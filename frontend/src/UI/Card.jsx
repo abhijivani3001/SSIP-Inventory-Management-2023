@@ -3,7 +3,7 @@ import Button from './Button';
 
 const Card = () => {
   return (
-    <div className='w-72 bg-white border border-gray-200 rounded-lg shadow-xl m-4'>
+    <div className='w-72 bg-white border border-gray-200 rounded-lg shadow-lg m-4'>
       <img
         className='p-8 rounded-t-lg h-48 m-auto'
         src='https://flowbite.com/docs/images/products/apple-watch.png'
