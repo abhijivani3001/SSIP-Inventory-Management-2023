@@ -15,9 +15,8 @@ function Navbar() {
     setIsLoginFormOpen(false);
   };
 
-
   return (
-    <nav className="bg-blue-500 p-4 flex justify-between items-center text-white">
+    <nav className="bg-gray-800 p-4 flex justify-between items-center text-white">
       <div>
         <Link to="/dashboard" className="hover:underline">Inventory Management</Link>
       </div>
