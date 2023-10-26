@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Navbar from './components/Navbar';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'; // If using React Router
@@ -15,8 +16,6 @@ function App() {
         {/* <Route path="/customers" component={Customers} /> */}
         {/* </Switch> */}
       </div>
-    </Router>
-  );
+    </Router>)
 }
-
 export default App;
