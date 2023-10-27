@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.navbar-title {
+  @apply hover:underline active:underline active:text-blue-700;
+}

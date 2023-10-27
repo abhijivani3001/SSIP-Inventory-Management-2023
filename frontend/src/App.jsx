@@ -1,19 +1,29 @@
 import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom'; // If using React Router
+
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Products from './pages/Products';
 import About from './pages/About';
-
-import { BrowserRouter, Routes, Route, Switch } from 'react-router-dom'; // If using React Router
+import NotFound from './pages/NotFound';
+import Login from './components/Login';
+import Cart from './pages/Cart';
+import Notification from './pages/Notification';
 
 function App() {
   return (
     <>
       <Navbar />
+      <div className='border-2 border-gray-500 mx-8'></div>
       <Routes>
         <Route path='/' element={<Home />} />
+        <Route path='/home' element={<Home />} />
+        <Route path='/login' element={<Login />} />
         <Route path='/products' element={<Products />} />
         <Route path='/about' element={<About />} />
+        <Route path='/cart' element={<Cart />} />
+        <Route path='/notification' element={<Notification />} />
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </>
   );
