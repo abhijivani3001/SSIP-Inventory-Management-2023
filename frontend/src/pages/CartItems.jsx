@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import backButton from '../resources/back-button.png';
 
 const CartItems = () => {
@@ -19,8 +20,8 @@ const CartItems = () => {
   return (
     <div className='flex flex-col mt-4'>
       <div className='flex ml-10'>
-        <img src={backButton} alt="arrow" className='mr-2 w-12 h-12 mt-3' />
-        <h1 className='text-6xl font-bold tracking-tight text-gray-900'>Cart Items</h1>
+        <img src={backButton} alt="arrow" className='mr-9 w-12 h-12 mt-3' />
+        <h1 className='text-5xl font-light tracking-tight text-gray-900'>Cart Items</h1>
       </div>
 
       <table className='mr-auto'>
@@ -68,3 +69,20 @@ const CartItems = () => {
 };
 
 export default CartItems;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

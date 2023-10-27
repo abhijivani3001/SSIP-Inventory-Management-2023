@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'; // If using React Router
-
+import ReactDOM from 'react-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Products from './pages/Products';
@@ -9,6 +9,13 @@ import NotFound from './pages/NotFound';
 import Login from './components/Login';
 import Notification from './pages/Notification';
 import CartItems from './pages/CartItems';
+
+ReactDOM.render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
+  document.getElementById('root')
+);
 
 function App() {
   return (
