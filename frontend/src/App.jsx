@@ -9,6 +9,7 @@ import NotFound from './pages/NotFound';
 import Login from './components/Login';
 import Cart from './pages/Cart';
 import Notification from './pages/Notification';
+import OrderList from './pages/OrderList';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path='/about' element={<About />} />
         <Route path='/cart' element={<Cart />} />
         <Route path='/notification' element={<Notification />} />
+        <Route path='/order-list' element={<OrderList />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </>
