@@ -8,6 +8,8 @@ import About from './pages/About';
 import NotFound from './pages/NotFound';
 import Login from './components/Login';
 import Notification from './pages/Notification';
+
+import OrderList from './pages/OrderList';
 import CartItems from './pages/CartItems';
 
 ReactDOM.render(
@@ -30,6 +32,7 @@ function App() {
         <Route path='/about' element={<About />} />
         <Route path='/cart' element={<CartItems />} />
         <Route path='/notification' element={<Notification />} />
+        <Route path='/order-list' element={<OrderList />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </>

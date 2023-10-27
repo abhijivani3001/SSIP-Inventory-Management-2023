@@ -12,9 +12,8 @@ const Login = ({ isOpen, onClose }) => {
 
   return (
     <div
-      className={`${
-        isOpen ? 'block' : 'hidden'
-      } fixed inset-0 flex items-center justify-center z-50`}
+      className={`${isOpen ? 'block' : 'hidden'
+        } fixed inset-0 flex items-center justify-center z-50`}
     >
       <div className='bg-white w-96 p-8 rounded-lg shadow-lg'>
         <h2 className='text-2xl font-semibold text-black mb-4 min-w-0 flex items-center justify-center'>
