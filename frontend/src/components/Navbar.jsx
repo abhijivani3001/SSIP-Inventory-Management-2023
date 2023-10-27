@@ -67,7 +67,7 @@ function Navbar() {
           <li>
             <Link
               to='/login'
-              className='navbar-title text-xl'
+              className={`hover:underline text-lg my-auto ${location.pathname === '/login' ? 'navbar-title' : ''}`}
               onClick={openLoginForm}
             >
               Login
