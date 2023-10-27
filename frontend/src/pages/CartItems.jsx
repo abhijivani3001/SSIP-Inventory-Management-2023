@@ -59,8 +59,8 @@ const CartItems = () => {
         ))}
       </table>
       <div className="flex items-center justify-center">
-  <button className='text-4xl font-bold bg-blue-500 hover:bg-blue-700 text-white py-3 px-8 rounded-full'>Submit</button>
-</div>
+        <button className='text-4xl font-bold bg-blue-500 hover:bg-blue-700 text-white py-3 px-8 rounded-full'>Submit</button>
+      </div>
 
 
     </div>
