@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import image from '../resources/left-arrow.png';
+import backButton from '../resources/back-button.png';
 
-const CartItem = () => {
+const CartItems = () => {
   const [values, setValues] = useState([12, 20, 25, 49]); // Initial values for each row
 
   const handleDecrease = (index) => {
@@ -19,7 +19,7 @@ const CartItem = () => {
   return (
     <div className='flex flex-col mt-4'>
       <div className='flex ml-10'>
-        <img src={image} alt="arrow" className='mr-2 w-12 h-12 mt-3' />
+        <img src={backButton} alt="arrow" className='mr-2 w-12 h-12 mt-3' />
         <h1 className='text-6xl font-bold tracking-tight text-gray-900'>Cart Items</h1>
       </div>
 
@@ -58,7 +58,7 @@ const CartItem = () => {
           </tr>
         ))}
       </table>
-      <div className="inline-block flex items-center justify-center">
+      <div className="flex items-center justify-center">
   <button className='text-4xl font-bold bg-blue-500 hover:bg-blue-700 text-white py-3 px-8 rounded-full'>Submit</button>
 </div>
 
@@ -67,4 +67,4 @@ const CartItem = () => {
   );
 };
 
-export default CartItem;
+export default CartItems;
