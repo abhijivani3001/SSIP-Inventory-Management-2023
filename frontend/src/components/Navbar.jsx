@@ -1,18 +1,29 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import Login from './Login';
 import { useState } from 'react';
 import cart from '../resources/shopping-cart.png';
 import notification from '../resources/notification.png';
-import user from '../resources/user.png';
 import { useLocation } from 'react-router-dom';
 
+// const USER_TYPES = {
+//   EMPLOYEE: 'employee',
+//   DEP_STORE_MANAGER: 'department store manager',
+//   HOD: 'hod',
+// };
 
-function Navbar() {
+// const CURRENT_USER_TYPES = USER_TYPES.EMPLOYEE;
+
+const Navbar = () => {
   const location = useLocation();
 
-
   const [isLoginFormOpen, setIsLoginFormOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const loginCheckHandler = (status) => {
+    status ? setIsLoggedIn(true) : setIsLoggedIn(false);
+    console.log('hello', isLoggedIn, status);
+  };
 
   const openLoginForm = () => {
     setIsLoginFormOpen(true);
@@ -51,6 +62,11 @@ function Navbar() {
               Order List
             </Link>
           </li>
+          <li>
+            <Link to='/placed-order-list' className={`hover:underline ${location.pathname === '/placed-order-list' ? 'navbar-title' : ''}`}>
+              Placed order
+            </Link>
+          </li>
 
         </div>
         <div className='ml-auto flex space-x-4'>
@@ -78,6 +94,6 @@ function Navbar() {
       </ul>
     </nav>
   );
-}
+};
 
 export default Navbar;
