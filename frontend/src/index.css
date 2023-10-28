@@ -5,3 +5,7 @@
 .navbar-title {
   @apply hover:underline active:underline active:text-gray-900 text-gray-900 font-bold underline;
 }
+
+body {
+  @apply bg-gray-100;
+}

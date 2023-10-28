@@ -24,7 +24,10 @@ const Card = () => {
         <div class='flex flex-col gap-4 items-center justify-between my-2 mb-0'>
           <div className='flex justify-evenly gap-2'>
             <Button>-</Button>
-            <input type='number' className='border-2 border-gray-700 w-20 rounded-lg' />
+            <input
+              type='number'
+              className='border-2 border-gray-700 w-20 rounded-lg'
+            />
             <Button>+</Button>
           </div>
           <Button>Add to cart</Button>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Button from '../UI/Button';
+import Button from '../components/UI/Button';
 
 class OrderList extends Component {
   constructor(props) {
@@ -23,14 +23,17 @@ class OrderList extends Component {
     });
 
     this.setState({ items: updatedItems });
-  }
+  };
 
   handleSelectAllChange = () => {
     const { items, selectAll } = this.state;
-    const updatedItems = items.map((item) => ({ ...item, approved: !selectAll }));
+    const updatedItems = items.map((item) => ({
+      ...item,
+      approved: !selectAll,
+    }));
 
     this.setState({ items: updatedItems, selectAll: !selectAll });
-  }
+  };
 
   render() {
     const { items, selectAll } = this.state;
@@ -38,13 +41,15 @@ class OrderList extends Component {
     return (
       <div className='mx-8 mt-4'>
         {/* title */}
-        <div><h1 className='text-6xl font-light'>Order List</h1></div>
+        <div>
+          <h1 className='text-6xl font-light'>Order List</h1>
+        </div>
         {/* items */}
         <div className='my-6'>
           <label className='mx-4 mt-2 text-xl'>
             <input
               className='mx-2'
-              type="checkbox"
+              type='checkbox'
               checked={selectAll}
               onChange={this.handleSelectAllChange}
             />
@@ -56,8 +61,9 @@ class OrderList extends Component {
                 <li key={item.id}>
                   <div className='border-2 m-2 p-2 flex  justify-between rounded-xl'>
                     <label className='my-auto'>
-                      <input className='mx-2'
-                        type="checkbox"
+                      <input
+                        className='mx-2'
+                        type='checkbox'
                         checked={item.approved}
                         onChange={() => this.handleCheckboxChange(item.id)}
                       />
@@ -71,12 +77,9 @@ class OrderList extends Component {
                 </li>
               ))}
             </div>
-          </ul >
+          </ul>
         </div>
-
-
-
-      </div >
+      </div>
     );
   }
 }
