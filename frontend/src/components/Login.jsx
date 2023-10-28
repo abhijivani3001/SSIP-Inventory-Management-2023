@@ -1,29 +1,60 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthContext from '../store/auth-context';
+// import axios from '../AxiosUrl';
+import axios from 'axios';
 
-const Login = () => {
-  const navigate=useNavigate();
+const Login = (props) => {
+  const navigate = useNavigate();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const authCtx=useContext(AuthContext);
+  const authCtx = useContext(AuthContext);
 
-  const users = [{ username: 'abhi', password: '123' }];
+  // const users = [{ username: 'abhi', password: '123' }];
 
   const submitHandler = (event) => {
     event.preventDefault();
-    
+
     console.log(username, password);
-    if(username===users[0].username && password===users[0].password){
-      authCtx.login('token1');
-      navigate('/');
-    }
-    else{
-      alert('user not exist')
-    }
+    // if(username===users[0].username && password===users[0].password){
+    //   authCtx.login('token1');
+    //   navigate('/');
+    // }
+    // else{
+    //   alert('user not exist')
+    // }
+
+    (async function login(event) {
+      // event.preventDefault();
+      try {
+        const res = await axios.post(
+          'https://ssip-inventory-management-2023-backend.vercel.app/api/user/login',
+          {
+            email: username,
+            password: password,
+          }
+        );
+        const data = res.data;
+        console.log(data);
+
+        if (data.success === true) {
+          alert('Login Successfully');
+
+          authCtx.login(data.token);
+
+          navigate('/');
+          // new:
+          // props.updateUsername(username);
+        } else {
+          alert('Login failed');
+        }
+      } catch (err) {
+        alert('Error, please try again');
+      }
+    })();
 
     setUsername('');
     setPassword('');

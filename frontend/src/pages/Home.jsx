@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from '../AxiosUrl';
 
 const Home = () => {
-  const [data, setData] = useState('');
+  const [data, setData] = useState({});
 
   useEffect(() => {
     axios
@@ -11,11 +11,13 @@ const Home = () => {
       .get('api/user/users')
       .then((response) => {
         setData(response);
-        console.log(response);
+        console.log(response.data.users[0]);
+        
       })
       .catch((err) => {
         console.log(err);
       });
+
     // const response = axios.get('/api/users');
     //   axios
     //     .post(`${process.env.REACT_APP_BACKEND_URL}/api/user/login`, {
@@ -31,9 +33,10 @@ const Home = () => {
     //     });
   }, []);
 
+  const temp=data?.data?.users[0].name;
   return (
     <div className='mx-8 my-4'>
-      <h1 className='text-8xl font-light'>Data: <p className='text-2xl'>{data?.data?.message}</p></h1>
+      <h1 className='text-8xl font-light'>Data: <p className='text-2xl'>{temp}</p></h1>
     </div>
   );
 };

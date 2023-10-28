@@ -119,12 +119,12 @@ const Navbar = () => {
           {isLoggedIn && (
             <li>
               <Link
-                to='/*'
+                to='/user'
                 className={`hover:underline text-xl my-auto ${
-                  location.pathname === '/*' ? 'navbar-title' : ''
+                  location.pathname === '/user' ? 'navbar-title' : ''
                 }`}
               >
-                
+                username
               </Link>
             </li>
           )}
@@ -132,7 +132,12 @@ const Navbar = () => {
           {/* logout */}
           {isLoggedIn && (
             <li>
-              <Link to='/'>
+              <Link
+                to='/'
+                className={`hover:underline text-xl my-auto ${
+                  location.pathname === '/*' ? 'navbar-title' : ''
+                }`}
+              >
                 <button onClick={logoutHandler}>Logout</button>
               </Link>
             </li>

@@ -14,7 +14,7 @@ import CartItems from './pages/CartItems';
 import AuthContext from './store/auth-context';
 
 function App() {
-  const authCtx= useContext(AuthContext);
+  const authCtx = useContext(AuthContext);
 
   return (
     <Layout>
@@ -22,9 +22,11 @@ function App() {
         <Route path='/' element={<Home />} exact />
         <Route path='/home' element={<Home />} />
         <Route path='/about' element={<About />} />
-        <Route path='/login' element={<Login />} />
-        
-        {authCtx.isLoggedIn && <Route path='/products' element={<Products />} />}
+        {!authCtx.isLoggedIn && <Route path='/login' element={<Login />} />}
+
+        {authCtx.isLoggedIn && (
+          <Route path='/products' element={<Products />} />
+        )}
         <Route path='/cart' element={<CartItems />} />
         <Route path='/notification' element={<Notification />} />
         <Route path='/order-list' element={<OrderList />} />
