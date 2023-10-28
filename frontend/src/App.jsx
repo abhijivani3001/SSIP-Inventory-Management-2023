@@ -8,6 +8,7 @@ import NotFound from './pages/NotFound';
 import Login from './components/Login';
 import Notification from './pages/Notification';
 import Layout from './components/Layout/Layout';
+import PlacedOrderList from './components/PlacedOrder';
 
 import OrderList from './pages/OrderList';
 import CartItems from './pages/CartItems';
@@ -23,7 +24,7 @@ function App() {
   return (
     <Layout>
       <Routes>
-        <Route path='/' element={<Home />} exact  />
+        <Route path='/' element={<Home />} exact />
         <Route path='/home' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/products' element={<Products />} />
@@ -31,6 +32,7 @@ function App() {
         <Route path='/cart' element={<CartItems />} />
         <Route path='/notification' element={<Notification />} />
         <Route path='/order-list' element={<OrderList />} />
+        <Route path='/placed-order-list' element={<PlacedOrderList />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </Layout>
