@@ -11,7 +11,6 @@ import { useLocation } from 'react-router-dom';
 function Navbar() {
   const location = useLocation();
 
-
   const [isLoginFormOpen, setIsLoginFormOpen] = useState(false);
 
   const openLoginForm = () => {
@@ -49,6 +48,11 @@ function Navbar() {
           <li>
             <Link to='/order-list' className={`hover:underline ${location.pathname === '/order-list' ? 'navbar-title' : ''}`}>
               Order List
+            </Link>
+          </li>
+          <li>
+            <Link to='/placed-order-list' className={`hover:underline ${location.pathname === '/placed-order-list' ? 'navbar-title' : ''}`}>
+              Placed Order
             </Link>
           </li>
 
