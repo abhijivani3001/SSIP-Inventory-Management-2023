@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import Home from './pages/Home';
@@ -11,16 +11,20 @@ import Layout from './components/Layout/Layout';
 import PlacedOrderList from './pages/PlacedOrderList';
 import OrderList from './pages/OrderList';
 import CartItems from './pages/CartItems';
+import AuthContext from './store/auth-context';
 
 function App() {
+  const authCtx= useContext(AuthContext);
+
   return (
     <Layout>
       <Routes>
         <Route path='/' element={<Home />} exact />
         <Route path='/home' element={<Home />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/products' element={<Products />} />
         <Route path='/about' element={<About />} />
+        <Route path='/login' element={<Login />} />
+        
+        {authCtx.isLoggedIn && <Route path='/products' element={<Products />} />}
         <Route path='/cart' element={<CartItems />} />
         <Route path='/notification' element={<Notification />} />
         <Route path='/order-list' element={<OrderList />} />

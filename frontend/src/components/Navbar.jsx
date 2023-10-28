@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useState } from 'react';
 import cart from '../resources/shopping-cart.png';
 import notification from '../resources/notification.png';
 import { useLocation } from 'react-router-dom';
+import AuthContext from '../store/auth-context';
 
 // const USER_TYPES = {
 //   EMPLOYEE: 'employee',
@@ -15,22 +16,9 @@ import { useLocation } from 'react-router-dom';
 
 const Navbar = () => {
   const location = useLocation();
+  const authCtx=useContext(AuthContext);
 
-  const [isLoginFormOpen, setIsLoginFormOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const loginCheckHandler = (status) => {
-    status ? setIsLoggedIn(true) : setIsLoggedIn(false);
-    console.log('hello', isLoggedIn, status);
-  };
-
-  const openLoginForm = () => {
-    setIsLoginFormOpen(true);
-  };
-
-  const closeLoginForm = () => {
-    setIsLoginFormOpen(false);
-  };
+  const isLoggedIn=authCtx.isLoggedIn;
 
   return (
     <nav className='px-6 py-4 flex justify-between items-center text-gray-900'>
@@ -61,7 +49,9 @@ const Navbar = () => {
               About
             </Link>
           </li>
-          <li>
+
+          {/*  */}
+          {isLoggedIn && <li>
             <Link
               to='/products'
               className={`hover:underline ${
@@ -70,7 +60,8 @@ const Navbar = () => {
             >
               Products
             </Link>
-          </li>
+          </li>}
+
           <li>
             <Link
               to='/order-list'
@@ -94,12 +85,12 @@ const Navbar = () => {
         </div>
 
         <div className='ml-auto flex space-x-4'>
-          <li>
+          <li className='my-auto'>
             <Link to='/cart'>
-              <img src={cart} alt='Cart' className=' w-6' />
+              <img src={cart} alt='Cart' className='w-6' />
             </Link>
           </li>
-          <li>
+          <li className='my-auto'>
             <Link to='/notification'>
               <img src={notification} alt='Cart' className=' w-6' />
             </Link>
@@ -112,7 +103,6 @@ const Navbar = () => {
               className={`hover:underline text-lg my-auto ${
                 location.pathname === '/login' ? 'navbar-title' : ''
               }`}
-              onClick={openLoginForm}
             >
               Login
             </Link>

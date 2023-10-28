@@ -7,6 +7,7 @@ const Home = () => {
   useEffect(() => {
     axios
       .get(`/hello`)
+      // .get(`/api/order/`)
       .then((response) => {
         setData(response);
         console.log(response);
@@ -14,6 +15,7 @@ const Home = () => {
       .catch((err) => {
         console.log(err);
       });
+    // const response = axios.get('/api/users');
     //   axios
     //     .post(`${process.env.REACT_APP_BACKEND_URL}/api/user/login`, {
     //       email: 'abcd',
