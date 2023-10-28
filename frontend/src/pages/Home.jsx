@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../AxiosUrl';
 
 const Home = () => {
   const [data, setData] = useState('');
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/hello`)
+      .get(`/hello`)
       .then((response) => {
         setData(response);
         console.log(response);
