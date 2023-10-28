@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import Login from './Login';
 import { useState } from 'react';
 import cart from '../resources/shopping-cart.png';
 import notification from '../resources/notification.png';
@@ -43,32 +42,57 @@ const Navbar = () => {
       <ul className='flex space-x-16 mr-6 align-middle'>
         <div className='flex space-x-6  justify-items-start text-lg'>
           <li>
-            <Link to='/' className={`hover:underline ${location.pathname === '/' ? 'navbar-title' : ''}`}>
+            <Link
+              to='/'
+              className={`hover:underline ${
+                location.pathname === '/' ? 'navbar-title' : ''
+              }`}
+            >
               Home
             </Link>
           </li>
           <li>
-            <Link to='/about' className={`hover:underline ${location.pathname === '/about' ? 'navbar-title' : ''}`}>
+            <Link
+              to='/about'
+              className={`hover:underline ${
+                location.pathname === '/about' ? 'navbar-title' : ''
+              }`}
+            >
               About
             </Link>
           </li>
           <li>
-            <Link to='/products' className={`hover:underline ${location.pathname === '/products' ? 'navbar-title' : ''}`}>
+            <Link
+              to='/products'
+              className={`hover:underline ${
+                location.pathname === '/products' ? 'navbar-title' : ''
+              }`}
+            >
               Products
             </Link>
           </li>
           <li>
-            <Link to='/order-list' className={`hover:underline ${location.pathname === '/order-list' ? 'navbar-title' : ''}`}>
+            <Link
+              to='/order-list'
+              className={`hover:underline ${
+                location.pathname === '/order-list' ? 'navbar-title' : ''
+              }`}
+            >
               Order List
             </Link>
           </li>
           <li>
-            <Link to='/placed-order-list' className={`hover:underline ${location.pathname === '/placed-order-list' ? 'navbar-title' : ''}`}>
+            <Link
+              to='/placed-order-list'
+              className={`hover:underline ${
+                location.pathname === '/placed-order-list' ? 'navbar-title' : ''
+              }`}
+            >
               Placed order
             </Link>
           </li>
-
         </div>
+
         <div className='ml-auto flex space-x-4'>
           <li>
             <Link to='/cart'>
@@ -80,15 +104,29 @@ const Navbar = () => {
               <img src={notification} alt='Cart' className=' w-6' />
             </Link>
           </li>
+
+          {/* login */}
           <li>
             <Link
               to='/login'
-              className={`hover:underline text-lg my-auto ${location.pathname === '/login' ? 'navbar-title' : ''}`}
+              className={`hover:underline text-lg my-auto ${
+                location.pathname === '/login' ? 'navbar-title' : ''
+              }`}
               onClick={openLoginForm}
             >
               Login
             </Link>
-            <Login isOpen={isLoginFormOpen} onClose={closeLoginForm} />
+          </li>
+
+          <li>
+            <Link
+              to='/*'
+              className={`hover:underline text-xl my-auto ${
+                location.pathname === '/*' ? 'navbar-title' : ''
+              }`}
+            >
+              username
+            </Link>
           </li>
         </div>
       </ul>
