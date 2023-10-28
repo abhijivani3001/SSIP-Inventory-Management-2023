@@ -6,9 +6,8 @@ const Home = () => {
 
   useEffect(() => {
     axios
-      // .get(`/hello`)
+      .get(`/hello`)
       // .get(`/api/order/`)
-      .get('api/user/users')
       .then((response) => {
         setData(response);
         console.log(response);

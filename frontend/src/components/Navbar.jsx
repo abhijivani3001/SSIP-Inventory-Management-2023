@@ -16,13 +16,9 @@ import AuthContext from '../store/auth-context';
 
 const Navbar = () => {
   const location = useLocation();
-  const authCtx = useContext(AuthContext);
+  const authCtx=useContext(AuthContext);
 
-  const isLoggedIn = authCtx.isLoggedIn;
-
-  const logoutHandler = () => {
-    authCtx.logout();
-  };
+  const isLoggedIn=authCtx.isLoggedIn;
 
   return (
     <nav className='px-6 py-4 flex justify-between items-center text-gray-900'>
@@ -55,18 +51,16 @@ const Navbar = () => {
           </li>
 
           {/*  */}
-          {isLoggedIn && (
-            <li>
-              <Link
-                to='/products'
-                className={`hover:underline ${
-                  location.pathname === '/products' ? 'navbar-title' : ''
-                }`}
-              >
-                Products
-              </Link>
-            </li>
-          )}
+          {isLoggedIn && <li>
+            <Link
+              to='/products'
+              className={`hover:underline ${
+                location.pathname === '/products' ? 'navbar-title' : ''
+              }`}
+            >
+              Products
+            </Link>
+          </li>}
 
           <li>
             <Link
@@ -103,40 +97,27 @@ const Navbar = () => {
           </li>
 
           {/* login */}
-          {!isLoggedIn && (
-            <li>
-              <Link
-                to='/login'
-                className={`hover:underline text-lg my-auto ${
-                  location.pathname === '/login' ? 'navbar-title' : ''
-                }`}
-              >
-                Login
-              </Link>
-            </li>
-          )}
+          <li>
+            <Link
+              to='/login'
+              className={`hover:underline text-lg my-auto ${
+                location.pathname === '/login' ? 'navbar-title' : ''
+              }`}
+            >
+              Login
+            </Link>
+          </li>
 
-          {isLoggedIn && (
-            <li>
-              <Link
-                to='/*'
-                className={`hover:underline text-xl my-auto ${
-                  location.pathname === '/*' ? 'navbar-title' : ''
-                }`}
-              >
-                
-              </Link>
-            </li>
-          )}
-
-          {/* logout */}
-          {isLoggedIn && (
-            <li>
-              <Link to='/'>
-                <button onClick={logoutHandler}>Logout</button>
-              </Link>
-            </li>
-          )}
+          <li>
+            <Link
+              to='/*'
+              className={`hover:underline text-xl my-auto ${
+                location.pathname === '/*' ? 'navbar-title' : ''
+              }`}
+            >
+              username
+            </Link>
+          </li>
         </div>
       </ul>
     </nav>

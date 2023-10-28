@@ -1,29 +1,17 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import AuthContext from '../store/auth-context';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
-  const navigate=useNavigate();
-
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const authCtx=useContext(AuthContext);
 
   const users = [{ username: 'abhi', password: '123' }];
 
   const submitHandler = (event) => {
     event.preventDefault();
-    
     console.log(username, password);
-    if(username===users[0].username && password===users[0].password){
-      authCtx.login('token1');
-      navigate('/');
-    }
-    else{
-      alert('user not exist')
-    }
 
     setUsername('');
     setPassword('');
