@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useState } from 'react';
 import cart from '../resources/shopping-cart.png';
 import notification from '../resources/notification.png';
 import { useLocation } from 'react-router-dom';
 import AuthContext from '../store/auth-context';
+import axios from '../AxiosUrl';
 
 // const USER_TYPES = {
 //   EMPLOYEE: 'employee',
@@ -17,12 +18,27 @@ import AuthContext from '../store/auth-context';
 const Navbar = () => {
   const location = useLocation();
   const authCtx = useContext(AuthContext);
+  const token = authCtx.token;
+
+  const [username, setUsername] = useState('');
 
   const isLoggedIn = authCtx.isLoggedIn;
 
   const logoutHandler = () => {
     authCtx.logout();
   };
+
+  useEffect(() => {
+    axios
+      .get('api/user')
+      .then((response) => {
+        setUsername(response.data.user.name);
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [username]);
 
   return (
     <nav className='px-6 py-4 flex justify-between items-center text-gray-900'>
@@ -124,7 +140,7 @@ const Navbar = () => {
                   location.pathname === '/user' ? 'navbar-title' : ''
                 }`}
               >
-                username
+                {username}
               </Link>
             </li>
           )}
