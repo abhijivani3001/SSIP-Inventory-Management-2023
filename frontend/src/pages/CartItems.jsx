@@ -8,7 +8,7 @@ const CartItems = () => {
       <div>
         <h1 className='text-6xl font-light'>Cart Items</h1>
       </div>
-
+      
       <div className='my-6'>
         <CartItem value={value} />
         <CartItem value={value} />
@@ -21,3 +21,16 @@ const CartItems = () => {
 };
 
 export default CartItems;
+
+
+
+
+
+
+
+
+
+
+
+
+
