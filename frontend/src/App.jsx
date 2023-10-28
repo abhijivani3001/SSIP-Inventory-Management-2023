@@ -8,7 +8,7 @@ import NotFound from './pages/NotFound';
 import Login from './components/Login';
 import Notification from './pages/Notification';
 import Layout from './components/Layout/Layout';
-import PlacedOrderList from './components/PlacedOrder';
+import PlacedOrderList from './pages/PlacedOrderList';
 
 import OrderList from './pages/OrderList';
 import CartItems from './pages/CartItems';

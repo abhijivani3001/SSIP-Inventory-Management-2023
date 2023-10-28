@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '../components/UI/Button';
 
-const CartItem = (props) => {
+const PlacedOrder = (props) => {
   return (
     <div className='border-2 flex justify-between border-gray-300 rounded-lg my-4'>
       <div className='flex gap-4'>
@@ -23,4 +23,4 @@ const CartItem = (props) => {
   );
 };
 
-export default CartItem;
+export default PlacedOrder;

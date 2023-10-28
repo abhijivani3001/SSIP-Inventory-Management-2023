@@ -62,6 +62,11 @@ const Navbar = () => {
               Order List
             </Link>
           </li>
+          <li>
+            <Link to='/placed-order-list' className={`hover:underline ${location.pathname === '/placed-order-list' ? 'navbar-title' : ''}`}>
+              Placed order
+            </Link>
+          </li>
 
         </div>
         <div className='ml-auto flex space-x-4'>
