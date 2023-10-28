@@ -1,6 +1,6 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom'; // If using React Router
-import ReactDOM from 'react-dom';
+import { Routes, Route } from 'react-router-dom';
+
 import Home from './pages/Home';
 import Products from './pages/Products';
 import About from './pages/About';
@@ -9,16 +9,8 @@ import Login from './components/Login';
 import Notification from './pages/Notification';
 import Layout from './components/Layout/Layout';
 import PlacedOrderList from './pages/PlacedOrderList';
-
 import OrderList from './pages/OrderList';
 import CartItems from './pages/CartItems';
-
-ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
-  document.getElementById('root')
-);
 
 function App() {
   return (
