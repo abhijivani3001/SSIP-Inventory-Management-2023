@@ -27,8 +27,8 @@ function App() {
         {authCtx.isLoggedIn && (
           <Route path='/products' element={<Products />} />
         )}
-        <Route path='/cart' element={<CartItems />} />
-        <Route path='/notification' element={<Notification />} />
+        {authCtx.isLoggedIn && <Route path='/cart' element={<CartItems />} />}
+        {authCtx.isLoggedIn && <Route path='/notification' element={<Notification />} />}
         <Route path='/order-list' element={<OrderList />} />
         <Route path='/placed-order-list' element={<PlacedOrderList />} />
         <Route path='*' element={<NotFound />} />

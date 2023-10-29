@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthContext from '../store/auth-context';
-// import axios from '../AxiosUrl';
-import axios from 'axios';
+import axios from '../api/AxiosUrl';
+// import axios from 'axios';
 
 const Login = (props) => {
   const navigate = useNavigate();
@@ -10,7 +10,6 @@ const Login = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const authCtx = useContext(AuthContext);
 
   // const users = [{ username: 'abhi', password: '123' }];
@@ -27,18 +26,14 @@ const Login = (props) => {
     //   alert('user not exist')
     // }
 
-    (async function login(event) {
-      // event.preventDefault();
+    (async function login() {
       try {
-        const res = await axios.post(
-          'https://ssip-inventory-management-2023-backend.vercel.app/api/user/login',
-          {
-            email: username,
-            password: password,
-          }
-        );
+        const res = await axios.post('/api/user/login', {
+          email: username,
+          password: password,
+        });
         const data = res.data;
-        console.log(data);
+        // console.log(data);
 
         if (data.success === true) {
           alert('Login Successfully');
@@ -46,8 +41,6 @@ const Login = (props) => {
           authCtx.login(data.token);
 
           navigate('/');
-          // new:
-          // props.updateUsername(username);
         } else {
           alert('Login failed');
         }

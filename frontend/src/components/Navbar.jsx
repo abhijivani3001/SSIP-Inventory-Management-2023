@@ -5,24 +5,16 @@ import cart from '../resources/shopping-cart.png';
 import notification from '../resources/notification.png';
 import { useLocation } from 'react-router-dom';
 import AuthContext from '../store/auth-context';
-import axios from '../AxiosUrl';
-
-// const USER_TYPES = {
-//   EMPLOYEE: 'employee',
-//   DEP_STORE_MANAGER: 'department store manager',
-//   HOD: 'hod',
-// };
-
-// const CURRENT_USER_TYPES = USER_TYPES.EMPLOYEE;
+import axios from '../api/AxiosUrl';
 
 const Navbar = () => {
   const location = useLocation();
+
   const authCtx = useContext(AuthContext);
-  const token = authCtx.token;
+  const isLoggedIn = authCtx.isLoggedIn;
+  // const token = authCtx.token;
 
   const [username, setUsername] = useState('');
-
-  const isLoggedIn = authCtx.isLoggedIn;
 
   const logoutHandler = () => {
     authCtx.logout();
@@ -148,12 +140,7 @@ const Navbar = () => {
           {/* logout */}
           {isLoggedIn && (
             <li>
-              <Link
-                to='/'
-                className={`hover:underline text-xl my-auto ${
-                  location.pathname === '/*' ? 'navbar-title' : ''
-                }`}
-              >
+              <Link to='/' className='hover:underline text-xl my-auto '>
                 <button onClick={logoutHandler}>Logout</button>
               </Link>
             </li>

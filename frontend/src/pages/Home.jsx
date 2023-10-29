@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import axios from '../AxiosUrl';
+import axios from '../api/AxiosUrl';
 import AuthContext from '../store/auth-context';
 
 const Home = () => {
   const authCtx = useContext(AuthContext);
   const token = authCtx.token;
 
-  useEffect(() => {
+  // useEffect(() => {
     // axios
     //   // .get(`/hello`)
     //   // .get(`/api/order/`)
@@ -46,7 +46,7 @@ const Home = () => {
     //     .catch((err) => {
     //       console.log(err);
     //     });
-  }, []);
+  // }, []);
 
   // const temp=data?.data?.users[0].name;
 
