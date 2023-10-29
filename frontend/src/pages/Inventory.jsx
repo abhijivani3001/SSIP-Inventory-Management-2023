@@ -4,7 +4,9 @@ import InventoryCard from '../components/UI/InventoryCard';
 const Inventory = () => {
   return (
     <div>
-      <div>Inventory</div>
+      <div>
+        <h1 className='text-6xl m-3 font-light'>Inventory</h1>
+      </div>
       <div className='flex flex-wrap justify-center my-6'>
         <InventoryCard />
         <InventoryCard />
