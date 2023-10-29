@@ -30,7 +30,7 @@ const Card = (props) => {
         src='https://flowbite.com/docs/images/products/apple-watch.png'
         alt='product image'
       />
-      <div class='px-5 pb-5 mt-4'>
+      <div className='px-5 pb-5 mt-4'>
         <h5 className='text-xl font-semibold tracking-tight text-gray-900'>
           {props.title}
         </h5>
@@ -47,9 +47,8 @@ const Card = (props) => {
               type='number'
               className='border-2 border-gray-700 w-12 text-center rounded-lg'
               min={1}
-              // inputMode='none'
               // readOnly //
-              defaultValue={1}
+              // defaultValue={1}
               value={freqOfItem}
               onChange={(e) => setFreqOfItem(e.target.value)}
             />
