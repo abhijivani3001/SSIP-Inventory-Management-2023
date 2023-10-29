@@ -11,8 +11,10 @@ const Products = () => {
       try {
         const result = await axios.get('api/item');
         const data = await result.data.data;
+        // console.log(data);
+
         const finalData = data.map((item) => {
-          if (item.description.length > 25) {
+          if (item.description.length > 40) {
             item.description = item.description.slice(0, 25) + '...';
           }
           return item;
