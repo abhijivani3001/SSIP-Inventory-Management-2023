@@ -10,7 +10,7 @@ const Products = () => {
     (async () => {
       try {
         const result = await axios.get('api/item');
-        const data = await result.data.data;
+        const data = await result.data.items;
         // console.log(data);
 
         const finalData = data.map((item) => {

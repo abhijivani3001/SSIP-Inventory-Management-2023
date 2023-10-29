@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import Button from './UI/Button';
+import Button from '../UI/Button';
 
 const CartItem = (props) => {
-  const [freq, setFreq] = useState(props.value);
-  const incrementHandler = () => {
-    setFreq((prev) => prev + 1);
-  };
-  const decrementHandler = () => {
-    if (freq > 1) setFreq((prev) => prev - 1);
-  };
+  const [freq, setFreq] = useState(props.amount);
+  // const incrementHandler = () => {
+  //   setFreq((prev) => prev + 1);
+  // };
+  // const decrementHandler = () => {
+  //   if (freq > 1) setFreq((prev) => prev - 1);
+  // };
 
   return (
     <>
@@ -20,14 +20,14 @@ const CartItem = (props) => {
             alt='product image'
           />
           <h5 className='text-xl my-auto font-semibold tracking-tight text-gray-900'>
-            Apple Watch Series 7 GPS
+            {props.name}
           </h5>
         </div>
 
         <div className='flex my-auto gap-2 mr-8'>
-          <Button onClick={decrementHandler}>-</Button>
+          <Button onClick={props.onRemoveFromCart}>-</Button>
           <div className='my-auto'>{freq}</div>
-          <Button onClick={incrementHandler}>+</Button>
+          <Button onClick={props.onAddToCart}>+</Button>
         </div>
       </div>
     </>

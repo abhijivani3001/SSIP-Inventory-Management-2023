@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Button from './Button';
+import CartContext from '../../store/cart-context';
 
 const Card = (props) => {
   const [freqOfItem, setFreqOfItem] = useState(1);
@@ -44,7 +45,7 @@ const Card = (props) => {
           </div>
 
           <div className='mt-2'>
-            <Button>Add to cart</Button>
+            <Button onClick={props.onAddToCart}>Add to cart</Button>
           </div>
         </div>
       </div>
