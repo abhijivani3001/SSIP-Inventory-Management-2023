@@ -6,12 +6,16 @@ const AuthContext = React.createContext({
   login: (token) => {},
   logout: () => {},
   username: '',
+
+  products: [],
 });
 
 export const AuthContextProvider = (props) => {
   const initialToken = localStorage.getItem('token');
   const [token, setToken] = useState(initialToken);
   const [username, setUsername] = useState('');
+
+  const [products,setProducts]=useState([]);
 
   const userIsLoggedIn = !!token; // !! converts truthy/falsy to true/false boolean value
 
@@ -27,12 +31,18 @@ export const AuthContextProvider = (props) => {
     localStorage.removeItem('token');
   };
 
+  const productsHandler=()=>{
+    setProducts();
+  }
+
   const contextValue = {
     token: token,
     isLoggedIn: userIsLoggedIn,
     login: loginHandler,
     logout: logoutHandler,
     username: username,
+
+    products: products,
   };
 
   return (
