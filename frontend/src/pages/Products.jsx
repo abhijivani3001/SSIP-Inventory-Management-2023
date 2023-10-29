@@ -9,8 +9,8 @@ const Products = () => {
     (async () => {
       try {
         const result = await axios.get('api/item');
-        const data = await result.data.data;
-        // console.log(data);
+        const data = await result.data.items;
+        console.log(result.data);
 
         const finalData = data.map((item) => {
           if (item.description.length > 40) {
