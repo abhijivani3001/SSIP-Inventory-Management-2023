@@ -7,5 +7,5 @@
 }
 
 body {
-  @apply bg-gray-100 max-w-[100%] overflow-hidden;
+  @apply bg-gray-100 max-w-[100%] overflow-x-hidden overflow-y-auto;
 }
