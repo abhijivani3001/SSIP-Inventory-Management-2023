@@ -26,7 +26,7 @@ const Login = (props) => {
     //   alert('user not exist')
     // }
 
-    (async function login() {
+    (async function () {
       try {
         const res = await axios.post('/api/user/login', {
           email: username,
@@ -37,7 +37,7 @@ const Login = (props) => {
 
         if (data.success === true) {
           alert('Login Successfully');
-
+          // localStorage.setItem('token', data.token);
           authCtx.login(data.token);
 
           navigate('/');

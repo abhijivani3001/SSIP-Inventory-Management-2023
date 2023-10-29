@@ -37,7 +37,7 @@ const CartItems = () => {
           />
         ))}
       </div>
-      <div className='text-center'>
+      <div className='text-center my-4'>
         <Button>Submit</Button>
       </div>
     </div>
