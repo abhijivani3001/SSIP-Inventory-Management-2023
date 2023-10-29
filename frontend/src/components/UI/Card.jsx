@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from './Button';
 
-const Card = () => {
+const Card = (props) => {
+  const [freqOfItem, setFreqOfItem] = useState(1);
+
+  const incrementHandler = () => {
+    setFreqOfItem((prev) => prev + 1);
+  };
+  const decrementHandler = () => {
+    if (freqOfItem > 1) setFreqOfItem((prev) => prev - 1);
+  };
+
   return (
     <div className='w-72 bg-white border border-gray-200 rounded-lg shadow-lg m-4'>
       <img
@@ -10,27 +19,34 @@ const Card = () => {
         alt='product image'
       />
       <div class='px-5 pb-5 mt-4'>
-        {/* title */}
         <h5 className='text-xl font-semibold tracking-tight text-gray-900'>
-          Apple Watch Series 7 GPS
+          {props.title}
         </h5>
 
         {/* description */}
-        <p className='text-gray-500 text-sm my-2'>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto,
-          aliquid?
-        </p>
+        <p className='text-gray-500 text-sm my-2'>{props.description}</p>
+        {/* <p className='text-gray-800 text-lg my-2'>Category: {props.category}</p> */}
 
-        <div class='flex flex-col gap-4 items-center justify-between my-2 mb-0'>
+        <div className='flex flex-col gap-1 items-center justify-between my-2 mb-0'>
           <div className='flex justify-evenly gap-2'>
-            <Button>-</Button>
+            <label className='text-lg font-semibold'>Amount</label>
+            {/* <Button onClick={decrementHandler}>-</Button> */}
             <input
               type='number'
-              className='border-2 border-gray-700 w-20 rounded-lg'
+              className='border-2 border-gray-700 w-12 text-center rounded-lg'
+              min={1}
+              // inputMode='none'
+              // readOnly //
+              defaultValue={1}
+              value={freqOfItem}
+              onChange={(e) => setFreqOfItem(e.target.value)}
             />
-            <Button>+</Button>
+            {/* <Button onClick={incrementHandler}>+</Button> */}
           </div>
-          <Button>Add to cart</Button>
+
+          <div className='mt-2'>
+            <Button>Add to cart</Button>
+          </div>
         </div>
       </div>
     </div>

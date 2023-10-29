@@ -1,5 +1,6 @@
 import React from 'react';
 import Card from '../components/UI/Card';
+import Product from '../components/Products/Product';
 
 const Products = () => {
   return (
@@ -8,13 +9,12 @@ const Products = () => {
         <h1 className='text-6xl font-light'>Products</h1>
       </div>
       <div className='flex flex-wrap justify-center my-6'>
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        <Product />
+        <Product />
+        {/* <Product />
+        <Product />
+        <Product /> */}
+        
       </div>
     </div>
   );
