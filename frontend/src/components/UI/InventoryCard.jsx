@@ -2,7 +2,16 @@ import React, { useState } from 'react';
 import Button from './Button';
 
 const InventoryCard = (props) => {
-  const [availableItems,setAvailableItems]=useState(12);
+  const [availableItems, setAvailableItems] = useState(12);
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleUpdateClick = () => {
+    setIsEditing(!isEditing);
+  };
+
+  const handleSaveClick = () => {
+    setIsEditing(false);
+  };
 
   return (
     <>
@@ -19,27 +28,29 @@ const InventoryCard = (props) => {
 
           {/* description */}
           <p className='text-gray-500 text-sm my-2'>description</p>
-          {/* <p className='text-gray-800 text-lg my-2'>Category: {props.category}</p> */}
 
           <div className='flex flex-col gap-1 items-center justify-between my-2 mb-0'>
             <div className='flex justify-evenly gap-2'>
               <label className='text-lg font-semibold'>Amount</label>
-              {/* <Button onClick={decrementHandler}>-</Button> */}
-              {/* <input
-                type='number'
-                className='border-2 border-gray-700 w-12 text-center rounded-lg'
-                min={1}
-                // readOnly //
-                // defaultValue={1}
-                value={freqOfItem}
-                onChange={(e) => setFreqOfItem(e.target.value)}
-              /> */}
-              <span>{availableItems}</span>
-              {/* <Button onClick={incrementHandler}>+</Button> */}
+              {isEditing ? (
+                <input
+                  type='number'
+                  className='border-2 border-gray-700 w-12 text-center rounded-lg'
+                  min={1}
+                  value={availableItems}
+                  onChange={(e) => setAvailableItems(e.target.value)}
+                />
+              ) : (
+                <span>{availableItems}</span>
+              )}
             </div>
 
             <div className='mt-2'>
-              <Button>Update</Button>
+              {isEditing ? (
+                <Button onClick={handleSaveClick}>Save</Button>
+              ) : (
+                <Button onClick={handleUpdateClick}>Update</Button>
+              )}
             </div>
           </div>
         </div>
