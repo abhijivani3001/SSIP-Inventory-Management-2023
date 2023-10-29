@@ -3,7 +3,13 @@ import CartItem from '../components/CartItem';
 import Button from '../components/UI/Button';
 
 const CartItems = () => {
-  const [value, setValue] = useState(12);
+  const [cartItems, setCartItems] = useState([]); // State to store cart items
+
+  // Function to add items to the cart
+  const addToCart = (newItem) => {
+    setCartItems((prevItems) => [...prevItems, newItem]);
+  };
+
   return (
     <div className='mx-8 mt-4'>
       <div>
@@ -11,13 +17,14 @@ const CartItems = () => {
       </div>
 
       <div className='my-6'>
-        <CartItem value={value} />
-        <CartItem value={value} />
-        <CartItem value={value} />
-        <CartItem value={value} />
-        <CartItem value={value} />
+        {cartItems.map((item, index) => (
+          <CartItem key={index} {...item} />
+        ))}
       </div>
-        <div className='text-center'><Button>Submit</Button></div>
+
+      <div className='text-center'>
+        <Button>Submit</Button>
+      </div>
     </div>
   );
 };

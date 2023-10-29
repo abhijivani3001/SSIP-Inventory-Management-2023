@@ -11,6 +11,18 @@ const Card = (props) => {
     if (freqOfItem > 1) setFreqOfItem((prev) => prev - 1);
   };
 
+
+  const handleAddToCart = () => {
+    const item = {
+      title: props.title,
+      description: props.description,
+      quantity: freqOfItem,
+    };
+
+    // Pass the item to the parent component (CartItems)
+    props.addToCart(item);
+  };
+
   return (
     <div className='w-72 bg-white border border-gray-200 rounded-lg shadow-lg m-4'>
       <img
@@ -45,7 +57,7 @@ const Card = (props) => {
           </div>
 
           <div className='mt-2'>
-            <Button>Add to cart</Button>
+            <Button onClick={handleAddToCart}>Add to cart</Button>
           </div>
         </div>
       </div>
