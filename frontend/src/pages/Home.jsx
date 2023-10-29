@@ -3,8 +3,8 @@ import axios from '../api/AxiosUrl';
 import AuthContext from '../store/auth-context';
 
 const Home = () => {
-  const authCtx = useContext(AuthContext);
-  const token = authCtx.token;
+  // const authCtx = useContext(AuthContext);
+  // const token = authCtx.token;
 
   // useEffect(() => {
     // axios
@@ -53,7 +53,7 @@ const Home = () => {
   return (
     <div className='mx-8 my-4'>
       <h1 className='text-8xl font-light'>
-        Data: <p className='text-2xl'>{token}</p>
+        Welcome to Inventory management system
       </h1>
     </div>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import Card from '../UI/ProductCard';
+import ProductCard from '../UI/ProductCard';
 import { useCart } from '../../store/CartProvider';
 
 const Product = (props) => {
@@ -12,7 +12,7 @@ const Product = (props) => {
   return (
     <>
       {props.data.map((val) => (
-        <Card
+        <ProductCard
           key={val._id}
           title={val.name}
           description={val.description}

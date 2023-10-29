@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PlacedOrder from '../components/PlacedOrder';
+import PlacedOrder from '../components/PlacedOrder/PlacedOrder';
 
 const PlacedOrderList = () => {
   const [value, setValue] = useState(12);

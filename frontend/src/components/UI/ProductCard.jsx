@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import Button from './Button';
 import CartContext from '../../store/cart-context';
 
-const Card = (props) => {
+const ProductCard = (props) => {
   const [freqOfItem, setFreqOfItem] = useState(1);
 
   const incrementHandler = () => {
@@ -53,4 +53,4 @@ const Card = (props) => {
   );
 };
 
-export default Card;
+export default ProductCard;

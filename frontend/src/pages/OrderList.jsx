@@ -40,11 +40,10 @@ class OrderList extends Component {
 
     return (
       <div className='mx-8 mt-4'>
-        {/* title */}
         <div>
           <h1 className='text-6xl font-light'>Order List</h1>
         </div>
-        {/* items */}
+
         <div className='my-6'>
           <label className='mx-4 mt-2 text-xl'>
             <input
@@ -59,7 +58,7 @@ class OrderList extends Component {
             <div className='flex flex-col'>
               {items.map((item) => (
                 <li key={item.id}>
-                  <div className='border-2 m-2 p-2 flex  justify-between rounded-xl'>
+                  <div className='border-2 m-2 p-2 flex justify-between rounded-xl bg-white'>
                     <label className='my-auto'>
                       <input
                         className='mx-2'

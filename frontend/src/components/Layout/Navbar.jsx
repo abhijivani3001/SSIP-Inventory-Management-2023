@@ -1,11 +1,11 @@
 import React, { useContext, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useState } from 'react';
-import cart from '../resources/shopping-cart.png';
-import notification from '../resources/notification.png';
+import cartImg from '../../resources/shopping-cart.png';
+import notificationImg from '../../resources/notification.png';
 import { useLocation } from 'react-router-dom';
-import AuthContext from '../store/auth-context';
-import axios from '../api/AxiosUrl';
+import AuthContext from '../../store/auth-context';
+import axios from '../../api/AxiosUrl';
 
 const Navbar = () => {
   const location = useLocation();
@@ -34,8 +34,8 @@ const Navbar = () => {
 
   return (
     <nav className='px-6 py-4 flex justify-between items-center text-gray-900'>
-      <div>
-        <Link to='/' className='text-4xl ml-2 font-semibold'>
+      <div className='text-4xl ml-2 font-semibold'>
+        <Link to='/' >
           Inventory Management
         </Link>
       </div>
@@ -76,7 +76,7 @@ const Navbar = () => {
             </li>
           )}
 
-          <li>
+          {isLoggedIn && <li>
             <Link
               to='/order-list'
               className={`hover:underline ${
@@ -85,8 +85,8 @@ const Navbar = () => {
             >
               Order List
             </Link>
-          </li>
-          <li>
+          </li>}
+          {isLoggedIn && <li>
             <Link
               to='/placed-order-list'
               className={`hover:underline ${
@@ -95,20 +95,30 @@ const Navbar = () => {
             >
               Placed order
             </Link>
-          </li>
+          </li>}
+          {isLoggedIn && <li>
+            <Link
+              to='/inventory'
+              className={`hover:underline ${
+                location.pathname === '/inventory' ? 'navbar-title' : ''
+              }`}
+            >
+              Inventory
+            </Link>
+          </li>}
         </div>
 
         <div className='ml-auto flex space-x-4'>
-          <li className='my-auto'>
+          {isLoggedIn && <li className='my-auto'>
             <Link to='/cart'>
-              <img src={cart} alt='Cart' className='w-6' />
+              <img src={cartImg} alt='Cart' className='w-6' />
             </Link>
-          </li>
-          <li className='my-auto'>
+          </li>}
+          {isLoggedIn && <li className='my-auto'>
             <Link to='/notification'>
-              <img src={notification} alt='Cart' className=' w-6' />
+              <img src={notificationImg} alt='Cart' className=' w-6' />
             </Link>
-          </li>
+          </li>}
 
           {/* login */}
           {!isLoggedIn && (
