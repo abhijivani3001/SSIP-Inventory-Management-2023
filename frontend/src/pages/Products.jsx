@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Product from '../components/Products/Product';
-
 import axios from '../api/AxiosUrl';
 
 const Products = () => {

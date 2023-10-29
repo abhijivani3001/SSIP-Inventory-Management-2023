@@ -1,5 +1,6 @@
 import React from 'react';
-import Card from '../UI/Card';
+import Card from '../UI/ProductCard';
+import { useCart } from '../../store/CartProvider';
 
 const Product = (props) => {
   return (

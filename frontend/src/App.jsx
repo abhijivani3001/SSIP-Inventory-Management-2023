@@ -11,6 +11,7 @@ import Layout from './components/Layout/Layout';
 import PlacedOrderList from './pages/PlacedOrderList';
 import OrderList from './pages/OrderList';
 import CartItems from './pages/CartItems';
+import UserProfile from './pages/UserProfile';
 import AuthContext from './store/auth-context';
 
 function App() {
@@ -23,6 +24,9 @@ function App() {
         <Route path='/home' element={<Home />} />
         <Route path='/about' element={<About />} />
         {!authCtx.isLoggedIn && <Route path='/login' element={<Login />} />}
+        {authCtx.isLoggedIn && (
+          <Route path='/user' element={<UserProfile />} />
+        )}
 
         {authCtx.isLoggedIn && (
           <Route path='/products' element={<Products />} />
