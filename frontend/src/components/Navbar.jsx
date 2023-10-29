@@ -115,7 +115,7 @@ const Navbar = () => {
             <li>
               <Link
                 to='/login'
-                className={`hover:underline text-lg my-auto ${
+                className={`hover:underline text-xl my-auto ${
                   location.pathname === '/login' ? 'navbar-title' : ''
                 }`}
               >
@@ -140,11 +140,16 @@ const Navbar = () => {
           {/* logout */}
           {isLoggedIn && (
             <li>
-              <Link to='/' className='hover:underline text-xl my-auto '>
-                <button onClick={logoutHandler}>Logout</button>
+              <Link
+                to='/'
+                onClick={logoutHandler}
+                className='hover:underline text-xl my-auto'
+              >
+                Logout
               </Link>
             </li>
           )}
+          
         </div>
       </ul>
     </nav>
