@@ -4,7 +4,6 @@ import Button from '../components/UI/Button';
 import { useCart } from '../store/CartProvider';
 
 const CartItems = () => {
-  const [value, setValue] = useState(12);
   const { cart, dispatch } = useCart();
 
   const handleAddToCart = (item) => {
@@ -22,18 +21,13 @@ const CartItems = () => {
       </div>
 
       <div className='my-6'>
-        {/* <CartItem value={value} />
-        <CartItem value={value} />
-        <CartItem value={value} />
-        <CartItem value={value} />
-        <CartItem value={value} /> */}
-        {/* {cartItems} */}
         {cart.items.map((item) => (
           <CartItem
             key={item.id}
             name={item.name}
             onAddToCart={handleAddToCart}
             onRemoveFromCart={handleRemoveFromCart}
+            amount={item.amount}
           />
         ))}
       </div>

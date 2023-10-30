@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import Button from '../UI/Button';
 
 const CartItem = (props) => {
-  const [freq, setFreq] = useState(props.amount);
-  // const incrementHandler = () => {
-  //   setFreq((prev) => prev + 1);
-  // };
-  // const decrementHandler = () => {
-  //   if (freq > 1) setFreq((prev) => prev - 1);
-  // };
+  const [amount, setAmount] = useState(props.amount);
+
+  const incrementHandler = () => {
+    setAmount((prev) => prev + 1);
+  };
+  const decrementHandler = () => {
+    setAmount((prev) => prev - 1);
+  };
 
   return (
     <>
@@ -25,9 +26,11 @@ const CartItem = (props) => {
         </div>
 
         <div className='flex my-auto gap-2 mr-8'>
-          <Button onClick={props.onRemoveFromCart}>-</Button>
-          <div className='my-auto'>{freq}</div>
-          <Button onClick={props.onAddToCart}>+</Button>
+          <Button onClick={props.onRemoveFromCart}>Delete</Button>
+          <Button onClick={decrementHandler}>-</Button>
+          <div className='my-auto'>{amount}</div>
+          <Button onClick={incrementHandler}>+</Button>
+          {/* <Button onClick={props.onAddToCart}>+</Button> */}
         </div>
       </div>
     </>

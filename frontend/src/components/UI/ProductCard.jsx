@@ -1,6 +1,5 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Button from './Button';
-import CartContext from '../../store/cart-context';
 
 const ProductCard = (props) => {
   const [freqOfItem, setFreqOfItem] = useState(1);
@@ -39,7 +38,10 @@ const ProductCard = (props) => {
               // readOnly //
               // defaultValue={1}
               value={freqOfItem}
-              onChange={(e) => setFreqOfItem(e.target.value)}
+              onChange={(e) => {
+                setFreqOfItem(e.target.value);
+                props.amountChangeHandler(e.target.value);
+              }}
             />
             {/* <Button onClick={incrementHandler}>+</Button> */}
           </div>
