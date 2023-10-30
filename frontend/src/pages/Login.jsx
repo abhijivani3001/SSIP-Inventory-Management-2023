@@ -1,53 +1,55 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthContext from '../store/auth-context';
 import axios from '../api/AxiosUrl';
-// import axios from 'axios';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
 
 const Login = (props) => {
   const navigate = useNavigate();
-
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
   const authCtx = useContext(AuthContext);
 
-  // const users = [{ username: 'abhi', password: '123' }];
+  // const notify = () => {
+  //   toast.success('Login successful', {
+  //     position: 'top-right',
+  //     autoClose: 6000,
+  //     style: {
+  //       marginTop: '70px',
+  //     },
+  //   });
+  // }
 
-  const submitHandler = (event) => {
+  const submitHandler = async (event) => {
     event.preventDefault();
 
-    console.log(username, password);
-    // if(username===users[0].username && password===users[0].password){
-    //   authCtx.login('token1');
-    //   navigate('/');
-    // }
-    // else{
-    //   alert('user not exist')
-    // }
+    try {
+      const res = await axios.post('/api/user/login', {
+        email: username,
+        password: password,
+      });
+      const data = res.data;
 
-    (async function () {
-      try {
-        const res = await axios.post('/api/user/login', {
-          email: username,
-          password: password,
+      if (data.success === true) {
+        alert("Login Successfully");
+        authCtx.login(data.token);
+
+        toast.success('Login successful', {
+          position: 'top-right',
+          autoClose: 6000,
+          style: {
+            marginTop: '70px',
+          },
         });
-        const data = res.data;
-        // console.log(data);
-
-        if (data.success === true) {
-          alert('Login Successfully');
-          // localStorage.setItem('token', data.token);
-          authCtx.login(data.token);
-
-          navigate('/');
-        } else {
-          alert('Login failed');
-        }
-      } catch (err) {
-        alert('Error, please try again');
+        // notify();
+        navigate('/');
+      } else {
+        alert('Login failed');
       }
-    })();
+    } catch (err) {
+      alert('Error, please try again');
+    }
 
     setUsername('');
     setPassword('');
@@ -63,7 +65,7 @@ const Login = (props) => {
           <div className='mb-4'>
             <label className='block text-gray-800'>Username</label>
             <input
-              type='string'
+              type='text'
               id='username'
               className='w-full px-3 py-2 border text-black rounded-lg focus:outline-none focus:border-blue-500'
               placeholder='Enter your username'
@@ -95,6 +97,7 @@ const Login = (props) => {
               Login
             </button>
           </div>
+
           <div className='text-center mt-4'>
             <Link
               to='/'
@@ -105,6 +108,8 @@ const Login = (props) => {
           </div>
         </form>
       </div>
+
+      <ToastContainer />
     </div>
   );
 };

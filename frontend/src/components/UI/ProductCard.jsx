@@ -18,7 +18,10 @@ const ProductCard = (props) => {
 
     toast.success('Item added to cart successfully', {
       position: 'top-right',
-      autoClose: 3000,
+      autoClose: 1500,
+      style: {
+        marginTop: '70px', 
+      },
     });
   };
 
@@ -56,7 +59,6 @@ const ProductCard = (props) => {
           </div>
         </div>
       </div>
-      {/* Add the ToastContainer from react-toastify */}
       <ToastContainer />
     </div>
   );

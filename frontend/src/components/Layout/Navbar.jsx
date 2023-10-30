@@ -43,18 +43,17 @@ const Navbar = () => {
 
   return (
     <nav className='sticky inset-x-0 top-0 z-50'>
-      <div className='px-6 py-3 flex justify-between items-center text-gray-900 bg-white'>
+      <div className='px-6 py-3 flex justify-between items-center text-gray-900 bg-gray-100'>
         <div className='text-4xl ml-2 font-semibold'>
           <Link to='/'>Inventory Management</Link>
         </div>
-        <ul className='flex space-x-16 mr-6 align-middle'>
+        <ul className='flex space-x-32 mr-6 align-middle'>
           <div className='flex space-x-6  justify-items-start text-lg'>
             <li>
               <Link
                 to='/'
-                className={`hover:underline ${
-                  location.pathname === '/' ? 'navbar-title' : ''
-                }`}
+                className={`hover:underline ${location.pathname === '/' ? 'navbar-title' : ''
+                  }`}
               >
                 Home
               </Link>
@@ -62,9 +61,8 @@ const Navbar = () => {
             <li>
               <Link
                 to='/about'
-                className={`hover:underline ${
-                  location.pathname === '/about' ? 'navbar-title' : ''
-                }`}
+                className={`hover:underline ${location.pathname === '/about' ? 'navbar-title' : ''
+                  }`}
               >
                 About
               </Link>
@@ -75,9 +73,8 @@ const Navbar = () => {
               <li>
                 <Link
                   to='/products'
-                  className={`hover:underline ${
-                    location.pathname === '/products' ? 'navbar-title' : ''
-                  }`}
+                  className={`hover:underline ${location.pathname === '/products' ? 'navbar-title' : ''
+                    }`}
                 >
                   Products
                 </Link>
@@ -88,9 +85,8 @@ const Navbar = () => {
               <li>
                 <Link
                   to='/order-list'
-                  className={`hover:underline ${
-                    location.pathname === '/order-list' ? 'navbar-title' : ''
-                  }`}
+                  className={`hover:underline ${location.pathname === '/order-list' ? 'navbar-title' : ''
+                    }`}
                 >
                   Order List
                 </Link>
@@ -100,11 +96,10 @@ const Navbar = () => {
               <li>
                 <Link
                   to='/placed-order-list'
-                  className={`hover:underline ${
-                    location.pathname === '/placed-order-list'
-                      ? 'navbar-title'
-                      : ''
-                  }`}
+                  className={`hover:underline ${location.pathname === '/placed-order-list'
+                    ? 'navbar-title'
+                    : ''
+                    }`}
                 >
                   Placed order
                 </Link>
@@ -114,9 +109,8 @@ const Navbar = () => {
               <li>
                 <Link
                   to='/inventory'
-                  className={`hover:underline ${
-                    location.pathname === '/inventory' ? 'navbar-title' : ''
-                  }`}
+                  className={`hover:underline ${location.pathname === '/inventory' ? 'navbar-title' : ''
+                    }`}
                 >
                   Inventory
                 </Link>
@@ -152,9 +146,8 @@ const Navbar = () => {
               <li>
                 <Link
                   to='/login'
-                  className={`hover:underline text-xl my-auto ${
-                    location.pathname === '/login' ? 'navbar-title' : ''
-                  }`}
+                  className={`hover:underline text-xl my-auto ${location.pathname === '/login' ? 'navbar-title' : ''
+                    }`}
                 >
                   Login
                 </Link>
@@ -165,9 +158,8 @@ const Navbar = () => {
               <li>
                 <Link
                   to='/user'
-                  className={`hover:underline text-xl my-auto ${
-                    location.pathname === '/user' ? 'navbar-title' : ''
-                  }`}
+                  className={`hover:underline text-xl my-auto ${location.pathname === '/user' ? 'navbar-title' : ''
+                    }`}
                 >
                   {username}
                 </Link>
