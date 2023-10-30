@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import CartItem from '../components/Cart/CartItem';
 import Button from '../components/UI/Button';
 import { useCart } from '../store/CartProvider';
-import axios from '../api/AxiosUrl';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; // Import the toast library
+import 'react-toastify/dist/ReactToastify.css';
+import axios from '../api/AxiosUrl';
 
 const CartItems = () => {
   const { cart, dispatch } = useCart();
@@ -13,11 +13,11 @@ const CartItems = () => {
   useEffect(() => {
     setIsCartEmpty(!cart.items.length);
   }, [cart]);
+  console.log(isCartEmpty, cart.items);
 
   const handleAddToCart = (item) => {
     dispatch({ type: 'ADD_ITEM', payload: item });
   };
-
   const handleRemoveFromCart = (item) => {
     dispatch({ type: 'REMOVE_ITEM', payload: item });
   };
@@ -39,6 +39,10 @@ const CartItems = () => {
     // console.log(cart);
 
     let orders = [];
+
+    // console.log(cart);
+
+
     cart.items.forEach((val) => {
       orders.push({
         itemId: val._id,
@@ -48,6 +52,7 @@ const CartItems = () => {
       });
     });
     postElement(orders);
+
 
     // Clear the cart
     dispatch({ type: 'CLEAR_CART' });
@@ -59,6 +64,7 @@ const CartItems = () => {
         <div className='text-3xl text-center '>Your cart is empty</div>
       )}
 
+      {/* list */}
       {!isCartEmpty && (
         <div>
           <div>
