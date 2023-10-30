@@ -2,9 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import CartItem from '../components/Cart/CartItem';
 import Button from '../components/UI/Button';
 import { useCart } from '../store/CartProvider';
+
 import axios from '../api/AxiosUrl';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; // Import the toast library
 
 const CartItems = () => {
   const { cart, dispatch } = useCart();
@@ -13,37 +12,38 @@ const CartItems = () => {
   useEffect(() => {
     setIsCartEmpty(!cart.items.length);
   }, [cart]);
-  // console.log(isCartEmpty,cart.items);
+  console.log(isCartEmpty,cart.items);
 
   const handleAddToCart = (item) => {
     dispatch({ type: 'ADD_ITEM', payload: item });
   };
-
   const handleRemoveFromCart = (item) => {
     dispatch({ type: 'REMOVE_ITEM', payload: item });
   };
 
   const postElement = async (orders) => {
     try {
-      const res = await axios.post('api/order', [{
-        itemId: val._id,
-        quantity: val.amount,
-        delivered: 0,
-        status: 'pending',
-      }]);
-      // console.log(res);
+      const res = await axios.post('api/order', orders);
+      console.log(res);
     } catch (error) {
       console.log(error.message);
     }
   };
 
-  const submitHandler = (event) => {
+  const submitHandler =  (event) => {
     event.preventDefault();
     // console.log(cart);
 
+    let orders=[];
     cart.items.forEach((val) => {
-      postElement(val);
+      orders.push({
+        itemId: val._id,
+        quantity: val.amount,
+        delivered: 0,
+        status: 'pending',
+      });
     });
+    postElement(orders);
   };
 
   return (
@@ -52,6 +52,7 @@ const CartItems = () => {
         <div className='text-3xl text-center '>Your cart is empty</div>
       )}
 
+      {/* list */}
       {!isCartEmpty && (
         <div>
           <div>
@@ -73,7 +74,6 @@ const CartItems = () => {
           </div>
         </div>
       )}
-      <ToastContainer />
     </div>
   );
 };
