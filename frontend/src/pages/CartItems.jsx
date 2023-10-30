@@ -22,18 +22,10 @@ const CartItems = () => {
     dispatch({ type: 'REMOVE_ITEM', payload: item });
   };
 
-  const postElement = async (val) => {
+  const postElement = async (orders) => {
     try {
-      const res = await axios.post('api/order', [
-        {
-          itemId: val._id,
-          quantity: val.amount,
-          delivered: 0,
-          status: 'pending',
-        },
-      ]);
+      const res = await axios.post('api/order', orders);
       console.log(res);
-      // console.log(res);
     } catch (error) {
       console.log(error.message);
     }
@@ -41,20 +33,24 @@ const CartItems = () => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    // console.log(cart);
-
     toast.success('Order placed successfully!', {
       autoClose: 3000,
     });
+    // console.log(cart);
 
-    if (cart.items.length > 0) {
-      cart.items.forEach((val) => {
-        postElement(val);
+    let orders = [];
+    cart.items.forEach((val) => {
+      orders.push({
+        itemId: val._id,
+        quantity: val.amount,
+        delivered: 0,
+        status: 'pending',
       });
+    });
+    postElement(orders);
 
-      // Clear the cart
-      dispatch({ type: 'CLEAR_CART' });
-    }
+    // Clear the cart
+    dispatch({ type: 'CLEAR_CART' });
   };
 
   return (
