@@ -12,7 +12,7 @@ const CartItems = () => {
   useEffect(() => {
     setIsCartEmpty(!cart.items.length);
   }, [cart]);
-  // console.log(isCartEmpty,cart.items);
+  console.log(isCartEmpty,cart.items);
 
   const handleAddToCart = (item) => {
     dispatch({ type: 'ADD_ITEM', payload: item });
@@ -21,15 +21,10 @@ const CartItems = () => {
     dispatch({ type: 'REMOVE_ITEM', payload: item });
   };
 
-  const postElement = async (val) => {
+  const postElement = async (orders) => {
     try {
-      const res = await axios.post('api/order', [{
-        itemId: val._id,
-        quantity: val.amount,
-        delivered: 0,
-        status: 'pending',
-      }]);
-      // console.log(res);
+      const res = await axios.post('api/order', orders);
+      console.log(res);
     } catch (error) {
       console.log(error.message);
     }
@@ -39,9 +34,17 @@ const CartItems = () => {
     event.preventDefault();
     // console.log(cart);
 
+    let orders=[];
     cart.items.forEach((val) => {
-      postElement(val);
+      orders.push({
+        itemId: val._id,
+        quantity: val.amount,
+        delivered: 0,
+        status: 'pending',
+      });
     });
+    postElement(orders);
+    
   };
 
   return (
