@@ -13,7 +13,7 @@ const Navbar = () => {
   const { cart, dispatch } = useCart();
 
   const [amount, setAmount] = useState(cart.items.length || 0);
-  console.log(amount);
+  // console.log(amount);
 
   useEffect(() => {
     setAmount(cart.items.length);
@@ -34,7 +34,7 @@ const Navbar = () => {
       .get('api/user')
       .then((response) => {
         setUsername(response.data.user.name);
-        console.log(response);
+        // console.log(response);
       })
       .catch((error) => {
         console.log(error);

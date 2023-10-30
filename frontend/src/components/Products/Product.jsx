@@ -12,7 +12,7 @@ const Product = (props) => {
 
   const handleAddToCart = (item) => {
     item = { ...item, amount: amount };
-    console.log(item);
+    // console.log(item);
     dispatch({ type: 'ADD_ITEM', payload: item });
   };
 

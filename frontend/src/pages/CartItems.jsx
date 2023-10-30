@@ -33,6 +33,7 @@ const CartItems = () => {
         },
       ]);
       console.log(res);
+      // console.log(res);
     } catch (error) {
       console.log(error.message);
     }
@@ -40,7 +41,7 @@ const CartItems = () => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    console.log(cart);
+    // console.log(cart);
 
     toast.success('Order placed successfully!', {
       autoClose: 3000,
@@ -70,7 +71,7 @@ const CartItems = () => {
           <div className='my-6'>
             {cart.items.map((item) => (
               <CartItem
-                key={item.id}
+                key={item._id}
                 name={item.name}
                 onAddToCart={handleAddToCart}
                 onRemoveFromCart={handleRemoveFromCart}
