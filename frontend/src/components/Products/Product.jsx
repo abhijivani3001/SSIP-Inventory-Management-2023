@@ -25,7 +25,7 @@ const Product = (props) => {
           description={val.description}
           company={val.company}
           category={val.category}
-          onAddToCart={handleAddToCart.bind(null, val)} 
+          onAddToCart={handleAddToCart.bind(null, val)}
           amountChangeHandler={amountChangeHandler}
         />
       ))}

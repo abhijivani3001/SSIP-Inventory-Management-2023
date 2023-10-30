@@ -1,9 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PlacedOrder from '../components/PlacedOrder/PlacedOrder';
+
+import axios from '../api/AxiosUrl';
 
 const PlacedOrderList = () => {
   const [value, setValue] = useState(12);
   const [status, setStatus] = useState('Pending');
+
+  const [placedOrders, setPlacedOrders] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const result = await axios.get('api/order');
+        const data = await result.data.orders;
+        console.log(data);
+
+        setPlacedOrders(data);
+      } catch (error) {
+        console.log(error.message);
+      }
+    })();
+  }, []);
 
   return (
     <div className='mx-8 mt-4'>
@@ -18,11 +36,12 @@ const PlacedOrderList = () => {
       </div>
 
       <div className='my-6'>
+        {/* <PlacedOrder value={value} status={status} />
         <PlacedOrder value={value} status={status} />
         <PlacedOrder value={value} status={status} />
         <PlacedOrder value={value} status={status} />
-        <PlacedOrder value={value} status={status} />
-        <PlacedOrder value={value} status={status} />
+        <PlacedOrder value={value} status={status} /> */}
+        <PlacedOrder data={placedOrders} />
       </div>
     </div>
   );
