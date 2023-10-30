@@ -1,10 +1,16 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import CartItem from '../components/Cart/CartItem';
 import Button from '../components/UI/Button';
 import { useCart } from '../store/CartProvider';
 
 const CartItems = () => {
   const { cart, dispatch } = useCart();
+  const [isCartEmpty, setIsCartEmpty] = useState(true);
+
+  useEffect(() => {
+    setIsCartEmpty(!cart.items.length);
+  }, [cart]);
+  // console.log(isCartEmpty,cart.items);
 
   const handleAddToCart = (item) => {
     dispatch({ type: 'ADD_ITEM', payload: item });
@@ -16,24 +22,32 @@ const CartItems = () => {
 
   return (
     <div className='mx-8 mt-4'>
-      <div>
-        <h1 className='text-6xl font-light'>Cart Items</h1>
-      </div>
+      {isCartEmpty && (
+        <div className='text-3xl text-center '>Your cart is empty</div>
+      )}
 
-      <div className='my-6'>
-        {cart.items.map((item) => (
-          <CartItem
-            key={item.id}
-            name={item.name}
-            onAddToCart={handleAddToCart}
-            onRemoveFromCart={handleRemoveFromCart}
-            amount={item.amount}
-          />
-        ))}
-      </div>
-      <div className='text-center my-4'>
-        <Button>Submit</Button>
-      </div>
+      {/* list */}
+      {!isCartEmpty && (
+        <div>
+          <div>
+            <h1 className='text-6xl font-light'>Cart Items</h1>
+          </div>
+          <div className='my-6'>
+            {cart.items.map((item) => (
+              <CartItem
+                key={item.id}
+                name={item.name}
+                onAddToCart={handleAddToCart}
+                onRemoveFromCart={handleRemoveFromCart}
+                amount={item.amount}
+              />
+            ))}
+          </div>
+          <div className='text-center my-4'>
+            <Button>Submit</Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

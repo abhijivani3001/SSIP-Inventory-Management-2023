@@ -11,6 +11,7 @@ import { useCart } from '../../store/CartProvider';
 const Navbar = () => {
   const location = useLocation();
   const { cart, dispatch } = useCart();
+  
   const [amount, setAmount] = useState(cart.items.length || 0);
   console.log(amount);
 
