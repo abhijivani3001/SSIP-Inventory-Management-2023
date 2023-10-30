@@ -14,13 +14,11 @@ const ProductCard = (props) => {
   };
 
   const handleAddToCart = () => {
-    // Call the parent component's function to add the item to the cart
     props.onAddToCart();
 
-    // Show a toast notification
     toast.success('Item added to cart successfully', {
-      position: 'top-right', // You can customize the position
-      autoClose: 3000, // Close the notification after 3 seconds (adjust as needed)
+      position: 'top-right',
+      autoClose: 3000,
     });
   };
 
