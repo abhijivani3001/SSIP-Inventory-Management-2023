@@ -29,7 +29,7 @@ const CartItems = () => {
         delivered: 0,
         status: 'pending',
       }]);
-      console.log(res);
+      // console.log(res);
     } catch (error) {
       console.log(error.message);
     }
@@ -37,7 +37,7 @@ const CartItems = () => {
 
   const submitHandler =  (event) => {
     event.preventDefault();
-    console.log(cart);
+    // console.log(cart);
 
     cart.items.forEach((val) => {
       postElement(val);
@@ -59,7 +59,7 @@ const CartItems = () => {
           <div className='my-6'>
             {cart.items.map((item) => (
               <CartItem
-                key={item.id}
+                key={item._id}
                 name={item.name}
                 onAddToCart={handleAddToCart}
                 onRemoveFromCart={handleRemoveFromCart}

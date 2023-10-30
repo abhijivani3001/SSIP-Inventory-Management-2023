@@ -1,11 +1,9 @@
 import React from 'react';
-import Button from '../UI/Button';
 
 const PlacedOrder = (props) => {
   return (
     <>
-    {props.data.map((val)=>(
-      <div className='border-2 flex justify-between border-gray-300 bg-white rounded-lg my-4'>
+      <div className='border-2 flex justify-between border-gray-300 bg-white rounded-lg mb-2'>
         <div className='flex gap-4'>
           <img
             className='p-4 h-20'
@@ -13,16 +11,16 @@ const PlacedOrder = (props) => {
             alt='productimage'
           />
           <h5 className='text-xl my-auto font-semibold tracking-tight text-gray-900'>
-            {val.itemId}
+            {props.name}
           </h5>
         </div>
 
-        <div className='flex my-auto gap-2 mr-8'>
-          <div className='mr-12'>{val.quantity}</div>
-          <div className='ml-2'>{val.status}</div>
+        <div className='flex my-auto gap-14 mr-8'>
+          <div className='mr-10'>{props.quantity}</div>
+          <div className='mr-2'>{props.delivered}</div>
+          <div>{props.status}</div>
         </div>
       </div>
-      ))}
     </>
   );
 };
