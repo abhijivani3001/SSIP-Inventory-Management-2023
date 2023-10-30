@@ -3,14 +3,6 @@ import Button from '../UI/Button';
 
 const CartItem = (props) => {
   const [amount, setAmount] = useState(props.amount);
-
-  const incrementHandler = () => {
-    setAmount((prev) => prev + 1);
-  };
-  const decrementHandler = () => {
-    setAmount((prev) => prev - 1);
-  };
-
   return (
     <>
       <div className='border-2 flex justify-between border-gray-300 bg-white rounded-lg my-2'>
@@ -27,9 +19,9 @@ const CartItem = (props) => {
 
         <div className='flex my-auto gap-2 mr-8'>
           <Button onClick={props.onRemoveFromCart}>Delete</Button>
-          <Button onClick={decrementHandler}>-</Button>
+          <Button>-</Button>
           <div className='my-auto'>{amount}</div>
-          <Button onClick={incrementHandler}>+</Button>
+          <Button>+</Button>
           {/* <Button onClick={props.onAddToCart}>+</Button> */}
         </div>
       </div>

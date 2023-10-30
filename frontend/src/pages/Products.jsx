@@ -24,7 +24,7 @@ const Products = () => {
         console.log(error.message);
       }
     })();
-  }, []);
+  }, [products]);
 
   return (
     <div className='mx-8 mt-4'>

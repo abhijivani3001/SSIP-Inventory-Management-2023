@@ -3,23 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import AuthContext from '../store/auth-context';
 import axios from '../api/AxiosUrl';
 import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer, toast } from 'react-toastify';
 
 const Login = (props) => {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const authCtx = useContext(AuthContext);
-
-  // const notify = () => {
-  //   toast.success('Login successful', {
-  //     position: 'top-right',
-  //     autoClose: 6000,
-  //     style: {
-  //       marginTop: '70px',
-  //     },
-  //   });
-  // }
 
   const submitHandler = async (event) => {
     event.preventDefault();
@@ -32,17 +21,8 @@ const Login = (props) => {
       const data = res.data;
 
       if (data.success === true) {
-        alert("Login Successfully");
+        alert('Login Successfully');
         authCtx.login(data.token);
-
-        toast.success('Login successful', {
-          position: 'top-right',
-          autoClose: 6000,
-          style: {
-            marginTop: '70px',
-          },
-        });
-        // notify();
         navigate('/');
       } else {
         alert('Login failed');
@@ -108,8 +88,6 @@ const Login = (props) => {
           </div>
         </form>
       </div>
-
-      <ToastContainer />
     </div>
   );
 };

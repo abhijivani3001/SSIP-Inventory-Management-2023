@@ -3,6 +3,8 @@ import CartItem from '../components/Cart/CartItem';
 import Button from '../components/UI/Button';
 import { useCart } from '../store/CartProvider';
 
+import axios from '../api/AxiosUrl';
+
 const CartItems = () => {
   const { cart, dispatch } = useCart();
   const [isCartEmpty, setIsCartEmpty] = useState(true);
@@ -15,9 +17,31 @@ const CartItems = () => {
   const handleAddToCart = (item) => {
     dispatch({ type: 'ADD_ITEM', payload: item });
   };
-
   const handleRemoveFromCart = (item) => {
     dispatch({ type: 'REMOVE_ITEM', payload: item });
+  };
+
+  const postElement = async (val) => {
+    try {
+      const res = await axios.post('api/order', [{
+        itemId: val._id,
+        quantity: val.amount,
+        delivered: 0,
+        status: 'pending',
+      }]);
+      console.log(res);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const submitHandler =  (event) => {
+    event.preventDefault();
+    console.log(cart);
+
+    cart.items.forEach((val) => {
+      postElement(val);
+    });
   };
 
   return (
@@ -44,7 +68,7 @@ const CartItems = () => {
             ))}
           </div>
           <div className='text-center my-4'>
-            <Button>Submit</Button>
+            <Button onClick={submitHandler}>Submit</Button>
           </div>
         </div>
       )}
