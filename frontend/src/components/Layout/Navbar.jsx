@@ -9,11 +9,21 @@ import axios from '../../api/AxiosUrl';
 import { useCart } from '../../store/CartProvider';
 
 const Navbar = () => {
+  const USER = {
+    EMPLOYEE: 'employee',
+    SUB_BRANCH_STORE_MANAGER: 'sub-branch-store-manager',
+    SUB_BRANCH_HEAD: 'sub-branch-head',
+    BRANCH_STORE_MANAGER: 'branch-store-manager',
+    BRANCH_HEAD: 'branch-head',
+    DEPARTMENT_STORE_MANAGER: 'department-store-manager',
+    DEPARTMENT_HEAD: 'department-head',
+    ADMIN: 'admin',
+  };
+
   const location = useLocation();
   const { cart, dispatch } = useCart();
 
   const [amount, setAmount] = useState(cart.items.length || 0);
-  // console.log(amount);
 
   useEffect(() => {
     setAmount(cart.items.length);
@@ -22,18 +32,20 @@ const Navbar = () => {
   const authCtx = useContext(AuthContext);
   const isLoggedIn = authCtx.isLoggedIn;
   // const token = authCtx.token;
-
-  const [username, setUsername] = useState('');
-
+  
   const logoutHandler = () => {
     authCtx.logout();
   };
+  
+  const [username, setUsername] = useState('');
+  const [userRole, setUserRole] = useState('');
 
   useEffect(() => {
     axios
       .get('api/user')
       .then((response) => {
         setUsername(response.data.user.name);
+        setUserRole(response.data.user.role);
         // console.log(response);
       })
       .catch((error) => {
@@ -81,7 +93,7 @@ const Navbar = () => {
               </li>
             )}
 
-            {isLoggedIn && (
+            {isLoggedIn && userRole!==USER.EMPLOYEE && (
               <li>
                 <Link
                   to='/order-list'
@@ -105,7 +117,7 @@ const Navbar = () => {
                 </Link>
               </li>
             )}
-            {isLoggedIn && (
+            {isLoggedIn && (userRole===USER.SUB_BRANCH_STORE_MANAGER || userRole===USER.BRANCH_STORE_MANAGER || userRole===USER.DEPARTMENT_STORE_MANAGER) && (
               <li>
                 <Link
                   to='/inventory'

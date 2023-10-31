@@ -40,9 +40,6 @@ const CartItems = () => {
 
     let orders = [];
 
-    // console.log(cart);
-
-
     cart.items.forEach((val) => {
       orders.push({
         itemId: val._id,
@@ -52,7 +49,6 @@ const CartItems = () => {
       });
     });
     postElement(orders);
-
 
     // Clear the cart
     dispatch({ type: 'CLEAR_CART' });

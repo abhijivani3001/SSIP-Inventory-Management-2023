@@ -4,10 +4,9 @@ import PlacedOrder from '../components/PlacedOrder/PlacedOrder';
 import axios from '../api/AxiosUrl';
 
 const PlacedOrderList = () => {
-  const [value, setValue] = useState(12);
-  const [status, setStatus] = useState('Pending');
-
   const [placedOrders, setPlacedOrders] = useState([]);
+  const [isLoading, setIsLoading]=useState(true);
+  const [isOrdersPlaced, setIsOrdersPlaced] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -17,15 +16,22 @@ const PlacedOrderList = () => {
         // console.log(data);
 
         setPlacedOrders(data);
+        if (data.length) setIsOrdersPlaced(true);
+        else setIsOrdersPlaced(false);
       } catch (error) {
         console.log(error.message);
       }
+      setIsLoading(false);
     })();
   }, []);
   // console.log(placedOrders);
 
   return (
     <div className='mx-8 mt-4'>
+      {isLoading && <div className='text-xl my-auto text-center '>Loading...</div>}
+      {!isLoading && !isOrdersPlaced && <div className='text-3xl text-center '>Placed orders is empty</div> }
+      
+      {!isLoading && isOrdersPlaced && <>
       <div className='flex justify-between'>
         <h1 className='text-6xl font-light'>Placed Order</h1>
         <h2 className='text-2xl font-light my- gap-2 mr-8'>
@@ -48,6 +54,7 @@ const PlacedOrderList = () => {
           />
         ))}
       </div>
+      </>}
     </div>
   );
 };

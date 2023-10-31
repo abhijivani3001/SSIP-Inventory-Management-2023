@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Button from './Button';
 
 const InventoryCard = (props) => {
-  const [availableItems, setAvailableItems] = useState(12);
+  const [availableItems, setAvailableItems] = useState(props.quantity);
   const [isEditing, setIsEditing] = useState(false);
 
   const handleUpdateClick = () => {
@@ -23,17 +23,17 @@ const InventoryCard = (props) => {
         />
         <div className='px-5 pb-5 mt-4'>
           <h5 className='text-xl font-semibold tracking-tight text-gray-900'>
-            title
+            {props.name}
           </h5>
-
-          {/* description */}
-          <p className='text-gray-500 text-sm my-2'>description</p>
+          <p className='text-gray-500 text-sm my-2'>{props.description}</p>
 
           <div className='flex flex-col gap-1 items-center justify-between my-2 mb-0'>
             <div className='flex justify-evenly gap-2'>
-              <label className='text-lg font-semibold'>Amount</label>
+              <label className='text-lg font-semibold' htmlFor={props.id}>Quantity</label>
               {isEditing ? (
                 <input
+                  id={props.id}
+                  name='quantity'
                   type='number'
                   className='border-2 border-gray-700 w-12 text-center rounded-lg'
                   min={1}
@@ -41,7 +41,7 @@ const InventoryCard = (props) => {
                   onChange={(e) => setAvailableItems(e.target.value)}
                 />
               ) : (
-                <span>{availableItems}</span>
+                <span>{props.quantity}</span>
               )}
             </div>
 

@@ -20,7 +20,7 @@ const ProductCard = (props) => {
       position: 'top-right',
       autoClose: 1500,
       style: {
-        marginTop: '70px', 
+        marginTop: '70px',
       },
     });
   };
@@ -43,6 +43,8 @@ const ProductCard = (props) => {
           <div className='flex justify-evenly gap-2'>
             <label className='text-lg font-semibold'>Amount</label>
             <input
+              id={props.id}
+              name='amount'
               type='number'
               className='border-2 border-gray-700 w-12 text-center rounded-lg'
               min={1}
