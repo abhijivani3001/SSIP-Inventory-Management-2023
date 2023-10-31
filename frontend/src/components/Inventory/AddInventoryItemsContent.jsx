@@ -58,6 +58,7 @@ const AddInventoryItemsContent = (props) => {
                 company={val.company}
                 category={val.category}
                 itemId={val._id}
+                getInventoryItems={props.getInventoryItems}
               />
             ))}
           </div>

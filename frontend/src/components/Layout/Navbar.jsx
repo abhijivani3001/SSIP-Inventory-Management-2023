@@ -100,7 +100,7 @@ const Navbar = () => {
                   className={`hover:underline ${location.pathname === '/order-list' ? 'navbar-title' : ''
                     }`}
                 >
-                  Order List
+                  Requested orders
                 </Link>
               </li>
             )}
@@ -113,7 +113,7 @@ const Navbar = () => {
                     : ''
                     }`}
                 >
-                  Placed order
+                  Placed orders
                 </Link>
               </li>
             )}

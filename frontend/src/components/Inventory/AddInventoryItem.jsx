@@ -15,7 +15,10 @@ const AddInventoryItem = (props) => {
       {createPortal(<Backdrop onClick={props.onClose} />, portalElement)}
       {createPortal(
         <div className='modal'>
-          <AddInventoryItemsContent onClose={props.onClose} />
+          <AddInventoryItemsContent
+            onClose={props.onClose}
+            getInventoryItems={props.getInventoryItems}
+          />
         </div>,
         portalElement
       )}

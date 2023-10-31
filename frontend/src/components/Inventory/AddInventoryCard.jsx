@@ -26,6 +26,8 @@ const AddInventoryCard = (props) => {
           marginTop: '70px',
         },
       });
+
+      props.getInventoryItems();
     } catch (error) {
       console.log(error.message);
     }

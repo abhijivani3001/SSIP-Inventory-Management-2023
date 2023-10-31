@@ -6,6 +6,28 @@ import Button from '../components/UI/Button';
 import AddInventoryItem from '../components/Inventory/AddInventoryItem';
 
 const Inventory = (props) => {
+  const getInventoryItems = async () => {
+    try {
+      const result = await axios.get('api/inventory');
+      const data = await result.data.inventory;
+      // console.log(data);
+
+      const finalData = data.map((item) => {
+        if (item.description.length > 40) {
+          item.description = item.description.slice(0, 30) + '...';
+        }
+        return item;
+      });
+      setInventoryProducts(finalData);
+
+      if (data.length) setIsInventoryProductsAvailable(true);
+      else setIsInventoryProductsAvailable(false);
+    } catch (error) {
+      console.log(error.message);
+    }
+    setIsLoading(false);
+  };
+
   const [inventoryProducts, setInventoryProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isInventoryProductsAvailable, setIsInventoryProductsAvailable] =
@@ -21,27 +43,7 @@ const Inventory = (props) => {
   };
 
   useEffect(() => {
-    (async () => {
-      try {
-        const result = await axios.get('api/inventory');
-        const data = await result.data.inventory;
-        // console.log(data);
-
-        const finalData = data.map((item) => {
-          if (item.description.length > 40) {
-            item.description = item.description.slice(0, 30) + '...';
-          }
-          return item;
-        });
-        setInventoryProducts(finalData);
-
-        if (data.length) setIsInventoryProductsAvailable(true);
-        else setIsInventoryProductsAvailable(false);
-      } catch (error) {
-        console.log(error.message);
-      }
-      setIsLoading(false);
-    })();
+    getInventoryItems();
   }, []);
 
   return (
@@ -79,7 +81,10 @@ const Inventory = (props) => {
           </div>
 
           {isAddProductsShown && (
-            <AddInventoryItem onClose={hideAddProductsHandler} />
+            <AddInventoryItem
+              onClose={hideAddProductsHandler}
+              getInventoryItems={getInventoryItems}
+            />
           )}
         </>
       )}
