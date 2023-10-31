@@ -1,29 +1,40 @@
 import React, { Component } from 'react';
 import Button from '../components/UI/Button';
+import axios from 'axios';
 
 class OrderList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: [
-        { id: 1, name: 'Item 1', approved: false, frequency: 12 },
-        { id: 2, name: 'Item 2', approved: false, frequency: 7 },
-        { id: 3, name: 'Item 3', approved: false, frequency: 20 },
-      ],
+      items: [],
       selectAll: false,
     };
   }
 
-  handleCheckboxChange = (itemId) => {
-    const updatedItems = this.state.items.map((item) => {
-      if (item.id === itemId) {
-        return { ...item, approved: !item.approved };
-      }
-      return item;
-    });
+  componentDidMount() {
+    // Fetch all orders with a status of "pending" from the API
+    axios.get('/api/user/users')
+      .then((response) => {
+        console.log(response);
+        // Filter the orders to get only the ones with status "pending"
+        const pendingOrders = response.data.orders.filter(order => order.status === 'pending');
+        this.setState({ items: pendingOrders });
+      })
+      .catch((error) => {
+        console.error('Error fetching orders:', error);
+      });
+  }
 
-    this.setState({ items: updatedItems });
-  };
+  // handleCheckboxChange = (itemId) {
+  //   const updatedItems = this.state.items.map((item) => {
+  //     if (item.itemId === itemId) {
+  //       return { ...item, approved: !item.approved };
+  //     }
+  //     return item;
+  //   });
+
+  //   this.setState({ items: updatedItems });
+  // };
 
   handleSelectAllChange = () => {
     const { items, selectAll } = this.state;
@@ -57,19 +68,19 @@ class OrderList extends Component {
           <ul>
             <div className='flex flex-col'>
               {items.map((item) => (
-                <li key={item.id}>
+                <li key={item.itemId}>
                   <div className='border-2 m-2 p-2 flex justify-between rounded-xl bg-white'>
                     <label className='my-auto'>
                       <input
                         className='mx-2'
                         type='checkbox'
                         checked={item.approved}
-                        onChange={() => this.handleCheckboxChange(item.id)}
+                        onChange={() => this.handleCheckboxChange(item.itemId)}
                       />
                       {item.name}
                     </label>
                     <div className='flex justify-center align-middle mx-5 space-x-4'>
-                      <div className='my-auto'>{item.frequency}</div>
+                      <div className='my-auto'>{item.quantity}</div>
                       <Button>Allocate</Button>
                     </div>
                   </div>
