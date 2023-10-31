@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import CartItem from '../components/Cart/CartItem';
 import Button from '../components/UI/Button';
 import { useCart } from '../store/CartProvider';
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from '../api/AxiosUrl';
 
@@ -33,10 +32,6 @@ const CartItems = () => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    toast.success('Order placed successfully!', {
-      autoClose: 3000,
-    });
-    // console.log(cart);
 
     let orders = [];
 
@@ -82,7 +77,6 @@ const CartItems = () => {
           </div>
         </div>
       )}
-      <ToastContainer />
     </div>
   );
 };

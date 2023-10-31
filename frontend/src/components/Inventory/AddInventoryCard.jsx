@@ -2,12 +2,37 @@ import React, { useContext, useEffect, useState } from 'react';
 import Button from '../UI/Button';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from '../../api/AxiosUrl';
 
 const AddInventoryCard = (props) => {
   const [freqOfItem, setFreqOfItem] = useState(1);
 
+  const addToInventoryHandler = async (event) => {
+    event.preventDefault();
+    try {
+      console.log(props.itemId, freqOfItem);
+      const res = await axios.post('api/inventory', [
+        {
+          itemId: props.itemId,
+          quantity: freqOfItem,
+        },
+      ]);
+      // console.log(res);
+
+      toast.success('Item added to inventory successfully', {
+        position: 'top-right',
+        autoClose: 1500,
+        style: {
+          marginTop: '70px',
+        },
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
-    <div className='w-72 bg-white border border-gray-200 rounded-lg shadow-lg m-4'>
+    <div className='w-72 bg-white border border-gray-200 rounded-lg shadow-lg mx-2 my-4'>
       <img
         className='p-8 rounded-t-lg h-48 m-auto'
         src='https://flowbite.com/docs/images/products/apple-watch.png'
@@ -37,7 +62,7 @@ const AddInventoryCard = (props) => {
           </div>
 
           <div className='mt-2'>
-            <Button>Add to Inventory</Button>
+            <Button onClick={addToInventoryHandler}>Add to Inventory</Button>
           </div>
         </div>
       </div>

@@ -17,7 +17,7 @@ const Products = () => {
 
         const finalData = data.map((item) => {
           if (item.description.length > 40) {
-            item.description = item.description.slice(0, 25) + '...';
+            item.description = item.description.slice(0, 30) + '...';
           }
           return item;
         });

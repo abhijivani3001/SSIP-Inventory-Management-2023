@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import InventoryCard from '../components/Inventory/InventoryCard';
-import { createPortal } from 'react-dom';
 
 import axios from '../api/AxiosUrl';
 import Button from '../components/UI/Button';
@@ -20,20 +19,24 @@ const Inventory = (props) => {
   const hideAddProductsHandler = () => {
     setIsAddProductsShown(false);
   };
-  const addToInventoryHandler=()=>{
-
-  }
 
   useEffect(() => {
     (async () => {
       try {
         const result = await axios.get('api/inventory');
         const data = await result.data.inventory;
-        console.log(data);
+        // console.log(data);
+
+        const finalData = data.map((item) => {
+          if (item.description.length > 40) {
+            item.description = item.description.slice(0, 30) + '...';
+          }
+          return item;
+        });
+        setInventoryProducts(finalData);
 
         if (data.length) setIsInventoryProductsAvailable(true);
         else setIsInventoryProductsAvailable(false);
-        setInventoryProducts(data);
       } catch (error) {
         console.log(error.message);
       }
@@ -71,12 +74,12 @@ const Inventory = (props) => {
             ))}
           </div>
 
-          <div className=' text-center'>
+          <div className=' text-center mb-6'>
             <Button onClick={showAddProductsHandler}>Add Item</Button>
           </div>
 
           {isAddProductsShown && (
-            <AddInventoryItem onClose={hideAddProductsHandler} onAdd={addToInventoryHandler} />
+            <AddInventoryItem onClose={hideAddProductsHandler} />
           )}
         </>
       )}

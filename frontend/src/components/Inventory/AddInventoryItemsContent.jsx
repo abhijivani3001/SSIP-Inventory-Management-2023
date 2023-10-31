@@ -33,6 +33,8 @@ const AddInventoryItemsContent = (props) => {
     })();
   }, []);
 
+  // console.log('products', products);
+
   return (
     <div className='mx-8'>
       {isLoading && (
@@ -55,12 +57,12 @@ const AddInventoryItemsContent = (props) => {
                 description={val.description}
                 company={val.company}
                 category={val.category}
+                itemId={val._id}
               />
             ))}
           </div>
           <div className='flex gap-4 justify-center'>
             <Button onClick={props.onClose}>close</Button>
-            {/* <Button onClick={props.onAdd}>Add to Inventory</Button> */}
           </div>
         </>
       )}
