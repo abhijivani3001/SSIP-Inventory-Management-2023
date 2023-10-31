@@ -1,29 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Button from './Button';
+import Button from '../UI/Button';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const ProductCard = (props) => {
+const AddInventoryCard = (props) => {
   const [freqOfItem, setFreqOfItem] = useState(1);
-
-  const incrementHandler = () => {
-    setFreqOfItem((prev) => prev + 1);
-  };
-  const decrementHandler = () => {
-    if (freqOfItem > 1) setFreqOfItem((prev) => prev - 1);
-  };
-
-  const handleAddToCart = () => {
-    props.onAddToCart();
-
-    toast.success('Item added to cart successfully', {
-      position: 'top-right',
-      autoClose: 1500,
-      style: {
-        marginTop: '70px',
-      },
-    });
-  };
 
   return (
     <div className='w-72 bg-white border border-gray-200 rounded-lg shadow-lg m-4'>
@@ -51,19 +32,19 @@ const ProductCard = (props) => {
               value={freqOfItem}
               onChange={(e) => {
                 setFreqOfItem(e.target.value);
-                props.amountChangeHandler(e.target.value);
               }}
             />
           </div>
 
           <div className='mt-2'>
-            <Button onClick={handleAddToCart}>Add to cart</Button>
+            <Button>Add to Inventory</Button>
           </div>
         </div>
       </div>
+
       <ToastContainer />
     </div>
   );
 };
 
-export default ProductCard;
+export default AddInventoryCard;

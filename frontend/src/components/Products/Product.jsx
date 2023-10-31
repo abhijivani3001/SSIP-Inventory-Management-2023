@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ProductCard from '../UI/ProductCard';
+import ProductCard from './ProductCard';
 import { useCart } from '../../store/CartProvider';
 
 const Product = (props) => {

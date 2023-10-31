@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import Product from '../components/Products/Product';
 
-import axios from '../api/AxiosUrl';
+import axios from '../../api/AxiosUrl';
+import Button from '../UI/Button';
+import AddInventoryCard from './AddInventoryCard';
 
-const Products = () => {
+const AddInventoryItemsContent = (props) => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isProductsAvailable, setIsProductsAvailable] = useState(false);
@@ -33,7 +34,7 @@ const Products = () => {
   }, []);
 
   return (
-    <div className='mx-8 mt-4'>
+    <div className='mx-8'>
       {isLoading && (
         <div className='text-xl my-auto text-center '>Loading...</div>
       )}
@@ -44,10 +45,22 @@ const Products = () => {
       {!isLoading && isProductsAvailable && (
         <>
           <div>
-            <h1 className='text-6xl font-light'>Products</h1>
+            <h1 className='text-4xl font-light'>Add Products to Inventory</h1>
           </div>
-          <div className='flex flex-wrap justify-center my-6'>
-            <Product data={products} />
+          <div className='flex flex-wrap justify-center my-3'>
+            {products.map((val) => (
+              <AddInventoryCard
+                key={val._id}
+                title={val.name}
+                description={val.description}
+                company={val.company}
+                category={val.category}
+              />
+            ))}
+          </div>
+          <div className='flex gap-4 justify-center'>
+            <Button onClick={props.onClose}>close</Button>
+            {/* <Button onClick={props.onAdd}>Add to Inventory</Button> */}
           </div>
         </>
       )}
@@ -55,4 +68,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default AddInventoryItemsContent;

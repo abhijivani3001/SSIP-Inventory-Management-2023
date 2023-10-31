@@ -9,3 +9,11 @@
 body {
   @apply bg-gray-100 max-w-[100%] overflow-x-hidden overflow-y-auto;
 }
+
+.backdrop {
+  @apply overflow-hidden fixed top-0 left-0 w-[100vw] h-[100vw] z-20 bg-[rgba(0,0,0,0.7)];
+}
+
+.modal { 
+  @apply  overflow-auto absolute top-[5%] text-center max-h-[90%] bg-white p-5 rounded-lg z-30 mx-16;
+}

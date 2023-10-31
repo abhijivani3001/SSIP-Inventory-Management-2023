@@ -54,7 +54,7 @@ const Navbar = () => {
   }, [username]);
 
   return (
-    <nav className='sticky inset-x-0 top-0 z-50'>
+    <nav className='sticky inset-x-0 top-0 z-10'>
       <div className='px-6 py-3 flex justify-between items-center text-gray-900 bg-gray-100'>
         <div className='text-4xl ml-2 font-semibold'>
           <Link to='/'>Inventory Management</Link>

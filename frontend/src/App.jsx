@@ -60,9 +60,16 @@ function App() {
         {isLoggedIn && <Route path='/cart' element={<CartItems />} />}
         {isLoggedIn && (
           <Route path='/notification' element={<Notification />} />
+        )}
+        {isLoggedIn &&
+          (userRole === USER.SUB_BRANCH_STORE_MANAGER ||
+            userRole === USER.BRANCH_STORE_MANAGER ||
+            userRole === USER.DEPARTMENT_STORE_MANAGER) && (
+            <Route path='/inventory' element={<Inventory />} />
           )}
-        {isLoggedIn && (userRole===USER.SUB_BRANCH_STORE_MANAGER || userRole===USER.BRANCH_STORE_MANAGER || userRole===USER.DEPARTMENT_STORE_MANAGER) && <Route path='/inventory' element={<Inventory />} />}
-        {isLoggedIn && userRole!==USER.EMPLOYEE && <Route path='/order-list' element={<OrderList />} />}
+        {isLoggedIn && userRole !== USER.EMPLOYEE && (
+          <Route path='/order-list' element={<OrderList />} />
+        )}
         {isLoggedIn && (
           <Route path='/placed-order-list' element={<PlacedOrderList />} />
         )}

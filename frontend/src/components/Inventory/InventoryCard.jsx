@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import Button from './Button';
+import Button from '../UI/Button';
+
+import axios from '../../api/AxiosUrl';
 
 const InventoryCard = (props) => {
   const [availableItems, setAvailableItems] = useState(props.quantity);
@@ -9,8 +11,20 @@ const InventoryCard = (props) => {
     setIsEditing(!isEditing);
   };
 
-  const handleSaveClick = () => {
+  const handleSaveClick = async () => {
     setIsEditing(false);
+    // props.quantity=availableItems;
+    try {
+      const res = await axios.put('api/inventory', {
+        updatedQuantity: availableItems, inventoryId: props.inventoryId
+      });
+      console.log(res.data);
+
+      props.setInventoryProducts(res.data.inventory);
+    } catch (error) {
+      console.log(error.message);
+    }
+    // console.log(props);
   };
 
   return (
@@ -29,7 +43,9 @@ const InventoryCard = (props) => {
 
           <div className='flex flex-col gap-1 items-center justify-between my-2 mb-0'>
             <div className='flex justify-evenly gap-2'>
-              <label className='text-lg font-semibold' htmlFor={props.id}>Quantity</label>
+              <label className='text-lg font-semibold' htmlFor={props.id}>
+                Quantity
+              </label>
               {isEditing ? (
                 <input
                   id={props.id}
