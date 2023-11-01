@@ -12,37 +12,39 @@ const CartItems = () => {
 
   const [cartitem, setCartItem] = useState([]);
 
-  // const [cart, setCart] = useState({});
-
   const saveCart = (cart) => {
-    // console.log(myCart);
     localStorage.setItem("cart", JSON.stringify(cart));
-    // let subt = 0;
-    // let keys = Object.keys(myCart);
-    // for (let i = 0; i < keys.length; i++) {
-    //   subt += myCart[keys[i]].price * myCart[keys[i]].qty;
-    // }
-    // setSubTotal(subt)
+  };
+
+  const clearCartOnReload = (event) => {
+    if (cart.items.length > 0) {
+      const confirmationMessage = 'If you reload the page, your cart will become empty. Do you want to continue?';
+      event.returnValue = confirmationMessage;
+      return confirmationMessage;
+    }
   };
 
   useEffect(() => {
-
-
     setIsCartEmpty(!cart.items.length);
-    // setCart(cart);
     saveCart(cart);
+
+    // Add the event listener for beforeunload when the component mounts
+    window.addEventListener('beforeunload', clearCartOnReload);
+
+    // Remove the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('beforeunload', clearCartOnReload);
+    };
   }, [cart]);
-  console.log(isCartEmpty, cart.items);
 
   const handleAddToCart = (item) => {
     dispatch({ type: 'ADD_ITEM', payload: item });
     setCartItem(...item, item);
-    // setCart(cart);
     saveCart(cart);
   };
+
   const handleRemoveFromCart = (item) => {
     dispatch({ type: 'REMOVE_ITEM', payload: item });
-    // setCart(cart);
     saveCart(cart);
   };
 
@@ -60,7 +62,6 @@ const CartItems = () => {
     toast.success('Order placed successfully!', {
       autoClose: 3000,
     });
-    // console.log(cart);
 
     let orders = [];
 
@@ -73,9 +74,7 @@ const CartItems = () => {
       });
     });
     postElement(orders);
-    // setCart(cart);
     saveCart(cart);
-    // Clear the cart
     dispatch({ type: 'CLEAR_CART' });
   };
 
@@ -85,7 +84,6 @@ const CartItems = () => {
         <div className='text-3xl text-center '>Your cart is empty</div>
       )}
 
-      {/* list */}
       {!isCartEmpty && (
         <div>
           <div>
