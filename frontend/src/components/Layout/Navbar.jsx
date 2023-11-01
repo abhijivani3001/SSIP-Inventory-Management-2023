@@ -96,8 +96,8 @@ const Navbar = () => {
             {isLoggedIn && userRole!==USER.EMPLOYEE && (
               <li>
                 <Link
-                  to='/order-list'
-                  className={`hover:underline ${location.pathname === '/order-list' ? 'navbar-title' : ''
+                  to='/requested-order-list'
+                  className={`hover:underline ${location.pathname === '/requested-order-list' ? 'navbar-title' : ''
                     }`}
                 >
                   Requested orders

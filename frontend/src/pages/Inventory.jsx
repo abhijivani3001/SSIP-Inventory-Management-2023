@@ -55,31 +55,32 @@ const Inventory = (props) => {
         <div className='text-3xl text-center '>Products is not available</div>
       )}
 
-      {!isLoading && isInventoryProductsAvailable && (
+      {!isLoading && (
         <>
-          <div>
-            <h1 className='text-6xl font-light'>Inventory</h1>
-          </div>
-          <div className='flex flex-wrap justify-center my-6'>
-            {inventoryProducts.map((val) => (
-              <InventoryCard
-                key={val._id}
-                name={val.name}
-                description={val.description}
-                company={val.company}
-                category={val.category}
-                imageUrl={val.imageUrl}
-                quantity={val.quantity}
-                inventoryId={val._id}
-                setInventoryProducts={setInventoryProducts}
-              />
-            ))}
-          </div>
+          {isInventoryProductsAvailable && <>
+            <div>
+              <h1 className='text-6xl font-light'>Inventory</h1>
+            </div>
+            <div className='flex flex-wrap justify-center my-6'>
+              {inventoryProducts.map((val) => (
+                <InventoryCard
+                  key={val._id}
+                  name={val.name}
+                  description={val.description}
+                  company={val.company}
+                  category={val.category}
+                  imageUrl={val.imageUrl}
+                  quantity={val.quantity}
+                  inventoryId={val._id}
+                  setInventoryProducts={setInventoryProducts}
+                />
+              ))}
+            </div>
+          </>}
 
           <div className=' text-center mb-6'>
             <Button onClick={showAddProductsHandler}>Add Item</Button>
           </div>
-
           {isAddProductsShown && (
             <AddInventoryItem
               onClose={hideAddProductsHandler}

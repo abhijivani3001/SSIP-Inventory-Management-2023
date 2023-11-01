@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Button from '../components/UI/Button';
 import axios from '../api/AxiosUrl';
+import RequestedOrderData from '../components/RequestedOrderData.jsx/RequestedOrderData';
 
-const OrderList = () => {
-  const [requestedOrders, setRequestedOrders] = useState([]);
+const RequestedOrderList = () => {
+  const [usersOfRequestedOrders, setUsersOfRequestedOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isRequestedOrdersAvailable, setIsRequestedOrdersAvailable] =
     useState(false);
@@ -16,16 +17,18 @@ const OrderList = () => {
 
         const res2 = await axios.post('api/user/users', {
           ...user,
-          role: 'employee',
+          // role: 'employee',
         });
-        console.log(res2, user);
+        // console.log(res2, user);
 
         const data = await res2.data.users;
 
         if (data?.length) {
           setIsRequestedOrdersAvailable(true);
-          setRequestedOrders(data);
+          setUsersOfRequestedOrders(data);
         } else setIsRequestedOrdersAvailable(false);
+
+        console.log(usersOfRequestedOrders);
       } catch (error) {
         console.log(error.message);
       }
@@ -49,9 +52,18 @@ const OrderList = () => {
             <h1 className='text-6xl font-light'>Order List</h1>
           </div>
           <div className='my-6'>
-            <ul>
-              <div className='flex flex-col'></div>
-            </ul>
+            {usersOfRequestedOrders.map((val) => (
+              <RequestedOrderData
+                key={val._id}
+                branch={val.branch}
+                subBranch={val.subBranch}
+                department={val.department}
+                role={val.role}
+                name={val.name}
+                orders={val.orders} // order array
+                userId={val._id}
+              />
+            ))}
           </div>
         </>
       )}
@@ -59,4 +71,4 @@ const OrderList = () => {
   );
 };
 
-export default OrderList;
+export default RequestedOrderList;

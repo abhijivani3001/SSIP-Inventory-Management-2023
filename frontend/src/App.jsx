@@ -9,13 +9,13 @@ import Login from './pages/Login';
 import Notification from './pages/Notification';
 import Layout from './components/Layout/Layout';
 import PlacedOrderList from './pages/PlacedOrderList';
-import OrderList from './pages/OrderList';
 import CartItems from './pages/CartItems';
 import UserProfile from './pages/UserProfile';
 import AuthContext from './store/auth-context';
 import Inventory from './pages/Inventory';
 
 import axios from './api/AxiosUrl';
+import RequestedOrderList from './pages/RequestedOrderList';
 
 function App() {
   const USER = {
@@ -68,7 +68,7 @@ function App() {
             <Route path='/inventory' element={<Inventory />} />
           )}
         {isLoggedIn && userRole !== USER.EMPLOYEE && (
-          <Route path='/order-list' element={<OrderList />} />
+          <Route path='/requested-order-list' element={<RequestedOrderList />} />
         )}
         {isLoggedIn && (
           <Route path='/placed-order-list' element={<PlacedOrderList />} />
