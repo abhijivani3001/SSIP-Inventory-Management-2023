@@ -69,14 +69,14 @@ const RequestedOrderData = (props) => {
                     </label>
                     <button
                       onClick={handleAllocate}
-                      className="bg-green-700 hover:bg-green-800 border-gray-300 border w-20 h-10 rounded text-white hover:text-gray-200"
+                      className="bg-blue-600 hover:bg-blue-800 border-gray-300 border w-20 h-10 rounded text-white hover:text-gray-200"
                     >
                       Allocate
                     </button>
 
                     <button
                       onClick={handleReject}
-                      className="bg-red-700 hover:bg-red-800 border-red-300 border w-20 h-10 rounded text-white hover:text-gray-200"
+                      className="bg-red-600 hover:bg-red-800 border-red-300 border w-20 h-10 rounded text-white hover:text-gray-200"
                     >
                       Reject
                     </button>
