@@ -72,14 +72,14 @@ const Inventory = (props) => {
                     imageUrl={val.imageUrl}
                     quantity={val.quantity}
                     inventoryId={val._id}
-                    setInventoryProducts={setInventoryProducts}
+                    getInventoryItems={getInventoryItems}
                   />
                 ))}
               </div>
             </>
           )}
 
-          <div className=' text-center mb-6'>
+          <div className=' text-center my-6'>
             <Button onClick={showAddProductsHandler}>Add Item</Button>
           </div>
 

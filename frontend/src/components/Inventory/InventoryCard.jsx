@@ -6,29 +6,40 @@ import axios from '../../api/AxiosUrl';
 const InventoryCard = (props) => {
   const [availableItems, setAvailableItems] = useState(props.quantity);
   const [isEditing, setIsEditing] = useState(false);
+  // console.log(props.inventoryId);
 
   const handleUpdateClick = () => {
     setIsEditing(!isEditing);
+    setAvailableItems(props.quantity);
   };
 
   const handleSaveClick = async () => {
     setIsEditing(false);
-    // props.quantity=availableItems;
     try {
       const res = await axios.put('api/inventory', {
         updatedQuantity: availableItems,
         inventoryId: props.inventoryId,
       });
-      console.log(res.data);
-
-      props.setInventoryProducts(res.data.inventory);
+      // console.log(res.data);
+      props.getInventoryItems();
     } catch (error) {
       console.log(error.message);
     }
-    // console.log(props);
   };
 
-  const deleteItemHandler = () => {};
+  const deleteItemHandler = async () => {
+    // console.log('delete');
+    try {
+      const res = await axios.delete('api/inventory', {
+        inventoryId: props.inventoryId,
+      });
+      console.log(res);
+      
+      props.getInventoryItems();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
