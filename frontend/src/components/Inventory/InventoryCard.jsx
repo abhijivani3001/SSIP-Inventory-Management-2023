@@ -29,10 +29,9 @@ const InventoryCard = (props) => {
 
   const deleteItemHandler = async () => {
     // console.log('delete');
+    console.log(props);
     try {
-      const res = await axios.delete('api/inventory', {
-        inventoryId: props.inventoryId,
-      });
+      const res = await axios.delete(`api/inventory/${props.inventoryId}`);
       console.log(res);
       
       props.getInventoryItems();
