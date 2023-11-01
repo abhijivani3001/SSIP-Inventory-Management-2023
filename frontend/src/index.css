@@ -15,5 +15,9 @@ body {
 }
 
 .modal {
-  @apply fixed overflow-auto top-[5%] text-center max-h-[90%] bg-white py-4 rounded-lg z-30 mx-16;
+  @apply fixed overflow-auto flex top-[5%] text-center max-h-[90%] bg-white py-4 rounded-lg z-30 mx-16;
+}
+
+.button {
+  @apply text-white focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 text-center;
 }

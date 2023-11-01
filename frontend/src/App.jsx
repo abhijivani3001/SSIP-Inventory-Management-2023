@@ -34,6 +34,8 @@ function App() {
 
   const [userRole, setUserRole] = useState('');
 
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     if (isLoggedIn) {
       axios
@@ -46,14 +48,25 @@ function App() {
           console.error('Error fetching user data:', error);
         });
     }
+    setIsLoading(false);
   }, [isLoggedIn]);
 
   return (
     <Layout>
       <Routes>
+        {!isLoading && (
+          <Route
+            path='*'
+            element={
+              <div className='text-xl my-auto text-center mt-4'>Loading...</div>
+            }
+          />
+        )}
+
         <Route path='/' element={<Home />} exact />
         <Route path='/home' element={<Home />} />
         <Route path='/about' element={<About />} />
+
         {!isLoggedIn && <Route path='/login' element={<Login />} />}
         {isLoggedIn && <Route path='/user' element={<UserProfile />} />}
         {isLoggedIn && <Route path='/products' element={<Products />} />}
@@ -68,12 +81,16 @@ function App() {
             <Route path='/inventory' element={<Inventory />} />
           )}
         {isLoggedIn && userRole !== USER.EMPLOYEE && (
-          <Route path='/requested-order-list' element={<RequestedOrderList />} />
+          <Route
+            path='/requested-order-list'
+            element={<RequestedOrderList />}
+          />
         )}
         {isLoggedIn && (
           <Route path='/placed-order-list' element={<PlacedOrderList />} />
         )}
-        <Route path='*' element={<NotFound />} />
+
+        {!isLoading && <Route path='*' element={<NotFound />} />}
       </Routes>
     </Layout>
   );

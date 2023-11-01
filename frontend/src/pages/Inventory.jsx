@@ -6,6 +6,12 @@ import Button from '../components/UI/Button';
 import AddInventoryItem from '../components/Inventory/AddInventoryItem';
 
 const Inventory = (props) => {
+  const [inventoryProducts, setInventoryProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isInventoryProductsAvailable, setIsInventoryProductsAvailable] =
+    useState(false);
+  const [isAddProductsShown, setIsAddProductsShown] = useState(false);
+
   const getInventoryItems = async () => {
     try {
       const result = await axios.get('api/inventory');
@@ -27,13 +33,6 @@ const Inventory = (props) => {
     }
     setIsLoading(false);
   };
-
-  const [inventoryProducts, setInventoryProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isInventoryProductsAvailable, setIsInventoryProductsAvailable] =
-    useState(false);
-
-  const [isAddProductsShown, setIsAddProductsShown] = useState(false);
 
   const showAddProductsHandler = () => {
     setIsAddProductsShown(true);
@@ -57,30 +56,33 @@ const Inventory = (props) => {
 
       {!isLoading && (
         <>
-          {isInventoryProductsAvailable && <>
-            <div>
-              <h1 className='text-6xl font-light'>Inventory</h1>
-            </div>
-            <div className='flex flex-wrap justify-center my-6'>
-              {inventoryProducts.map((val) => (
-                <InventoryCard
-                  key={val._id}
-                  name={val.name}
-                  description={val.description}
-                  company={val.company}
-                  category={val.category}
-                  imageUrl={val.imageUrl}
-                  quantity={val.quantity}
-                  inventoryId={val._id}
-                  setInventoryProducts={setInventoryProducts}
-                />
-              ))}
-            </div>
-          </>}
+          {isInventoryProductsAvailable && (
+            <>
+              <div>
+                <h1 className='text-6xl font-light'>Inventory</h1>
+              </div>
+              <div className='flex flex-wrap justify-center my-6'>
+                {inventoryProducts.map((val) => (
+                  <InventoryCard
+                    key={val._id}
+                    name={val.name}
+                    description={val.description}
+                    company={val.company}
+                    category={val.category}
+                    imageUrl={val.imageUrl}
+                    quantity={val.quantity}
+                    inventoryId={val._id}
+                    setInventoryProducts={setInventoryProducts}
+                  />
+                ))}
+              </div>
+            </>
+          )}
 
           <div className=' text-center mb-6'>
             <Button onClick={showAddProductsHandler}>Add Item</Button>
           </div>
+
           {isAddProductsShown && (
             <AddInventoryItem
               onClose={hideAddProductsHandler}

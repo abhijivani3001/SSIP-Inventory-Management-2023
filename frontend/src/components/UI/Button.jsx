@@ -2,7 +2,12 @@ import React from 'react';
 
 const Button = (props) => {
   return (
-    <button onClick={props.onClick} className='text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 text-center'>
+    <button
+      onClick={props.onClick}
+      className={`${props.bg} ${
+        !props.bg ? 'bg-gray-500' : ''
+      } hover:bg-gray-800 button`}
+    >
       {props.children}
     </button>
   );

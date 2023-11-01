@@ -16,7 +16,8 @@ const InventoryCard = (props) => {
     // props.quantity=availableItems;
     try {
       const res = await axios.put('api/inventory', {
-        updatedQuantity: availableItems, inventoryId: props.inventoryId
+        updatedQuantity: availableItems,
+        inventoryId: props.inventoryId,
       });
       console.log(res.data);
 
@@ -26,6 +27,8 @@ const InventoryCard = (props) => {
     }
     // console.log(props);
   };
+
+  const deleteItemHandler = () => {};
 
   return (
     <>
@@ -61,12 +64,19 @@ const InventoryCard = (props) => {
               )}
             </div>
 
-            <div className='mt-2'>
+            <div className='mt-2 mx-2 flex gap-2'>
               {isEditing ? (
-                <Button onClick={handleSaveClick}>Save</Button>
+                <Button bg='bg-green-500' onClick={handleSaveClick}>
+                  Save
+                </Button>
               ) : (
-                <Button onClick={handleUpdateClick}>Update</Button>
+                <Button bg='bg-blue-500' onClick={handleUpdateClick}>
+                  Update
+                </Button>
               )}
+              <Button bg='bg-red-500' onClick={deleteItemHandler}>
+                Delete
+              </Button>
             </div>
           </div>
         </div>
