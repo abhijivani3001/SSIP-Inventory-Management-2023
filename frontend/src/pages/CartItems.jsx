@@ -28,10 +28,9 @@ const CartItems = () => {
     setIsCartEmpty(!cart.items.length);
     saveCart(cart);
 
-    // Add the event listener for beforeunload when the component mounts
+
     window.addEventListener('beforeunload', clearCartOnReload);
 
-    // Remove the event listener when the component unmounts
     return () => {
       window.removeEventListener('beforeunload', clearCartOnReload);
     };
