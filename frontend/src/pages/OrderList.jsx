@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '../components/UI/Button';
 import axios from '../api/AxiosUrl';
-import AuthContext from '../store/auth-context';
 
 const OrderList = () => {
   const [requestedOrders, setRequestedOrders] = useState([]);
@@ -9,36 +8,24 @@ const OrderList = () => {
   const [isRequestedOrdersAvailable, setIsRequestedOrdersAvailable] =
     useState(false);
 
-  const authCtx = useContext(AuthContext);
-
-  const [user, setUser] = useState({});
-
-  useEffect(() => {
-    axios
-      .get('api/user')
-      .then((response) => {
-        const user = response.data.user;
-        // console.log(user);
-        setUser(user);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
   useEffect(() => {
     (async () => {
       try {
-        const res = await axios.post('api/user/users', {
+        const res1 = await axios.get('api/user');
+        const user = await res1.data.user;
+
+        const res2 = await axios.post('api/user/users', {
           ...user,
           role: 'employee',
         });
-        // console.log(res, user);
-        const data = await res.data.users;
-        setRequestedOrders(data);
-        // console.log(data);
-        if (requestedOrders?.length) setIsRequestedOrdersAvailable(true);
-        else setIsRequestedOrdersAvailable(false);
+        console.log(res2, user);
+
+        const data = await res2.data.users;
+
+        if (data?.length) {
+          setIsRequestedOrdersAvailable(true);
+          setRequestedOrders(data);
+        } else setIsRequestedOrdersAvailable(false);
       } catch (error) {
         console.log(error.message);
       }
