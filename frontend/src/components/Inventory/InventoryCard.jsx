@@ -10,34 +10,35 @@ const InventoryCard = (props) => {
 
   const handleUpdateClick = () => {
     setIsEditing(!isEditing);
+    setAvailableItems(props.quantity);
   };
 
   const handleSaveClick = async () => {
     setIsEditing(false);
-    // props.quantity=availableItems;
     try {
       const res = await axios.put('api/inventory', {
         updatedQuantity: availableItems,
         inventoryId: props.inventoryId,
       });
-      console.log(res.data);
+      // console.log(res.data);
       props.getInventoryItems();
     } catch (error) {
       console.log(error.message);
     }
-    // console.log(props);
   };
 
   const deleteItemHandler = async () => {
-    console.log('delete');
+    // console.log('delete');
     try {
       const res = await axios.delete('api/inventory', {
         inventoryId: props.inventoryId,
       });
       console.log(res);
-
+      
       props.getInventoryItems();
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
