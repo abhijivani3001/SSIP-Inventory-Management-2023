@@ -48,8 +48,13 @@ const RequestedOrderList = () => {
       )}
       {!isLoading && isRequestedOrdersAvailable && (
         <>
-          <div>
+          <div className='flex justify-between'>
             <h1 className='text-6xl font-light'>Order List</h1>
+            <h2 className='text-2xl font-light my- gap-2 mr-8'>
+              <div className='flex items-end gap-6 mt-8'>
+                <div>Requested Quantity</div>
+              </div>
+            </h2>
           </div>
           <div className='my-6'>
             {usersOfRequestedOrders.map((val) => (

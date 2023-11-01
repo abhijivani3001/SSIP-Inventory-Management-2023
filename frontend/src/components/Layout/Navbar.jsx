@@ -32,11 +32,11 @@ const Navbar = () => {
   const authCtx = useContext(AuthContext);
   const isLoggedIn = authCtx.isLoggedIn;
   // const token = authCtx.token;
-  
+
   const logoutHandler = () => {
     authCtx.logout();
   };
-  
+
   const [username, setUsername] = useState('');
   const [userRole, setUserRole] = useState('');
 
@@ -93,7 +93,7 @@ const Navbar = () => {
               </li>
             )}
 
-            {isLoggedIn && userRole!==USER.EMPLOYEE && (
+            {isLoggedIn && userRole !== USER.EMPLOYEE && (
               <li>
                 <Link
                   to='/requested-order-list'
@@ -117,7 +117,7 @@ const Navbar = () => {
                 </Link>
               </li>
             )}
-            {isLoggedIn && (userRole===USER.SUB_BRANCH_STORE_MANAGER || userRole===USER.BRANCH_STORE_MANAGER || userRole===USER.DEPARTMENT_STORE_MANAGER) && (
+            {isLoggedIn && (userRole === USER.SUB_BRANCH_STORE_MANAGER || userRole === USER.BRANCH_STORE_MANAGER || userRole === USER.DEPARTMENT_STORE_MANAGER) && (
               <li>
                 <Link
                   to='/inventory'
