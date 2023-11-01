@@ -10,15 +10,10 @@ const CartItems = () => {
   const { cart, dispatch } = useCart();
   const [isCartEmpty, setIsCartEmpty] = useState(true);
 
-  const [cartitem, setCartItem] = useState([]);
-
-  const saveCart = (cart) => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  };
-
   const clearCartOnReload = (event) => {
     if (cart.items.length > 0) {
-      const confirmationMessage = 'If you reload the page, your cart will become empty. Do you want to continue?';
+      const confirmationMessage =
+        'If you reload the page, your cart will become empty. Do you want to continue?';
       event.returnValue = confirmationMessage;
       return confirmationMessage;
     }
@@ -26,8 +21,6 @@ const CartItems = () => {
 
   useEffect(() => {
     setIsCartEmpty(!cart.items.length);
-    saveCart(cart);
-
 
     window.addEventListener('beforeunload', clearCartOnReload);
 
@@ -38,13 +31,10 @@ const CartItems = () => {
 
   const handleAddToCart = (item) => {
     dispatch({ type: 'ADD_ITEM', payload: item });
-    setCartItem(...item, item);
-    saveCart(cart);
   };
 
   const handleRemoveFromCart = (item) => {
     dispatch({ type: 'REMOVE_ITEM', payload: item });
-    saveCart(cart);
   };
 
   const postElement = async (orders) => {
@@ -73,7 +63,6 @@ const CartItems = () => {
       });
     });
     postElement(orders);
-    saveCart(cart);
     dispatch({ type: 'CLEAR_CART' });
   };
 
