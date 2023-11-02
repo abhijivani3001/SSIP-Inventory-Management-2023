@@ -64,13 +64,13 @@ const InventoryCard = (props) => {
                   id={props.id}
                   name='quantity'
                   type='number'
-                  className='border-2 border-gray-700 w-12 text-center rounded-lg'
+                  className='border-2 border-gray-700 w-12 p-0 text-center rounded-lg'
                   min={1}
                   value={availableItems}
                   onChange={(e) => setAvailableItems(e.target.value)}
                 />
               ) : (
-                <span>{props.quantity}</span>
+                <span className='my-auto'>{props.quantity}</span>
               )}
             </div>
 

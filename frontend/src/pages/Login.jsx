@@ -24,6 +24,8 @@ const Login = (props) => {
         alert('Login Successfully');
         authCtx.login(data.token);
         navigate('/');
+
+        window.location.reload() // bad-practice
       } else {
         alert('Login failed');
       }
