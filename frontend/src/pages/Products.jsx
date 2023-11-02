@@ -44,7 +44,7 @@ const Products = () => {
       {!isLoading && isProductsAvailable && (
         <>
           <div>
-            <h1 className='text-6xl font-light'>Products</h1>
+            <h1 className='page-title'>Products</h1>
           </div>
           <div className='flex flex-wrap justify-center my-6'>
             <Product data={products} />

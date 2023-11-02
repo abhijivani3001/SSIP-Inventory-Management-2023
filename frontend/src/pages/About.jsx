@@ -1,7 +1,23 @@
 import React from 'react';
 
 const About = () => {
-  return <div className='mx-8 my-4'><h1 className='text-8xl font-light'>About section of Inventory Management System!</h1></div>;
+  const dropdown = document.getElementById('user-dropdown');
+  const navbarUser = document.getElementById('navbar-user');
+
+  const toggleDropdown = () => {
+    dropdown.classList.toggle('hidden');
+  };
+  const toggleNavbarUser = () => {
+    navbarUser.classList.toggle('hidden');
+  };
+
+  return (
+    <div className='mx-8 mt-4'>
+      <div>
+        <h1 className='page-title'>About page</h1>
+      </div>
+    </div>
+  );
 };
 
 export default About;

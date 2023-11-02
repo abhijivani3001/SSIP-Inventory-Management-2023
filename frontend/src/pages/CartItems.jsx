@@ -49,7 +49,7 @@ const CartItems = () => {
   const submitHandler = (event) => {
     event.preventDefault();
     toast.success('Order placed successfully!', {
-      autoClose: 3000,
+      autoClose: 1500,
     });
 
     let orders = [];
@@ -63,19 +63,20 @@ const CartItems = () => {
       });
     });
     postElement(orders);
+
     dispatch({ type: 'CLEAR_CART' });
   };
 
   return (
     <div className='mx-8 mt-4'>
       {isCartEmpty && (
-        <div className='text-3xl text-center '>Your cart is empty</div>
+        <div className='text-3xl text-center'>Your cart is empty</div>
       )}
 
       {!isCartEmpty && (
         <div>
           <div>
-            <h1 className='text-6xl font-light'>Cart Items</h1>
+            <h1 className='page-title'>Cart Items</h1>
           </div>
           <div className='my-6'>
             {cart.items.map((item) => (

@@ -36,7 +36,7 @@ const AddInventoryItemsContent = (props) => {
   // console.log('products', products);
 
   return (
-    <div className='mx-8'>
+    <div className='mx-8 mb-8'>
       {isLoading && (
         <div className='text-xl my-auto text-center '>Loading...</div>
       )}
@@ -62,8 +62,8 @@ const AddInventoryItemsContent = (props) => {
               />
             ))}
           </div>
-          <div className='flex gap-4 justify-center'>
-            <Button onClick={props.onClose}>close</Button>
+          <div className='flex gap-4 justify-center mb-8'>
+            <Button onClick={props.onClose} mb='mb-4'>close</Button>
           </div>
         </>
       )}

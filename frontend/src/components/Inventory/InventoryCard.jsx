@@ -33,7 +33,7 @@ const InventoryCard = (props) => {
     try {
       const res = await axios.delete(`api/inventory/${props.inventoryId}`);
       console.log(res);
-      
+
       props.getInventoryItems();
     } catch (error) {
       console.log(error);

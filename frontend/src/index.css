@@ -6,6 +6,17 @@
   @apply hover:underline active:underline active:text-gray-900 text-gray-900 font-bold underline;
 }
 
+.navbar-element{
+  @apply block py-2 pl-3 pr-4 rounded md:bg-transparent md:p-0 hover:text-blue-600 hover:underline hover:underline-offset-4;
+}
+.active-navbar-element{
+  @apply block py-2 pl-3 pr-4 rounded md:bg-transparent md:p-0 text-blue-600 underline underline-offset-4;
+}
+
+.page-title{
+  @apply text-6xl font-light;
+}
+
 body {
   @apply bg-gray-100 max-w-[100%] overflow-x-hidden overflow-y-auto;
 }

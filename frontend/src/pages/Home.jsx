@@ -1,62 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
-import axios from '../api/AxiosUrl';
-import AuthContext from '../store/auth-context';
+import React from 'react';
 
 const Home = () => {
-  // const authCtx = useContext(AuthContext);
-  // const token = authCtx.token;
-
-  // useEffect(() => {
-    // axios
-    //   // .get(`/hello`)
-    //   // .get(`/api/order/`)
-    //   // .get('api/user')
-    //   .then((response) => {
-    //     setData(response);
-    //     console.log(response.data);
-
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-    // axios
-    //   .get('api/user', {
-    //     headers: {
-    //       Authorization: 'Bearer ' + token, //the token is a variable which holds the token
-    //     },
-    //   })
-    //   .then((response) => {
-    //     setData(response);
-    //     console.log(response.data);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-
-    // const response = axios.get('/api/users');
-    //   axios
-    //     .post(`${process.env.REACT_APP_BACKEND_URL}/api/user/login`, {
-    //       email: 'abcd',
-    //       password: '123',
-    //     })
-    //     .then((response) => {
-    //       setData(response);
-    //       console.log(response);
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-  // }, []);
-
-  // const temp=data?.data?.users[0].name;
-
-  return (
-    <div className='mx-8 my-4'>
-      <h1 className='text-8xl font-light'>
-        Welcome to Inventory management system
-      </h1>
+  return <div className='mx-8 my-4'>
+    <div className='page-title'>
+      Home
     </div>
-  );
+  </div>;
 };
 
 export default Home;

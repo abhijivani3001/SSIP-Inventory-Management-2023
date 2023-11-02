@@ -54,15 +54,6 @@ function App() {
   return (
     <Layout>
       <Routes>
-        {!isLoading && (
-          <Route
-            path='*'
-            element={
-              <div className='text-xl my-auto text-center mt-4'>Loading...</div>
-            }
-          />
-        )}
-
         <Route path='/' element={<Home />} exact />
         <Route path='/home' element={<Home />} />
         <Route path='/about' element={<About />} />
@@ -90,7 +81,15 @@ function App() {
           <Route path='/placed-order-list' element={<PlacedOrderList />} />
         )}
 
-        {!isLoading && <Route path='*' element={<NotFound />} />}
+        {(isLoading && isLoggedIn) && (
+          <Route
+          path='*'
+          element={
+            <div className='text-xl my-auto text-center mt-4'>Loading...</div>
+          }
+          />
+          )}
+          {!isLoading && <Route path='*' element={<NotFound />} />}
       </Routes>
     </Layout>
   );

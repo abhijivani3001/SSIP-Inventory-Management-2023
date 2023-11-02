@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthContext from '../store/auth-context';
 import axios from '../api/AxiosUrl';
@@ -12,14 +12,14 @@ const Login = (props) => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
-
+    
     try {
       const res = await axios.post('/api/user/login', {
         email: username,
         password: password,
       });
-      const data = res.data;
-
+      const data = await res.data;
+      
       if (data.success === true) {
         alert('Login Successfully');
         authCtx.login(data.token);
@@ -30,7 +30,7 @@ const Login = (props) => {
     } catch (err) {
       alert('Error, please try again');
     }
-
+    
     setUsername('');
     setPassword('');
   };
