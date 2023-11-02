@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Inventory from '../../pages/Inventory';
 import axios from '../../api/AxiosUrl';
+import Button from '../UI/Button';
 
 const RequestedOrderData = (props) => {
   const [selectedItems, setSelectedItems] = useState([]);
@@ -103,7 +104,10 @@ const RequestedOrderData = (props) => {
                             const updatedOrderData = prevOrderData.map(
                               (item) => {
                                 if (item._id === order._id) {
-                                  return { ...item, quantity: e.target.value };
+                                  return {
+                                    ...item,
+                                    quantity: e.target.value,
+                                  };
                                 }
                                 return item;
                               }
