@@ -12,27 +12,27 @@ const Login = (props) => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
-    
+
     try {
       const res = await axios.post('/api/user/login', {
         email: username,
         password: password,
       });
       const data = await res.data;
-      
+
       if (data.success === true) {
         alert('Login Successfully');
         authCtx.login(data.token);
         navigate('/');
 
-        window.location.reload() // bad-practice
+        window.location.reload(); // bad-practice
       } else {
         alert('Login failed');
       }
     } catch (err) {
       alert('Error, please try again');
     }
-    
+
     setUsername('');
     setPassword('');
   };
