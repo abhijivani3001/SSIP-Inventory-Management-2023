@@ -3,6 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { useState } from 'react';
 import cartImg from '../../resources/shopping-cart.png';
 import notificationImg from '../../resources/notification.png';
+import userImg from '../../resources/user.png';
 import { useLocation } from 'react-router-dom';
 import AuthContext from '../../store/auth-context';
 import axios from '../../api/AxiosUrl';
@@ -142,8 +143,8 @@ const Navbar = () => {
               >
                 <span className='sr-only'>Open user menu</span>
                 <img
-                  className='w-8 h-8 rounded-full'
-                  src='https://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png'
+                  className='w-7 h-7 rounded-full'
+                  src={userImg}
                   alt='user photo'
                 />
               </button>

@@ -37,13 +37,14 @@ const ReqOrdSubData = (props) => {
     }
   };
 
-  console.log(allocatedOrderData);
+  // console.log(allocatedOrderData);
 
-  const acceptHandler = async (storeManagerId) => {
+  const statusHandler = async (storeManagerId, status) => {
     try {
+      const res = await axios.put('api/order', { storeManagerId, status });
+      console.log(res);
     } catch (error) {}
   };
-  const rejectHandler = () => {};
 
   return (
     <div className='mx-8 mt-4'>
@@ -52,12 +53,18 @@ const ReqOrdSubData = (props) => {
           <div>{props.name}</div>
           <div className='flex gap-4 mr-4'>
             <div>
-              <Button bg='bg-green-500' onClick={acceptHandler}>
+              <Button
+                bg='bg-green-500'
+                onClick={() => statusHandler(props.userId, 'accepted')}
+              >
                 Accept
               </Button>
             </div>
             <div>
-              <Button bg='bg-red-500' onClick={rejectHandler}>
+              <Button
+                bg='bg-red-500'
+                onClick={() => statusHandler(props.userId, 'rejected')}
+              >
                 Reject
               </Button>
             </div>
