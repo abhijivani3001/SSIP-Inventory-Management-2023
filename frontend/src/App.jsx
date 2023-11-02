@@ -33,7 +33,6 @@ function App() {
   const isLoggedIn = authCtx.isLoggedIn;
 
   const [userRole, setUserRole] = useState('');
-
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -68,9 +67,8 @@ function App() {
         {isLoggedIn &&
           (userRole === USER.SUB_BRANCH_STORE_MANAGER ||
             userRole === USER.BRANCH_STORE_MANAGER ||
-            userRole === USER.DEPARTMENT_STORE_MANAGER) && (
-            <Route path='/inventory' element={<Inventory />} />
-          )}
+            userRole === USER.DEPARTMENT_STORE_MANAGER ||
+            !isLoading) && <Route path='/inventory' element={<Inventory />} />}
         {isLoggedIn && userRole !== USER.EMPLOYEE && (
           <Route
             path='/requested-order-list'
@@ -81,15 +79,7 @@ function App() {
           <Route path='/placed-order-list' element={<PlacedOrderList />} />
         )}
 
-        {(isLoading && isLoggedIn) && (
-          <Route
-          path='*'
-          element={
-            <div className='text-xl my-auto text-center mt-4'>Loading...</div>
-          }
-          />
-          )}
-          {!isLoading && <Route path='*' element={<NotFound />} />}
+        {!isLoading && <Route path='*' element={<NotFound />} />}
       </Routes>
     </Layout>
   );
