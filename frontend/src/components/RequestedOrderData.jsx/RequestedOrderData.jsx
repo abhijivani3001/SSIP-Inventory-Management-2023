@@ -5,6 +5,7 @@ import axios from '../../api/AxiosUrl';
 const RequestedOrderData = (props) => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [inventoryData, setInventoryData] = useState([]);
+  const [allocatedOrderData, setAllocatedOrderData] = useState(props.orders);
 
   useEffect(() => {
     getInventoryItemsQuantity();
@@ -16,14 +17,19 @@ const RequestedOrderData = (props) => {
       const data = await result.data.inventory;
       console.log(data);
       setInventoryData(data);
+      setAllocatedOrderData((prevOrderData) => {
+        const updatedOrderData = prevOrderData.map((order) => {
+          const item = data.find((singleInventoryItem) => singleInventoryItem.itemId === order.itemId)
+          if (item) {
+            return { ...order, quantity: order.quantity }
+          }
+          return order
+        })
+        return updatedOrderData
+      })
     } catch (error) {
       console.log(error.message);
     }
-  };
-
-  const getAvailableQuantity = (orderName) => {
-    const inventoryItem = inventoryData.find(item => item.name === orderName);
-    return inventoryItem ? inventoryItem.quantity : 0;
   };
 
   const handleSelectItem = (order) => {
@@ -67,7 +73,7 @@ const RequestedOrderData = (props) => {
             </label>
           </div>
 
-          {props.orders.map((order) => (
+          {props.orders.map((order, index) => (
             <div key={order.itemId}>
               {order.status === 'pending' && (
                 <div className='border flex justify-between mx-11 p-1 text-lg'>
@@ -84,7 +90,18 @@ const RequestedOrderData = (props) => {
                       Allocated Quantity:
                       <input
                         type='number'
-                        value={getAvailableQuantity(order.name)}
+                        value={allocatedOrderData[index].quantity}
+                        onChange={(e) => {
+                          setAllocatedOrderData(prevOrderData => {
+                            const updatedOrderData = prevOrderData.map((item) => {
+                              if (item._id === order._id) {
+                                return { ...item, quantity: e.target.value }
+                              }
+                              return item;
+                            })
+                            return updatedOrderData
+                          })
+                        }}
                         className="w-20 mx-3"
                       />
                     </label>
