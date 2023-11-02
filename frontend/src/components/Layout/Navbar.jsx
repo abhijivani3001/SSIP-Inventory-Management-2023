@@ -260,12 +260,26 @@ const Navbar = () => {
                 </Link>
               </li>
             )}
-            {isLoggedIn && userRole !== USER.EMPLOYEE && (
+            {isLoggedIn && userRole === USER.SUB_BRANCH_STORE_MANAGER && (
               <li>
                 <Link
                   to='/requested-order-list'
                   className={`${
                     location.pathname === '/requested-order-list'
+                      ? 'active-navbar-element'
+                      : 'navbar-element'
+                  }`}
+                >
+                  Requested orders
+                </Link>
+              </li>
+            )}
+            {isLoggedIn && userRole === USER.SUB_BRANCH_HEAD && (
+              <li>
+                <Link
+                  to='/requested-order-list-sub-head'
+                  className={`${
+                    location.pathname === '/requested-order-list-sub-head'
                       ? 'active-navbar-element'
                       : 'navbar-element'
                   }`}

@@ -16,6 +16,7 @@ import Inventory from './pages/Inventory';
 
 import axios from './api/AxiosUrl';
 import RequestedOrderList from './pages/RequestedOrderList';
+import RequestedOrderSubHead from './pages/SubBranchHead/RequestedOrderSubHead';
 
 function App() {
   const USER = {
@@ -69,10 +70,16 @@ function App() {
             userRole === USER.BRANCH_STORE_MANAGER ||
             userRole === USER.DEPARTMENT_STORE_MANAGER ||
             !isLoading) && <Route path='/inventory' element={<Inventory />} />}
-        {isLoggedIn && userRole !== USER.EMPLOYEE && (
+        {isLoggedIn && userRole === USER.SUB_BRANCH_STORE_MANAGER && (
           <Route
             path='/requested-order-list'
             element={<RequestedOrderList />}
+          />
+        )}
+        {isLoggedIn && userRole === USER.SUB_BRANCH_HEAD && (
+          <Route
+            path='/requested-order-list-sub-head'
+            element={<RequestedOrderSubHead />}
           />
         )}
         {isLoggedIn && (

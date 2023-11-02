@@ -39,7 +39,7 @@ const PlacedOrderList = () => {
         <>
           <div className='flex justify-between'>
             <h1 className='page-title'>Placed Order</h1>
-            <h2 className='text-2xl font-light my- gap-2 mr-8'>
+            <h2 className='text-2xl font-light gap-4 mr-12'>
               <div className='flex items-end gap-6 mt-8'>
                 <div>Quantity</div>
                 <div>Received</div>

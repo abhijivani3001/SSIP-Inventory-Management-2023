@@ -3,7 +3,7 @@ import React from 'react';
 const PlacedOrder = (props) => {
   return (
     <>
-      <div className='border-2 flex justify-between border-gray-300 bg-white rounded-lg mb-2'>
+      <div className='border-2 flex justify-between border-gray-300 bg-white rounded-lg mb-2 mx-6'>
         <div className='flex gap-4'>
           <img
             className='p-4 h-20'

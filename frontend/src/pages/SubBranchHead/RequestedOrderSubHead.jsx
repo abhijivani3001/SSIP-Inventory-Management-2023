@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import Button from '../components/UI/Button';
-import axios from '../api/AxiosUrl';
-import RequestedOrderData from '../components/RequestedOrderData.jsx/RequestedOrderData';
-import { useCart } from '../store/CartProvider';
-import ROLES from '../constants/ROLES';
+import Button from '../../components/UI/Button';
+import axios from '../../api/AxiosUrl';
+import RequestedOrderData from '../../components/RequestedOrderData.jsx/RequestedOrderData';
+import { useCart } from '../../store/CartProvider';
+import ROLES from '../../constants/ROLES';
+import ReqOrdSubData from './ReqOrdSubData';
 
-const RequestedOrderList = () => {
+const RequestedOrderSubHead = () => {
   const { cart, dispatch } = useCart();
   const [usersOfRequestedOrders, setUsersOfRequestedOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isRequestedOrdersAvailable, setIsRequestedOrdersAvailable] =
     useState(false);
+
   const handleMergeOrder = async () => {
     const orderMap = new Map();
     usersOfRequestedOrders.forEach((user) => {
@@ -30,6 +32,7 @@ const RequestedOrderList = () => {
         }
       });
     });
+
     let ordersArray = [];
     orderMap.forEach((value, key) => {
       ordersArray.push({
@@ -38,6 +41,7 @@ const RequestedOrderList = () => {
         name: value.name,
       });
     });
+
     ordersArray.forEach((item) => {
       dispatch({ type: 'ADD_ITEM', payload: item });
     });
@@ -58,6 +62,8 @@ const RequestedOrderList = () => {
         } else if (user.role === ROLES.SUB_BRANCH_STORE_MANGER) {
           roleOfRequestedUser = ROLES.EMPLOYEE;
           roleOfRequestedUser2 = ROLES.SUB_BRANCH_HEAD;
+        } else if (user.role === ROLES.SUB_BRANCH_HEAD) {
+          roleOfRequestedUser = ROLES.SUB_BRANCH_STORE_MANGER;
         }
         const res2 = await axios.post('api/user/users', {
           ...user,
@@ -67,7 +73,8 @@ const RequestedOrderList = () => {
 
         const data = await res2.data.users;
 
-        // console.log(data);
+        console.log(data);
+
         if (roleOfRequestedUser2) {
           const res3 = await axios.post('api/user/users', {
             ...user,
@@ -105,15 +112,10 @@ const RequestedOrderList = () => {
         <>
           <div className='flex justify-between'>
             <h1 className='page-title'>Order List</h1>
-            <h2 className='text-2xl font-light my- gap-2 mr-8'>
-              <div className='flex items-end gap-6 mt-8'>
-                <div>Available Quantity</div>
-              </div>
-            </h2>
           </div>
           <div className='my-6'>
             {usersOfRequestedOrders.map((val) => (
-              <RequestedOrderData
+              <ReqOrdSubData
                 key={val._id}
                 branch={val.branch}
                 subBranch={val.subBranch}
@@ -125,15 +127,15 @@ const RequestedOrderList = () => {
               />
             ))}
           </div>
-          <div className=' text-center'>
-            <Button bg='bg-green-400' mb='mb-4' onClick={handleMergeOrder}>
+          {/* <div className=" text-center">
+            <Button bg="bg-green-400" mb="mb-4" onClick={handleMergeOrder}>
               Submit
             </Button>
-          </div>
+          </div> */}
         </>
       )}
     </div>
   );
 };
 
-export default RequestedOrderList;
+export default RequestedOrderSubHead;
