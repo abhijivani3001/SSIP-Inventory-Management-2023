@@ -68,6 +68,7 @@ const RequestedOrderData = (props) => {
                 type='checkbox'
                 checked={selectedItems.length === props.orders.length}
                 onChange={handleSelectAll}
+                className='mx-3'
               />
               Select All
             </label>
@@ -78,11 +79,12 @@ const RequestedOrderData = (props) => {
               {order.status === 'pending' && (
                 <div className='border flex justify-between mx-11 p-1 text-lg'>
                   <div className='grid grid-cols-4'>
-                    <label>
+                    <label className='my-auto'>
                       <input
                         type='checkbox'
                         checked={selectedItems.includes(order)}
                         onChange={() => handleSelectItem(order)}
+                        className='mx-3'
                       />
                       {order.name}
                     </label>
@@ -102,7 +104,7 @@ const RequestedOrderData = (props) => {
                             return updatedOrderData
                           })
                         }}
-                        className="w-20 mx-3"
+                        className='border-2 border-gray-700 w-16 p-0 text-center rounded-lg mx-4'
                       />
                     </label>
                     <div className="flex">
@@ -113,15 +115,16 @@ const RequestedOrderData = (props) => {
                         Allocate
                       </button>
 
-                      <button
+                      {/* pending */}
+                      {/* <button
                         onClick={handleReject}
                         className="bg-red-600 hover:bg-red-800 border-red-300 border w-20 h-10 rounded text-white hover:text-gray-200 ml-3"
                       >
                         Reject
-                      </button>
+                      </button> */}
                     </div>
                   </div>
-                  <div className="border border-black rounded w-20 h-7 text-center">
+                  <div className="border border-black rounded w-20 h-7 text-center my-auto">
                     {order.quantity}
                   </div>
                 </div>
