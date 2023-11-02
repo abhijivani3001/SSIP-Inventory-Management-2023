@@ -19,14 +19,19 @@ const RequestedOrderData = (props) => {
       setInventoryData(data);
       setAllocatedOrderData((prevOrderData) => {
         const updatedOrderData = prevOrderData.map((order) => {
-          const item = data.find((singleInventoryItem) => singleInventoryItem.itemId === order.itemId)
+          const item = data.find(
+            (singleInventoryItem) => singleInventoryItem.itemId === order.itemId
+          );
           if (item) {
-            return { ...order, quantity: order.quantity }
+            return {
+              ...order,
+              quantity: Math.min(order.quantity, item.quantity),
+            };
           }
-          return order
-        })
-        return updatedOrderData
-      })
+          return order;
+        });
+        return updatedOrderData;
+      });
     } catch (error) {
       console.log(error.message);
     }
@@ -68,7 +73,7 @@ const RequestedOrderData = (props) => {
                 type='checkbox'
                 checked={selectedItems.length === props.orders.length}
                 onChange={handleSelectAll}
-                className='mx-3'
+                className='mx-3 rounded focus:outline-none active:outline-none'
               />
               Select All
             </label>
@@ -84,7 +89,7 @@ const RequestedOrderData = (props) => {
                         type='checkbox'
                         checked={selectedItems.includes(order)}
                         onChange={() => handleSelectItem(order)}
-                        className='mx-3'
+                        className='mx-3 rounded focus:outline-none active:outline-none'
                       />
                       {order.name}
                     </label>
@@ -94,23 +99,26 @@ const RequestedOrderData = (props) => {
                         type='number'
                         value={allocatedOrderData[index].quantity}
                         onChange={(e) => {
-                          setAllocatedOrderData(prevOrderData => {
-                            const updatedOrderData = prevOrderData.map((item) => {
-                              if (item._id === order._id) {
-                                return { ...item, quantity: e.target.value }
+                          setAllocatedOrderData((prevOrderData) => {
+                            const updatedOrderData = prevOrderData.map(
+                              (item) => {
+                                if (item._id === order._id) {
+                                  return { ...item, quantity: e.target.value };
+                                }
+                                return item;
                               }
-                              return item;
-                            })
-                            return updatedOrderData
-                          })
+                            );
+                            return updatedOrderData;
+                          });
                         }}
-                        className='border-2 border-gray-700 w-16 p-0 text-center rounded-lg mx-4'
+                        min={1}
+                        className='border-2 border-gray-700 w-16 p-0 text-center mx-4 rounded'
                       />
                     </label>
-                    <div className="flex">
+                    <div className='flex'>
                       <button
                         onClick={handleAllocate}
-                        className="bg-blue-600 hover:bg-blue-800 border-gray-300 border w-20 h-10 rounded text-white hover:text-gray-200"
+                        className='bg-blue-600 hover:bg-blue-800 border-gray-300 border w-20 h-10 rounded text-white hover:text-gray-200'
                       >
                         Allocate
                       </button>
@@ -124,7 +132,7 @@ const RequestedOrderData = (props) => {
                       </button> */}
                     </div>
                   </div>
-                  <div className="border border-black rounded w-20 h-7 text-center my-auto">
+                  <div className='border border-black rounded w-20 h-7 text-center my-auto'>
                     {order.quantity}
                   </div>
                 </div>
