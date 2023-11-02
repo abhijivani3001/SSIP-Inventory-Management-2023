@@ -1,8 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Inventory from '../../pages/Inventory';
+import axios from '../../api/AxiosUrl';
 
 const RequestedOrderData = (props) => {
   const [selectedItems, setSelectedItems] = useState([]);
-  const [allocationQuantity, setAllocationQuantity] = useState(0);
+  const [inventoryData, setInventoryData] = useState([]);
+
+  useEffect(() => {
+    getInventoryItemsQuantity();
+  }, []);
+
+  const getInventoryItemsQuantity = async () => {
+    try {
+      const result = await axios.get('api/inventory');
+      const data = await result.data.inventory;
+      console.log(data);
+      setInventoryData(data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const getAvailableQuantity = (orderName) => {
+    const inventoryItem = inventoryData.find(item => item.name === orderName);
+    return inventoryItem ? inventoryItem.quantity : 0;
+  };
 
   const handleSelectItem = (order) => {
     if (selectedItems.includes(order)) {
@@ -21,11 +43,11 @@ const RequestedOrderData = (props) => {
   };
 
   const handleAllocate = () => {
-    console.log('Allocate quantity:', allocationQuantity);
+    console.log('Allocate quantity to selected items:', selectedItems);
   };
 
   const handleReject = () => {
-
+    console.log('Reject items:', selectedItems);
   };
 
   return (
@@ -59,28 +81,28 @@ const RequestedOrderData = (props) => {
                       {order.name}
                     </label>
                     <label className='mx-3 flex justify-end items-center'>
-                      Allocate Quantity:
+                      Allocated Quantity:
                       <input
                         type='number'
-                        value={allocationQuantity}
-                        onChange={(e) => setAllocationQuantity(e.target.value)}
-                        className="w-20"
+                        value={getAvailableQuantity(order.name)}
+                        className="w-20 mx-3"
                       />
                     </label>
-                    <button
-                      onClick={handleAllocate}
-                      className="bg-blue-600 hover:bg-blue-800 border-gray-300 border w-20 h-10 rounded text-white hover:text-gray-200"
-                    >
-                      Allocate
-                    </button>
+                    <div className="flex">
+                      <button
+                        onClick={handleAllocate}
+                        className="bg-blue-600 hover:bg-blue-800 border-gray-300 border w-20 h-10 rounded text-white hover:text-gray-200"
+                      >
+                        Allocate
+                      </button>
 
-                    <button
-                      onClick={handleReject}
-                      className="bg-red-600 hover:bg-red-800 border-red-300 border w-20 h-10 rounded text-white hover:text-gray-200"
-                    >
-                      Reject
-                    </button>
-
+                      <button
+                        onClick={handleReject}
+                        className="bg-red-600 hover:bg-red-800 border-red-300 border w-20 h-10 rounded text-white hover:text-gray-200 ml-3"
+                      >
+                        Reject
+                      </button>
+                    </div>
                   </div>
                   <div className="border border-black rounded w-20 h-7 text-center">
                     {order.quantity}
