@@ -34,6 +34,7 @@ const CartItems = () => {
   };
 
   const handleRemoveFromCart = (item) => {
+    console.log(item)
     dispatch({ type: 'REMOVE_ITEM', payload: item });
   };
 
@@ -86,6 +87,7 @@ const CartItems = () => {
                 onAddToCart={handleAddToCart}
                 onRemoveFromCart={handleRemoveFromCart}
                 amount={item.amount}
+                item={item}
               />
             ))}
           </div>

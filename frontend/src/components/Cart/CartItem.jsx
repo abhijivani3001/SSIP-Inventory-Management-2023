@@ -26,7 +26,7 @@ const CartItem = (props) => {
         </div>
 
         <div className='flex my-auto gap-2 mr-8'>
-          <Button onClick={props.onRemoveFromCart}>Delete</Button>
+          <Button onClick={()=>props.onRemoveFromCart(props.item)}>Delete</Button>
           <Button onClick={decrementHandler}>-</Button>
           <div className='my-auto'>{amount}</div>
           <Button onClick={incrementHandler}>+</Button>
