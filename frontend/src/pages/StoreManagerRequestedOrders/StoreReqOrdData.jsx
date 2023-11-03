@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Inventory from '../Inventory';
 import axios from '../../api/AxiosUrl';
 import Button from '../../components/UI/Button';
@@ -10,6 +10,20 @@ const StoreReqOrdData = (props) => {
 
   useEffect(() => {
     getInventoryItemsQuantity();
+  }, []);
+
+  const [userData, setUserData] = useState();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await axios.get('/api/user');
+        const data = await res.data.user;
+        setUserData(data);
+      } catch (error) {
+        console.error(error);
+      }
+    })();
   }, []);
 
   const getInventoryItemsQuantity = async () => {
@@ -38,8 +52,9 @@ const StoreReqOrdData = (props) => {
     }
   };
 
-  const handleAllocate = async (id, quantity) => {
+  const handleAllocate = async (id, orderId, quantity) => {
     try {
+      // quantity=requirement of user
       let q, tempId; // q=quantity of inventory item, tempId=inventory Id in which we want to update quantity
       inventoryData.map((item) => {
         if (item.itemId === id) {
@@ -53,6 +68,17 @@ const StoreReqOrdData = (props) => {
         updatedQuantity: q - quantity,
         inventoryId: tempId,
       });
+
+      if (q >= quantity) {
+        const res2 = await axios.put(`api/order/${orderId}`, {
+          // user_id: userData._id,
+          user_id: props.userId,
+          status: 'accepted',
+          delivered: quantity,
+        });
+        console.log(res2);
+      }
+
       // console.log(res);
     } catch (error) {
       console.log(error.message);
@@ -71,13 +97,15 @@ const StoreReqOrdData = (props) => {
 
           {props.orders.map((order, index) => (
             <div key={order.itemId}>
+              {/* {(order.status === 'accepted' || order.status==='pending') && ( */}
               {order.status === 'pending' && (
                 <div className='border flex justify-between mx-11 p-1 text-lg'>
                   <div className='grid grid-cols-4'>
                     <div>{order.name}</div>
+
                     <div className='border border-black rounded w-20 h-7 text-center my-auto'>
                       <span className='text-sm'>x</span>
-                      {order.quantity}
+                      {order.quantity - order.delivered}
                     </div>
 
                     <label className='mx-3 flex justify-end items-center'>
@@ -106,7 +134,10 @@ const StoreReqOrdData = (props) => {
                         }}
                         min={0}
                         className='border-2 border-gray-700 w-16 p-0 text-center mx-4 rounded'
-                        max={order.quantity}
+                        max={Math.min(
+                          order.quantity,
+                          allocatedOrderData[index].quantity
+                        )}
                       />
                     </label>
                     <div className='flex'>
@@ -114,7 +145,8 @@ const StoreReqOrdData = (props) => {
                         onClick={() =>
                           handleAllocate(
                             order.itemId,
-                            allocatedOrderData[index].quantity
+                            order._id,
+                            allocatedOrderData[index].quantity // store-manager's allocated quantity
                           )
                         }
                         className='bg-blue-600 hover:bg-blue-800 border-gray-300 border w-20 h-10 rounded text-white hover:text-gray-200'
