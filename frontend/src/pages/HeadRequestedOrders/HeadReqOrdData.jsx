@@ -3,41 +3,40 @@ import axios from '../../api/AxiosUrl';
 import Button from '../../components/UI/Button';
 
 const HeadReqOrdData = (props) => {
-  const [inventoryData, setInventoryData] = useState([]);
-  const [allocatedOrderData, setAllocatedOrderData] = useState(props.orders);
+  const [mergeOrderData, setMergeOrderData] = useState([]);
 
-  useEffect(() => {
-    getInventoryItemsQuantity();
-  }, []);
-
-  const getInventoryItemsQuantity = async () => {
-    try {
-      const result = await axios.get('api/inventory');
-      const data = await result.data.inventory;
-      // console.log(data);
-
-      setInventoryData(data);
-      setAllocatedOrderData((prevOrderData) => {
-        const updatedOrderData = prevOrderData.map((order) => {
-          const item = data.find(
-            (singleInventoryItem) => singleInventoryItem.itemId === order.itemId
-          );
-          if (item) {
-            return {
-              ...order,
-              quantity: Math.min(order.quantity, item.quantity),
-            };
-          }
-          return { order, quantity: 0 };
+  const handleMergeOrder = async () => {
+    const orderMap = new Map();
+    props.orders.forEach((order) => {
+      if (orderMap.has(order.itemId)) {
+        const mapItem = orderMap.get(order.itemId);
+        let updatedOrder = {
+          ...mapItem,
+          quantity: order.quantity + mapItem.quantity,
+        };
+        orderMap.set(order.itemId, updatedOrder);
+      } else {
+        orderMap.set(order.itemId, {
+          name: order.name,
+          quantity: order.quantity,
+          status: order.status,
         });
-        return updatedOrderData;
-      });
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+      }
+    });
 
-  // console.log(allocatedOrderData);
+    let ordersArray = [];
+    orderMap.forEach((value, key) => {
+      ordersArray.push({
+        _id: key,
+        itemId: key,
+        quantity: value.quantity,
+        name: value.name,
+        status: value.status,
+      });
+    });
+
+    setMergeOrderData(ordersArray);
+  };
 
   const statusHandler = async (storeManagerId, status) => {
     try {
@@ -45,6 +44,12 @@ const HeadReqOrdData = (props) => {
       console.log(res);
     } catch (error) {}
   };
+
+  useEffect(() => {
+    handleMergeOrder();
+  }, []);
+
+  console.log(mergeOrderData);
 
   return (
     <div className='mx-8 mt-4'>
@@ -70,8 +75,7 @@ const HeadReqOrdData = (props) => {
             </div>
           </div>
         </div>
-
-        {props.orders.map((order, index) => (
+        {mergeOrderData.map((order, index) => (
           <div key={order.itemId}>
             {order.status === 'pending' && (
               <div className='border text-xl'>

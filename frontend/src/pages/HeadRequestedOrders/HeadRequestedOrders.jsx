@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import Button from "../../components/UI/Button";
-import axios from "../../api/AxiosUrl";
-import { useCart } from "../../store/CartProvider";
-import ROLES from "../../constants/ROLES";
-import HeadReqOrdData from "./HeadReqOrdData";
+import React, { useState, useEffect } from 'react';
+import Button from '../../components/UI/Button';
+import axios from '../../api/AxiosUrl';
+import { useCart } from '../../store/CartProvider';
+import ROLES from '../../constants/ROLES';
+import HeadReqOrdData from './HeadReqOrdData';
 
 const HeadRequestedOrders = () => {
   const { cart, dispatch } = useCart();
@@ -12,48 +12,14 @@ const HeadRequestedOrders = () => {
   const [isRequestedOrdersAvailable, setIsRequestedOrdersAvailable] =
     useState(false);
 
-  // const handleMergeOrder = async () => {
-  //   const orderMap = new Map();
-  //   usersOfRequestedOrders.forEach((user) => {
-  //     user.orders.forEach((order) => {
-  //       if (orderMap.has(order.itemId)) {
-  //         const mapItem = orderMap.get(order.itemId);
-  //         let updatedOrder = {
-  //           ...mapItem,
-  //           quantity: order.quantity + mapItem.quantity,
-  //         };
-  //         orderMap.set(order.itemId, updatedOrder);
-  //       } else {
-  //         orderMap.set(order.itemId, {
-  //           name: order.name,
-  //           quantity: order.quantity,
-  //         });
-  //       }
-  //     });
-  //   });
-
-  //   let ordersArray = [];
-  //   orderMap.forEach((value, key) => {
-  //     ordersArray.push({
-  //       _id: key,
-  //       amount: value.quantity,
-  //       name: value.name,
-  //     });
-  //   });
-
-  //   ordersArray.forEach((item) => {
-  //     dispatch({ type: 'ADD_ITEM', payload: item });
-  //   });
-  // };
-
   useEffect(() => {
     (async () => {
       try {
-        const res1 = await axios.get("api/user");
+        const res1 = await axios.get('api/user');
         const user = await res1.data.user;
 
-        let roleOfRequestedUser = "";
-        let roleOfRequestedUser2 = "";
+        let roleOfRequestedUser = '';
+        let roleOfRequestedUser2 = '';
 
         if (user.role === ROLES.DEPARTMENT_STORE_MANAGER) {
           roleOfRequestedUser = ROLES.BRANCH_STORE_MANAGER;
@@ -66,7 +32,7 @@ const HeadRequestedOrders = () => {
           roleOfRequestedUser = ROLES.SUB_BRANCH_STORE_MANAGER;
         }
 
-        const res2 = await axios.post("api/user/users", {
+        const res2 = await axios.post('api/user/users', {
           ...user,
           role: roleOfRequestedUser,
         });
@@ -74,7 +40,7 @@ const HeadRequestedOrders = () => {
         const data = await res2.data.users;
 
         if (roleOfRequestedUser2) {
-          const res3 = await axios.post("api/user/users", {
+          const res3 = await axios.post('api/user/users', {
             ...user,
             role: roleOfRequestedUser2,
           });
@@ -94,21 +60,21 @@ const HeadRequestedOrders = () => {
   }, []);
 
   return (
-    <div className="mx-8 mt-4">
+    <div className='mx-8 mt-4'>
       {isLoading && (
-        <div className="text-xl my-auto text-center ">Loading...</div>
+        <div className='text-xl my-auto text-center '>Loading...</div>
       )}
       {!isLoading && !isRequestedOrdersAvailable && (
-        <div className="text-3xl text-center">
+        <div className='text-3xl text-center'>
           No more orders are requested!
         </div>
       )}
       {!isLoading && isRequestedOrdersAvailable && (
         <>
-          <div className="flex justify-between">
-            <h1 className="page-title">Order List</h1>
+          <div className='flex justify-between'>
+            <h1 className='page-title'>Order List</h1>
           </div>
-          <div className="my-6">
+          <div className='my-6'>
             {usersOfRequestedOrders.map((val) => {
               return (
                 val.orders.length > 0 && (
@@ -126,11 +92,6 @@ const HeadRequestedOrders = () => {
               );
             })}
           </div>
-          {/* <div className=" text-center">
-            <Button bg="bg-green-400" mb="mb-4" onClick={handleMergeOrder}>
-              Submit
-            </Button>
-          </div> */}
         </>
       )}
     </div>

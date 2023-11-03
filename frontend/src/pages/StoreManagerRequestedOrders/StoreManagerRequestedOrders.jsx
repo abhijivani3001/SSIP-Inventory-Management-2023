@@ -16,9 +16,7 @@ const StoreManagerRequestedOrders = () => {
   const handleMergeOrder = async () => {
     const orderMap = new Map();
     usersOfRequestedOrders.forEach((user) => {
-      
       user.orders.forEach((order) => {
-        
         if (orderMap.has(order.itemId)) {
           const mapItem = orderMap.get(order.itemId);
           let updatedOrder = {
