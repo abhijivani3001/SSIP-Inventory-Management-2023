@@ -5,6 +5,7 @@ import ReactApexChart from 'react-apexcharts';
 
 import PieChart from '../components/Charts/PieChart';
 import BarChart from '../components/Charts/BarChart';
+import UserChart from '../components/Charts/UserChart';
 
 const Dashboard = () => {
   const authCtx = useContext(AuthContext);
@@ -39,7 +40,7 @@ const Dashboard = () => {
             .get(`api/order`)
             .then((orderResponse) => {
               const orderDataFromAPI = orderResponse.data.orders;
-              console.log(orderDataFromAPI);
+              // console.log(orderDataFromAPI);
 
               // Create a map to calculate the sum of quantities for each category
               const categoryMap = new Map();
@@ -97,6 +98,7 @@ const Dashboard = () => {
                   y: totalQuantity, // Value for the bar
                 })
               );
+              // console.log
 
               setIsLoading(false);
             })
@@ -125,6 +127,9 @@ const Dashboard = () => {
               </div>
               <div className='mx-10'>
                 <BarChart />
+              </div>
+              <div className='mx-10'>
+                <UserChart />
               </div>
             </div>
           )}

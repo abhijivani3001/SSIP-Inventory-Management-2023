@@ -7,7 +7,6 @@ const PlacedOrder = (props) => {
   const handleReceivedClick = async () => {
     setIsItemReceived(true);
     const res = await axios.get('/api/user');
-
     try {
       const response = await axios.put(`api/order/${props.orderId}`, {
         status: 'completed',
