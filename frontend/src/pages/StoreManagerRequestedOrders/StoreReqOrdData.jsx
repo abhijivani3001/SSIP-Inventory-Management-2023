@@ -38,24 +38,25 @@ const StoreReqOrdData = (props) => {
     }
   };
 
-  const handleSelectItem = (order) => {
-    if (selectedItems.includes(order)) {
-      setSelectedItems(selectedItems.filter((item) => item !== order));
-    } else {
-      setSelectedItems([...selectedItems, order]);
-    }
-  };
+  const handleAllocate = async (id, quantity) => {
+    try {
+      let q, tempId; // q=quantity of inventory item, tempId=inventory Id in which we want to update quantity
+      inventoryData.map((item) => {
+        if (item.itemId === id) {
+          q = item.quantity;
+          tempId = item._id;
+        }
+      });
+      // console.log(q - quantity);
 
-  const handleSelectAll = () => {
-    if (selectedItems.length === props.orders.length) {
-      setSelectedItems([]);
-    } else {
-      setSelectedItems([...props.orders]);
+      const res = await axios.put('api/inventory', {
+        updatedQuantity: q - quantity,
+        inventoryId: tempId,
+      });
+      // console.log(res);
+    } catch (error) {
+      console.log(error.message);
     }
-  };
-
-  const handleAllocate = () => {
-    console.log('Allocate quantity to selected items:', selectedItems);
   };
 
   const handleReject = () => {
@@ -68,32 +69,12 @@ const StoreReqOrdData = (props) => {
         <div className='bg-gray-200 border-2 border-gray-300 rounded-lg m-4'>
           <div className='text-2xl font-semibold mx-4 my-2'>{props.name}</div>
 
-          <div className='mx-4'>
-            <label>
-              <input
-                type='checkbox'
-                checked={selectedItems.length === props.orders.length}
-                onChange={handleSelectAll}
-                className='mx-3 rounded focus:outline-none active:outline-none'
-              />
-              Select All
-            </label>
-          </div>
-
           {props.orders.map((order, index) => (
             <div key={order.itemId}>
               {order.status === 'pending' && (
                 <div className='border flex justify-between mx-11 p-1 text-lg'>
                   <div className='grid grid-cols-4'>
-                    <label className='my-auto'>
-                      <input
-                        type='checkbox'
-                        checked={selectedItems.includes(order)}
-                        onChange={() => handleSelectItem(order)}
-                        className='mx-3 rounded focus:outline-none active:outline-none'
-                      />
-                      {order.name}
-                    </label>
+                    <div>{order.name}</div>
                     <div className='border border-black rounded w-20 h-7 text-center my-auto'>
                       <span className='text-sm'>x</span>
                       {order.quantity}
@@ -123,14 +104,19 @@ const StoreReqOrdData = (props) => {
                             return updatedOrderData;
                           });
                         }}
-                        min={1}
+                        min={0}
                         className='border-2 border-gray-700 w-16 p-0 text-center mx-4 rounded'
                         max={order.quantity}
                       />
                     </label>
                     <div className='flex'>
                       <button
-                        onClick={handleAllocate}
+                        onClick={() =>
+                          handleAllocate(
+                            order.itemId,
+                            allocatedOrderData[index].quantity
+                          )
+                        }
                         className='bg-blue-600 hover:bg-blue-800 border-gray-300 border w-20 h-10 rounded text-white hover:text-gray-200'
                       >
                         Allocate

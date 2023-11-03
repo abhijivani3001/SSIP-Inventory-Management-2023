@@ -40,6 +40,7 @@ const CartItems = () => {
 
   const postElement = async (orders) => {
     try {
+      console.log(orders);
       const res = await axios.post('api/order', orders);
       console.log(res);
     } catch (error) {
@@ -63,6 +64,7 @@ const CartItems = () => {
         status: 'pending',
       });
     });
+    
     postElement(orders);
 
     dispatch({ type: 'CLEAR_CART' });
