@@ -47,7 +47,7 @@ const StoreManagerNavbar = (props) => {
               <div className='flex gap-0'>
                 <div className='w-6 relative'>
                   <img src={cartImg} alt='Cart' />
-                  <span className='absolute left-3 bottom-3 bg-teal-700 text-white py-0 px-2 rounded-full z-30'>
+                  <span className='absolute left-3 bottom-3 bg-teal-700 text-white py-0 px-1.5 text-sm rounded-full z-30'>
                     {amount}
                   </span>
                 </div>
@@ -163,11 +163,10 @@ const StoreManagerNavbar = (props) => {
           <li>
             <Link
               to='/'
-              className={`${
-                location.pathname === '/'
+              className={`${location.pathname === '/'
                   ? 'active-navbar-element'
                   : 'navbar-element'
-              }`}
+                }`}
             >
               Home
             </Link>
@@ -175,11 +174,10 @@ const StoreManagerNavbar = (props) => {
           <li>
             <Link
               to='/about'
-              className={`${
-                location.pathname === '/about'
+              className={`${location.pathname === '/about'
                   ? 'active-navbar-element'
                   : 'navbar-element'
-              }`}
+                }`}
             >
               About
             </Link>
@@ -187,11 +185,10 @@ const StoreManagerNavbar = (props) => {
           <li>
             <Link
               to='/products'
-              className={`${
-                location.pathname === '/products'
+              className={`${location.pathname === '/products'
                   ? 'active-navbar-element'
                   : 'navbar-element'
-              }`}
+                }`}
             >
               Products
             </Link>
@@ -199,11 +196,10 @@ const StoreManagerNavbar = (props) => {
           <li>
             <Link
               to='/store-manager-requested-orders'
-              className={`${
-                location.pathname === '/store-manager-requested-orders'
+              className={`${location.pathname === '/store-manager-requested-orders'
                   ? 'active-navbar-element'
                   : 'navbar-element'
-              }`}
+                }`}
             >
               Requested orders
             </Link>
@@ -211,11 +207,10 @@ const StoreManagerNavbar = (props) => {
           <li>
             <Link
               to='/placed-orders'
-              className={`${
-                location.pathname === '/placed-orders'
+              className={`${location.pathname === '/placed-orders'
                   ? 'active-navbar-element'
                   : 'navbar-element'
-              }`}
+                }`}
             >
               Placed orders
             </Link>
@@ -223,11 +218,10 @@ const StoreManagerNavbar = (props) => {
           <li>
             <Link
               to='/inventory'
-              className={`${
-                location.pathname === '/inventory'
+              className={`${location.pathname === '/inventory'
                   ? 'active-navbar-element'
                   : 'navbar-element'
-              }`}
+                }`}
             >
               Inventory
             </Link>

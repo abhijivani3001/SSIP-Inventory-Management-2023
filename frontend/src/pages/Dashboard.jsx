@@ -118,7 +118,7 @@ const Dashboard = () => {
         <p>Loading...</p>
       ) : (
         <div>
-          {orderData.length > 0 && (
+          {orderData.length < 1 ? <span className='text-2xl mx-3'>No order placed by you </span> : (
             <div className='flex'>
               <div className='mx-10'>
                 <PieChart />

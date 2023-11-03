@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import PlacedOrder from '../components/PlacedOrder/PlacedOrder';
-
 import axios from '../api/AxiosUrl';
 
 const PlacedOrderList = () => {
+  // const authCtx = useState(AuthContext);
+
   const [placedOrders, setPlacedOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isOrdersPlaced, setIsOrdersPlaced] = useState(false);
@@ -32,7 +33,7 @@ const PlacedOrderList = () => {
         <div className='text-xl my-auto text-center '>Loading...</div>
       )}
       {!isLoading && !isOrdersPlaced && (
-        <div className='text-3xl text-center '>Placed orders is empty</div>
+        <div className='text-3xl text-center'>Placed orders is empty</div>
       )}
 
       {!isLoading && isOrdersPlaced && (
@@ -52,10 +53,12 @@ const PlacedOrderList = () => {
             {placedOrders.map((item) => (
               <PlacedOrder
                 key={item._id}
+                imageUrl={item.imageUrl}
                 name={item.name}
                 quantity={item.quantity}
                 status={item.status}
                 delivered={item.delivered}
+                orderId={item._id}
               />
             ))}
           </div>
