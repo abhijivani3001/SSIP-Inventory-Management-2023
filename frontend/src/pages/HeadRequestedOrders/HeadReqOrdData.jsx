@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from '../../api/AxiosUrl';
 import Button from '../../components/UI/Button';
 
-const ReqOrdSubData = (props) => {
+const HeadReqOrdData = (props) => {
   const [inventoryData, setInventoryData] = useState([]);
   const [allocatedOrderData, setAllocatedOrderData] = useState(props.orders);
 
@@ -94,4 +94,4 @@ const ReqOrdSubData = (props) => {
   );
 };
 
-export default ReqOrdSubData;
+export default HeadReqOrdData;

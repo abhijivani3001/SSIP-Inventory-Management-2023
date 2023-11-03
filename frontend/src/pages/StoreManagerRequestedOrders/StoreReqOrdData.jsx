@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import Inventory from "../../pages/Inventory";
-import axios from "../../api/AxiosUrl";
-import Button from "../UI/Button";
+import React, { useState, useEffect } from 'react';
+import Inventory from '../Inventory';
+import axios from '../../api/AxiosUrl';
+import Button from '../../components/UI/Button';
 
-const RequestedOrderData = (props) => {
+const StoreReqOrdData = (props) => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [inventoryData, setInventoryData] = useState([]);
   const [allocatedOrderData, setAllocatedOrderData] = useState(props.orders);
@@ -14,7 +14,7 @@ const RequestedOrderData = (props) => {
 
   const getInventoryItemsQuantity = async () => {
     try {
-      const result = await axios.get("api/inventory");
+      const result = await axios.get('api/inventory');
       const data = await result.data.inventory;
       console.log(data);
       setInventoryData(data);
@@ -55,26 +55,26 @@ const RequestedOrderData = (props) => {
   };
 
   const handleAllocate = () => {
-    console.log("Allocate quantity to selected items:", selectedItems);
+    console.log('Allocate quantity to selected items:', selectedItems);
   };
 
   const handleReject = () => {
-    console.log("Reject items:", selectedItems);
+    console.log('Reject items:', selectedItems);
   };
 
   return (
     <>
       {props.orders.length > 0 && (
-        <div className="bg-gray-200 border-2 border-gray-300 rounded-lg m-4">
-          <div className="text-2xl font-semibold mx-4 my-2">{props.name}</div>
+        <div className='bg-gray-200 border-2 border-gray-300 rounded-lg m-4'>
+          <div className='text-2xl font-semibold mx-4 my-2'>{props.name}</div>
 
-          <div className="mx-4">
+          <div className='mx-4'>
             <label>
               <input
-                type="checkbox"
+                type='checkbox'
                 checked={selectedItems.length === props.orders.length}
                 onChange={handleSelectAll}
-                className="mx-3 rounded focus:outline-none active:outline-none"
+                className='mx-3 rounded focus:outline-none active:outline-none'
               />
               Select All
             </label>
@@ -82,27 +82,27 @@ const RequestedOrderData = (props) => {
 
           {props.orders.map((order, index) => (
             <div key={order.itemId}>
-              {order.status === "pending" && (
-                <div className="border flex justify-between mx-11 p-1 text-lg">
-                  <div className="grid grid-cols-4">
-                    <label className="my-auto">
+              {order.status === 'pending' && (
+                <div className='border flex justify-between mx-11 p-1 text-lg'>
+                  <div className='grid grid-cols-4'>
+                    <label className='my-auto'>
                       <input
-                        type="checkbox"
+                        type='checkbox'
                         checked={selectedItems.includes(order)}
                         onChange={() => handleSelectItem(order)}
-                        className="mx-3 rounded focus:outline-none active:outline-none"
+                        className='mx-3 rounded focus:outline-none active:outline-none'
                       />
                       {order.name}
                     </label>
-                    <div className="border border-black rounded w-20 h-7 text-center my-auto">
-                      <span className="text-sm">x</span>
+                    <div className='border border-black rounded w-20 h-7 text-center my-auto'>
+                      <span className='text-sm'>x</span>
                       {order.quantity}
                     </div>
 
-                    <label className="mx-3 flex justify-end items-center">
+                    <label className='mx-3 flex justify-end items-center'>
                       Allocate Quantity:
                       <input
-                        type="number"
+                        type='number'
                         value={allocatedOrderData[index].quantity}
                         onChange={(e) => {
                           setAllocatedOrderData((prevOrderData) => {
@@ -124,14 +124,14 @@ const RequestedOrderData = (props) => {
                           });
                         }}
                         min={1}
-                        className="border-2 border-gray-700 w-16 p-0 text-center mx-4 rounded"
+                        className='border-2 border-gray-700 w-16 p-0 text-center mx-4 rounded'
                         max={order.quantity}
                       />
                     </label>
-                    <div className="flex">
+                    <div className='flex'>
                       <button
                         onClick={handleAllocate}
-                        className="bg-blue-600 hover:bg-blue-800 border-gray-300 border w-20 h-10 rounded text-white hover:text-gray-200"
+                        className='bg-blue-600 hover:bg-blue-800 border-gray-300 border w-20 h-10 rounded text-white hover:text-gray-200'
                       >
                         Allocate
                       </button>
@@ -155,4 +155,4 @@ const RequestedOrderData = (props) => {
   );
 };
 
-export default RequestedOrderData;
+export default StoreReqOrdData;

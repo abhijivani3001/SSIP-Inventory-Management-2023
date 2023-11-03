@@ -51,7 +51,7 @@ const Inventory = (props) => {
         <div className='text-xl my-auto text-center '>Loading...</div>
       )}
       {!isLoading && !isInventoryProductsAvailable && (
-        <div className='text-3xl text-center '>Products is not available</div>
+        <div className='text-3xl text-center '>Your Inventory is empty</div>
       )}
 
       {!isLoading && (

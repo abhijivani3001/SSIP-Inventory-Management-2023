@@ -1,51 +1,50 @@
 import React, { useState, useEffect } from 'react';
 import Button from '../../components/UI/Button';
 import axios from '../../api/AxiosUrl';
-import RequestedOrderData from '../../components/RequestedOrderData.jsx/RequestedOrderData';
 import { useCart } from '../../store/CartProvider';
 import ROLES from '../../constants/ROLES';
-import ReqOrdSubData from './ReqOrdSubData';
+import HeadReqOrdData from './HeadReqOrdData';
 
-const RequestedOrderSubHead = () => {
+const HeadRequestedOrders = () => {
   const { cart, dispatch } = useCart();
   const [usersOfRequestedOrders, setUsersOfRequestedOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isRequestedOrdersAvailable, setIsRequestedOrdersAvailable] =
     useState(false);
 
-  const handleMergeOrder = async () => {
-    const orderMap = new Map();
-    usersOfRequestedOrders.forEach((user) => {
-      user.orders.forEach((order) => {
-        if (orderMap.has(order.itemId)) {
-          const mapItem = orderMap.get(order.itemId);
-          let updatedOrder = {
-            ...mapItem,
-            quantity: order.quantity + mapItem.quantity,
-          };
-          orderMap.set(order.itemId, updatedOrder);
-        } else {
-          orderMap.set(order.itemId, {
-            name: order.name,
-            quantity: order.quantity,
-          });
-        }
-      });
-    });
+  // const handleMergeOrder = async () => {
+  //   const orderMap = new Map();
+  //   usersOfRequestedOrders.forEach((user) => {
+  //     user.orders.forEach((order) => {
+  //       if (orderMap.has(order.itemId)) {
+  //         const mapItem = orderMap.get(order.itemId);
+  //         let updatedOrder = {
+  //           ...mapItem,
+  //           quantity: order.quantity + mapItem.quantity,
+  //         };
+  //         orderMap.set(order.itemId, updatedOrder);
+  //       } else {
+  //         orderMap.set(order.itemId, {
+  //           name: order.name,
+  //           quantity: order.quantity,
+  //         });
+  //       }
+  //     });
+  //   });
 
-    let ordersArray = [];
-    orderMap.forEach((value, key) => {
-      ordersArray.push({
-        _id: key,
-        amount: value.quantity,
-        name: value.name,
-      });
-    });
+  //   let ordersArray = [];
+  //   orderMap.forEach((value, key) => {
+  //     ordersArray.push({
+  //       _id: key,
+  //       amount: value.quantity,
+  //       name: value.name,
+  //     });
+  //   });
 
-    ordersArray.forEach((item) => {
-      dispatch({ type: 'ADD_ITEM', payload: item });
-    });
-  };
+  //   ordersArray.forEach((item) => {
+  //     dispatch({ type: 'ADD_ITEM', payload: item });
+  //   });
+  // };
 
   useEffect(() => {
     (async () => {
@@ -55,16 +54,18 @@ const RequestedOrderSubHead = () => {
 
         let roleOfRequestedUser = '';
         let roleOfRequestedUser2 = '';
+
         if (user.role === ROLES.DEPARTMENT_STORE_MANAGER) {
           roleOfRequestedUser = ROLES.BRANCH_STORE_MANAGER;
         } else if (user.role === ROLES.BRANCH_STORE_MANAGER) {
-          roleOfRequestedUser = ROLES.SUB_BRANCH_STORE_MANGER;
-        } else if (user.role === ROLES.SUB_BRANCH_STORE_MANGER) {
+          roleOfRequestedUser = ROLES.SUB_BRANCH_STORE_MANAGER;
+        } else if (user.role === ROLES.SUB_BRANCH_STORE_MANAGER) {
           roleOfRequestedUser = ROLES.EMPLOYEE;
           roleOfRequestedUser2 = ROLES.SUB_BRANCH_HEAD;
         } else if (user.role === ROLES.SUB_BRANCH_HEAD) {
-          roleOfRequestedUser = ROLES.SUB_BRANCH_STORE_MANGER;
+          roleOfRequestedUser = ROLES.SUB_BRANCH_STORE_MANAGER;
         }
+
         const res2 = await axios.post('api/user/users', {
           ...user,
           role: roleOfRequestedUser,
@@ -115,7 +116,7 @@ const RequestedOrderSubHead = () => {
           </div>
           <div className='my-6'>
             {usersOfRequestedOrders.map((val) => (
-              <ReqOrdSubData
+              <HeadReqOrdData
                 key={val._id}
                 branch={val.branch}
                 subBranch={val.subBranch}
@@ -138,4 +139,4 @@ const RequestedOrderSubHead = () => {
   );
 };
 
-export default RequestedOrderSubHead;
+export default HeadRequestedOrders;

@@ -13,23 +13,13 @@ import CartItems from './pages/CartItems';
 import UserProfile from './pages/UserProfile';
 import AuthContext from './store/auth-context';
 import Inventory from './pages/Inventory';
+import ROLES from './constants/ROLES';
 
 import axios from './api/AxiosUrl';
-import RequestedOrderList from './pages/RequestedOrderList';
-import RequestedOrderSubHead from './pages/SubBranchHead/RequestedOrderSubHead';
+import HeadRequestedOrders from './pages/HeadRequestedOrders/HeadRequestedOrders';
+import StoreManagerRequestedOrders from './pages/StoreManagerRequestedOrders/StoreManagerRequestedOrders';
 
 function App() {
-  const USER = {
-    EMPLOYEE: 'employee',
-    SUB_BRANCH_STORE_MANAGER: 'sub-branch-store-manager',
-    SUB_BRANCH_HEAD: 'sub-branch-head',
-    BRANCH_STORE_MANAGER: 'branch-store-manager',
-    BRANCH_HEAD: 'branch-head',
-    DEPARTMENT_STORE_MANAGER: 'department-store-manager',
-    DEPARTMENT_HEAD: 'department-head',
-    ADMIN: 'admin',
-  };
-
   const authCtx = useContext(AuthContext);
   const isLoggedIn = authCtx.isLoggedIn;
 
@@ -65,25 +55,37 @@ function App() {
         {isLoggedIn && (
           <Route path='/notification' element={<Notification />} />
         )}
+
         {isLoggedIn &&
-          (userRole === USER.SUB_BRANCH_STORE_MANAGER ||
-            userRole === USER.BRANCH_STORE_MANAGER ||
-            userRole === USER.DEPARTMENT_STORE_MANAGER ||
+          (userRole === ROLES.SUB_BRANCH_STORE_MANAGER ||
+            userRole === ROLES.BRANCH_STORE_MANAGER ||
+            userRole === ROLES.DEPARTMENT_STORE_MANAGER ||
             !isLoading) && <Route path='/inventory' element={<Inventory />} />}
-        {isLoggedIn && userRole === USER.SUB_BRANCH_STORE_MANAGER && (
-          <Route
-            path='/requested-order-list'
-            element={<RequestedOrderList />}
-          />
-        )}
-        {isLoggedIn && userRole === USER.SUB_BRANCH_HEAD && (
-          <Route
-            path='/requested-order-list-sub-head'
-            element={<RequestedOrderSubHead />}
-          />
-        )}
+
+        {isLoggedIn &&
+          (userRole === ROLES.SUB_BRANCH_STORE_MANAGER ||
+            userRole === ROLES.BRANCH_STORE_MANAGER ||
+            userRole === ROLES.DEPARTMENT_STORE_MANAGER ||
+            !isLoading) && (
+            <Route
+              path='/store-manager-requested-orders'
+              element={<StoreManagerRequestedOrders />}
+            />
+          )}
+
+        {isLoggedIn &&
+          (userRole === ROLES.SUB_BRANCH_HEAD ||
+            userRole === ROLES.BRANCH_HEAD ||
+            userRole === ROLES.DEPARTMENT_HEAD ||
+            !isLoading) && (
+            <Route
+              path='/head-requested-orders'
+              element={<HeadRequestedOrders />}
+            />
+          )}
+
         {isLoggedIn && (
-          <Route path='/placed-order-list' element={<PlacedOrderList />} />
+          <Route path='/placed-orders' element={<PlacedOrderList />} />
         )}
 
         {!isLoading && <Route path='*' element={<NotFound />} />}
