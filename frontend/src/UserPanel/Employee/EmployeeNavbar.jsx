@@ -96,6 +96,14 @@ const EmployeeNavbar = (props) => {
                   to='/user'
                   className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
                 >
+                  Your profile
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to='/dashboard'
+                  className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+                >
                   Dashboard
                 </Link>
               </li>
