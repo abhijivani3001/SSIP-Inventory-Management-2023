@@ -22,6 +22,7 @@ const Product = (props) => {
         <ProductCard
           key={val._id}
           title={val.name}
+          imageUrl={val.imageUrl}
           description={val.description}
           company={val.company}
           category={val.category}

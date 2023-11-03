@@ -40,7 +40,7 @@ const Navbar = () => {
   return (
     <nav className='sticky inset-x-0 top-0 z-10 text-gray-900 bg-gray-100 text-xl mx-2'>
       <div className='flex flex-wrap items-center justify-between mx-auto p-4 px-10'>
-        {/* part-1 */}
+
         <Link to='/'>
           <div className='flex items-center'>
             <img
@@ -63,11 +63,10 @@ const Navbar = () => {
               <li>
                 <Link
                   to='/'
-                  className={`${
-                    location.pathname === '/'
-                      ? 'active-navbar-element'
-                      : 'navbar-element'
-                  }`}
+                  className={`${location.pathname === '/'
+                    ? 'active-navbar-element'
+                    : 'navbar-element'
+                    }`}
                 >
                   Home
                 </Link>
@@ -75,11 +74,10 @@ const Navbar = () => {
               <li>
                 <Link
                   to='/about'
-                  className={`${
-                    location.pathname === '/about'
-                      ? 'active-navbar-element'
-                      : 'navbar-element'
-                  }`}
+                  className={`${location.pathname === '/about'
+                    ? 'active-navbar-element'
+                    : 'navbar-element'
+                    }`}
                 >
                   About
                 </Link>
@@ -94,11 +92,10 @@ const Navbar = () => {
               <li>
                 <Link
                   to='/login'
-                  className={`navbar-element ${
-                    location.pathname === '/login'
-                      ? 'active-navbar-element'
-                      : ''
-                  }`}
+                  className={`navbar-element ${location.pathname === '/login'
+                    ? 'active-navbar-element'
+                    : ''
+                    }`}
                 >
                   Login
                 </Link>
