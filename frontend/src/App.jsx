@@ -18,6 +18,7 @@ import ROLES from './constants/ROLES';
 import axios from './api/AxiosUrl';
 import HeadRequestedOrders from './pages/HeadRequestedOrders/HeadRequestedOrders';
 import StoreManagerRequestedOrders from './pages/StoreManagerRequestedOrders/StoreManagerRequestedOrders';
+import Dashboard from './pages/Dashboard';
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -50,6 +51,7 @@ function App() {
 
         {!isLoggedIn && <Route path='/login' element={<Login />} />}
         {isLoggedIn && <Route path='/user' element={<UserProfile />} />}
+        {isLoggedIn && <Route path='/dashboard' element={<Dashboard />} />}
         {isLoggedIn && <Route path='/products' element={<Products />} />}
         {isLoggedIn && <Route path='/cart' element={<CartItems />} />}
         {isLoggedIn && (
