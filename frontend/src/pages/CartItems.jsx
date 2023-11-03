@@ -34,15 +34,13 @@ const CartItems = () => {
   };
 
   const handleRemoveFromCart = (item) => {
-    console.log(item);
     dispatch({ type: 'REMOVE_ITEM', payload: item });
   };
 
   const postElement = async (orders) => {
     try {
-      console.log(orders);
       const res = await axios.post('api/order', orders);
-      console.log(res);
+      // console.log(res);
     } catch (error) {
       console.log(error.message);
     }
@@ -51,7 +49,7 @@ const CartItems = () => {
   const submitHandler = (event) => {
     event.preventDefault();
     toast.success('Order placed successfully!', {
-      autoClose: 1500,
+      autoClose: 1000,
     });
 
     let orders = [];

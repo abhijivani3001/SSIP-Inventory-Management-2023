@@ -11,7 +11,7 @@ const Product = (props) => {
   };
 
   const handleAddToCart = (item) => {
-    item = { ...item, amount: amount };
+    item = { ...item, amount: (+amount) }; // (+amount) : '+' is used to convert string to int
     // console.log(item);
     dispatch({ type: 'ADD_ITEM', payload: item });
   };
@@ -26,7 +26,8 @@ const Product = (props) => {
           description={val.description}
           company={val.company}
           category={val.category}
-          onAddToCart={handleAddToCart.bind(null, val)}
+          // onAddToCart={handleAddToCart.bind(null, val)}
+          onAddToCart={()=>handleAddToCart(val)}
           amountChangeHandler={amountChangeHandler}
         />
       ))}

@@ -7,7 +7,7 @@ const CartItem = (props) => {
   const { cart, dispatch } = useCart();
 
   const incrementHandler = (item) => {
-    setAmount((prev) => prev + 1);
+    setAmount((+amount)+1);
     dispatch({
       type: 'UPDATE_ITEM',
       payload: { ...item, amount: Math.max(0, item.amount + 1) },
@@ -15,7 +15,7 @@ const CartItem = (props) => {
   };
   const decrementHandler = (item) => {
     console.log(item);
-    if (amount > 1) setAmount((prev) => prev - 1);
+    if (amount > 1) setAmount((+amount)-1);
     dispatch({
       type: 'UPDATE_ITEM',
       payload: { ...item, amount: Math.max(0, item.amount - 1) },

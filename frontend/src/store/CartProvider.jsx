@@ -22,11 +22,13 @@ const cartReducer = (state, action) => {
         ...state,
         items: updatedItemsArray,
       };
+
     case 'REMOVE_ITEM':
       const updatedItems = state.items.filter(
         (item) => item._id !== action.payload._id
       );
       return { ...state, items: updatedItems };
+
     case 'UPDATE_ITEM':
       const updatedItemsArray2 = state.items.map((item) => {
         if (item.name === action.payload.name) {
@@ -38,8 +40,10 @@ const cartReducer = (state, action) => {
         ...state,
         items: updatedItemsArray2,
       };
+
     case 'CLEAR_CART':
       return initialState;
+      
     default:
       return initialState;
   }
