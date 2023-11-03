@@ -1,13 +1,8 @@
 import axios from '../../api/AxiosUrl';
 import React, { useState } from 'react';
-// import AuthContext from '../../store/auth-context';
-
 
 const PlacedOrder = (props) => {
-  // const authCtx = useState(AuthContext);
-
   const [isItemReceived, setIsItemReceived] = useState(false);
-
 
   const handleReceivedClick = async () => {
     setIsItemReceived(true);
@@ -29,11 +24,9 @@ const PlacedOrder = (props) => {
     }
   };
 
-
-
-
   return (
     <>
+
       <div className={`border-2 flex justify-between border-gray-300 bg-white rounded-lg mb-2 mx-6 ${isItemReceived ? 'bg-green-100' : ''}`}>
         <div className='flex gap-4'>
           <img
@@ -45,27 +38,22 @@ const PlacedOrder = (props) => {
             {props.name}
           </h5>
         </div>
-        {!isItemReceived ? (
+        {props.status === 'accepted' && !isItemReceived && (
           <button
-            className='bg-green-500 text-white px-3 py-1 rounded'
+            className='bg-green-500  text-white px-3 py-1 rounded'
             onClick={handleReceivedClick}
           >
             Received?
           </button>
-        ) : (
-          <span className='text-green-500 font-semibold'></span>
         )}
         <div className='flex my-auto gap-14 mr-8'>
           <div className='mr-10'>{props.quantity}</div>
           <div className='mr-2'>{props.delivered}</div>
-          <div>{isItemReceived ? 'Completed' : props.status}</div>
+          <div className={`${props.status === 'completed' ? 'text-green-500' : ''}`}>
+            {isItemReceived ? 'Completed' : props.status}
+          </div>
         </div>
       </div>
-      {/* <div className='flex my-auto gap-14 mr-8'>
-        <div className='mr-10'>{props.quantity}</div>
-        <div className='mr-2'>{props.delivered}</div>
-        <div>{props.status}</div>
-      </div> */}
       <div></div>
     </>
   );
