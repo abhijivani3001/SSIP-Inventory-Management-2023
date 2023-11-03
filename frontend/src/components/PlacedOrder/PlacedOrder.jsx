@@ -24,9 +24,11 @@ const PlacedOrder = (props) => {
     }
   };
 
+  // Conditionally render the "Received?" button based on props.quantity and props.delivered
+  const shouldRenderReceivedButton = props.quantity === props.delivered;
+
   return (
     <>
-
       <div className={`border-2 flex justify-between border-gray-300 bg-white rounded-lg mb-2 mx-6 ${isItemReceived ? 'bg-green-100' : ''}`}>
         <div className='flex gap-4'>
           <img
@@ -38,9 +40,9 @@ const PlacedOrder = (props) => {
             {props.name}
           </h5>
         </div>
-        {props.status === 'accepted' && !isItemReceived && (
+        {props.status === 'accepted' && !isItemReceived && shouldRenderReceivedButton && (
           <button
-            className='bg-green-500  text-white px-3 py-1 rounded'
+            className='bg-green-500 text-white px-3 py-1 rounded'
             onClick={handleReceivedClick}
           >
             Received?

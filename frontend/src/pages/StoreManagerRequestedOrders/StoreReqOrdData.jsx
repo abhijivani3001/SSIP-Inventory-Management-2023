@@ -96,7 +96,7 @@ const StoreReqOrdData = (props) => {
           {props.orders.map((order, index) => (
             <div key={order.itemId}>
               {/* {order.status === 'pending' && ( */}
-              {(order.status === 'accepted' || order.status==='pending') && (
+              {(order.status === 'accepted' || order.status === 'pending') && (
                 <div className='border flex justify-between mx-11 p-1 text-lg'>
                   <div className='grid grid-cols-4'>
                     <div>{order.name}</div>
