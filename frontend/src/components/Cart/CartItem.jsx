@@ -1,14 +1,25 @@
 import React, { useState } from 'react';
 import Button from '../UI/Button';
+import { useCart } from '../../store/CartProvider';
 
 const CartItem = (props) => {
   const [amount, setAmount] = useState(props.amount);
+  const { cart, dispatch } = useCart();
 
-  const incrementHandler = () => {
-    // setAmount((prev) => prev + 1);
+  const incrementHandler = (item) => {
+    setAmount((prev) => prev + 1);
+    dispatch({
+      type: 'UPDATE_ITEM',
+      payload: { ...item, amount: Math.max(0, item.amount + 1) },
+    });
   };
-  const decrementHandler = () => {
-    // if(amount>1) setAmount((prev) => prev - 1);
+  const decrementHandler = (item) => {
+    console.log(item);
+    if (amount > 1) setAmount((prev) => prev - 1);
+    dispatch({
+      type: 'UPDATE_ITEM',
+      payload: { ...item, amount: Math.max(0, item.amount - 1) },
+    });
   };
 
   return (
@@ -26,11 +37,12 @@ const CartItem = (props) => {
         </div>
 
         <div className='flex my-auto gap-2 mr-8'>
-          <Button onClick={()=>props.onRemoveFromCart(props.item)}>Delete</Button>
-          <Button onClick={decrementHandler}>-</Button>
+          <Button onClick={() => props.onRemoveFromCart(props.item)}>
+            Delete
+          </Button>
+          <Button onClick={() => decrementHandler(props.item)}>-</Button>
           <div className='my-auto'>{amount}</div>
-          <Button onClick={incrementHandler}>+</Button>
-          {/* <Button onClick={props.onAddToCart}>+</Button> */}
+          <Button onClick={() => incrementHandler(props.item)}>+</Button>
         </div>
       </div>
     </>

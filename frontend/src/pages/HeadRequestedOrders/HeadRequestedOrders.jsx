@@ -28,8 +28,17 @@ const HeadRequestedOrders = () => {
         } else if (user.role === ROLES.SUB_BRANCH_STORE_MANAGER) {
           roleOfRequestedUser = ROLES.EMPLOYEE;
           roleOfRequestedUser2 = ROLES.SUB_BRANCH_HEAD;
+        } 
+        // new
+        else if (user.role === ROLES.DEPARTMENT_HEAD) {
+          roleOfRequestedUser = ROLES.DEPARTMENT_STORE_MANAGER;
+        } else if (user.role === ROLES.BRANCH_HEAD) {
+          roleOfRequestedUser = ROLES.BRANCH_STORE_MANAGER;
+          // roleOfRequestedUser2 = ROLES.SUB_BRANCH_HEAD;
         } else if (user.role === ROLES.SUB_BRANCH_HEAD) {
           roleOfRequestedUser = ROLES.SUB_BRANCH_STORE_MANAGER;
+        } else if (user.role === ROLES.SUB_BRANCH_STORE_MANAGER) {
+          roleOfRequestedUser = ROLES.EMPLOYEE;
         }
 
         const res2 = await axios.post('api/user/users', {

@@ -52,32 +52,30 @@ const StoreReqOrdData = (props) => {
     }
   };
 
-  const handleAllocate = async (id, orderId, quantity) => {
+  const handleAllocate = async (id, orderId, quantityToBeDelivered) => {
     try {
       // quantity=requirement of user
-      let q, tempId; // q=quantity of inventory item, tempId=inventory Id in which we want to update quantity
+      let inventoryItemQuantity, tempId; // q=quantity of inventory item, tempId=inventory Id in which we want to update quantity
       inventoryData.map((item) => {
         if (item.itemId === id) {
-          q = item.quantity;
+          inventoryItemQuantity = item.quantity;
           tempId = item._id;
         }
       });
       // console.log(q - quantity);
 
       const res = await axios.put('api/inventory', {
-        updatedQuantity: q - quantity,
+        updatedQuantity: inventoryItemQuantity - quantityToBeDelivered,
         inventoryId: tempId,
       });
 
-      if (q >= quantity) {
-        const res2 = await axios.put(`api/order/${orderId}`, {
-          // user_id: userData._id,
-          user_id: props.userId,
-          status: 'accepted',
-          delivered: quantity,
-        });
-        console.log(res2);
-      }
+      const res2 = await axios.put(`api/order/${orderId}`, {
+        // user_id: userData._id,
+        user_id: props.userId,
+        status: 'accepted',
+        delivered: quantityToBeDelivered,
+      });
+      console.log(res2);
 
       // console.log(res);
     } catch (error) {
@@ -97,8 +95,8 @@ const StoreReqOrdData = (props) => {
 
           {props.orders.map((order, index) => (
             <div key={order.itemId}>
-              {/* {(order.status === 'accepted' || order.status==='pending') && ( */}
-              {order.status === 'pending' && (
+              {/* {order.status === 'pending' && ( */}
+              {(order.status === 'accepted' || order.status==='pending') && (
                 <div className='border flex justify-between mx-11 p-1 text-lg'>
                   <div className='grid grid-cols-4'>
                     <div>{order.name}</div>

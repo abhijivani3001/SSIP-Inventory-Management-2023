@@ -34,7 +34,7 @@ const CartItems = () => {
   };
 
   const handleRemoveFromCart = (item) => {
-    console.log(item)
+    console.log(item);
     dispatch({ type: 'REMOVE_ITEM', payload: item });
   };
 
@@ -64,7 +64,7 @@ const CartItems = () => {
         status: 'pending',
       });
     });
-    
+
     postElement(orders);
 
     dispatch({ type: 'CLEAR_CART' });
@@ -93,8 +93,15 @@ const CartItems = () => {
               />
             ))}
           </div>
-          <div className='text-center my-4'>
-            <Button onClick={submitHandler}>Submit</Button>
+          <div className='flex gap-4 justify-center'>
+            <div className='text-center my-4'>
+              <Button onClick={() => dispatch({ type: 'CLEAR_CART' })}>
+                Clear
+              </Button>
+            </div>
+            <div className='text-center my-4'>
+              <Button onClick={submitHandler}>Submit</Button>
+            </div>
           </div>
         </div>
       )}
