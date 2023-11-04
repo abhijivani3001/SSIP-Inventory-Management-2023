@@ -13,17 +13,17 @@ const UserDataCard = (props) => {
       </div>
 
       <div className='text-xl ml-5'>
-        <div>
+        {/* <div> */}
           Email:{' '}
-          <span className='text-gray-500 text-xl'>{props.user.email}</span>
-        </div>
-        <div>
+          <span className='text-gray-500 mr-14 text-xl'>{props.user.email}</span>
+        {/* </div> */}
+        {/* <div> */}
           Phone:{' '}
           <span className='text-gray-500 text-xl'>{props.user.phone}</span>
-        </div>
+        {/* </div> */}
       </div>
 
-      <div className='text-2xl ml-5'>Orders</div>
+      {/* <div className='text-2xl ml-5'>Orders</div>
       <div className='text-lg '>
         <div className='my-4'>
           {props.user.orders?.map((order) => (
@@ -38,8 +38,8 @@ const UserDataCard = (props) => {
             </div>
           ))}
           <div className='border border-black my-4'></div>
-        </div>
-      </div>
+        </div> */}
+      {/* </div> */}
     </div>
   );
 };
