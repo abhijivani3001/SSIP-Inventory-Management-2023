@@ -117,10 +117,10 @@ const Dashboard = () => {
   }, [authCtx.isLoggedIn, authCtx.email]);
   return (
     <div className='p-4 bg-white rounded-lg shadow-lg'>
-      <h1 className='text-2xl font-semibold mb-4'>Dashboard</h1>
       {isLoading ? (
         <p>Loading...</p>
-      ) : (
+        ) : (
+        <><h1 className='text-2xl font-semibold mb-4'>Dashboard</h1>
         <div>
           {orderData.length < 1 ? (
             <span className='text-2xl mx-3'>No order placed by you</span>
@@ -144,7 +144,7 @@ const Dashboard = () => {
             </div>
           )}
         </div>
-
+</>
       )}
     </div>
   );

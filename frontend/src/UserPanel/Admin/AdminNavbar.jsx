@@ -79,7 +79,7 @@ const AdminNavbar = (props) => {
               </li>
               <li>
                 <Link
-                  to='/dashboard'
+                  to='/admin-dashboard'
                   className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
                 >
                   Dashboard
@@ -162,13 +162,24 @@ const AdminNavbar = (props) => {
           </li>
           <li>
             <Link
-              to='/dashboard'
-              className={`${location.pathname === '/dashboard'
+              to='/admin-dashboard'
+              className={`${location.pathname === '/admin-dashboard'
                 ? 'active-navbar-element'
                 : 'navbar-element'
                 }`}
             >
               Dashboard
+            </Link>
+          </li>
+          <li>
+            <Link
+              to='/forgot-password'
+              className={`${location.pathname === '/forgot-password'
+                ? 'active-navbar-element'
+                : 'navbar-element'
+                }`}
+            >
+              Reset Password
             </Link>
           </li>
         </ul>

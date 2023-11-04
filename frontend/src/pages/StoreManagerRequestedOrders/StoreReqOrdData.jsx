@@ -8,6 +8,11 @@ const StoreReqOrdData = (props) => {
   const [inventoryData, setInventoryData] = useState([]);
   const [allocatedOrderData, setAllocatedOrderData] = useState(props.orders);
 
+  function formatDate(string) {
+    var options = { year: "numeric", month: "long", day: "numeric" };
+    return new Date(string).toLocaleDateString([], options);
+  }
+
   const getInventoryItemsQuantity = async () => {
     try {
       const result = await axios.get("api/inventory");
@@ -81,7 +86,7 @@ const StoreReqOrdData = (props) => {
 
   useEffect(() => {
     getInventoryItemsQuantity();
-  }, [getInventoryItemsQuantity]);
+  }, []);
 
   const [userData, setUserData] = useState();
 
@@ -111,9 +116,12 @@ const StoreReqOrdData = (props) => {
                   <div className="grid grid-cols-5 w-full">
                     <div>{order.name}</div>
 
-                    <div className="border border-black rounded w-20 h-7 text-center my-auto">
-                      <span className="text-sm">x</span>
-                      {order.quantity - order.delivered}
+                    <div className="flex items-center">
+                      <div className="border border-black rounded w-20 h-7 text-center my-auto">
+                        <span className="text-sm">x</span>
+                        {order.quantity - order.delivered}
+                      </div>
+                      <span className="ml-3">{formatDate(order.createdAt)}</span>
                     </div>
 
                     <label className="mx-3 flex justify-end items-center">

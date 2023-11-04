@@ -21,6 +21,8 @@ import axios from './api/AxiosUrl';
 import HeadRequestedOrders from './pages/HeadRequestedOrders/HeadRequestedOrders';
 import StoreManagerRequestedOrders from './pages/StoreManagerRequestedOrders/StoreManagerRequestedOrders';
 import Dashboard from './pages/Dashboard';
+import AdminDashboard from './UserPanel/Admin/AdminDashboard';
+import ForgotPassword from './pages/ForgotPassword';
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -56,8 +58,14 @@ function App() {
 
         {!isLoggedIn && <Route path='/login' element={<Login />} />}
         {!isLoggedIn && <Route path='/' element={<Login />} />}
+        {/* {!isLoggedIn && <Route path='/forgot-password' element={<ForgotPassword />} />} */}
+        
         {isLoggedIn && <Route path='/user' element={<UserProfile />} />}
-        {isLoggedIn && <Route path='/dashboard' element={<Dashboard />} />}
+        {isLoggedIn && (userRole!==ROLES.ADMIN) && <Route path='/dashboard' element={<Dashboard />} />}
+        {isLoggedIn && (userRole!==ROLES.ADMIN) && <Route path='/' element={<Dashboard />} />}
+        {isLoggedIn && (userRole===ROLES.ADMIN) && <Route path='/admin-dashboard' element={<AdminDashboard />} />}
+        {isLoggedIn && (userRole===ROLES.ADMIN) && <Route path='/' element={<AdminDashboard />} />}
+        {isLoggedIn && (userRole===ROLES.ADMIN) && <Route path='/forgot-password' element={<ForgotPassword />} />}
         {/* {isLoggedIn && <Route path='/' element={<Dashboard />} />} */}
         {isLoggedIn && <Route path='/products' element={<Products />} />}
         {isLoggedIn && <Route path='/cart' element={<CartItems />} />}
