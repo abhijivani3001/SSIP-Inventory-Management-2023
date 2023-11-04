@@ -47,52 +47,54 @@ const StoreManagerRequestedOrders = () => {
     });
   };
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const res1 = await axios.get('api/user');
-        const user = await res1.data.user;
+  const getRequiredData = async () => {
+    try {
+      const res1 = await axios.get('api/user');
+      const user = await res1.data.user;
 
-        let roleOfRequestedUser = '';
-        let roleOfRequestedUser2 = '';
-        if (user.role === ROLES.DEPARTMENT_STORE_MANAGER) {
-          roleOfRequestedUser = ROLES.BRANCH_STORE_MANAGER;
-        } else if (user.role === ROLES.BRANCH_STORE_MANAGER) {
-          roleOfRequestedUser = ROLES.SUB_BRANCH_STORE_MANAGER;
-        } else if (user.role === ROLES.SUB_BRANCH_STORE_MANAGER) {
-          roleOfRequestedUser = ROLES.EMPLOYEE;
-          roleOfRequestedUser2 = ROLES.SUB_BRANCH_HEAD;
-        }
-        const res2 = await axios.post('api/user/users', {
-          ...user,
-          role: roleOfRequestedUser,
-        });
-        // console.log(res2, user);
-
-        const data = await res2.data.users;
-
-        // console.log(data);
-        if (roleOfRequestedUser2) {
-          const res3 = await axios.post('api/user/users', {
-            ...user,
-            role: roleOfRequestedUser2,
-          });
-          const tempdata = await res3.data.users;
-          data.push(...tempdata);
-          console.log(data);
-        }
-
-        if (data?.length) {
-          setIsRequestedOrdersAvailable(true);
-          setUsersOfRequestedOrders(data);
-        } else setIsRequestedOrdersAvailable(false);
-
-        console.log(usersOfRequestedOrders);
-      } catch (error) {
-        console.log(error.message);
+      let roleOfRequestedUser = '';
+      let roleOfRequestedUser2 = '';
+      if (user.role === ROLES.DEPARTMENT_STORE_MANAGER) {
+        roleOfRequestedUser = ROLES.BRANCH_STORE_MANAGER;
+      } else if (user.role === ROLES.BRANCH_STORE_MANAGER) {
+        roleOfRequestedUser = ROLES.SUB_BRANCH_STORE_MANAGER;
+      } else if (user.role === ROLES.SUB_BRANCH_STORE_MANAGER) {
+        roleOfRequestedUser = ROLES.EMPLOYEE;
+        roleOfRequestedUser2 = ROLES.SUB_BRANCH_HEAD;
       }
-      setIsLoading(false);
-    })();
+      const res2 = await axios.post('api/user/users', {
+        ...user,
+        role: roleOfRequestedUser,
+      });
+      // console.log(res2, user);
+
+      const data = await res2.data.users;
+
+      // console.log(data);
+      if (roleOfRequestedUser2) {
+        const res3 = await axios.post('api/user/users', {
+          ...user,
+          role: roleOfRequestedUser2,
+        });
+        const tempdata = await res3.data.users;
+        data.push(...tempdata);
+        console.log(data);
+      }
+
+      if (data?.length) {
+        setIsRequestedOrdersAvailable(true);
+        setUsersOfRequestedOrders(data);
+      } else setIsRequestedOrdersAvailable(false);
+
+      console.log(usersOfRequestedOrders);
+    } catch (error) {
+      console.log(error.message);
+    }
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    getRequiredData();
   }, []);
 
   return (
@@ -124,8 +126,13 @@ const StoreManagerRequestedOrders = () => {
                 department={val.department}
                 role={val.role}
                 name={val.name}
-                orders={val.orders} // order array
+                orders={val.orders.filter(
+                  (dataItem) =>
+                    dataItem.status !== 'completed' &&
+                    dataItem.status !== 'rejected'
+                )} // order array
                 userId={val._id}
+                getRequiredData={getRequiredData}
               />
             ))}
           </div>

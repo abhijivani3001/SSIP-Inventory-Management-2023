@@ -2,9 +2,9 @@ import React, { useState, useEffect, useContext } from 'react';
 import Inventory from '../Inventory';
 import axios from '../../api/AxiosUrl';
 import Button from '../../components/UI/Button';
+import { ToastContainer, toast } from 'react-toastify';
 
 const StoreReqOrdData = (props) => {
-  const [selectedItems, setSelectedItems] = useState([]);
   const [inventoryData, setInventoryData] = useState([]);
   const [allocatedOrderData, setAllocatedOrderData] = useState(props.orders);
 
@@ -33,18 +33,23 @@ const StoreReqOrdData = (props) => {
       console.log(data);
       setInventoryData(data);
       setAllocatedOrderData((prevOrderData) => {
-        const updatedOrderData = prevOrderData.map((order) => {
-          const item = data.find(
+        console.log(prevOrderData.length, prevOrderData);
+        const updatedOrderData = props.orders.map((order) => {
+          const inventoryItem = data.find(
             (singleInventoryItem) => singleInventoryItem.itemId === order.itemId
           );
-          if (item) {
+          if (inventoryItem) {
             return {
               ...order,
-              quantity: Math.min(order.quantity, item.quantity),
+              quantity: Math.min(
+                order.quantity - order.delivered,
+                inventoryItem.quantity
+              ),
             };
           }
-          return { order, quantity: 0 };
+          return { ...order, quantity: 0 };
         });
+        console.log(updatedOrderData);
         return updatedOrderData;
       });
     } catch (error) {
@@ -55,6 +60,11 @@ const StoreReqOrdData = (props) => {
   const handleAllocate = async (id, orderId, quantityToBeDelivered) => {
     try {
       // quantity=requirement of user
+      if (quantityToBeDelivered <= 0) {
+        return toast.success('Allocate Quantity should be > 0', {
+          autoClose: 1500,
+        });
+      }
       let inventoryItemQuantity, tempId; // q=quantity of inventory item, tempId=inventory Id in which we want to update quantity
       inventoryData.map((item) => {
         if (item.itemId === id) {
@@ -75,16 +85,16 @@ const StoreReqOrdData = (props) => {
         status: 'accepted',
         delivered: quantityToBeDelivered,
       });
+      toast.success('Item allocated Successfully', {
+        autoClose: 1500,
+      });
       console.log(res2);
+      props.getRequiredData();
 
       // console.log(res);
     } catch (error) {
       console.log(error.message);
     }
-  };
-
-  const handleReject = () => {
-    console.log('Reject items:', selectedItems);
   };
 
   return (
@@ -115,12 +125,19 @@ const StoreReqOrdData = (props) => {
                           setAllocatedOrderData((prevOrderData) => {
                             const updatedOrderData = prevOrderData.map(
                               (item) => {
+                                const inventoryItem = inventoryData.find(
+                                  (singleInventoryItem) =>
+                                    singleInventoryItem.itemId === order.itemId
+                                );
                                 if (item._id === order._id) {
                                   return {
                                     ...item,
                                     quantity: Math.min(
                                       e.target.value,
-                                      order.quantity
+                                      Math.min(
+                                        order.quantity - order.delivered,
+                                        inventoryItem.quantity
+                                      )
                                     ),
                                   };
                                 }
@@ -132,10 +149,6 @@ const StoreReqOrdData = (props) => {
                         }}
                         min={0}
                         className='border-2 border-gray-700 w-16 p-0 text-center mx-4 rounded'
-                        max={Math.min(
-                          order.quantity,
-                          allocatedOrderData[index].quantity
-                        )}
                       />
                     </label>
                     <div className='flex'>
@@ -167,6 +180,7 @@ const StoreReqOrdData = (props) => {
           ))}
         </div>
       )}
+      <ToastContainer />
     </>
   );
 };
