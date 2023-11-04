@@ -1,34 +1,16 @@
-import React, { useState, useEffect, useContext } from 'react';
-import Inventory from '../Inventory';
-import axios from '../../api/AxiosUrl';
-import Button from '../../components/UI/Button';
-import { ToastContainer, toast } from 'react-toastify';
+import React, { useState, useEffect, useContext } from "react";
+import Inventory from "../Inventory";
+import axios from "../../api/AxiosUrl";
+import Button from "../../components/UI/Button";
+import { ToastContainer, toast } from "react-toastify";
 
 const StoreReqOrdData = (props) => {
   const [inventoryData, setInventoryData] = useState([]);
   const [allocatedOrderData, setAllocatedOrderData] = useState(props.orders);
 
-  useEffect(() => {
-    getInventoryItemsQuantity();
-  }, []);
-
-  const [userData, setUserData] = useState();
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await axios.get('/api/user');
-        const data = await res.data.user;
-        setUserData(data);
-      } catch (error) {
-        console.error(error);
-      }
-    })();
-  }, []);
-
   const getInventoryItemsQuantity = async () => {
     try {
-      const result = await axios.get('api/inventory');
+      const result = await axios.get("api/inventory");
       const data = await result.data.inventory;
       console.log(data);
       setInventoryData(data);
@@ -61,7 +43,7 @@ const StoreReqOrdData = (props) => {
     try {
       // quantity=requirement of user
       if (quantityToBeDelivered <= 0) {
-        return toast.success('Allocate Quantity should be > 0', {
+        return toast.success("Allocate Quantity should be > 0", {
           autoClose: 1500,
         });
       }
@@ -74,7 +56,7 @@ const StoreReqOrdData = (props) => {
       });
       // console.log(q - quantity);
 
-      const res = await axios.put('api/inventory', {
+      const res = await axios.put("api/inventory", {
         updatedQuantity: inventoryItemQuantity - quantityToBeDelivered,
         inventoryId: tempId,
       });
@@ -82,10 +64,10 @@ const StoreReqOrdData = (props) => {
       const res2 = await axios.put(`api/order/${orderId}`, {
         // user_id: userData._id,
         user_id: props.userId,
-        status: 'accepted',
+        status: "accepted",
         delivered: quantityToBeDelivered,
       });
-      toast.success('Item allocated Successfully', {
+      toast.success("Item allocated Successfully", {
         autoClose: 1500,
       });
       console.log(res2);
@@ -97,29 +79,47 @@ const StoreReqOrdData = (props) => {
     }
   };
 
+  useEffect(() => {
+    getInventoryItemsQuantity();
+  }, [getInventoryItemsQuantity]);
+
+  const [userData, setUserData] = useState();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await axios.get("/api/user");
+        const data = await res.data.user;
+        setUserData(data);
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+  }, []);
+
   return (
     <>
       {props.orders.length > 0 && (
-        <div className='bg-gray-200 border-2 border-gray-300 rounded-lg m-4'>
-          <div className='text-2xl font-semibold mx-4 my-2'>{props.name}</div>
+        <div className="bg-gray-200 border-2 border-gray-300 rounded-lg m-4">
+          <div className="text-2xl font-semibold mx-4 my-2">{props.name}</div>
 
           {props.orders.map((order, index) => (
             <div key={order.itemId}>
               {/* {order.status === 'pending' && ( */}
-              {(order.status === 'accepted' || order.status === 'pending') && (
-                <div className='border flex justify-between mx-11 p-1 text-lg'>
-                  <div className='grid grid-cols-4'>
+              {(order.status === "accepted" || order.status === "pending") && (
+                <div className="border flex justify-between mx-11 p-1 text-lg">
+                  <div className="grid grid-cols-5 w-full">
                     <div>{order.name}</div>
 
-                    <div className='border border-black rounded w-20 h-7 text-center my-auto'>
-                      <span className='text-sm'>x</span>
+                    <div className="border border-black rounded w-20 h-7 text-center my-auto">
+                      <span className="text-sm">x</span>
                       {order.quantity - order.delivered}
                     </div>
 
-                    <label className='mx-3 flex justify-end items-center'>
-                      Allocate Quantity:
+                    <label className="mx-3 flex justify-end items-center">
+                      Allocate Qty:
                       <input
-                        type='number'
+                        type="number"
                         value={allocatedOrderData[index].quantity}
                         onChange={(e) => {
                           setAllocatedOrderData((prevOrderData) => {
@@ -148,10 +148,11 @@ const StoreReqOrdData = (props) => {
                           });
                         }}
                         min={0}
-                        className='border-2 border-gray-700 w-16 p-0 text-center mx-4 rounded'
+                        className="border-2 border-gray-700 w-16 p-0 text-center mx-4 rounded"
                       />
                     </label>
-                    <div className='flex'>
+
+                    <div className="flex w-auto">
                       <button
                         onClick={() =>
                           handleAllocate(
@@ -160,7 +161,17 @@ const StoreReqOrdData = (props) => {
                             allocatedOrderData[index].quantity // store-manager's allocated quantity
                           )
                         }
-                        className='bg-blue-600 hover:bg-blue-800 border-gray-300 border w-20 h-10 rounded text-white hover:text-gray-200'
+                        className={`bg-blue-600 hover:bg-blue-800 border-gray-300 border w-20 h-10 rounded text-white hover:text-gray-200 ${
+                          (order.quantity - order.delivered !==
+                            allocatedOrderData[index].quantity ||
+                            allocatedOrderData[index].quantity === 0) &&
+                          "disabled:opacity-20 disabled:bg-gray-600 cursor-not-allowed hover:bg-gray-600"
+                        }`}
+                        disabled={
+                          order.quantity - order.delivered !==
+                            allocatedOrderData[index].quantity ||
+                          allocatedOrderData[index].quantity === 0
+                        }
                       >
                         Allocate
                       </button>
@@ -172,6 +183,14 @@ const StoreReqOrdData = (props) => {
                       >
                         Reject
                       </button> */}
+                    </div>
+
+                    <div className="border border-black rounded w-20 h-7 text-center my-auto ml-auto">
+                      <span className="text-sm">x</span>
+                      {inventoryData.find(
+                        (singleInventoryItem) =>
+                          singleInventoryItem.itemId === order.itemId
+                      )?.quantity || 0}
                     </div>
                   </div>
                 </div>
