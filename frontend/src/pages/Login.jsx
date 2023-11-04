@@ -23,7 +23,7 @@ const Login = (props) => {
       if (data.success === true) {
         alert('Login Successfully');
         authCtx.login(data.token);
-        navigate('/dashboard');
+        navigate('/');
 
         window.location.reload(); // bad-practice
       } else {
@@ -83,10 +83,10 @@ const Login = (props) => {
 
           <div className='text-center mt-4'>
             <Link
-              to='/'
-              className='text-gray-700 border-2 hover:bg-gray-100 py-1.5 px-6 rounded-lg'
+              to='/forgot-password'
+              className='text-blue-600 hover:underline'
             >
-              Close
+              Forgot Password?
             </Link>
           </div>
         </form>
