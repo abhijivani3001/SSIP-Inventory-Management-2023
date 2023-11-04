@@ -160,6 +160,17 @@ const AdminNavbar = (props) => {
               Register User
             </Link>
           </li>
+          <li>
+            <Link
+              to='/dashboard'
+              className={`${location.pathname === '/dashboard'
+                ? 'active-navbar-element'
+                : 'navbar-element'
+                }`}
+            >
+              Dashboard
+            </Link>
+          </li>
         </ul>
       </div>
     </>

@@ -160,7 +160,7 @@ const StoreManagerNavbar = (props) => {
         id='navbar-user'
       >
         <ul className='flex flex-col font-medium text-lg p-4 md:p-0 mt-4 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0'>
-          <li>
+          {/* <li>
             <Link
               to='/'
               className={`${location.pathname === '/'
@@ -181,7 +181,7 @@ const StoreManagerNavbar = (props) => {
             >
               About
             </Link>
-          </li>
+          </li> */}
           <li>
             <Link
               to='/products'
@@ -224,6 +224,17 @@ const StoreManagerNavbar = (props) => {
                 }`}
             >
               Inventory
+            </Link>
+          </li>
+          <li>
+            <Link
+              to='/dashboard'
+              className={`${location.pathname === '/dashboard'
+                ? 'active-navbar-element'
+                : 'navbar-element'
+                }`}
+            >
+              Dashboard
             </Link>
           </li>
         </ul>

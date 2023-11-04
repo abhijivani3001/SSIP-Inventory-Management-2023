@@ -47,16 +47,18 @@ function App() {
   return (
     <Layout>
       <Routes>
-        <Route path='/' element={<Home />} exact />
-        <Route path='/home' element={<Home />} />
-        <Route path='/about' element={<About />} />
+        
+        {/* <Route path='/home' element={<Home />} /> */}
+        {/* <Route path='/about' element={<About />} /> */}
 
         {isLoggedIn && (userRole === ROLES.ADMIN) && <Route path='/register-user' element={<RegisterUser />} />}
         {isLoggedIn && (userRole === ROLES.ADMIN) && <Route path='/add-products' element={<AddProducts />} />}
 
         {!isLoggedIn && <Route path='/login' element={<Login />} />}
+        {!isLoggedIn && <Route path='/' element={<Login />} />}
         {isLoggedIn && <Route path='/user' element={<UserProfile />} />}
         {isLoggedIn && <Route path='/dashboard' element={<Dashboard />} />}
+        {/* {isLoggedIn && <Route path='/' element={<Dashboard />} />} */}
         {isLoggedIn && <Route path='/products' element={<Products />} />}
         {isLoggedIn && <Route path='/cart' element={<CartItems />} />}
         {isLoggedIn && (

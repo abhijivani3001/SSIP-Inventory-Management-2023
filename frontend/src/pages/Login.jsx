@@ -23,7 +23,7 @@ const Login = (props) => {
       if (data.success === true) {
         alert('Login Successfully');
         authCtx.login(data.token);
-        navigate('/');
+        navigate('/dashboard');
 
         window.location.reload(); // bad-practice
       } else {

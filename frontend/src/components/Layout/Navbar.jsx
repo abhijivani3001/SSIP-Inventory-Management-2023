@@ -55,7 +55,7 @@ const Navbar = () => {
           </div>
         </Link>
 
-        {!isLoggedIn && (
+        {/* {!isLoggedIn && (
           <div
             className='items-center justify-between hidden w-full md:flex md:w-auto md:order-1'
             id='navbar-user'
@@ -85,7 +85,7 @@ const Navbar = () => {
               </li>
             </ul>
           </div>
-        )}
+        )} */}
 
         {!isLoggedIn && (
           <div className='order-last flex gap-4'>
