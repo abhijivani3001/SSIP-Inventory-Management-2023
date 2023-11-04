@@ -14,6 +14,8 @@ import UserProfile from './pages/UserProfile';
 import AuthContext from './store/auth-context';
 import Inventory from './pages/Inventory';
 import ROLES from './constants/ROLES';
+import RegisterUser from './UserPanel/Admin/RegisterUser'
+import AddProducts from './UserPanel/Admin/AddProducts'
 
 import axios from './api/AxiosUrl';
 import HeadRequestedOrders from './pages/HeadRequestedOrders/HeadRequestedOrders';
@@ -48,6 +50,9 @@ function App() {
         <Route path='/' element={<Home />} exact />
         <Route path='/home' element={<Home />} />
         <Route path='/about' element={<About />} />
+
+        {isLoggedIn && (userRole === ROLES.ADMIN) && <Route path='/register-user' element={<RegisterUser />} />}
+        {isLoggedIn && (userRole === ROLES.ADMIN) && <Route path='/add-products' element={<AddProducts />} />}
 
         {!isLoggedIn && <Route path='/login' element={<Login />} />}
         {isLoggedIn && <Route path='/user' element={<UserProfile />} />}

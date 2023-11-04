@@ -9,6 +9,7 @@ import ROLES from '../../constants/ROLES';
 import EmployeeNavbar from '../../UserPanel/Employee/EmployeeNavbar';
 import HeadNavbar from '../../UserPanel/Head/HeadNavbar';
 import StoreManagerNavbar from '../../UserPanel/StoreManager/StoreManagerNavbar';
+import AdminNavbar from '../../UserPanel/Admin/AdminNavbar';
 
 const Navbar = () => {
   const authCtx = useContext(AuthContext);
@@ -102,6 +103,10 @@ const Navbar = () => {
               </li>
             </ul>
           </div>
+        )}
+
+        {!isLoading && isLoggedIn && (userData.role===ROLES.ADMIN) && (
+          <AdminNavbar logoutHandler={logoutHandler} />
         )}
 
         {!isLoading &&
