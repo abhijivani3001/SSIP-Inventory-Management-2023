@@ -102,7 +102,7 @@ const PieChart = () => {
   };
 
   return (
-    <div className='p-4 bg-white rounded-lg shadow-lg'>
+    <div className='p-4 bg-white rounded-lg shadow-lg border-2 border-gray-800'>
       {isLoading ? (
         <p>Loading...</p>
       ) : (

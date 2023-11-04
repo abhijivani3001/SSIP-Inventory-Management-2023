@@ -126,7 +126,7 @@ const Dashboard = () => {
             <span className='text-2xl mx-3'>No order placed by you</span>
           ) : (
             <div className='flex flex-wrap justify-evenly'>
-              <div className='mx-10 my-5'>
+              <div className='mx-10 my-5 broder '>
                 <PieChart />
               </div>
               <div className='mx-10 my-5'>
