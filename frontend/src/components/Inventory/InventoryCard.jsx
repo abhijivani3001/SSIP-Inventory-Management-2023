@@ -6,7 +6,8 @@ import axios from "../../api/AxiosUrl";
 const InventoryCard = (props) => {
   const [availableItems, setAvailableItems] = useState(props.quantity);
   const [isEditing, setIsEditing] = useState(false);
-  // console.log(props.inventoryId);
+
+  const isLowQuantity = availableItems < 10;
 
   const handleUpdateClick = () => {
     setIsEditing(!isEditing);
@@ -20,7 +21,6 @@ const InventoryCard = (props) => {
         updatedQuantity: availableItems,
         inventoryId: props.inventoryId,
       });
-      // console.log(res.data);
       props.getInventoryItems();
     } catch (error) {
       console.log(error.message);
@@ -28,12 +28,8 @@ const InventoryCard = (props) => {
   };
 
   const deleteItemHandler = async () => {
-    // console.log('delete');
-    console.log(props);
     try {
       const res = await axios.delete(`api/inventory/${props.inventoryId}`);
-      console.log(res);
-
       props.getInventoryItems();
     } catch (error) {
       console.log(error);
@@ -50,8 +46,15 @@ const InventoryCard = (props) => {
         />
         <div className="px-5 pb-5 mt-4">
           <h5 className="text-xl font-semibold tracking-tight text-gray-900">
-            {props.name}
+            {isLowQuantity ? (
+              <span title="Item quantity is low" className="text-red-700 hover:text-red-800 cursor-help">
+                {props.name} {" *"}
+              </span>
+            ) : (
+              props.name
+            )}
           </h5>
+
           <p className="text-gray-500 text-sm my-2">{props.description}</p>
 
           <div className="flex flex-col gap-1 items-center justify-between my-2 mb-0">
