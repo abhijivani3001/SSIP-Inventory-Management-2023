@@ -29,9 +29,9 @@ const PlacedOrder = (props) => {
   return (
     <>
       <div className={`border-2 flex justify-between border-gray-300 bg-white rounded-lg mb-2 mx-6 ${isItemReceived ? 'bg-green-100' : ''}`}>
-        <div className='flex gap-4'>
+        <div className="flex gap-4 m-2">
           <img
-            className='p-4 h-20'
+            className="p-2 h-16 w-24 object-contain"
             src={props.imageUrl}
             alt='productimage'
           />
