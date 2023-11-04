@@ -51,7 +51,7 @@ const Login = (props) => {
               id='username'
               name='username'
               className='w-full px-3 py-2 border text-black rounded-lg focus:outline-none focus:border-blue-500'
-              placeholder='Enter your username'
+              placeholder='Enter your email here'
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required

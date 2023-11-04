@@ -74,6 +74,33 @@ const PieChart = () => {
     }
   }, [authCtx.isLoggedIn, authCtx.email]);
 
+  // Function to convert data to CSV
+  const convertToCSV = () => {
+    const csvRows = [];
+    const headers = ['Username', 'Order Name', 'Order Date', 'Order Quantity'];
+    csvRows.push(headers.join(','));
+
+    // Extract data for the CSV from orderData
+    for (const data of orderData) {
+      csvRows.push([userData.name, data.x, userData.createdAt, data.y].join(','));
+    }
+
+    const csvData = csvRows.join('\n');
+    return csvData;
+  };
+
+  // Function to trigger the CSV download
+  const downloadCSV = () => {
+    const csvData = convertToCSV();
+    const blob = new Blob([csvData], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'user_order_data.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div className='p-4 bg-white rounded-lg shadow-lg'>
       {isLoading ? (
@@ -84,17 +111,23 @@ const PieChart = () => {
             <h2 className='text-xl font-semibold mt-4'>Order Chart</h2>
             <ReactApexChart
               options={{
-                labels: orderData.map((data) => data.x), // Extract the labels from chartData
+                labels: orderData.map((data) => data.x),
               }}
-              series={orderData.map((data) => data.y)} // Extract the values from chartData
+              series={orderData.map((data) => data.y)}
               type='pie'
               width='500'
               height='500'
             />
+
+            {/* Add the Download button */}
+            <button onClick={downloadCSV} className='bg-blue-500 text-white p-2 mt-4'>
+              Download CSV
+            </button>
           </div>
         )
       )}
     </div>
   );
 };
+
 export default PieChart;

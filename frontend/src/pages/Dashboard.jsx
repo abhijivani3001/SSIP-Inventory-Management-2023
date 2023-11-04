@@ -6,6 +6,8 @@ import ReactApexChart from 'react-apexcharts';
 import PieChart from '../components/Charts/PieChart';
 import BarChart from '../components/Charts/BarChart';
 import UserChart from '../components/Charts/UserChart';
+import OrderData from '../components/Charts/OrderData';
+// import OrderGraph from '../components/Charts/OrderGraph';
 
 const Dashboard = () => {
   const authCtx = useContext(AuthContext);
@@ -120,20 +122,29 @@ const Dashboard = () => {
         <p>Loading...</p>
       ) : (
         <div>
-          {orderData.length < 1 ? <span className='text-2xl mx-3'>No order placed by you </span> : (
-            <div className='flex'>
-              <div className='mx-10'>
+          {orderData.length < 1 ? (
+            <span className='text-2xl mx-3'>No order placed by you</span>
+          ) : (
+            <div className='flex flex-wrap justify-evenly'>
+              <div className='mx-10 my-5'>
                 <PieChart />
               </div>
-              <div className='mx-10'>
+              <div className='mx-10 my-5'>
                 <BarChart />
               </div>
-              <div className='mx-10'>
-                <UserChart />
+              <div className='mx-10 my-5'>
+                {/* <UserChart /> */}
+              </div>
+              <div className='mx-10 my-5'>
+                <OrderData />
+              </div>
+              <div className='mx-10 my-5'>
+                {/* <OrderGraph /> */}
               </div>
             </div>
           )}
         </div>
+
       )}
     </div>
   );
