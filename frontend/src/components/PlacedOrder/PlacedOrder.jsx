@@ -2,15 +2,12 @@ import axios from '../../api/AxiosUrl';
 import React, { useState } from 'react';
 
 const PlacedOrder = (props) => {
-  const [isItemReceived, setIsItemReceived] = useState(false);
-
   const handleReceivedClick = async () => {
-    setIsItemReceived(true);
     const res = await axios.get('/api/user');
     try {
       const response = await axios.put(`api/order/${props.orderId}`, {
         status: 'completed',
-        user_id: res.data.user._id
+        user_id: res.data.user._id,
       });
 
       if (response.status === 200) {
@@ -23,39 +20,58 @@ const PlacedOrder = (props) => {
     }
   };
 
-  // Conditionally render the "Received?" button based on props.quantity and props.delivered
-  const shouldRenderReceivedButton = props.quantity === props.delivered;
+  const isAllQuantityReceived = props.quantity === props.delivered;
 
   return (
     <>
-      <div className={`border-2 flex justify-between border-gray-300 bg-white rounded-lg mb-2 mx-6 ${isItemReceived ? 'bg-green-100' : ''}`}>
-        <div className="flex gap-4 m-2">
-          <img
-            className="p-2 h-16 w-24 object-contain"
-            src={props.imageUrl}
-            alt='productimage'
-          />
-          <h5 className={`text-xl my-auto font-semibold tracking-tight text-gray-900 ${isItemReceived ? 'text-green-700' : ''}`}>
-            {props.name}
-          </h5>
-        </div>
-        {props.status === 'accepted' && !isItemReceived && shouldRenderReceivedButton && (
-          <button
-            className='bg-green-500 text-white px-3 py-1 rounded'
-            onClick={handleReceivedClick}
-          >
-            Received?
-          </button>
-        )}
-        <div className='flex my-auto gap-14 mr-8'>
-          <div className='mr-10'>{props.quantity}</div>
-          <div className='mr-2'>{props.delivered}</div>
-          <div className={`${props.status === 'completed' ? 'text-green-500' : ''}`}>
-            {isItemReceived ? 'Completed' : props.status}
+      <tr class='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'>
+        <th
+          scope='row'
+          class='flex items-center px-4 py-4 text-gray-900 whitespace-nowrap dark:text-white'
+        >
+          <div class='text-base font-semibold flex gap-2'>
+            <div>
+              <img
+                className='p-2 h-16 w-24 object-contain'
+                src={props.imageUrl}
+                alt='productimage'
+              />
+            </div>
+            <div className='my-auto'>{props.name}</div>
           </div>
-        </div>
-      </div>
-      <div></div>
+        </th>
+        <td class='px-6 py-4'>{props.date}</td>
+        <td class='px-6 py-4'>{props.quantity}</td>
+        <td class='px-6 py-4'>{props.delivered}</td>
+        <td class='px-6 py-4'>
+          <div class='flex items-center'>
+            {props.status === 'accepted' && isAllQuantityReceived && (
+              <button>
+                <div
+                  className='flex items-center text-blue-500'
+                  onClick={handleReceivedClick}
+                >
+                  Received?
+                </div>
+              </button>
+            )}
+
+            {props.status === 'completed' && (
+              <div className='flex items-center'>
+                <div className='h-2.5 w-2.5 rounded-full bg-green-500 mr-2'></div>
+                Completed
+              </div>
+            )}
+
+            {(props.status === 'pending' || !isAllQuantityReceived) && (
+              <div className='flex items-center'>
+                <div className='h-2.5 w-2.5 rounded-full bg-yellow-300 mr-2'></div>
+                Pending
+              </div>
+            )}
+          </div>
+        </td>
+      </tr>
     </>
   );
 };
