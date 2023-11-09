@@ -1,5 +1,4 @@
 import React from 'react';
-import Button from '../components/UI/Button';
 import { Link } from 'react-router-dom';
 
 const NotFound = () => {
@@ -10,9 +9,9 @@ const NotFound = () => {
           404 Not Found
         </div>
         <div className='text-center'>
-        <Link to='/'>
-          <Button>Back to Home</Button>
-        </Link>
+          <Link to='/'>
+            <button className='blue_btn'>Back to Home</button>
+          </Link>
         </div>
       </div>
     </>

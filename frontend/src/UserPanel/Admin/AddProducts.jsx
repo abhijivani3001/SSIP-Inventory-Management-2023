@@ -23,12 +23,12 @@ const AddProducts = () => {
       imageUrl: imageURL,
     };
 
-    const res=await axios.post('api/item', data);
+    const res = await axios.post('api/item', data);
     console.log(res);
   };
 
   return (
-    <div className='inset-0 flex items-center justify-center p-16'>
+    <div className='inset-0 flex items-center justify-center p-8'>
       <div className='bg-white w-96 p-8 text-lg font-semibold rounded-lg shadow-lg'>
         <h2 className='text-2xl font-semibold text-black mb-4 min-w-0 flex items-center justify-center'>
           Add Item
@@ -48,9 +48,7 @@ const AddProducts = () => {
             />
           </div>
           <div className='mb-4'>
-            <label className='block text-gray-700'>
-              Description
-            </label>
+            <label className='block text-gray-700'>Description</label>
             <input
               type='text'
               id='description'
@@ -63,9 +61,7 @@ const AddProducts = () => {
             />
           </div>
           <div className='mb-4'>
-            <label className='block text-gray-700'>
-              Company
-            </label>
+            <label className='block text-gray-700'>Company</label>
             <input
               type='text'
               id='company'
@@ -78,9 +74,7 @@ const AddProducts = () => {
             />
           </div>
           <div className='mb-4'>
-            <label className='block text-gray-700'>
-              Category
-            </label>
+            <label className='block text-gray-700'>Category</label>
             <input
               type='text'
               id='category'
@@ -105,22 +99,16 @@ const AddProducts = () => {
               required
             />
           </div>
-          <div className='text-center'>
-            <button
-              type='submit'
-              className='bg-gray-800 w-24 text-white border-2 hover:bg-gray-700 py-1.5 px-6 rounded-lg'
-            >
+          <div className='flex justify-center align-middle'>
+            <button type='submit' className='blue_btn mt-2'>
               Add
             </button>
-          </div>
 
-          <div className='text-center mt-4'>
-            <Link
-              to='/'
-              className='text-gray-700 w-24 border-2 hover:bg-gray-100 py-1.5 px-6 rounded-lg'
-            >
-              Close
-            </Link>
+            <div className='my-auto'>
+              <Link to='/' className='trans_btn'>
+                Close
+              </Link>
+            </div>
           </div>
         </form>
       </div>

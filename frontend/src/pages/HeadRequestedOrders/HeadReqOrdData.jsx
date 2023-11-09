@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../../api/AxiosUrl';
-import Button from '../../components/UI/Button';
 
 const HeadReqOrdData = (props) => {
   const [mergeOrderData, setMergeOrderData] = useState([]);
@@ -58,20 +57,20 @@ const HeadReqOrdData = (props) => {
           <div>{props.name}</div>
           <div className='flex gap-4 mr-4'>
             <div>
-              <Button
-                bg='bg-green-500'
+              <button
+                className='green_btn'
                 onClick={() => statusHandler(props.userId, 'accepted')}
               >
                 Accept
-              </Button>
+              </button>
             </div>
             <div>
-              <Button
-                bg='bg-red-500'
+              <button
+                className='red_btn'
                 onClick={() => statusHandler(props.userId, 'rejected')}
               >
                 Reject
-              </Button>
+              </button>
             </div>
           </div>
         </div>

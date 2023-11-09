@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Button from '../UI/Button';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -57,7 +56,9 @@ const ProductCard = (props) => {
           </div>
 
           <div className='mt-2'>
-            <Button onClick={handleAddToCart}>Add to cart</Button>
+            <button className='blue_btn' onClick={handleAddToCart}>
+              Add to cart
+            </button>
           </div>
         </div>
       </div>

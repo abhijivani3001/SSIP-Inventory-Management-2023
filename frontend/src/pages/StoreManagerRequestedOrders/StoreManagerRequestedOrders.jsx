@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Button from '../../components/UI/Button';
 import axios from '../../api/AxiosUrl';
 import { useCart } from '../../store/CartProvider';
 import ROLES from '../../constants/ROLES';
@@ -137,9 +136,9 @@ const StoreManagerRequestedOrders = () => {
             ))}
           </div>
           <div className=' text-center'>
-            <Button bg='bg-green-400' mb='mb-4' onClick={handleMergeOrder}>
+            <button className='green_btn' mb='mb-4' onClick={handleMergeOrder}>
               Submit
-            </Button>
+            </button>
           </div>
         </>
       )}

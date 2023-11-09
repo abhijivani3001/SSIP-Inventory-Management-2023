@@ -1,11 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import AuthContext from '../../store/auth-context';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from '../../api/AxiosUrl';
 import 'react-toastify/dist/ReactToastify.css';
 
 const RegisterUser = () => {
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -43,9 +41,9 @@ const RegisterUser = () => {
   };
 
   return (
-    <div className='inset-0 flex items-center justify-center p-16'>
-      <div className='bg-white text-xl text-gray-900 font-semibold w-1/3 p-8 rounded-lg shadow-lg'>
-        <h2 className='text-2xl font-semibold text-black mb-4 min-w-0 flex items-center justify-center'>
+    <div className='inset-0 flex items-center justify-center p-8'>
+      <div className='bg-white text-xl text-gray-800 font-semibold w-1/3 p-8 rounded-lg shadow-lg'>
+        <h2 className='text-2xl font-semibold text-gray-800 mb-4 min-w-0 flex items-center justify-center'>
           Register User
         </h2>
         <form onSubmit={handleSubmit}>
@@ -154,21 +152,15 @@ const RegisterUser = () => {
               required
             />
           </div>
-          <div className='text-center'>
-            <button
-              type='submit'
-              className='bg-gray-800 text-white border-2 hover:bg-gray-700 py-1.5 px-6 rounded-xl'
-            >
+          <div className='flex justify-center align-middle'>
+            <button type='submit' className='blue_btn mt-2'>
               Register
             </button>
-          </div>
-          <div className='text-center mt-4'>
-            <Link
-              to='/'
-              className='text-gray-700 border-2 w-40 hover:bg-gray-700 hover:text-white py-1.5 px-6 rounded-xl'
-            >
-              Close
-            </Link>
+            <div className='my-auto'>
+              <Link to='/' className='trans_btn'>
+                Close
+              </Link>
+            </div>
           </div>
         </form>
       </div>

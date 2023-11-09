@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CartItem from '../components/Cart/CartItem';
-import Button from '../components/UI/Button';
 import { useCart } from '../store/CartProvider';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -93,12 +92,17 @@ const CartItems = () => {
           </div>
           <div className='flex gap-4 justify-center'>
             <div className='text-center my-4'>
-              <Button onClick={() => dispatch({ type: 'CLEAR_CART' })}>
+              <button
+                className='trans_btn'
+                onClick={() => dispatch({ type: 'CLEAR_CART' })}
+              >
                 Clear
-              </Button>
+              </button>
             </div>
             <div className='text-center my-4'>
-              <Button onClick={submitHandler}>Submit</Button>
+              <button className='green_btn' onClick={submitHandler}>
+                Submit
+              </button>
             </div>
           </div>
         </div>

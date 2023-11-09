@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from '../api/AxiosUrl';
 
-const ForgotPassword = () => {
+const ResetPassword = () => {
   const [email, setEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
 
@@ -67,10 +67,7 @@ const ForgotPassword = () => {
             />
           </div>
           <div className='text-center'>
-            <button
-              type='submit'
-              className='bg-gray-800 text-white border-2 hover:bg-gray-700 py-1.5 px-6 rounded-lg'
-            >
+            <button type='submit' className='gray_btn'>
               Reset Password
             </button>
           </div>
@@ -80,4 +77,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default ResetPassword;

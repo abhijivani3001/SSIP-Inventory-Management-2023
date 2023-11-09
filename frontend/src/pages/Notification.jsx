@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import NotificationCard from '../components/Notification/NotificationCard';
 
 const Notification = () => {

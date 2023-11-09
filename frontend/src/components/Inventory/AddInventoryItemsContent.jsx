@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
 import axios from '../../api/AxiosUrl';
-import Button from '../UI/Button';
 import AddInventoryCard from './AddInventoryCard';
 
 const AddInventoryItemsContent = (props) => {
@@ -63,7 +62,7 @@ const AddInventoryItemsContent = (props) => {
             ))}
           </div>
           <div className='flex gap-4 justify-center mb-8'>
-            <Button onClick={props.onClose} mb='mb-4'>close</Button>
+            <button className='trans_btn mb-4' onClick={props.onClose} mb='mb-4'>close</button>
           </div>
         </>
       )}

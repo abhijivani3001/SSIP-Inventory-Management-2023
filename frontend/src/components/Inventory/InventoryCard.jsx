@@ -1,7 +1,6 @@
-import React, { useState } from "react";
-import Button from "../UI/Button";
+import React, { useState } from 'react';
 
-import axios from "../../api/AxiosUrl";
+import axios from '../../api/AxiosUrl';
 
 const InventoryCard = (props) => {
   const [availableItems, setAvailableItems] = useState(props.quantity);
@@ -17,7 +16,7 @@ const InventoryCard = (props) => {
   const handleSaveClick = async () => {
     setIsEditing(false);
     try {
-      const res = await axios.put("api/inventory", {
+      const res = await axios.put('api/inventory', {
         updatedQuantity: availableItems,
         inventoryId: props.inventoryId,
       });
@@ -38,58 +37,61 @@ const InventoryCard = (props) => {
 
   return (
     <>
-      <div className="w-72 bg-white border border-gray-200 rounded-lg shadow-lg m-4">
+      <div className='w-72 bg-white border border-gray-200 rounded-lg shadow-lg m-4'>
         <img
-          className="p-8 rounded-t-lg h-48 m-auto"
+          className='p-8 rounded-t-lg h-48 m-auto'
           src={props.imageUrl}
-          alt="inventory"
+          alt='inventory'
         />
-        <div className="px-5 pb-5 mt-4">
-          <h5 className="text-xl font-semibold tracking-tight text-gray-900">
+        <div className='px-5 pb-5 mt-4'>
+          <h5 className='text-xl font-semibold tracking-tight text-gray-900'>
             {isLowQuantity ? (
-              <span title="Item quantity is low" className="text-red-700 hover:text-red-800 cursor-help">
-                {props.name} {" *"}
+              <span
+                title='Item quantity is low'
+                className='text-red-700 hover:text-red-800 cursor-help'
+              >
+                {props.name} {' *'}
               </span>
             ) : (
               props.name
             )}
           </h5>
 
-          <p className="text-gray-500 text-sm my-2">{props.description}</p>
+          <p className='text-gray-500 text-sm my-2'>{props.description}</p>
 
-          <div className="flex flex-col gap-1 items-center justify-between my-2 mb-0">
-            <div className="flex justify-evenly gap-2">
-              <label className="text-lg font-semibold" htmlFor={props.id}>
+          <div className='flex flex-col gap-1 items-center justify-between my-2 mb-0'>
+            <div className='flex justify-evenly gap-2'>
+              <label className='text-lg font-semibold' htmlFor={props.id}>
                 Quantity
               </label>
               {isEditing ? (
                 <input
                   id={props.id}
-                  name="quantity"
-                  type="number"
-                  className="border-2 border-gray-700 w-12 p-0 text-center rounded-lg"
+                  name='quantity'
+                  type='number'
+                  className='border-2 border-gray-700 w-12 p-0 text-center rounded-lg'
                   min={1}
                   value={availableItems}
                   onChange={(e) => setAvailableItems(e.target.value)}
                 />
               ) : (
-                <span className="my-auto">{props.quantity}</span>
+                <span className='my-auto'>{props.quantity}</span>
               )}
             </div>
 
-            <div className="mt-2 mx-2 flex gap-2">
+            <div className='mt-2 mx-2 flex gap-2'>
               {isEditing ? (
-                <Button bg="bg-green-500" onClick={handleSaveClick}>
+                <button className='blue_btn' onClick={handleSaveClick}>
                   Save
-                </Button>
+                </button>
               ) : (
-                <Button bg="bg-blue-500" onClick={handleUpdateClick}>
+                <button className='green_btn' onClick={handleUpdateClick}>
                   Update
-                </Button>
+                </button>
               )}
-              <Button bg="bg-red-500" onClick={deleteItemHandler}>
+              <button className='red_btn' onClick={deleteItemHandler}>
                 Delete
-              </Button>
+              </button>
             </div>
           </div>
         </div>

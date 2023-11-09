@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Button from '../UI/Button';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from '../../api/AxiosUrl';
@@ -64,7 +63,9 @@ const AddInventoryCard = (props) => {
           </div>
 
           <div className='mt-2'>
-            <Button onClick={addToInventoryHandler}>Add to Inventory</Button>
+            <button className='blue_btn' onClick={addToInventoryHandler}>
+              Add to Inventory
+            </button>
           </div>
         </div>
       </div>

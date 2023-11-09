@@ -9,15 +9,11 @@ const AdminDashboard = () => {
   useEffect(() => {
     (async () => {
       try {
-        // const res1 = await axios.get("api/user");
-        // console.log(res1);
-        // const user = await res1.data.user;
-
-        const res2 = await axios.post('/api/user/users' ,{
-          role: 'admin'
+        const res2 = await axios.post('/api/user/users', {
+          role: 'admin',
         });
         console.log(res2);
-        const data = await res2.data.users;        
+        const data = await res2?.data?.users;
         console.log(data);
 
         setUserData(data);
@@ -38,7 +34,7 @@ const AdminDashboard = () => {
       )}
       {!isLoading && (
         <div className='text-3xl mx-40 border border-gray-400 py-5 px-10 rounded-lg shadow-xl my-10'>
-          {userData.map((user)=>(
+          {userData.map((user) => (
             <UserDataCard user={user} />
           ))}
         </div>

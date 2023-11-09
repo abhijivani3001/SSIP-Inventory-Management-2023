@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import InventoryCard from '../components/Inventory/InventoryCard';
 
 import axios from '../api/AxiosUrl';
-import Button from '../components/UI/Button';
 import AddInventoryItem from '../components/Inventory/AddInventoryItem';
 
 const Inventory = (props) => {
@@ -80,7 +79,9 @@ const Inventory = (props) => {
           )}
 
           <div className=' text-center my-6'>
-            <Button onClick={showAddProductsHandler}>Add Item</Button>
+            <button className='blut_btn' onClick={showAddProductsHandler}>
+              Add Item
+            </button>
           </div>
 
           {isAddProductsShown && (

@@ -23,7 +23,7 @@ const Login = (props) => {
       if (data.success === true) {
         alert('Login Successfully');
         authCtx.login(data.token);
-        navigate('/');
+        navigate('/dashboard');
 
         window.location.reload(); // bad-practice
       } else {
@@ -40,7 +40,7 @@ const Login = (props) => {
   return (
     <div className='inset-0 flex items-center justify-center p-16'>
       <div className='bg-white w-96 p-8 rounded-lg shadow-lg'>
-        <h2 className='text-2xl font-semibold text-black mb-4 min-w-0 flex items-center justify-center'>
+        <h2 className='text-2xl font-semibold text-gray-800 mb-4 min-w-0 flex items-center justify-center'>
           Login
         </h2>
         <form onSubmit={submitHandler}>
@@ -73,15 +73,12 @@ const Login = (props) => {
             />
           </div>
           <div className='text-center'>
-            <button
-              type='submit'
-              className='bg-gray-800 text-white border-2 hover:bg-gray-700 py-1.5 px-6 rounded-lg'
-            >
+            <button type='submit' className='blue_btn'>
               Login
             </button>
           </div>
 
-          <div className='text-center mt-4'>
+          <div className='text-center'>
             <Link
               to='/forgot-password'
               className='text-blue-600 hover:underline'

@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-import Home from './pages/Home';
 import Products from './pages/Products';
-import About from './pages/About';
 import NotFound from './pages/NotFound';
 import Login from './pages/Login';
 import Notification from './pages/Notification';
@@ -14,15 +12,16 @@ import UserProfile from './pages/UserProfile';
 import AuthContext from './store/auth-context';
 import Inventory from './pages/Inventory';
 import ROLES from './constants/ROLES';
-import RegisterUser from './UserPanel/Admin/RegisterUser'
-import AddProducts from './UserPanel/Admin/AddProducts'
+import RegisterUser from './UserPanel/Admin/RegisterUser';
+import AddProducts from './UserPanel/Admin/AddProducts';
 
 import axios from './api/AxiosUrl';
 import HeadRequestedOrders from './pages/HeadRequestedOrders/HeadRequestedOrders';
 import StoreManagerRequestedOrders from './pages/StoreManagerRequestedOrders/StoreManagerRequestedOrders';
 import Dashboard from './pages/Dashboard';
 import AdminDashboard from './UserPanel/Admin/AdminDashboard';
-import ForgotPassword from './pages/ForgotPassword';
+import ForgotPassword from './pages/ResetPassword';
+import ResetPassword from './pages/ResetPassword';
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -49,37 +48,50 @@ function App() {
   return (
     <Layout>
       <Routes>
-        
-        {/* <Route path='/home' element={<Home />} /> */}
-        {/* <Route path='/about' element={<About />} /> */}
-
-        {isLoggedIn && (userRole === ROLES.ADMIN) && <Route path='/register-user' element={<RegisterUser />} />}
-        {isLoggedIn && (userRole === ROLES.ADMIN) && <Route path='/add-products' element={<AddProducts />} />}
-
         {!isLoggedIn && <Route path='/login' element={<Login />} />}
         {!isLoggedIn && <Route path='/' element={<Login />} />}
         {/* {!isLoggedIn && <Route path='/forgot-password' element={<ForgotPassword />} />} */}
-        
+
+        {/* admin */}
+        {isLoggedIn && (userRole === ROLES.ADMIN || !isLoading) && (
+          <Route path='/register-user' element={<RegisterUser />} />
+        )}
+        {isLoggedIn && (userRole === ROLES.ADMIN || !isLoading) && (
+          <Route path='/add-products' element={<AddProducts />} />
+        )}
+        {isLoggedIn && userRole === ROLES.ADMIN && (
+          <Route path='/dashboard' element={<AdminDashboard />} />
+        )}
+        {isLoggedIn && (userRole === ROLES.ADMIN || !isLoading) && (
+          <Route path='/reset-password' element={<ResetPassword />} />
+        )}
+
+        {/* --- */}
         {isLoggedIn && <Route path='/user' element={<UserProfile />} />}
-        {isLoggedIn && (userRole!==ROLES.ADMIN) && <Route path='/dashboard' element={<Dashboard />} />}
-        {isLoggedIn && (userRole!==ROLES.ADMIN) && <Route path='/' element={<Dashboard />} />}
-        {isLoggedIn && (userRole===ROLES.ADMIN) && <Route path='/admin-dashboard' element={<AdminDashboard />} />}
-        {isLoggedIn && (userRole===ROLES.ADMIN) && <Route path='/' element={<AdminDashboard />} />}
-        {isLoggedIn && (userRole===ROLES.ADMIN) && <Route path='/forgot-password' element={<ForgotPassword />} />}
-        {/* {isLoggedIn && <Route path='/' element={<Dashboard />} />} */}
-        {isLoggedIn && <Route path='/products' element={<Products />} />}
-        {isLoggedIn && <Route path='/cart' element={<CartItems />} />}
-        {isLoggedIn && (
+
+        {isLoggedIn && userRole !== ROLES.ADMIN && (
+          <Route path='/dashboard' element={<Dashboard />} />
+        )}
+
+        {isLoggedIn && userRole !== ROLES.ADMIN && (
+          <Route path='/products' element={<Products />} />
+        )}
+        {isLoggedIn && userRole !== ROLES.ADMIN && (
+          <Route path='/cart' element={<CartItems />} />
+        )}
+        {isLoggedIn && userRole !== ROLES.ADMIN && (
           <Route path='/notification' element={<Notification />} />
         )}
 
         {isLoggedIn &&
+          userRole !== ROLES.ADMIN &&
           (userRole === ROLES.SUB_BRANCH_STORE_MANAGER ||
             userRole === ROLES.BRANCH_STORE_MANAGER ||
             userRole === ROLES.DEPARTMENT_STORE_MANAGER ||
             !isLoading) && <Route path='/inventory' element={<Inventory />} />}
 
         {isLoggedIn &&
+          userRole !== ROLES.ADMIN &&
           (userRole === ROLES.SUB_BRANCH_STORE_MANAGER ||
             userRole === ROLES.BRANCH_STORE_MANAGER ||
             userRole === ROLES.DEPARTMENT_STORE_MANAGER ||
@@ -91,6 +103,7 @@ function App() {
           )}
 
         {isLoggedIn &&
+          userRole !== ROLES.ADMIN &&
           (userRole === ROLES.SUB_BRANCH_HEAD ||
             userRole === ROLES.BRANCH_HEAD ||
             userRole === ROLES.DEPARTMENT_HEAD ||
@@ -101,7 +114,7 @@ function App() {
             />
           )}
 
-        {isLoggedIn && (
+        {isLoggedIn && userRole !== ROLES.ADMIN && (
           <Route path='/placed-orders' element={<PlacedOrderList />} />
         )}
 

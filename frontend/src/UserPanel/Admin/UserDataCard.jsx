@@ -13,14 +13,9 @@ const UserDataCard = (props) => {
       </div>
 
       <div className='text-xl ml-5'>
-        {/* <div> */}
-          Email:{' '}
-          <span className='text-gray-500 mr-14 text-xl'>{props.user.email}</span>
-        {/* </div> */}
-        {/* <div> */}
-          Phone:{' '}
-          <span className='text-gray-500 text-xl'>{props.user.phone}</span>
-        {/* </div> */}
+        Email:{' '}
+        <span className='text-gray-500 mr-14 text-xl'>{props.user.email}</span>
+        Phone: <span className='text-gray-500 text-xl'>{props.user.phone}</span>
       </div>
     </div>
   );

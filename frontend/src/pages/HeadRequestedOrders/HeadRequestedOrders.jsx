@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Button from "../../components/UI/Button";
 import axios from "../../api/AxiosUrl";
 import { useCart } from "../../store/CartProvider";
 import ROLES from "../../constants/ROLES";

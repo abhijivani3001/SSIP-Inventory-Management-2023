@@ -40,9 +40,9 @@ const AdminNavbar = (props) => {
           </li>
           <li>
             <Link
-              to='/admin-dashboard'
+              to='/dashboard'
               className={`${
-                location.pathname === '/admin-dashboard'
+                location.pathname === '/dashboard'
                   ? 'active-navbar-element'
                   : 'navbar-element'
               }`}
@@ -52,9 +52,9 @@ const AdminNavbar = (props) => {
           </li>
           <li>
             <Link
-              to='/forgot-password'
+              to='/reset-password'
               className={`${
-                location.pathname === '/forgot-password'
+                location.pathname === '/reset-password'
                   ? 'active-navbar-element'
                   : 'navbar-element'
               }`}

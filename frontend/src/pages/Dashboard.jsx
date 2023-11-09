@@ -116,35 +116,32 @@ const Dashboard = () => {
     }
   }, [authCtx.isLoggedIn, authCtx.email]);
   return (
-    <div className='p-4 bg-white rounded-lg shadow-lg'>
+    <div className='p-4 bg-gray-100 rounded-lg shadow-lg'>
       {isLoading ? (
         <p>Loading...</p>
-        ) : (
-        <><h1 className='text-2xl font-semibold mb-4'>Dashboard</h1>
-        <div>
-          {orderData.length < 1 ? (
-            <span className='text-2xl mx-3'>No order placed by you</span>
-          ) : (
-            <div className='flex flex-wrap justify-evenly'>
-              <div className='mx-10 my-5 broder '>
-                <PieChart />
+      ) : (
+        <>
+          <h1 className='text-2xl font-semibold mb-4'>Dashboard</h1>
+          <div>
+            {orderData.length < 1 ? (
+              <span className='text-2xl mx-3'>No order placed by you</span>
+            ) : (
+              <div className='flex flex-wrap justify-center'>
+                <div className='mx-10 my-5 broder '>
+                  <PieChart />
+                </div>
+                <div className='mx-10 my-5'>
+                  <BarChart />
+                </div>
+                <div className='mx-10 my-5'>{/* <UserChart /> */}</div>
+                <div className='mx-10 my-5'>
+                  <OrderData />
+                </div>
+                <div className='mx-10 my-5'>{/* <OrderGraph /> */}</div>
               </div>
-              <div className='mx-10 my-5'>
-                <BarChart />
-              </div>
-              <div className='mx-10 my-5'>
-                {/* <UserChart /> */}
-              </div>
-              <div className='mx-10 my-5'>
-                <OrderData />
-              </div>
-              <div className='mx-10 my-5'>
-                {/* <OrderGraph /> */}
-              </div>
-            </div>
-          )}
-        </div>
-</>
+            )}
+          </div>
+        </>
       )}
     </div>
   );
