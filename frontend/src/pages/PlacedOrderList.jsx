@@ -37,11 +37,11 @@ const PlacedOrderList = () => {
       )}
 
       {!isLoading && isOrdersPlaced && (
-        <>
+        <div className='my-4'>
           {placedOrders.map((order) => (
             <PlacedBulkOrder order={order} />
           ))}
-        </>
+        </div>
       )}
     </div>
   );
