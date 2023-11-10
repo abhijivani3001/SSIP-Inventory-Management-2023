@@ -12,13 +12,15 @@ const CartItem = (props) => {
       payload: { ...item, amount: Math.max(0, item.amount + 1) },
     });
   };
+
   const decrementHandler = (item) => {
-    console.log(item);
-    if (amount > 1) setAmount(+amount - 1);
-    dispatch({
-      type: 'UPDATE_ITEM',
-      payload: { ...item, amount: Math.max(0, item.amount - 1) },
-    });
+    if (amount > 1) {
+      setAmount(+amount - 1);
+      dispatch({
+        type: 'UPDATE_ITEM',
+        payload: { ...item, amount: Math.max(0, item.amount - 1) },
+      });
+    }
   };
 
   return (
