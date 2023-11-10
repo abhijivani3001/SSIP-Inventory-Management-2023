@@ -1,5 +1,5 @@
 import axios from '../../api/AxiosUrl';
-import React, { useState } from 'react';
+import React from 'react';
 
 const PlacedOrder = (props) => {
   const handleReceivedClick = async () => {
@@ -27,7 +27,7 @@ const PlacedOrder = (props) => {
       <tr class='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'>
         <th
           scope='row'
-          class='flex items-center px-4 py-4 text-gray-900 whitespace-nowrap dark:text-white'
+          class='flex items-center px-4 py-1 text-gray-900 whitespace-nowrap dark:text-white'
         >
           <div class='text-base font-semibold flex gap-2'>
             <div>
@@ -40,10 +40,9 @@ const PlacedOrder = (props) => {
             <div className='my-auto'>{props.name}</div>
           </div>
         </th>
-        <td class='px-6 py-4'>{props.date}</td>
-        <td class='px-6 py-4'>{props.quantity}</td>
-        <td class='px-6 py-4'>{props.delivered}</td>
-        <td class='px-6 py-4'>
+        <td class='px-6'>{props.quantity}</td>
+        <td class='px-6'>{props.delivered}</td>
+        <td class='px-6'>
           <div class='flex items-center'>
             {props.status === 'accepted' && isAllQuantityReceived && (
               <button>
