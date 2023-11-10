@@ -1,20 +1,18 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useCart } from '../../store/CartProvider';
 
 const ProductCard = (props) => {
   const [freqOfItem, setFreqOfItem] = useState(1);
+  let item = props.val;
 
-  const incrementHandler = () => {
-    setFreqOfItem((prev) => prev + 1);
-  };
-  const decrementHandler = () => {
-    if (freqOfItem > 1) setFreqOfItem((prev) => prev - 1);
-  };
+  const { cart, dispatch } = useCart();
 
   const handleAddToCart = () => {
-    props.onAddToCart();
+    item = { ...item, amount: +freqOfItem }; // (+amount) : '+' is used to convert string to int
 
+    dispatch({ type: 'ADD_ITEM', payload: item });
     toast.success('Item added to cart successfully', {
       position: 'top-right',
       autoClose: 1500,
@@ -50,13 +48,12 @@ const ProductCard = (props) => {
               value={freqOfItem}
               onChange={(e) => {
                 setFreqOfItem(e.target.value);
-                props.amountChangeHandler(e.target.value);
               }}
             />
           </div>
 
           <div className='mt-2'>
-            <button className='blue_btn' onClick={handleAddToCart}>
+            <button className='blue_btn' onClick={() => handleAddToCart()}>
               Add to cart
             </button>
           </div>
