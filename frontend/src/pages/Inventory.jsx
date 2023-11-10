@@ -78,8 +78,8 @@ const Inventory = (props) => {
             </>
           )}
 
-          <div className=' text-center my-6'>
-            <button className='blut_btn' onClick={showAddProductsHandler}>
+          <div className='text-center my-6'>
+            <button className='blue_btn' onClick={showAddProductsHandler}>
               Add Item
             </button>
           </div>

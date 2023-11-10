@@ -55,9 +55,8 @@ const Navbar = () => {
   return (
     <nav className='sticky inset-x-0 top-0 z-10 text-gray-900 bg-gray-100 text-xl mx-2'>
       <div className='flex flex-wrap items-center justify-between mx-auto p-4 px-10'>
-
         {/* Part-1: logo */}
-        <Link to='/'>
+        <Link to='/dashboard'>
           <div className='flex items-center'>
             <img
               src='https://flowbite.com/docs/images/logo.svg'
@@ -129,24 +128,28 @@ const Navbar = () => {
                     Your profile
                   </Link>
                 </li>
-                {userData.role !== ROLES.ADMIN && <li>
-                  <Link
-                    to='/dashboard'
-                    className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
-                    onClick={toggleDropdown}
-                  >
-                    Dashboard
-                  </Link>
-                </li>}
-                {userData.role === ROLES.ADMIN && <li>
-                  <Link
-                    to='/admin-dashboard'
-                    className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
-                    onClick={toggleDropdown}
-                  >
-                    Dashboard
-                  </Link>
-                </li>}
+                {userData.role !== ROLES.ADMIN && (
+                  <li>
+                    <Link
+                      to='/dashboard'
+                      className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+                      onClick={toggleDropdown}
+                    >
+                      Dashboard
+                    </Link>
+                  </li>
+                )}
+                {userData.role === ROLES.ADMIN && (
+                  <li>
+                    <Link
+                      to='/admin-dashboard'
+                      className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+                      onClick={toggleDropdown}
+                    >
+                      Dashboard
+                    </Link>
+                  </li>
+                )}
                 <li>
                   <a
                     href='#'

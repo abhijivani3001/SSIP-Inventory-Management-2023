@@ -115,7 +115,17 @@ const StoreReqOrdData = (props) => {
     <>
       {props.orders.length > 0 && (
         <div className='bg-gray-200 border-2 border-gray-300 rounded-lg m-4'>
-          <div className='text-2xl font-semibold mx-4 my-2'>{props.name}</div>
+          <div className='flex justify-between'>
+            <div className='flex align-middle'>
+              <div className='text-2xl font-semibold mx-4 my-2'>
+                {props.name}
+              </div>
+              <div className='text-xl font-medium text-gray-500 my-2'>
+                Orders x{props.orders.length}
+              </div>
+            </div>
+            <div>Created at: {props.orders.createdAt}</div>
+          </div>
 
           {props.orders.map((order, index) => (
             <div key={order.itemId}>

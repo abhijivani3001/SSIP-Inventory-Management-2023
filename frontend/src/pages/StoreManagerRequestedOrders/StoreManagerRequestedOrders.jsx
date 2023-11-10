@@ -53,6 +53,7 @@ const StoreManagerRequestedOrders = () => {
 
       let roleOfRequestedUser = '';
       let roleOfRequestedUser2 = '';
+
       if (user.role === ROLES.DEPARTMENT_STORE_MANAGER) {
         roleOfRequestedUser = ROLES.BRANCH_STORE_MANAGER;
       } else if (user.role === ROLES.BRANCH_STORE_MANAGER) {
@@ -61,15 +62,15 @@ const StoreManagerRequestedOrders = () => {
         roleOfRequestedUser = ROLES.EMPLOYEE;
         roleOfRequestedUser2 = ROLES.SUB_BRANCH_HEAD;
       }
+
       const res2 = await axios.post('api/user/users', {
         ...user,
         role: roleOfRequestedUser,
       });
-      // console.log(res2, user);
 
       const data = await res2.data.users;
-
       // console.log(data);
+
       if (roleOfRequestedUser2) {
         const res3 = await axios.post('api/user/users', {
           ...user,
@@ -77,7 +78,7 @@ const StoreManagerRequestedOrders = () => {
         });
         const tempdata = await res3.data.users;
         data.push(...tempdata);
-        console.log(data);
+        // console.log(data);
       }
 
       if (data?.length) {
@@ -108,14 +109,6 @@ const StoreManagerRequestedOrders = () => {
       )}
       {!isLoading && isRequestedOrdersAvailable && (
         <>
-          <div className='flex justify-between'>
-            <h1 className='page-title'>Order List</h1>
-            <h2 className='text-2xl font-light my- gap-2 mr-8'>
-              <div className='flex items-end gap-6 mt-8'>
-                <div>Available Quantity</div>
-              </div>
-            </h2>
-          </div>
           <div className='my-6'>
             {usersOfRequestedOrders.map((val) => (
               <StoreReqOrdData
@@ -125,11 +118,13 @@ const StoreManagerRequestedOrders = () => {
                 department={val.department}
                 role={val.role}
                 name={val.name}
-                orders={val.orders.filter(
-                  (dataItem) =>
-                    dataItem.status !== 'completed' &&
-                    dataItem.status !== 'rejected'
-                )} // order array
+                // orders={val.bulkOrders.filter(
+                //   (dataItem) =>
+                //     dataItem.status !== 'completed' &&
+                //     dataItem.status !== 'rejected'
+                // )} // order array
+
+                orders={val.bulkOrders} // bulk order
                 userId={val._id}
                 getRequiredData={getRequiredData}
               />

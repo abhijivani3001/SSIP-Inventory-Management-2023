@@ -14,6 +14,7 @@ const PlacedBulkOrder = (props) => {
     dropdownIcon.classList?.toggle('rotate-180');
     toggleButton.classList?.toggle('rounded-t-lg');
     toggleButton.classList?.toggle('rounded-lg');
+    toggleButton.classList?.toggle('border-b');
   };
 
   const formatDate = (dateString) => {
@@ -27,13 +28,13 @@ const PlacedBulkOrder = (props) => {
       <div
         id='accordion-collapse'
         data-accordion='collapse'
-        className='bg-white rounded-lg'
+        className='bg-white rounded-lg border border-gray-600 shadow-lg my-2'
       >
         <h2 id='accordion-collapse-heading-1'>
           <button
             id={`toggle-button-${order._id}`}
             type='button'
-            class='flex flex-col items-center justify-between w-full font-medium text-left text-gray-500 border border-gray-200 rounded-lg focus:outline-none'
+            class='flex flex-col items-center justify-between w-full font-medium text-left text-gray-600 border-gray-700 rounded-lg focus:outline-none'
             data-accordion-target='#accordion-collapse-body-1'
             aria-expanded='true'
             aria-controls='accordion-collapse-body-1'
