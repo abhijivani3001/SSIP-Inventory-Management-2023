@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-
 import axios from '../../api/AxiosUrl';
 import AddInventoryCard from './AddInventoryCard';
 
@@ -55,6 +54,7 @@ const AddInventoryItemsContent = (props) => {
                 title={val.name}
                 description={val.description}
                 company={val.company}
+                imageUrl={val.imageUrl}
                 category={val.category}
                 itemId={val._id}
                 getInventoryItems={props.getInventoryItems}
