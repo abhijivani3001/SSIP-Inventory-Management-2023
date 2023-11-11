@@ -3,6 +3,7 @@ import axios from '../../api/AxiosUrl';
 import { useCart } from '../../store/CartProvider';
 import ROLES from '../../constants/ROLES';
 import StoreReqOrdData from './StoreReqOrdData';
+import TempOne from './TempOne';
 
 const StoreManagerRequestedOrders = () => {
   const { cart, dispatch } = useCart();
@@ -110,25 +111,40 @@ const StoreManagerRequestedOrders = () => {
       {!isLoading && isRequestedOrdersAvailable && (
         <>
           <div className='my-6'>
-            {usersOfRequestedOrders.map((val) => (
-              <StoreReqOrdData
-                key={val._id}
-                branch={val.branch}
-                subBranch={val.subBranch}
-                department={val.department}
-                role={val.role}
-                name={val.name}
-                // orders={val.bulkOrders.filter(
-                //   (dataItem) =>
-                //     dataItem.status !== 'completed' &&
-                //     dataItem.status !== 'rejected'
-                // )} // order array
+            {usersOfRequestedOrders.map((val) =>
+              // <StoreReqOrdData
+              //   key={val._id}
+              //   branch={val.branch}
+              //   subBranch={val.subBranch}
+              //   department={val.department}
+              //   role={val.role}
+              //   name={val.name}
+              //   // orders={val.bulkOrders.filter(
+              //   //   (dataItem) =>
+              //   //     dataItem.status !== 'completed' &&
+              //   //     dataItem.status !== 'rejected'
+              //   // )} // order array
 
-                orders={val.bulkOrders} // bulk order
-                userId={val._id}
-                getRequiredData={getRequiredData}
-              />
-            ))}
+              //   orders={val.bulkOrders} // bulk order
+              //   userId={val._id}
+              //   getRequiredData={getRequiredData}
+              // />
+              val.bulkOrders.length > 0 ? (
+                <TempOne
+                  key={val._id}
+                  name={val.name}
+                  branch={val.branch}
+                  subBranch={val.subBranch}
+                  department={val.department}
+                  role={val.role}
+                  bulkOrders={val.bulkOrders}
+                  createdAt={val.createdAt}
+                  userId={val._id}
+                />
+              ) : (
+                ''
+              )
+            )}
           </div>
           <div className=' text-center'>
             <button className='green_btn' mb='mb-4' onClick={handleMergeOrder}>

@@ -20,7 +20,6 @@ import HeadRequestedOrders from './pages/HeadRequestedOrders/HeadRequestedOrders
 import StoreManagerRequestedOrders from './pages/StoreManagerRequestedOrders/StoreManagerRequestedOrders';
 import Dashboard from './pages/Dashboard';
 import AdminDashboard from './UserPanel/Admin/AdminDashboard';
-import ForgotPassword from './pages/ResetPassword';
 import ResetPassword from './pages/ResetPassword';
 
 function App() {
