@@ -110,7 +110,7 @@ const StoreManagerRequestedOrders = () => {
       )}
       {!isLoading && isRequestedOrdersAvailable && (
         <>
-          <div className='my-6'>
+          <div className='my-6 mx-2'>
             {usersOfRequestedOrders.map((val) =>
               // <StoreReqOrdData
               //   key={val._id}

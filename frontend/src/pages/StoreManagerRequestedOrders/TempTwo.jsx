@@ -1,8 +1,9 @@
 import React from 'react';
+import TempThree from './TempThree';
 
 const TempTwo = (props) => {
   const order = props.order;
-  console.log(order);
+  // console.log(order);
 
   // toggle classlist
   const dropdown = document?.getElementById(`collapse-body-${order._id}`);
@@ -77,30 +78,31 @@ const TempTwo = (props) => {
                       Name
                     </th>
                     <th scope='col' className='px-6 py-3'>
-                      Quantity
+                      Required Quantity
                     </th>
                     <th scope='col' className='px-6 py-3'>
-                      Received
+                      Delivered
                     </th>
                     <th scope='col' className='px-6 py-3'>
-                      Status
+                      Available
+                    </th>
+                    <th scope='col' className='px-6 py-3'>
+                      Action
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {/* {order.orders.map((item) => (
-                    <PlacedOrder
-                      // key={item._id}
+                  {order.orders.map((item) => (
+                    <TempThree
                       key={item.itemId}
                       imageUrl={item.imageUrl}
                       name={item.name}
                       quantity={item.quantity}
                       status={item.status}
                       delivered={item.delivered}
-                      orderId={item._id}
+                      itemId={item.itemId}
                     />
-                  ))} */}
-                  adsf
+                  ))}
                 </tbody>
               </table>
             </div>

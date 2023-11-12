@@ -5,7 +5,9 @@ const TempOne = (props) => {
   // toggle classlist
   const dropdown = document?.getElementById(`collapse-body-${props.userId}`);
   const dropdownIcon = document?.getElementById(`toggle-icon-${props.userId}`);
-  const toggleButton = document?.getElementById(`toggle-button-${props.userId}`);
+  const toggleButton = document?.getElementById(
+    `toggle-button-${props.userId}`
+  );
   const toggleDropdown = () => {
     dropdown.classList?.toggle('hidden');
     dropdownIcon.classList?.toggle('rotate-180');
@@ -67,7 +69,7 @@ const TempOne = (props) => {
             className='hidden w-full mt-4 rounded-b-lg'
             aria-labelledby='accordion-collapse-heading-1'
           >
-            {props.bulkOrders.map((order)=>(
+            {props.bulkOrders.map((order) => (
               <TempTwo order={order} />
             ))}
           </div>

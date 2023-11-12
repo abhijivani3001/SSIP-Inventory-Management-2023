@@ -24,7 +24,7 @@ const PlacedOrder = (props) => {
 
   return (
     <>
-      <tr class='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'>
+      <tr class='bg-white border-b divide-x dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'>
         <th
           scope='row'
           class='flex items-center px-4 py-1 text-gray-900 whitespace-nowrap dark:text-white'
