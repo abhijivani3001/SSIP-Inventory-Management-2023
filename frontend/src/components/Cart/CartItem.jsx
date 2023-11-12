@@ -25,8 +25,8 @@ const CartItem = (props) => {
 
   return (
     <>
-      <div className='border-2 flex justify-between border-gray-300 bg-white rounded-lg my-2'>
-        <div className='flex gap-4 m-2'>
+      <div className='border-2 flex justify-between border-gray-300 bg-white rounded-lg my-2 px-2'>
+        <div className='flex gap-4 my-1'>
           <img
             className='p-2 h-16 w-24 object-contain'
             src={props.item.imageUrl}
@@ -37,22 +37,22 @@ const CartItem = (props) => {
           </h5>
         </div>
 
-        <div className='flex align-middle my-auto gap-2 mr-8'>
+        <div className='flex align-middle my-auto gap-2 mr-6'>
           <button
-            className='red_btn mt-2'
+            className='red_btn mx-4'
             onClick={() => props.onRemoveFromCart(props.item)}
           >
             Delete
           </button>
           <button
-            className='gray_btn mt-2'
+            className='gray_btn'
             onClick={() => decrementHandler(props.item)}
           >
             -
           </button>
-          <div className='my-auto mx-0'>{amount}</div>
+          <div className='my-auto'>{amount}</div>
           <button
-            className='gray_btn mt-2'
+            className='gray_btn'
             onClick={() => incrementHandler(props.item)}
           >
             +

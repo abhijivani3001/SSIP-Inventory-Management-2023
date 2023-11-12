@@ -99,8 +99,8 @@ const AddProducts = () => {
               required
             />
           </div>
-          <div className='flex justify-center align-middle'>
-            <button type='submit' className='blue_btn mt-2'>
+          <div className='flex justify-center align-middle gap-2'>
+            <button type='submit' className='blue_btn'>
               Add
             </button>
 

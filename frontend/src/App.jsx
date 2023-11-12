@@ -61,6 +61,9 @@ function App() {
         {isLoggedIn && userRole === ROLES.ADMIN && (
           <Route path='/dashboard' element={<AdminDashboard />} />
         )}
+        {isLoggedIn && userRole === ROLES.ADMIN && (
+          <Route path='/' element={<AdminDashboard />} />
+        )}
         {isLoggedIn && (userRole === ROLES.ADMIN || !isLoading) && (
           <Route path='/reset-password' element={<ResetPassword />} />
         )}
@@ -70,6 +73,9 @@ function App() {
 
         {isLoggedIn && userRole !== ROLES.ADMIN && (
           <Route path='/dashboard' element={<Dashboard />} />
+        )}
+        {isLoggedIn && userRole !== ROLES.ADMIN && (
+          <Route path='/' element={<Dashboard />} />
         )}
 
         {isLoggedIn && userRole !== ROLES.ADMIN && (

@@ -42,7 +42,7 @@ const AdminNavbar = (props) => {
             <Link
               to='/dashboard'
               className={`${
-                location.pathname === '/dashboard'
+                location.pathname === '/dashboard' || location.pathname === '/'
                   ? 'active-navbar-element'
                   : 'navbar-element'
               }`}

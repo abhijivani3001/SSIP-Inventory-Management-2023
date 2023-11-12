@@ -77,7 +77,7 @@ const Navbar = () => {
                 <Link
                   to='/login'
                   className={`navbar-element ${
-                    location.pathname === '/login'
+                    location.pathname === '/login' || location.pathname === '/'
                       ? 'active-navbar-element'
                       : ''
                   }`}
@@ -199,7 +199,7 @@ const Navbar = () => {
         )}
 
         {!isLoading && isLoggedIn && userData.role === ROLES.ADMIN && (
-          <AdminNavbar logoutHandler={logoutHandler} />
+          <AdminNavbar />
         )}
 
         {!isLoading &&

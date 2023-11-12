@@ -9,7 +9,7 @@ const NotFound = () => {
           404 Not Found
         </div>
         <div className='text-center'>
-          <Link to='/dashboard'>
+          <Link to='/'>
             <button className='blue_btn'>Back to Dashboard</button>
           </Link>
         </div>
