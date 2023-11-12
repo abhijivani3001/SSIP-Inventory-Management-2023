@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../../api/AxiosUrl';
 
-const TempThree = (props) => {
+const StoreManReqOrdThree = (props) => {
   const [inventoryData, setInventoryData] = useState([]);
 
   const getInventoryItemsQuantity = async () => {
@@ -58,4 +58,4 @@ const TempThree = (props) => {
   );
 };
 
-export default TempThree;
+export default StoreManReqOrdThree;

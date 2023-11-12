@@ -1,7 +1,7 @@
 import React from 'react';
-import TempThree from './TempThree';
+import StoreManReqOrdThree from './StoreManReqOrdThree';
 
-const TempTwo = (props) => {
+const StoreManReqOrdTwo = (props) => {
   const order = props.order;
   // console.log(order);
 
@@ -93,7 +93,7 @@ const TempTwo = (props) => {
                 </thead>
                 <tbody>
                   {order.orders.map((item) => (
-                    <TempThree
+                    <StoreManReqOrdThree
                       key={item.itemId}
                       imageUrl={item.imageUrl}
                       name={item.name}
@@ -113,4 +113,4 @@ const TempTwo = (props) => {
   );
 };
 
-export default TempTwo;
+export default StoreManReqOrdTwo;

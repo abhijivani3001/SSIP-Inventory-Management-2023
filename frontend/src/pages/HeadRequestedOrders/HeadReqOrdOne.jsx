@@ -1,7 +1,7 @@
 import React from 'react';
-import TempTwo from './TempTwo';
+import HeadReqOrdTwo from './HeadReqOrdTwo';
 
-const TempOne = (props) => {
+const HeadReqOrdOne = (props) => {
   // toggle classlist
   const dropdown = document?.getElementById(`collapse-body-${props.userId}`);
   const dropdownIcon = document?.getElementById(`toggle-icon-${props.userId}`);
@@ -70,7 +70,7 @@ const TempOne = (props) => {
             aria-labelledby='accordion-collapse-heading-1'
           >
             {props.bulkOrders.map((order) => (
-              <TempTwo order={order} />
+              <HeadReqOrdTwo order={order} />
             ))}
           </div>
         </h2>
@@ -79,4 +79,4 @@ const TempOne = (props) => {
   );
 };
 
-export default TempOne;
+export default HeadReqOrdOne;
