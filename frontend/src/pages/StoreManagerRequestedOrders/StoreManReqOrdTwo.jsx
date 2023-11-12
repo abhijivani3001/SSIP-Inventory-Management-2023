@@ -2,13 +2,15 @@ import React from 'react';
 import StoreManReqOrdThree from './StoreManReqOrdThree';
 
 const StoreManReqOrdTwo = (props) => {
-  const order = props.order;
+  const bulkOrder = props.bulkOrder;
   // console.log(order);
 
   // toggle classlist
-  const dropdown = document?.getElementById(`collapse-body-${order._id}`);
-  const dropdownIcon = document?.getElementById(`toggle-icon-${order._id}`);
-  const toggleButton = document?.getElementById(`toggle-button-${order._id}`);
+  const dropdown = document?.getElementById(`collapse-body-${bulkOrder._id}`);
+  const dropdownIcon = document?.getElementById(`toggle-icon-${bulkOrder._id}`);
+  const toggleButton = document?.getElementById(
+    `toggle-button-${bulkOrder._id}`
+  );
   const toggleDropdown = () => {
     dropdown.classList?.toggle('hidden');
     dropdownIcon.classList?.toggle('rotate-180');
@@ -32,7 +34,7 @@ const StoreManReqOrdTwo = (props) => {
       >
         <h2 id='accordion-collapse-heading-1'>
           <button
-            id={`toggle-button-${order._id}`}
+            id={`toggle-button-${bulkOrder._id}`}
             type='button'
             class='flex flex-col items-center justify-between w-full font-bold text-left text-gray-600 border-gray-700 rounded-lg focus:outline-none'
             data-accordion-target='#accordion-collapse-body-1'
@@ -41,9 +43,9 @@ const StoreManReqOrdTwo = (props) => {
             onClick={toggleDropdown}
           >
             <div className='flex justify-between w-full align-middle p-5'>
-              <span>Ordered Products x{order.orders.length}</span>
+              <span>Ordered Products x{bulkOrder.orders.length}</span>
               <div className='flex gap-8 justify-between align-middle'>
-                <div>Created at: {formatDate(order.createdAt)}</div>
+                <div>Created at: {formatDate(bulkOrder.createdAt)}</div>
                 <svg
                   data-accordion-icon
                   className='w-3 h-3 rotate-180 shrink-0 my-auto'
@@ -51,7 +53,7 @@ const StoreManReqOrdTwo = (props) => {
                   xmlns='http://www.w3.org/2000/svg'
                   fill='none'
                   viewBox='0 0 10 6'
-                  id={`toggle-icon-${order._id}`}
+                  id={`toggle-icon-${bulkOrder._id}`}
                 >
                   <path
                     stroke='currentColor'
@@ -66,7 +68,7 @@ const StoreManReqOrdTwo = (props) => {
           </button>
 
           <div
-            id={`collapse-body-${order._id}`}
+            id={`collapse-body-${bulkOrder._id}`}
             className='hidden w-full rounded-b-lg'
             aria-labelledby='accordion-collapse-heading-1'
           >
@@ -92,17 +94,21 @@ const StoreManReqOrdTwo = (props) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {order.orders.map((item) => (
-                    <StoreManReqOrdThree
-                      key={item.itemId}
-                      imageUrl={item.imageUrl}
-                      name={item.name}
-                      quantity={item.quantity}
-                      status={item.status}
-                      delivered={item.delivered}
-                      itemId={item.itemId}
-                    />
-                  ))}
+                  {bulkOrder.orders.map((order) =>
+                    order.status === props.currentStatus ? (
+                      <StoreManReqOrdThree
+                        key={order.itemId}
+                        imageUrl={order.imageUrl}
+                        name={order.name}
+                        quantity={order.quantity}
+                        status={order.status}
+                        delivered={order.delivered}
+                        itemId={order.itemId}
+                      />
+                    ) : (
+                      ''
+                    )
+                  )}
                 </tbody>
               </table>
             </div>

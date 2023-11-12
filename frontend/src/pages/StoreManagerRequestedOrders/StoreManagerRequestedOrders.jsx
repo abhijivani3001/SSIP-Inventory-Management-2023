@@ -13,6 +13,8 @@ const StoreManagerRequestedOrders = () => {
   const [isRequestedOrdersAvailable, setIsRequestedOrdersAvailable] =
     useState(false);
 
+  const [currentStatus, setCurrentStatus] = useState('pending');
+
   const handleMergeOrder = async () => {
     const orderMap = new Map();
     usersOfRequestedOrders.forEach((user) => {
@@ -113,8 +115,38 @@ const StoreManagerRequestedOrders = () => {
       )}
       {!isLoading && isRequestedOrdersAvailable && (
         <>
+          <div class='flex justify-center overflow-x-auto whitespace-nowrap'>
+            <button
+              onClick={() => setCurrentStatus('pending')}
+              class='inline-flex items-center h-12 px-[10%] py-2 text-sm text-center text-gray-700 border border-b-0 border-gray-300 sm:text-base dark:border-gray-500 rounded-t-md dark:text-white whitespace-nowrap focus:outline-none'
+            >
+              Pending
+            </button>
+
+            <button
+              onClick={() => setCurrentStatus('accepted')}
+              class='inline-flex items-center h-12 px-[10%] py-2 text-sm text-center text-gray-700 bg-transparent border-b border-gray-300 sm:text-base dark:border-gray-500 dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400 dark:hover:border-gray-300'
+            >
+              Accepted
+            </button>
+
+            <button
+              onClick={() => setCurrentStatus('completed')}
+              class='inline-flex items-center h-12 px-[10%] py-2 text-sm text-center text-gray-700 bg-transparent border-b border-gray-300 sm:text-base dark:border-gray-500 dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400 dark:hover:border-gray-300'
+            >
+              Completed
+            </button>
+
+            <button
+              onClick={() => setCurrentStatus('rejected')}
+              class='inline-flex items-center h-12 px-[10%] py-2 text-sm text-center text-gray-700 bg-transparent border-b border-gray-300 sm:text-base dark:border-gray-500 dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400 dark:hover:border-gray-300'
+            >
+              Rejected
+            </button>
+          </div>
+
           <div className='my-6 mx-2'>
-            {usersOfRequestedOrders?.map((val) =>
+            {usersOfRequestedOrders?.map((val) => {
               // <StoreReqOrdData
               //   key={val._id}
               //   branch={val.branch}
@@ -132,22 +164,33 @@ const StoreManagerRequestedOrders = () => {
               //   userId={val._id}
               //   getRequiredData={getRequiredData}
               // />
-              val.bulkOrders.length > 0 ? (
-                <StoreManReqOrdOne
-                  key={val._id}
-                  name={val.name}
-                  branch={val.branch}
-                  subBranch={val.subBranch}
-                  department={val.department}
-                  role={val.role}
-                  bulkOrders={val.bulkOrders}
-                  createdAt={val.createdAt}
-                  userId={val._id}
-                />
-              ) : (
-                ''
-              )
-            )}
+
+              let flag = false;
+              val.bulkOrders.forEach((bulkOrder) => {
+                bulkOrder.orders.forEach((order) => {
+                  if (order.status === currentStatus) flag = true;
+                });
+              });
+
+              if (flag) {
+                return (
+                  <StoreManReqOrdOne
+                    key={val._id}
+                    name={val.name}
+                    branch={val.branch}
+                    subBranch={val.subBranch}
+                    department={val.department}
+                    role={val.role}
+                    bulkOrders={val.bulkOrders}
+                    createdAt={val.createdAt}
+                    userId={val._id}
+                    currentStatus={currentStatus}
+                  />
+                );
+              }
+              return <></>;
+            })}
+            
           </div>
           <div className='text-center'>
             <button className='green_btn mb-4' onClick={handleMergeOrder}>

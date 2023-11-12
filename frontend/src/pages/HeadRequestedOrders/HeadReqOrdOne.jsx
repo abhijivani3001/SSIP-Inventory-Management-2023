@@ -70,7 +70,7 @@ const HeadReqOrdOne = (props) => {
             aria-labelledby='accordion-collapse-heading-1'
           >
             {props.bulkOrders.map((order) => (
-              <HeadReqOrdTwo order={order} />
+              <HeadReqOrdTwo order={order} userId={props.userId} />
             ))}
           </div>
         </h2>

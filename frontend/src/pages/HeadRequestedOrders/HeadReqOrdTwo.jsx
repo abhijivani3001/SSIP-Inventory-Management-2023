@@ -1,8 +1,10 @@
 import React from 'react';
 import HeadReqOrdThree from './HeadReqOrdThree';
+import axios from '../../api/AxiosUrl';
 
 const HeadReqOrdTwo = (props) => {
   const order = props.order;
+  console.log(order);
 
   // toggle classlist
   const dropdown = document?.getElementById(`collapse-body-${order._id}`);
@@ -22,12 +24,22 @@ const HeadReqOrdTwo = (props) => {
     return date.toLocaleDateString(undefined, options);
   };
 
+  const statusHandler = async (bulkOrderId, status) => {
+    try {
+      const res = await axios.put(`api/order/${bulkOrderId}`, {
+        status,
+        user_id: props.userId,
+      });
+      console.log(res);
+    } catch (error) {}
+  };
+
   return (
     <>
       <div
         id='accordion-collapse'
         data-accordion='collapse'
-        className='bg-slate-200 rounded-lg border border-gray-600 shadow-lg my-2'
+        className='bg-slate-200 rounded-lg border borde r-gray-600 shadow-lg my-2'
       >
         <h2 id='accordion-collapse-heading-1'>
           <button
@@ -99,8 +111,18 @@ const HeadReqOrdTwo = (props) => {
                 </tbody>
               </table>
               <div className='flex bg-white justify-center gap-2'>
-                <button className='blue_btn my-4'>Approve</button>
-                <button className='trans_red_btn my-4'>Reject</button>
+                <button
+                  className='blue_btn my-4'
+                  onClick={() => statusHandler(order._id, 'accepted')}
+                >
+                  Approve
+                </button>
+                <button
+                  className='trans_red_btn my-4'
+                  onClick={() => statusHandler(order._id, 'rejected')}
+                >
+                  Reject
+                </button>
               </div>
             </div>
           </div>
