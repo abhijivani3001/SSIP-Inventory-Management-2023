@@ -27,13 +27,13 @@ const HeadReqOrdTwo = (props) => {
       <div
         id='accordion-collapse'
         data-accordion='collapse'
-        className='bg-white rounded-lg border border-gray-600 shadow-lg my-2'
+        className='bg-slate-200 rounded-lg border border-gray-600 shadow-lg my-2'
       >
         <h2 id='accordion-collapse-heading-1'>
           <button
             id={`toggle-button-${order._id}`}
             type='button'
-            class='flex flex-col items-center justify-between w-full font-medium text-left text-gray-600 border-gray-700 rounded-lg focus:outline-none'
+            class='flex flex-col items-center justify-between w-full font-bold text-left text-gray-600 border-gray-700 rounded-lg focus:outline-none'
             data-accordion-target='#accordion-collapse-body-1'
             aria-expanded='true'
             aria-controls='accordion-collapse-body-1'
@@ -66,22 +66,22 @@ const HeadReqOrdTwo = (props) => {
 
           <div
             id={`collapse-body-${order._id}`}
-            className='hidden w-full mt-4 rounded-b-lg'
+            className='hidden w-full rounded-b-lg'
             aria-labelledby='accordion-collapse-heading-1'
           >
             <div className='relative overflow-x-auto shadow-md rounded-b-lg'>
-              <table className='w-full text-sm text-left text-gray-500 dark:text-gray-400'>
+              <table className='w-full divide-y text-sm text-left text-gray-500 dark:text-gray-400'>
                 <thead className='text-xs text-gray-700 uppercase bg-slate-100 dark:bg-gray-700 dark:text-gray-400'>
-                  <tr>
+                  <tr className='divide-x'>
                     <th scope='col' className='px-6 py-3'>
                       Name
                     </th>
                     <th scope='col' className='px-6 py-3'>
                       Required Quantity
                     </th>
-                    <th scope='col' className='px-6 py-3'>
+                    {/* <th scope='col' className='px-6 py-3'>
                       Action
-                    </th>
+                    </th> */}
                   </tr>
                 </thead>
                 <tbody>
@@ -98,6 +98,10 @@ const HeadReqOrdTwo = (props) => {
                   ))}
                 </tbody>
               </table>
+              <div className='flex bg-white justify-center gap-2'>
+                <button className='blue_btn my-4'>Approve</button>
+                <button className='trans_red_btn my-4'>Reject</button>
+              </div>
             </div>
           </div>
         </h2>

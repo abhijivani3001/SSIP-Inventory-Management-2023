@@ -60,10 +60,7 @@ const HeadRequestedOrders = () => {
       )}
       {!isLoading && isRequestedOrdersAvailable && (
         <>
-          <div className='flex justify-between'>
-            <h1 className='page-title'>Order List</h1>
-          </div>
-          <div className='my-6'>
+          <div className='my-6 mx-2'>
             {usersOfRequestedOrders.map((val) => {
               return (
                 val.bulkOrders.length > 0 && (

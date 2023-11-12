@@ -22,12 +22,12 @@ const HeadReqOrdThree = (props) => {
 
         <td class='px-6'>{props.quantity}</td>
 
-        <td class='px-6'>
+        {/* <td class='px-6'>
           <div className='flex justify-between'>
             <button className='blue_btn'>Approve</button>
             <button className='trans_red_btn'>Reject</button>
           </div>
-        </td>
+        </td> */}
       </tr>
     </>
   );
