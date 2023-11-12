@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../../api/AxiosUrl';
 import UserDataCard from './UserDataCard';
+import { FaSearch } from 'react-icons/fa'; // Import the search icon
 
 const AdminDashboard = () => {
-  const [userData, setUserData] = useState();
+  const [userData, setUserData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     (async () => {
       try {
-        const res2 = await axios.post('/api/user/users', {
-          role: 'admin',
+        const res = await axios.post('/api/user/users', {
+          role: 'admin'
         });
-        console.log(res2);
-        const data = await res2?.data?.users;
-        console.log(data);
-
+        const data = await res.data.users;
         setUserData(data);
       } catch (error) {
         console.error(error);
@@ -24,18 +23,31 @@ const AdminDashboard = () => {
     })();
   }, []);
 
+  const filteredUsers = userData.filter((user) =>
+    user.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className='mx-8 mt-4'>
-      <div>
+      <div className='flex items-center justify-between mb-4'>
         <h1 className='page-title'>All registered users</h1>
+        <div className='flex items-center border rounded-lg px-3'>
+          <FaSearch />
+          <input
+            type='text'
+            placeholder='Search by name'
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className='bg-transparent outline-none ml-2'
+          />
+        </div>
       </div>
-      {isLoading && (
+      {isLoading ? (
         <div className='text-xl my-auto mt-8 text-center '>Loading...</div>
-      )}
-      {!isLoading && (
-        <div className='text-3xl mx-40 border border-gray-400 py-5 px-10 rounded-lg shadow-xl my-10'>
-          {userData.map((user) => (
-            <UserDataCard user={user} />
+      ) : (
+        <div className='text-3xl border border-gray-400 py-5 px-10 rounded-lg shadow-xl my-10'>
+          {filteredUsers.map((user) => (
+            <UserDataCard user={user} key={user.id} />
           ))}
         </div>
       )}
