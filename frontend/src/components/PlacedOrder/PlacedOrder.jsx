@@ -5,13 +5,17 @@ const PlacedOrder = (props) => {
   const handleReceivedClick = async () => {
     const res = await axios.get('/api/user');
     try {
-      const response = await axios.put(`api/order/${props.orderId}`, {
-        status: 'completed',
-        user_id: res.data.user._id,
-      });
+      const response = await axios.put(
+        `api/order/${props.bulkOrderId}/${props.orderId}`,
+        {
+          status: 'completed',
+          user_id: res.data.user._id,
+        }
+      );
 
       if (response.status === 200) {
         console.log('Order status updated successfully');
+        props.getOrders();
       } else {
         console.error('Error updating order status');
       }

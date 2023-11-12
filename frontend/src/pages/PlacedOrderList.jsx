@@ -8,22 +8,24 @@ const PlacedOrderList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isOrdersPlaced, setIsOrdersPlaced] = useState(false);
 
+  const getOrders = async () => {
+    try {
+      const result = await axios.get('api/order');
+      const data = await result.data.bulkOrders;
+      // console.log(data);
+
+      setPlacedOrders(data);
+
+      if (data?.length) setIsOrdersPlaced(true);
+      else setIsOrdersPlaced(false);
+    } catch (error) {
+      console.log(error.message);
+    }
+    setIsLoading(false);
+  };
+
   useEffect(() => {
-    (async () => {
-      try {
-        const result = await axios.get('api/order');
-        const data = await result.data.bulkOrders;
-        // console.log(data);
-
-        setPlacedOrders(data);
-
-        if (data?.length) setIsOrdersPlaced(true);
-        else setIsOrdersPlaced(false);
-      } catch (error) {
-        console.log(error.message);
-      }
-      setIsLoading(false);
-    })();
+    getOrders();
   }, []);
   // console.log(placedOrders);
 
@@ -39,7 +41,7 @@ const PlacedOrderList = () => {
       {!isLoading && isOrdersPlaced && (
         <div className='my-4 mx-2'>
           {placedOrders.map((order) => (
-            <PlacedBulkOrder order={order} />
+            <PlacedBulkOrder order={order} getOrders={getOrders} />
           ))}
         </div>
       )}

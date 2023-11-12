@@ -99,6 +99,8 @@ const PlacedBulkOrder = (props) => {
                       status={item.status}
                       delivered={item.delivered}
                       orderId={item._id}
+                      bulkOrderId={order._id}
+                      getOrders={props.getOrders}
                     />
                   ))}
                 </tbody>
