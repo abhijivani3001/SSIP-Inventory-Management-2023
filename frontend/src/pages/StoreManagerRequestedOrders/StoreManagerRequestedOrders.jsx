@@ -111,7 +111,7 @@ const StoreManagerRequestedOrders = () => {
       {!isLoading && isRequestedOrdersAvailable && (
         <>
           <div className='my-6 mx-2'>
-            {usersOfRequestedOrders.map((val) =>
+            {usersOfRequestedOrders?.map((val) =>
               // <StoreReqOrdData
               //   key={val._id}
               //   branch={val.branch}
@@ -146,8 +146,8 @@ const StoreManagerRequestedOrders = () => {
               )
             )}
           </div>
-          <div className=' text-center'>
-            <button className='green_btn' mb='mb-4' onClick={handleMergeOrder}>
+          <div className='text-center'>
+            <button className='green_btn mb-4' onClick={handleMergeOrder}>
               Submit
             </button>
           </div>

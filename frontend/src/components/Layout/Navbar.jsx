@@ -26,9 +26,10 @@ const Navbar = () => {
   const [userData, setUserData] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
-  // user profile dropdown
   const name = userData?.name;
   const email = userData?.email;
+
+  // user profile dropdown
   const dropdown = document.getElementById('user-dropdown');
   const navbarUser = document.getElementById('navbar-user');
   const toggleDropdown = () => {
@@ -43,7 +44,7 @@ const Navbar = () => {
       try {
         const res = await axios.get('/api/user');
         const data = await res.data.user;
-        console.log(data);
+        // console.log(data);
         setUserData(data);
       } catch (error) {
         console.error(error);
@@ -128,7 +129,7 @@ const Navbar = () => {
                     Your profile
                   </Link>
                 </li>
-                {userData.role !== ROLES.ADMIN && (
+                {userData?.role !== ROLES.ADMIN && (
                   <li>
                     <Link
                       to='/dashboard'
@@ -139,10 +140,10 @@ const Navbar = () => {
                     </Link>
                   </li>
                 )}
-                {userData.role === ROLES.ADMIN && (
+                {userData?.role === ROLES.ADMIN && (
                   <li>
                     <Link
-                      to='/admin-dashboard'
+                      to='/dashboard'
                       className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
                       onClick={toggleDropdown}
                     >
@@ -198,25 +199,25 @@ const Navbar = () => {
           </div>
         )}
 
-        {!isLoading && isLoggedIn && userData.role === ROLES.ADMIN && (
+        {!isLoading && isLoggedIn && userData?.role === ROLES.ADMIN && (
           <AdminNavbar />
         )}
 
         {!isLoading &&
           isLoggedIn &&
-          (userData.role === ROLES.SUB_BRANCH_HEAD ||
-            userData.role === ROLES.BRANCH_HEAD ||
-            userData.role === ROLES.DEPARTMENT_HEAD) && <HeadNavbar />}
+          (userData?.role === ROLES.SUB_BRANCH_HEAD ||
+            userData?.role === ROLES.BRANCH_HEAD ||
+            userData?.role === ROLES.DEPARTMENT_HEAD) && <HeadNavbar />}
 
         {!isLoading &&
           isLoggedIn &&
-          (userData.role === ROLES.SUB_BRANCH_STORE_MANAGER ||
-            userData.role === ROLES.BRANCH_STORE_MANAGER ||
-            userData.role === ROLES.DEPARTMENT_STORE_MANAGER) && (
+          (userData?.role === ROLES.SUB_BRANCH_STORE_MANAGER ||
+            userData?.role === ROLES.BRANCH_STORE_MANAGER ||
+            userData?.role === ROLES.DEPARTMENT_STORE_MANAGER) && (
             <StoreManagerNavbar />
           )}
 
-        {!isLoading && isLoggedIn && userData.role === ROLES.EMPLOYEE && (
+        {!isLoading && isLoggedIn && userData?.role === ROLES.EMPLOYEE && (
           <EmployeeNavbar />
         )}
       </div>
