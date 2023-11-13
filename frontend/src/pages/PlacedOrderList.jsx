@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import PlacedOrder from '../components/PlacedOrder/PlacedOrder';
 import axios from '../api/AxiosUrl';
 import PlacedBulkOrder from '../components/PlacedOrder/PlacedBulkOrder';
 
@@ -9,13 +8,13 @@ const PlacedOrderList = () => {
   const [isOrdersPlaced, setIsOrdersPlaced] = useState(false);
 
   const [currentStatus, setCurrentStatus] = useState('pending');
-  let mainFlag=false;
+  let mainFlag=false; // to check whether the placed order is empty or not
 
   const getOrders = async () => {
     try {
       const result = await axios.get('api/order');
       const data = await result.data.bulkOrders;
-      console.log(data);
+      // console.log(data);
 
       setPlacedOrders(data);
 
@@ -54,7 +53,6 @@ const PlacedOrderList = () => {
                   ? 'status_true_tab'
                   : 'status_false_tab'
               }`}
-              id='pending-status'
             >
               <p className='mx-auto'>Pending</p>
             </button>
@@ -66,7 +64,6 @@ const PlacedOrderList = () => {
                   ? 'status_true_tab'
                   : 'status_false_tab'
               }`}
-              id='accepted-status'
             >
               <p className='mx-auto'>Accepted</p>
             </button>
@@ -78,7 +75,6 @@ const PlacedOrderList = () => {
                   ? 'status_true_tab'
                   : 'status_false_tab'
               }`}
-              id='rejected-status'
             >
               <p className='mx-auto'>Rejected</p>
             </button>
@@ -90,7 +86,6 @@ const PlacedOrderList = () => {
                   ? 'status_true_tab'
                   : 'status_false_tab'
               }`}
-              id='completed-status'
             >
               <p className='mx-auto'>Completed</p>
             </button>

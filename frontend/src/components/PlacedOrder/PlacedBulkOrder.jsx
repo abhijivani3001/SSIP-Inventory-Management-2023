@@ -23,7 +23,6 @@ const PlacedBulkOrder = (props) => {
     >
       <h2 id='accordion-collapse-heading-1'>
         <button
-          id={`toggle-button-${order?._id}`}
           type='button'
           className='flex flex-col items-center justify-between w-full font-medium text-left text-gray-600 border-gray-700 rounded-lg focus:outline-none'
           data-accordion-target='#accordion-collapse-body-1'
@@ -48,7 +47,6 @@ const PlacedBulkOrder = (props) => {
                 xmlns='http://www.w3.org/2000/svg'
                 fill='none'
                 viewBox='0 0 10 6'
-                id={`toggle-icon-${order?._id}`}
               >
                 <path
                   stroke='currentColor'
@@ -63,7 +61,6 @@ const PlacedBulkOrder = (props) => {
         </button>
 
         <div
-          id={`collapse-body-${order?._id}`}
           className={`w-full rounded-b-lg ${isDropdownVisible ? '' : 'hidden'}`}
           aria-labelledby='accordion-collapse-heading-1'
         >

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import axios from "../../api/AxiosUrl";
-import { toast } from "react-toastify";
+import React, { useEffect, useState } from 'react';
+import axios from '../../api/AxiosUrl';
+import { toast } from 'react-toastify';
 
 const StoreManReqOrdThree = (props) => {
   const [inventoryData, setInventoryData] = useState([]);
@@ -8,7 +8,7 @@ const StoreManReqOrdThree = (props) => {
 
   const getInventoryItemsQuantity = async () => {
     try {
-      const result = await axios.get("api/inventory");
+      const result = await axios.get('api/inventory');
       const data = await result.data.inventory;
       setInventoryData(data);
       const currentOrderInventoryQuantity =
@@ -42,15 +42,15 @@ const StoreManReqOrdThree = (props) => {
 
   const submitAllocation = async (status) => {
     try {
-      if (status === "rejected") {
+      if (status === 'rejected') {
         const res2 = await axios.put(
           `api/order/${props.bulkOrderId}/${props.orderId}`,
           {
             user_id: props.userId,
-            status: "rejected",
+            status: 'rejected',
           }
         );
-        toast.success("Order Rejected Successfully", {
+        toast.success('Order Rejected Successfully', {
           autoClose: 1500,
         });
         return;
@@ -64,18 +64,18 @@ const StoreManReqOrdThree = (props) => {
       });
 
       if (inventoryItemQuantity - allocationQuantity < 10) {
-        const password = window.prompt("Enter Password");
+        const password = window.prompt('Enter Password');
         const MASTER_PASSWORD = 12345;
 
         if (password !== MASTER_PASSWORD) {
-          toast.error("Incorrect password. Order not allocated.", {
+          toast.error('Incorrect password. Order not allocated.', {
             autoClose: 1500,
           });
           return;
         }
       }
 
-      const res = await axios.put("api/inventory", {
+      const res = await axios.put('api/inventory', {
         updatedQuantity: inventoryItemQuantity - allocationQuantity,
         inventoryId,
       });
@@ -85,7 +85,7 @@ const StoreManReqOrdThree = (props) => {
         delivered: allocationQuantity,
       };
       if (props.quantity === props.delivered + allocationQuantity) {
-        orderOptions = { ...orderOptions, status: "accepted" };
+        orderOptions = { ...orderOptions, status: 'accepted' };
       }
       const res2 = await axios.put(
         `api/order/${props.bulkOrderId}/${props.orderId}`,
@@ -93,7 +93,7 @@ const StoreManReqOrdThree = (props) => {
           ...orderOptions,
         }
       );
-      toast.success("Item allocated Successfully", {
+      toast.success('Item allocated Successfully', {
         autoClose: 1500,
       });
     } catch (error) {
@@ -107,55 +107,55 @@ const StoreManReqOrdThree = (props) => {
 
   return (
     <>
-      <tr class="bg-white border-b divide-x dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+      <tr className='bg-white border-b divide-x dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'>
         <th
-          scope="row"
-          class="flex items-center px-4 py-1 text-gray-900 whitespace-nowrap dark:text-white"
+          scope='row'
+          className='flex items-center px-4 py-1 text-gray-900 whitespace-nowrap dark:text-white'
         >
-          <div class="text-base font-semibold flex gap-2">
+          <div className='text-base font-semibold flex gap-2'>
             <div>
               <img
-                className="p-2 h-16 w-24 object-contain"
+                className='p-2 h-16 w-24 object-contain'
                 src={props.imageUrl}
-                alt="productimage"
+                alt='productimage'
               />
             </div>
-            <div className="my-auto">{props.name}</div>
+            <div className='my-auto'>{props.name}</div>
           </div>
         </th>
 
-        <td class="px-6">{props.quantity}</td>
+        <td className='px-6'>{props.quantity}</td>
 
-        <td class="px-6">{props.delivered}</td>
+        <td className='px-6'>{props.delivered}</td>
 
-        <td class="px-6">
+        <td className='px-6'>
           {inventoryData?.find(
             (singleInventoryItem) => singleInventoryItem.itemId === props.itemId
           )?.quantity || 0}
         </td>
 
-        <td class="px-6 w-80">
-          <div className="flex justify-between">
+        {props.currentStatus==='pending' && <td className='px-6 w-80'>
+          <div className='flex justify-between'>
             <input
-              type="number"
+              type='number'
               value={allocationQuantity}
               onChange={handleAllocationQuantity}
-              className="border-2 border-gray-700 w-16 p-0 text-right rounded"
+              className='border-2 border-gray-700 w-16 p-0 text-right rounded'
             />
             <button
-              className="blue_btn"
-              onClick={() => submitAllocation("accepted")}
+              className='blue_btn'
+              onClick={() => submitAllocation('accepted')}
             >
               Allocate
             </button>
             <button
-              className="trans_red_btn"
-              onClick={() => submitAllocation("rejected")}
+              className='trans_red_btn'
+              onClick={() => submitAllocation('rejected')}
             >
               Reject
             </button>
           </div>
-        </td>
+        </td>}
       </tr>
     </>
   );
