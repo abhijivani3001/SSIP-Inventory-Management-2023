@@ -21,18 +21,21 @@ const StoreManagerRequestedOrders = () => {
     usersOfRequestedOrders.forEach((user) => {
       user.bulkOrders.forEach((bulkOrder) => {
         bulkOrder.orders.forEach((order) => {
-          if (orderMap.has(order.itemId)) {
-            const mapItem = orderMap.get(order.itemId);
-            let updatedOrder = {
-              ...mapItem,
-              quantity: order.quantity + mapItem.quantity,
-            };
-            orderMap.set(order.itemId, updatedOrder);
-          } else {
-            orderMap.set(order.itemId, {
-              name: order.name,
-              quantity: order.quantity,
-            });
+          if (order.status === 'pending' || order.status === 'head-accepted') {
+            if (orderMap.has(order.itemId)) {
+              const mapItem = orderMap.get(order.itemId);
+              let updatedOrder = {
+                ...mapItem,
+                quantity: order.quantity + mapItem.quantity,
+              };
+              orderMap.set(order.itemId, updatedOrder);
+            } else {
+              orderMap.set(order.itemId, {
+                name: order.name,
+                quantity: order.quantity,
+                imageUrl: order.imageUrl,
+              });
+            }
           }
         });
       });
@@ -44,6 +47,7 @@ const StoreManagerRequestedOrders = () => {
         _id: key,
         amount: value.quantity,
         name: value.name,
+        imageUrl: value.imageUrl,
       });
     });
 
@@ -109,19 +113,19 @@ const StoreManagerRequestedOrders = () => {
   };
 
   return (
-    <div className='mx-10 mt-4'>
+    <div className="mx-10 mt-4">
       {isLoading && (
-        <div className='text-xl my-auto text-center '>Loading...</div>
+        <div className="text-xl my-auto text-center ">Loading...</div>
       )}
       {!isLoading && !isRequestedOrdersAvailable && (
-        <div className='text-3xl text-center'>
+        <div className="text-3xl text-center">
           No more orders are requested!
         </div>
       )}
 
       {!isLoading && isRequestedOrdersAvailable && (
         <>
-          <div className='flex justify-center overflow-x-auto whitespace-nowrap'>
+          <div className="flex justify-center overflow-x-auto whitespace-nowrap">
             <button
               onClick={() => handleTabClick('pending')}
               className={`default_tab ${
@@ -130,7 +134,7 @@ const StoreManagerRequestedOrders = () => {
                   : 'status_false_tab'
               }`}
             >
-              <p className='mx-auto'>Pending</p>
+              <p className="mx-auto">Pending</p>
             </button>
 
             <button
@@ -141,7 +145,7 @@ const StoreManagerRequestedOrders = () => {
                   : 'status_false_tab'
               }`}
             >
-              <p className='mx-auto'>Accepted</p>
+              <p className="mx-auto">Accepted</p>
             </button>
 
             <button
@@ -152,7 +156,7 @@ const StoreManagerRequestedOrders = () => {
                   : 'status_false_tab'
               }`}
             >
-              <p className='mx-auto'>Rejected</p>
+              <p className="mx-auto">Rejected</p>
             </button>
 
             <button
@@ -163,11 +167,11 @@ const StoreManagerRequestedOrders = () => {
                   : 'status_false_tab'
               }`}
             >
-              <p className='mx-auto'>Completed</p>
+              <p className="mx-auto">Completed</p>
             </button>
           </div>
 
-          <div className='my-6'>
+          <div className="my-6">
             {usersOfRequestedOrders?.map((val) => {
               // <StoreReqOrdData
               //   key={val._id}
@@ -215,15 +219,15 @@ const StoreManagerRequestedOrders = () => {
               }
             })}
             {!mainFlag && (
-              <div className='text-3xl text-gray-700 text-center my-16'>
+              <div className="text-3xl text-gray-700 text-center my-16">
                 No more requested orders available.
               </div>
             )}
           </div>
 
           {mainFlag && currentStatus === 'pending' && (
-            <div className='text-center'>
-              <button className='green_btn mb-4' onClick={handleMergeOrder}>
+            <div className="text-center">
+              <button className="green_btn mb-4" onClick={handleMergeOrder}>
                 MERGE ALL ORDERS
               </button>
             </div>
