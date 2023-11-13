@@ -69,9 +69,24 @@ const HeadReqOrdOne = (props) => {
             className='hidden my-4 mx-4 rounded-b-lg'
             aria-labelledby='accordion-collapse-heading-1'
           >
-            {props.bulkOrders.map((order) => (
-              <HeadReqOrdTwo order={order} userId={props.userId} />
-            ))}
+            {props.bulkOrders.map((bulkOrder) => {
+              let flag = false;
+
+              bulkOrder.orders.forEach((order) => {
+                if (order.status === props.currentStatus) flag = true;
+              });
+
+              if (flag) {
+                return (
+                  <HeadReqOrdTwo
+                    bulkOrder={bulkOrder}
+                    userId={props.userId}
+                    currentStatus={props.currentStatus}
+                  />
+                );
+              }
+              return <></>;
+            })}
           </div>
         </h2>
       </div>

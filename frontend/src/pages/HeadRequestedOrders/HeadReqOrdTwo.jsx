@@ -3,13 +3,15 @@ import HeadReqOrdThree from './HeadReqOrdThree';
 import axios from '../../api/AxiosUrl';
 
 const HeadReqOrdTwo = (props) => {
-  const order = props.order;
-  console.log(order);
+  const bulkOrder = props.bulkOrder;
+  // console.log(bulkOrder);
 
   // toggle classlist
-  const dropdown = document?.getElementById(`collapse-body-${order._id}`);
-  const dropdownIcon = document?.getElementById(`toggle-icon-${order._id}`);
-  const toggleButton = document?.getElementById(`toggle-button-${order._id}`);
+  const dropdown = document?.getElementById(`collapse-body-${bulkOrder._id}`);
+  const dropdownIcon = document?.getElementById(`toggle-icon-${bulkOrder._id}`);
+  const toggleButton = document?.getElementById(
+    `toggle-button-${bulkOrder._id}`
+  );
   const toggleDropdown = () => {
     dropdown.classList?.toggle('hidden');
     dropdownIcon.classList?.toggle('rotate-180');
@@ -43,7 +45,7 @@ const HeadReqOrdTwo = (props) => {
       >
         <h2 id='accordion-collapse-heading-1'>
           <button
-            id={`toggle-button-${order._id}`}
+            id={`toggle-button-${bulkOrder._id}`}
             type='button'
             class='flex flex-col items-center justify-between w-full font-bold text-left text-gray-600 border-gray-700 rounded-lg focus:outline-none'
             data-accordion-target='#accordion-collapse-body-1'
@@ -52,9 +54,9 @@ const HeadReqOrdTwo = (props) => {
             onClick={toggleDropdown}
           >
             <div className='flex justify-between w-full align-middle p-5'>
-              <span>Ordered Products x{order.orders.length}</span>
+              <span>Ordered Products x{bulkOrder.orders.length}</span>
               <div className='flex gap-8 justify-between align-middle'>
-                <div>Created at: {formatDate(order.createdAt)}</div>
+                <div>Created at: {formatDate(bulkOrder.createdAt)}</div>
                 <svg
                   data-accordion-icon
                   className='w-3 h-3 rotate-180 shrink-0 my-auto'
@@ -62,7 +64,7 @@ const HeadReqOrdTwo = (props) => {
                   xmlns='http://www.w3.org/2000/svg'
                   fill='none'
                   viewBox='0 0 10 6'
-                  id={`toggle-icon-${order._id}`}
+                  id={`toggle-icon-${bulkOrder._id}`}
                 >
                   <path
                     stroke='currentColor'
@@ -77,7 +79,7 @@ const HeadReqOrdTwo = (props) => {
           </button>
 
           <div
-            id={`collapse-body-${order._id}`}
+            id={`collapse-body-${bulkOrder._id}`}
             className='hidden w-full rounded-b-lg'
             aria-labelledby='accordion-collapse-heading-1'
           >
@@ -97,33 +99,39 @@ const HeadReqOrdTwo = (props) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {order.orders.map((item) => (
-                    <HeadReqOrdThree
-                      key={item.itemId}
-                      imageUrl={item.imageUrl}
-                      name={item.name}
-                      quantity={item.quantity}
-                      status={item.status}
-                      delivered={item.delivered}
-                      itemId={item.itemId}
-                    />
-                  ))}
+                  {bulkOrder.orders.map((order) =>
+                    order.status === props.currentStatus ? (
+                      <HeadReqOrdThree
+                        key={order.itemId}
+                        imageUrl={order.imageUrl}
+                        name={order.name}
+                        quantity={order.quantity}
+                        status={order.status}
+                        delivered={order.delivered}
+                        itemId={order.itemId}
+                      />
+                    ) : (
+                      ''
+                    )
+                  )}
                 </tbody>
               </table>
-              <div className='flex bg-white justify-center gap-2'>
-                <button
-                  className='blue_btn my-4'
-                  onClick={() => statusHandler(order._id, 'accepted')}
-                >
-                  Approve
-                </button>
-                <button
-                  className='trans_red_btn my-4'
-                  onClick={() => statusHandler(order._id, 'rejected')}
-                >
-                  Reject
-                </button>
-              </div>
+              {props.currentStatus === 'pending' && (
+                <div className='flex bg-white justify-center gap-2'>
+                  <button
+                    className='blue_btn my-4'
+                    onClick={() => statusHandler(bulkOrder._id, 'accepted')}
+                  >
+                    Approve
+                  </button>
+                  <button
+                    className='trans_red_btn my-4'
+                    onClick={() => statusHandler(bulkOrder._id, 'rejected')}
+                  >
+                    Reject
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </h2>
