@@ -1,107 +1,26 @@
-import React, { useState, useEffect, useContext } from 'react';
-import axios from '../../api/AxiosUrl';
+// BarChart.jsx
+import React from 'react';
 import ReactApexChart from 'react-apexcharts';
-import AuthContext from '../../store/auth-context';
 
-const BarChart = () => {
-  const authCtx = useContext(AuthContext);
-
-  const [userData, setUserData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subBranch: '',
-    branch: '',
-    department: '',
-  });
-
-  const [orderData, setOrderData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
-  };
-
-  useEffect(() => {
-    if (authCtx.isLoggedIn) {
-      axios
-        .get(`api/user`)
-        .then((response) => {
-          const userDataFromAPI = response.data.user;
-          setUserData(userDataFromAPI);
-          setIsLoading(false);
-
-          axios
-            .get(`api/order`)
-            .then((orderResponse) => {
-              const orderDataFromAPI = orderResponse.data.orders;
-              console.log(orderDataFromAPI);
-
-              // Create a map to calculate the total order quantity date-wise
-              const dateOrderMap = new Map();
-
-              // Iterate through the order data to calculate the total order quantity for each date
-              orderDataFromAPI.forEach((order) => {
-                const createdAt = formatDate(order.createdAt); // Format the date as dd/mm/yyyy
-
-                if (dateOrderMap.has(createdAt)) {
-                  // Add to the existing total
-                  dateOrderMap.set(
-                    createdAt,
-                    dateOrderMap.get(createdAt) + order.quantity
-                  );
-                } else {
-                  // Initialize a new total
-                  dateOrderMap.set(createdAt, order.quantity);
-                }
-              });
-
-              // Transform the map into an array of objects for the bar chart
-              const chartData = Array.from(dateOrderMap).map(
-                ([date, totalQuantity]) => ({
-                  x: date, // Label for the bar
-                  y: totalQuantity, // Value for the bar
-                })
-              );
-
-              setOrderData(chartData);
-            })
-            .catch((error) => {
-              console.error('Error fetching order data:', error);
-            });
-        })
-        .catch((error) => {
-          console.error('Error fetching user data:', error);
-          setIsLoading(false);
-        });
-    }
-  }, [authCtx.isLoggedIn, authCtx.email]);
+const BarChart = ({ orderData }) => {
+  // Aggregate data for the bar chart
+  const data = orderData.map(({ x, y }) => ({ x, y }));
 
   return (
-    <div className='p-4 bg-white rounded-lg shadow-lg border-2 border-gray-800'>
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : (
-        orderData.length > 0 && (
-          <div>
-            <h2 className='text-xl font-semibold mt-4'>Daily Order Chart</h2>
-            <ReactApexChart
-              options={{
-                xaxis: {
-                  categories: orderData.map((data) => data.x), // Extract the date labels
-                },
-              }}
-              series={[{ data: orderData.map((data) => data.y) }]} // Extract the total quantities
-              type='bar'
-              width='500'
-            />
-          </div>
-        )
-      )}
+    <div className='mx-10 my-5'>
+      <ReactApexChart
+        options={{
+          chart: {
+            type: 'bar',
+          },
+          xaxis: {
+            type: 'category',
+          },
+        }}
+        series={[{ data }]}
+        type='bar'
+        width={800}
+      />
     </div>
   );
 };
