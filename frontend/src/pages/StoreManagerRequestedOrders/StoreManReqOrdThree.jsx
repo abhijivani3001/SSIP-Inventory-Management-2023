@@ -107,10 +107,10 @@ const StoreManReqOrdThree = (props) => {
 
   return (
     <>
-      <tr className='bg-white border-b divide-x dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'>
+      <tr className='bg-white border-b divide-x hover:bg-gray-50'>
         <th
           scope='row'
-          className='flex items-center px-4 py-1 text-gray-900 whitespace-nowrap dark:text-white'
+          className='flex items-center px-4 py-1 text-gray-900 whitespace-nowrap'
         >
           <div className='text-base font-semibold flex gap-2'>
             <div>

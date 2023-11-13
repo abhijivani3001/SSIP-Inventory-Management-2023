@@ -14,6 +14,7 @@ const HeadRequestedOrders = () => {
     useState(false);
 
   const [currentStatus, setCurrentStatus] = useState('pending');
+  let mainFlag = false; // to check whether the placed order is empty or not
 
   useEffect(() => {
     (async () => {
@@ -68,38 +69,35 @@ const HeadRequestedOrders = () => {
       {!isLoading && isRequestedOrdersAvailable && (
         <>
           <div className='flex justify-center overflow-x-auto whitespace-nowrap'>
-            <button
+          <button
               onClick={() => handleTabClick('pending')}
-              className={`inline-flex items-center h-12 w-1/3 py-2 text-lg text-gray-700 border-gray-400 whitespace-nowrap focus:outline-none ${
+              className={`default_tab ${
                 currentStatus === 'pending'
-                  ? 'border border-b-0 rounded-t-md text-gray-800 font-semibold'
-                  : 'whitespace-nowrap border-b cursor-base focus:outline-none hover:border-gray-500 hover:font-medium'
+                  ? 'status_true_tab'
+                  : 'status_false_tab'
               }`}
-              id='pending-status'
             >
               <p className='mx-auto'>Pending</p>
             </button>
 
             <button
               onClick={() => handleTabClick('accepted')}
-              className={`inline-flex items-center h-12 w-1/3 py-2 text-lg text-gray-700 bg-transparent border-gray-400 ${
+              className={`default_tab ${
                 currentStatus === 'accepted'
-                  ? 'border border-b-0 rounded-t-md text-gray-800 font-semibold'
-                  : 'whitespace-nowrap border-b cursor-base focus:outline-none hover:border-gray-500 hover:font-medium'
+                  ? 'status_true_tab'
+                  : 'status_false_tab'
               }`}
-              id='accepted-status'
             >
               <p className='mx-auto'>Approved</p>
             </button>
 
             <button
               onClick={() => handleTabClick('rejected')}
-              className={`inline-flex items-center h-12 w-1/3 py-2 text-lg text-gray-700 bg-transparent border-gray-400 ${
+              className={`default_tab ${
                 currentStatus === 'rejected'
-                  ? 'border border-b-0 rounded-t-md text-gray-800 font-semibold'
-                  : 'whitespace-nowrap border-b cursor-base focus:outline-none hover:border-gray-500 hover:font-medium'
+                  ? 'status_true_tab'
+                  : 'status_false_tab'
               }`}
-              id='rejected-status'
             >
               <p className='mx-auto'>Rejected</p>
             </button>
@@ -110,7 +108,10 @@ const HeadRequestedOrders = () => {
               let flag = false;
               val.bulkOrders.forEach((bulkOrder) => {
                 bulkOrder.orders.forEach((order) => {
-                  if (order.status === currentStatus) flag = true;
+                  if (order.status === currentStatus){
+                    flag = true;
+                    mainFlag=true;
+                  }
                 });
               });
 
@@ -127,8 +128,12 @@ const HeadRequestedOrders = () => {
                   />
                 );
               }
-              return <></>;
             })}
+            {!mainFlag && (
+              <div className='text-3xl text-gray-700 text-center my-16'>
+                No more requested orders available.
+              </div>
+            )}
           </div>
         </>
       )}
