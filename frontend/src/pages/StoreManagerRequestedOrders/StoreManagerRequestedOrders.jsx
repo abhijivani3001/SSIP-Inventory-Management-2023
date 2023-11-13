@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import axios from '../../api/AxiosUrl';
-import { useCart } from '../../store/CartProvider';
-import ROLES from '../../constants/ROLES';
-import StoreReqOrdData from './StoreReqOrdData';
-import StoreManReqOrdOne from './StoreManReqOrdOne';
+import React, { useState, useEffect } from "react";
+import axios from "../../api/AxiosUrl";
+import { useCart } from "../../store/CartProvider";
+import ROLES from "../../constants/ROLES";
+import StoreReqOrdData from "./StoreReqOrdData";
+import StoreManReqOrdOne from "./StoreManReqOrdOne";
 
 const StoreManagerRequestedOrders = () => {
   const { cart, dispatch } = useCart();
@@ -13,7 +13,7 @@ const StoreManagerRequestedOrders = () => {
   const [isRequestedOrdersAvailable, setIsRequestedOrdersAvailable] =
     useState(false);
 
-  const [currentStatus, setCurrentStatus] = useState('pending');
+  const [currentStatus, setCurrentStatus] = useState("pending");
 
   const handleMergeOrder = async () => {
     const orderMap = new Map();
@@ -47,17 +47,17 @@ const StoreManagerRequestedOrders = () => {
     });
 
     ordersArray.forEach((item) => {
-      dispatch({ type: 'ADD_ITEM', payload: item });
+      dispatch({ type: "ADD_ITEM", payload: item });
     });
   };
 
   const getRequiredData = async () => {
     try {
-      const res1 = await axios.get('api/user');
+      const res1 = await axios.get("api/user");
       const user = await res1.data.user;
 
-      let roleOfRequestedUser = '';
-      let roleOfRequestedUser2 = '';
+      let roleOfRequestedUser = "";
+      let roleOfRequestedUser2 = "";
 
       if (user.role === ROLES.DEPARTMENT_STORE_MANAGER) {
         roleOfRequestedUser = ROLES.BRANCH_STORE_MANAGER;
@@ -69,7 +69,7 @@ const StoreManagerRequestedOrders = () => {
         roleOfRequestedUser2 = ROLES.SUB_BRANCH_HEAD;
       }
 
-      const res2 = await axios.post('api/user/users', {
+      const res2 = await axios.post("api/user/users", {
         ...user,
         role: roleOfRequestedUser,
       });
@@ -78,7 +78,7 @@ const StoreManagerRequestedOrders = () => {
       // console.log(data);
 
       if (roleOfRequestedUser2) {
-        const res3 = await axios.post('api/user/users', {
+        const res3 = await axios.post("api/user/users", {
           ...user,
           role: roleOfRequestedUser2,
         });
@@ -104,48 +104,57 @@ const StoreManagerRequestedOrders = () => {
   }, []);
 
   return (
-    <div className='mx-8 mt-4'>
+    <div className="mx-8 mt-4">
       {isLoading && (
-        <div className='text-xl my-auto text-center '>Loading...</div>
+        <div className="text-xl my-auto text-center ">Loading...</div>
       )}
       {!isLoading && !isRequestedOrdersAvailable && (
-        <div className='text-3xl text-center'>
+        <div className="text-3xl text-center">
           No more orders are requested!
         </div>
       )}
       {!isLoading && isRequestedOrdersAvailable && (
         <>
-          <div class='flex justify-center overflow-x-auto whitespace-nowrap'>
+          <div class="flex justify-center overflow-x-auto whitespace-nowrap">
             <button
-              onClick={() => setCurrentStatus('pending')}
-              class='inline-flex items-center h-12 px-[10%] py-2 text-sm text-center text-gray-700 border border-b-0 border-gray-300 sm:text-base dark:border-gray-500 rounded-t-md dark:text-white whitespace-nowrap focus:outline-none'
+              onClick={() => setCurrentStatus("pending")}
+              className={`inline-flex items-center h-12 px-[10%] py-2 text-sm text-center text-gray-700 bg-transparent border-b border-gray-300 sm:text-base dark:border-gray-500 dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400 dark:hover:border-gray-300 ${
+                currentStatus === "pending" && "border border-b-0 rounded-t-md"
+              }`}
             >
               Pending
             </button>
 
             <button
-              onClick={() => setCurrentStatus('accepted')}
-              class='inline-flex items-center h-12 px-[10%] py-2 text-sm text-center text-gray-700 bg-transparent border-b border-gray-300 sm:text-base dark:border-gray-500 dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400 dark:hover:border-gray-300'
+              onClick={() => setCurrentStatus("accepted")}
+              className={`inline-flex items-center h-12 px-[10%] py-2 text-sm text-center text-gray-700 bg-transparent border-b border-gray-300 sm:text-base dark:border-gray-500 dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400 dark:hover:border-gray-300 ${
+                currentStatus === "accepted" && "border border-b-0 rounded-t-md"
+              }`}
             >
               Accepted
             </button>
 
             <button
-              onClick={() => setCurrentStatus('completed')}
-              class='inline-flex items-center h-12 px-[10%] py-2 text-sm text-center text-gray-700 bg-transparent border-b border-gray-300 sm:text-base dark:border-gray-500 dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400 dark:hover:border-gray-300'
+              onClick={() => setCurrentStatus("completed")}
+              className={`inline-flex items-center h-12 px-[10%] py-2 text-sm text-center text-gray-700 bg-transparent border-b border-gray-300 sm:text-base dark:border-gray-500 dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400 dark:hover:border-gray-300 ${
+                currentStatus === "completed" &&
+                "border border-b-0 rounded-t-md"
+              }`}
             >
               Completed
             </button>
 
             <button
-              onClick={() => setCurrentStatus('rejected')}
-              class='inline-flex items-center h-12 px-[10%] py-2 text-sm text-center text-gray-700 bg-transparent border-b border-gray-300 sm:text-base dark:border-gray-500 dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400 dark:hover:border-gray-300'
+              onClick={() => setCurrentStatus("rejected")}
+              className={`inline-flex items-center h-12 px-[10%] py-2 text-sm text-center text-gray-700 bg-transparent border-b border-gray-300 sm:text-base dark:border-gray-500 dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400 dark:hover:border-gray-300 ${
+                currentStatus === "rejected" && "border border-b-0 rounded-t-md"
+              }`}
             >
               Rejected
             </button>
           </div>
 
-          <div className='my-6 mx-2'>
+          <div className="my-6 mx-2">
             {usersOfRequestedOrders?.map((val) => {
               // <StoreReqOrdData
               //   key={val._id}
@@ -190,11 +199,10 @@ const StoreManagerRequestedOrders = () => {
               }
               return <></>;
             })}
-            
           </div>
-          <div className='text-center'>
-            <button className='green_btn mb-4' onClick={handleMergeOrder}>
-              Submit
+          <div className="text-center">
+            <button className="green_btn mb-4" onClick={handleMergeOrder}>
+              MERGE ALL ORDERS
             </button>
           </div>
         </>

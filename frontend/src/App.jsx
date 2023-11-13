@@ -21,6 +21,7 @@ import StoreManagerRequestedOrders from './pages/StoreManagerRequestedOrders/Sto
 import Dashboard from './pages/Dashboard';
 import AdminDashboard from './UserPanel/Admin/AdminDashboard';
 import ResetPassword from './pages/ResetPassword';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -46,6 +47,7 @@ function App() {
 
   return (
     <Layout>
+      <ToastContainer />
       <Routes>
         {!isLoggedIn && <Route path='/login' element={<Login />} />}
         {!isLoggedIn && <Route path='/' element={<Login />} />}
