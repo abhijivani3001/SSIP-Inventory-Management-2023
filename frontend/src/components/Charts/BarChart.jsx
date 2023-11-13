@@ -3,7 +3,6 @@ import React from 'react';
 import ReactApexChart from 'react-apexcharts';
 
 const BarChart = ({ orderData }) => {
-  // Aggregate data for the bar chart
   const data = orderData.map(({ x, y }) => ({ x, y }));
 
   return (
@@ -19,7 +18,7 @@ const BarChart = ({ orderData }) => {
         }}
         series={[{ data }]}
         type='bar'
-        width={800}
+        width={600}
       />
     </div>
   );
