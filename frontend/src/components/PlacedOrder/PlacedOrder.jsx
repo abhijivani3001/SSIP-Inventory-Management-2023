@@ -66,6 +66,13 @@ const PlacedOrder = (props) => {
               </div>
             )}
 
+            {props.status === 'rejected' && (
+              <div className='flex items-center'>
+                <div className='h-2.5 w-2.5 rounded-full bg-red-500 mr-2'></div>
+                Rejected
+              </div>
+            )}
+
             {((props.status === 'pending' && !isAllQuantityReceived) ||
               (props.status === 'accepted' && !isAllQuantityReceived)) && (
               <div className='flex items-center'>

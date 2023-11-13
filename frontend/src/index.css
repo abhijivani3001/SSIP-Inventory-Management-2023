@@ -5,7 +5,6 @@
 .navbar-title {
   @apply hover:underline active:underline active:text-gray-900 text-gray-900 font-bold underline;
 }
-
 .navbar-element {
   @apply block py-2 pl-3 pr-4 rounded md:bg-transparent md:p-0 hover:text-sky-600 hover:underline hover:underline-offset-4;
 }
@@ -48,6 +47,12 @@ body {
   @apply fixed overflow-auto flex top-[5%] text-center max-h-[90%] bg-white py-4 rounded-lg z-30 mx-16;
 }
 
-.button {
-  @apply text-white focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 text-center;
+.default_tab {
+  @apply inline-flex items-center h-12 w-1/3 py-2 text-lg text-gray-700 border-gray-400 whitespace-nowrap focus:outline-none;
+}
+.status_true_tab {
+  @apply border border-b-0 rounded-t-md text-gray-800 font-semibold;
+}
+.status_false_tab {
+  @apply whitespace-nowrap border-b focus:outline-none hover:border-gray-500 hover:font-medium;
 }
