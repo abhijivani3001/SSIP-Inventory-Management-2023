@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from '../../api/AxiosUrl';
 import { useCart } from '../../store/CartProvider';
 import ROLES from '../../constants/ROLES';
 import StoreReqOrdData from './StoreReqOrdData';
 import StoreManReqOrdOne from './StoreManReqOrdOne';
-import { findBelowUsers } from '../../components/Helper/Helper';
+import {
+  findBelowUsers,
+  compareStatusForStoreManager,
+} from '../../components/Helper/Helper';
 
 const StoreManagerRequestedOrders = () => {
   const { cart, dispatch } = useCart();
@@ -15,6 +18,7 @@ const StoreManagerRequestedOrders = () => {
     useState(false);
 
   const [currentStatus, setCurrentStatus] = useState('pending');
+  const currentUserRole = useRef('');
   let mainFlag = false; // to check whether the placed order is empty or not
 
   const handleMergeOrder = async () => {
@@ -66,6 +70,7 @@ const StoreManagerRequestedOrders = () => {
         '/api/user/users',
         findBelowUsers(currentUser)
       );
+      currentUserRole.current = currentUser.role;
       console.log(res2);
 
       const data = await res2.data.users;
@@ -88,18 +93,18 @@ const StoreManagerRequestedOrders = () => {
   };
 
   return (
-    <div className='mx-10 mt-4'>
+    <div className="mx-10 mt-4">
       {isLoading && (
-        <div className='text-xl my-auto text-center '>Loading...</div>
+        <div className="text-xl my-auto text-center ">Loading...</div>
       )}
       {!isLoading && !isRequestedOrdersAvailable && (
-        <div className='not_available'>No more orders are requested!</div>
+        <div className="not_available">No more orders are requested!</div>
       )}
 
       {!isLoading && isRequestedOrdersAvailable && (
         <>
-          <div className='my-6'>
-            <div className='flex justify-center overflow-x-auto whitespace-nowrap'>
+          <div className="my-6">
+            <div className="flex justify-center overflow-x-auto whitespace-nowrap">
               <button
                 onClick={() => handleTabClick('pending')}
                 className={`default_tab ${
@@ -108,7 +113,7 @@ const StoreManagerRequestedOrders = () => {
                     : 'status_false_tab'
                 }`}
               >
-                <p className='mx-auto'>Pending</p>
+                <p className="mx-auto">Pending</p>
               </button>
 
               <button
@@ -119,7 +124,7 @@ const StoreManagerRequestedOrders = () => {
                     : 'status_false_tab'
                 }`}
               >
-                <p className='mx-auto'>Accepted</p>
+                <p className="mx-auto">Accepted</p>
               </button>
 
               <button
@@ -130,7 +135,7 @@ const StoreManagerRequestedOrders = () => {
                     : 'status_false_tab'
                 }`}
               >
-                <p className='mx-auto'>Rejected</p>
+                <p className="mx-auto">Rejected</p>
               </button>
 
               <button
@@ -141,7 +146,7 @@ const StoreManagerRequestedOrders = () => {
                     : 'status_false_tab'
                 }`}
               >
-                <p className='mx-auto'>Completed</p>
+                <p className="mx-auto">Completed</p>
               </button>
             </div>
 
@@ -168,10 +173,13 @@ const StoreManagerRequestedOrders = () => {
               val.bulkOrders.forEach((bulkOrder) => {
                 bulkOrder.orders.forEach((order) => {
                   if (
-                    order.status === currentStatus ||
-                    (currentStatus === 'pending' &&
-                      order.status === 'head-accepted')
+                    compareStatusForStoreManager(
+                      currentUserRole.current,
+                      order.status,
+                      currentStatus
+                    )
                   ) {
+                    console.log('I M HERE');
                     flag = true;
                     mainFlag = true;
                   }
@@ -190,6 +198,7 @@ const StoreManagerRequestedOrders = () => {
                     bulkOrders={val.bulkOrders}
                     createdAt={val.createdAt}
                     userId={val._id}
+                    currentUserRole={currentUserRole.current}
                     currentStatus={currentStatus}
                   />
                 );
@@ -197,15 +206,15 @@ const StoreManagerRequestedOrders = () => {
               return <></>;
             })}
             {!mainFlag && (
-              <div className='not_available'>
+              <div className="not_available">
                 No more requested orders available.
               </div>
             )}
           </div>
 
           {mainFlag && currentStatus === 'pending' && (
-            <div className='text-center'>
-              <button className='green_btn mb-4' onClick={handleMergeOrder}>
+            <div className="text-center">
+              <button className="green_btn mb-4" onClick={handleMergeOrder}>
                 MERGE ALL ORDERS
               </button>
             </div>

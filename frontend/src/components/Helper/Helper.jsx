@@ -35,3 +35,20 @@ export const findBelowUsers = (currentUser) => {
 
   return { ...filters };
 };
+
+export const compareStatusForStoreManager = (
+  role,
+  orderStatus,
+  currentStatus
+) => {
+  if (role === ROLES.SUB_BRANCH_STORE_MANAGER)
+    return orderStatus === currentStatus;
+  else if (
+    role === ROLES.BRANCH_STORE_MANAGER ||
+    role === ROLES.DEPARTMENT_STORE_MANAGER
+  ) {
+    if (currentStatus === 'pending' && orderStatus === 'head-accepted')
+      return true;
+  }
+  return false;
+};

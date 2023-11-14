@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import StoreManReqOrdThree from './StoreManReqOrdThree';
+import { compareStatusForStoreManager } from '../../components/Helper/Helper';
 
 const StoreManReqOrdTwo = (props) => {
   const bulkOrder = props.bulkOrder;
@@ -94,9 +95,11 @@ const StoreManReqOrdTwo = (props) => {
                 </thead>
                 <tbody>
                   {bulkOrder.orders.map((order) =>
-                    order.status === props.currentStatus ||
-                    (props.currentStatus === 'pending' &&
-                      order.status === 'head-accepted') ? (
+                   compareStatusForStoreManager(
+                    props.currentUserRole,
+                    order.status,
+                    props.currentStatus
+                  ) ? (
                       <StoreManReqOrdThree
                         key={order.itemId}
                         imageUrl={order.imageUrl}
