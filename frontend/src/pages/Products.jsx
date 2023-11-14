@@ -38,7 +38,7 @@ const Products = () => {
         <div className='text-xl my-auto text-center '>Loading...</div>
       )}
       {!isLoading && !isProductsAvailable && (
-        <div className='text-3xl text-center '>Products is not available</div>
+        <div className='not_available'>Products is not available</div>
       )}
 
       {!isLoading && isProductsAvailable && (

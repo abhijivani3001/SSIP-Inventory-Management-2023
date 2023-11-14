@@ -69,9 +69,7 @@ const CartItems = () => {
 
   return (
     <div className='mx-8 mt-4'>
-      {isCartEmpty && (
-        <div className='text-3xl text-center'>Your cart is empty</div>
-      )}
+      {isCartEmpty && <div className='not_available'>Your cart is empty</div>}
 
       {!isCartEmpty && (
         <div>

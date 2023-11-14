@@ -39,7 +39,7 @@ const AddInventoryItemsContent = (props) => {
         <div className='text-xl my-auto text-center '>Loading...</div>
       )}
       {!isLoading && !isProductsAvailable && (
-        <div className='text-3xl text-center '>Products is not available</div>
+        <div className='not_available'>Products is not available</div>
       )}
 
       {!isLoading && isProductsAvailable && (
@@ -62,7 +62,13 @@ const AddInventoryItemsContent = (props) => {
             ))}
           </div>
           <div className='flex gap-4 justify-center mb-8'>
-            <button className='trans_btn mb-4' onClick={props.onClose} mb='mb-4'>close</button>
+            <button
+              className='trans_btn mb-4'
+              onClick={props.onClose}
+              mb='mb-4'
+            >
+              close
+            </button>
           </div>
         </>
       )}

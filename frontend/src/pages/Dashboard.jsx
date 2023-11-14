@@ -82,7 +82,7 @@ const Dashboard = () => {
           <div>
             {orderData.orderChartData?.length < 1 ||
             orderData.barChartData?.length < 1 ? (
-              <span className='text-2xl mx-3'>No order placed by you</span>
+              <span className='not_available'>No order placed by you</span>
             ) : (
               <div className='flex flex-wrap justify-center'>
                 {/* <div className='mx-10 my-5'>

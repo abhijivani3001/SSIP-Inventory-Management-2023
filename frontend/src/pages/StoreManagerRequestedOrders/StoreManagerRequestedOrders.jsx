@@ -93,9 +93,7 @@ const StoreManagerRequestedOrders = () => {
         <div className='text-xl my-auto text-center '>Loading...</div>
       )}
       {!isLoading && !isRequestedOrdersAvailable && (
-        <div className='text-3xl text-gray-700 text-center my-16'>
-          No more orders are requested!
-        </div>
+        <div className='not_available'>No more orders are requested!</div>
       )}
 
       {!isLoading && isRequestedOrdersAvailable && (
@@ -199,7 +197,7 @@ const StoreManagerRequestedOrders = () => {
               return <></>;
             })}
             {!mainFlag && (
-              <div className='text-3xl text-gray-700 text-center my-16'>
+              <div className='not_available'>
                 No more requested orders available.
               </div>
             )}

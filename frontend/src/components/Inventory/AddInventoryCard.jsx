@@ -16,7 +16,6 @@ const AddInventoryCard = (props) => {
           quantity: freqOfItem,
         },
       ]);
-      // console.log(res);
 
       toast.success('Item added to inventory successfully', {
         position: 'top-right',
@@ -53,11 +52,11 @@ const AddInventoryCard = (props) => {
               id={props.id}
               name='amount'
               type='number'
-              className='border-2 border-gray-700 w-12 p-0 text-center rounded-lg'
+              className='border-2 border-gray-700 w-12 h-7 p-0 my-auto text-center rounded-lg'
               min={1}
               value={freqOfItem}
               onChange={(e) => {
-                setFreqOfItem(e.target.value);
+                setFreqOfItem(Math.max(1, e.target.value));
               }}
             />
           </div>

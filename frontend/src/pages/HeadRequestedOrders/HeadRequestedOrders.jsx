@@ -53,9 +53,7 @@ const HeadRequestedOrders = () => {
         <div className='text-xl my-auto text-center '>Loading...</div>
       )}
       {!isLoading && !isRequestedOrdersAvailable && (
-        <div className='text-3xl text-center'>
-          No more orders are requested!
-        </div>
+        <div className='not_available'>No more orders are requested!</div>
       )}
 
       {!isLoading && isRequestedOrdersAvailable && (
@@ -127,7 +125,7 @@ const HeadRequestedOrders = () => {
               return <></>;
             })}
             {!mainFlag && (
-              <div className='text-3xl text-gray-700 text-center my-16'>
+              <div className='not_available'>
                 No more requested orders available.
               </div>
             )}

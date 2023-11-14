@@ -8,7 +8,7 @@ const PlacedOrderList = () => {
   const [isOrdersPlaced, setIsOrdersPlaced] = useState(false);
 
   const [currentStatus, setCurrentStatus] = useState('pending');
-  let mainFlag=false; // to check whether the placed order is empty or not
+  let mainFlag = false; // to check whether the placed order is empty or not
 
   const getOrders = async () => {
     try {
@@ -40,7 +40,7 @@ const PlacedOrderList = () => {
         <div className='text-xl my-auto text-center '>Loading...</div>
       )}
       {!isLoading && !isOrdersPlaced && (
-        <div className='text-3xl text-center'>Placed orders is empty</div>
+        <div className='not_available'>Placed orders is empty</div>
       )}
 
       {!isLoading && isOrdersPlaced && (
@@ -95,9 +95,9 @@ const PlacedOrderList = () => {
             {placedOrders?.map((order) => {
               let flag = false;
               order.orders.forEach((order) => {
-                if (order.status === currentStatus){
+                if (order.status === currentStatus) {
                   flag = true;
-                  mainFlag=true;
+                  mainFlag = true;
                 }
               });
 
@@ -111,7 +111,11 @@ const PlacedOrderList = () => {
                 );
               }
             })}
-            {!mainFlag && <div className='text-3xl text-gray-700 text-center my-16'>No more placed orders available.</div>}
+            {!mainFlag && (
+              <div className='not_available'>
+                No more placed orders available.
+              </div>
+            )}
           </div>
         </>
       )}

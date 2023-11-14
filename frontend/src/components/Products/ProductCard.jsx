@@ -41,7 +41,7 @@ const ProductCard = (props) => {
             <label className='text-lg font-semibold'>Amount</label>
             <input
               id={props.id}
-              // name='amount'
+              name='amount'
               type='number'
               className='border-2 border-gray-700 w-12 h-7 p-0 my-auto text-center rounded-lg'
               min={1}
