@@ -10,7 +10,7 @@ const CartItems = () => {
   const [isCartEmpty, setIsCartEmpty] = useState(true);
 
   const clearCartOnReload = (event) => {
-    if (cart.items.length > 0) {
+    if (cart?.items?.length > 0) {
       const confirmationMessage =
         'If you reload the page, your cart will become empty. Do you want to continue?';
       event.returnValue = confirmationMessage;
@@ -19,7 +19,7 @@ const CartItems = () => {
   };
 
   useEffect(() => {
-    setIsCartEmpty(!cart.items.length);
+    setIsCartEmpty(!cart?.items?.length);
 
     window.addEventListener('beforeunload', clearCartOnReload);
 
@@ -79,7 +79,7 @@ const CartItems = () => {
             <h1 className='page-title'>Cart Items</h1>
           </div>
           <div className='my-6'>
-            {cart.items.map((item) => (
+            {cart?.items.map((item) => (
               <CartItem
                 key={item._id}
                 name={item.name}

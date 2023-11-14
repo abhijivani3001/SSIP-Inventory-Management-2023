@@ -80,7 +80,6 @@ const StoreManagerRequestedOrders = () => {
       });
 
       const data = await res2.data.users;
-      // console.log(data);
 
       if (roleOfRequestedUser2) {
         const res3 = await axios.post('api/user/users', {
@@ -89,15 +88,12 @@ const StoreManagerRequestedOrders = () => {
         });
         const tempdata = await res3.data.users;
         data.push(...tempdata);
-        // console.log(data);
       }
 
       if (data?.length) {
         setIsRequestedOrdersAvailable(true);
         setUsersOfRequestedOrders(data);
       } else setIsRequestedOrdersAvailable(false);
-
-      console.log(usersOfRequestedOrders);
     } catch (error) {
       console.log(error.message);
     }
@@ -118,60 +114,60 @@ const StoreManagerRequestedOrders = () => {
         <div className='text-xl my-auto text-center '>Loading...</div>
       )}
       {!isLoading && !isRequestedOrdersAvailable && (
-        <div className='text-3xl text-center'>
+        <div className='text-3xl text-gray-700 text-center my-16'>
           No more orders are requested!
         </div>
       )}
 
       {!isLoading && isRequestedOrdersAvailable && (
         <>
-          <div className='flex justify-center overflow-x-auto whitespace-nowrap'>
-            <button
-              onClick={() => handleTabClick('pending')}
-              className={`default_tab ${
-                currentStatus === 'pending'
-                  ? 'status_true_tab'
-                  : 'status_false_tab'
-              }`}
-            >
-              <p className='mx-auto'>Pending</p>
-            </button>
-
-            <button
-              onClick={() => handleTabClick('accepted')}
-              className={`default_tab ${
-                currentStatus === 'accepted'
-                  ? 'status_true_tab'
-                  : 'status_false_tab'
-              }`}
-            >
-              <p className='mx-auto'>Accepted</p>
-            </button>
-
-            <button
-              onClick={() => handleTabClick('rejected')}
-              className={`default_tab ${
-                currentStatus === 'rejected'
-                  ? 'status_true_tab'
-                  : 'status_false_tab'
-              }`}
-            >
-              <p className='mx-auto'>Rejected</p>
-            </button>
-
-            <button
-              onClick={() => handleTabClick('completed')}
-              className={`default_tab ${
-                currentStatus === 'completed'
-                  ? 'status_true_tab'
-                  : 'status_false_tab'
-              }`}
-            >
-              <p className='mx-auto'>Completed</p>
-            </button>
-          </div>
-
           <div className='my-6'>
+            <div className='flex justify-center overflow-x-auto whitespace-nowrap'>
+              <button
+                onClick={() => handleTabClick('pending')}
+                className={`default_tab ${
+                  currentStatus === 'pending'
+                    ? 'status_true_tab'
+                    : 'status_false_tab'
+                }`}
+              >
+                <p className='mx-auto'>Pending</p>
+              </button>
+
+              <button
+                onClick={() => handleTabClick('accepted')}
+                className={`default_tab ${
+                  currentStatus === 'accepted'
+                    ? 'status_true_tab'
+                    : 'status_false_tab'
+                }`}
+              >
+                <p className='mx-auto'>Accepted</p>
+              </button>
+
+              <button
+                onClick={() => handleTabClick('rejected')}
+                className={`default_tab ${
+                  currentStatus === 'rejected'
+                    ? 'status_true_tab'
+                    : 'status_false_tab'
+                }`}
+              >
+                <p className='mx-auto'>Rejected</p>
+              </button>
+
+              <button
+                onClick={() => handleTabClick('completed')}
+                className={`default_tab ${
+                  currentStatus === 'completed'
+                    ? 'status_true_tab'
+                    : 'status_false_tab'
+                }`}
+              >
+                <p className='mx-auto'>Completed</p>
+              </button>
+            </div>
+
             {usersOfRequestedOrders?.map((val) => {
               // <StoreReqOrdData
               //   key={val._id}
@@ -194,7 +190,11 @@ const StoreManagerRequestedOrders = () => {
               let flag = false;
               val.bulkOrders.forEach((bulkOrder) => {
                 bulkOrder.orders.forEach((order) => {
-                  if (order.status === currentStatus) {
+                  if (
+                    order.status === currentStatus ||
+                    (currentStatus === 'pending' &&
+                      order.status === 'head-accepted')
+                  ) {
                     flag = true;
                     mainFlag = true;
                   }
@@ -217,6 +217,7 @@ const StoreManagerRequestedOrders = () => {
                   />
                 );
               }
+              return <></>;
             })}
             {!mainFlag && (
               <div className='text-3xl text-gray-700 text-center my-16'>

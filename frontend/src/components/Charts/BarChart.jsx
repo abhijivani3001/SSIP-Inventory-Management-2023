@@ -5,7 +5,7 @@ import { CSVLink } from 'react-csv';
 
 const BarChart = ({ orderData }) => {
   console.log(orderData);
-  const data = orderData.map(({ x, y }) => ({ x, y }));
+  const data = orderData?.map(({ x, y }) => ({ x, y }));
 
   const headers = [
     { label: 'Date', key: 'x' },
@@ -27,7 +27,11 @@ const BarChart = ({ orderData }) => {
         type='bar'
         width={600}
       />
-      <CSVLink data={orderData} headers={headers} className='border-gray-500 text-black p-2 border hover:bg-blue-800 hover:text-white rounded-2xl bg-blue-400 hover:border-blue-700'>
+      <CSVLink
+        data={orderData}
+        headers={headers}
+        className='border-gray-500 text-black p-2 border hover:bg-blue-800 hover:text-white rounded-2xl bg-blue-400 hover:border-blue-700'
+      >
         Download CSV
       </CSVLink>
     </div>

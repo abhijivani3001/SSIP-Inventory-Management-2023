@@ -69,7 +69,7 @@ const HeadRequestedOrders = () => {
       {!isLoading && isRequestedOrdersAvailable && (
         <>
           <div className='flex justify-center overflow-x-auto whitespace-nowrap'>
-          <button
+            <button
               onClick={() => handleTabClick('pending')}
               className={`default_tab ${
                 currentStatus === 'pending'
@@ -108,9 +108,13 @@ const HeadRequestedOrders = () => {
               let flag = false;
               val.bulkOrders.forEach((bulkOrder) => {
                 bulkOrder.orders.forEach((order) => {
-                  if (order.status === currentStatus){
+                  if (
+                    order.status === currentStatus ||
+                    (currentStatus === 'accepted' &&
+                      order.status === 'head-accepted')
+                  ) {
                     flag = true;
-                    mainFlag=true;
+                    mainFlag = true;
                   }
                 });
               });
@@ -128,6 +132,7 @@ const HeadRequestedOrders = () => {
                   />
                 );
               }
+              return <></>;
             })}
             {!mainFlag && (
               <div className='text-3xl text-gray-700 text-center my-16'>

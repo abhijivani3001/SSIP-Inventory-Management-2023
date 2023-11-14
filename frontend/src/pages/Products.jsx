@@ -23,7 +23,7 @@ const Products = () => {
         });
         setProducts(finalData);
 
-        if (finalData.length) setIsProductsAvailable(true);
+        if (finalData?.length) setIsProductsAvailable(true);
         else setIsProductsAvailable(false);
       } catch (error) {
         console.log(error.message);

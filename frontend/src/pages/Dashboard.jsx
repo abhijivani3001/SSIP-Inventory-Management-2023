@@ -19,14 +19,15 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (authCtx.isLoggedIn) {
-      axios.get('api/order')
+      axios
+        .get('api/order')
         .then((orderResponse) => {
           const bulkOrders = orderResponse.data.bulkOrders;
           const orderMap = new Map();
           const dateOrderMap = new Map();
 
-          bulkOrders.forEach(item => {
-            item.orders.forEach(order => {
+          bulkOrders.forEach((item) => {
+            item.orders.forEach((order) => {
               const name = order.name;
               const quantity = order.quantity;
               console.log(name, quantity);
@@ -46,8 +47,12 @@ const Dashboard = () => {
             });
           });
 
-          const orderChartData = Array.from(orderMap).map(([name, quantity]) => ({ name, quantity }));
-          const barChartData = Array.from(dateOrderMap).map(([date, totalQuantity]) => ({ x: date, y: totalQuantity }));
+          const orderChartData = Array.from(orderMap)?.map(
+            ([name, quantity]) => ({ name, quantity })
+          );
+          const barChartData = Array.from(dateOrderMap)?.map(
+            ([date, totalQuantity]) => ({ x: date, y: totalQuantity })
+          );
 
           const sortedBarChartData = barChartData.sort((a, b) => {
             const dateA = new Date(a.x.split('/').reverse().join('/'));
@@ -75,7 +80,8 @@ const Dashboard = () => {
         <>
           <h1 className='text-2xl font-semibold mb-4'>Dashboard</h1>
           <div>
-            {orderData.orderChartData.length < 1 || orderData.barChartData.length < 1 ? (
+            {orderData.orderChartData?.length < 1 ||
+            orderData.barChartData?.length < 1 ? (
               <span className='text-2xl mx-3'>No order placed by you</span>
             ) : (
               <div className='flex flex-wrap justify-center'>
@@ -83,12 +89,16 @@ const Dashboard = () => {
                   <PieChart orderData={orderData.orderChartData} />
                 </div> */}
                 <div className='mx-10 my-5 border-gray-800 border rounded-2xl'>
-                  <h2 className='mx-5 my-5 text-2xl font-semibold'>Total Ordered Quantity with Names </h2>
-                  <PieChart orderData={orderData.orderChartData} />
+                  <h2 className='mx-5 my-5 text-2xl font-semibold'>
+                    Total Ordered Quantity with Names{' '}
+                  </h2>
+                  <PieChart orderData={orderData?.orderChartData} />
                 </div>
                 <div className='mx-10 my-5 border-gray-800 border rounded-2xl'>
-                  <h2 className='mx-5 my-5 text-2xl font-semibold'>Total Orders</h2>
-                  <BarChart orderData={orderData.barChartData} />
+                  <h2 className='mx-5 my-5 text-2xl font-semibold'>
+                    Total Orders
+                  </h2>
+                  <BarChart orderData={orderData?.barChartData} />
                 </div>
               </div>
             )}

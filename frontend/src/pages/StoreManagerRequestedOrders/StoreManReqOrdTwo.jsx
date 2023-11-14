@@ -37,7 +37,7 @@ const StoreManReqOrdTwo = (props) => {
                 isDropdownVisible ? 'border-b border-gray-600' : ''
               }`}
             >
-              <span>Ordered Products x{bulkOrder?.orders.length}</span>
+              <span>Ordered Products x{bulkOrder?.orders?.length}</span>
               <div className='flex gap-8 justify-between align-middle'>
                 <div>Created at: {formatDate(bulkOrder?.createdAt)}</div>
                 <svg
@@ -84,14 +84,18 @@ const StoreManReqOrdTwo = (props) => {
                     <th scope='col' className='px-6 py-3'>
                       Available
                     </th>
-                    {props.currentStatus==='pending' && <th scope='col' className='px-6 py-3'>
-                      Action
-                    </th>}
+                    {props.currentStatus === 'pending' && (
+                      <th scope='col' className='px-6 py-3'>
+                        Action
+                      </th>
+                    )}
                   </tr>
                 </thead>
                 <tbody>
                   {bulkOrder.orders.map((order) =>
-                    order.status === props.currentStatus ? (
+                    order.status === props.currentStatus ||
+                    (props.currentStatus === 'pending' &&
+                      order.status === 'head-accepted') ? (
                       <StoreManReqOrdThree
                         key={order.itemId}
                         imageUrl={order.imageUrl}

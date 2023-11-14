@@ -25,7 +25,7 @@ const Inventory = (props) => {
       });
       setInventoryProducts(finalData);
 
-      if (data.length) setIsInventoryProductsAvailable(true);
+      if (data?.length) setIsInventoryProductsAvailable(true);
       else setIsInventoryProductsAvailable(false);
     } catch (error) {
       console.log(error.message);
@@ -61,7 +61,7 @@ const Inventory = (props) => {
                 <h1 className='text-6xl font-light'>Inventory</h1>
               </div>
               <div className='flex flex-wrap justify-center my-6'>
-                {inventoryProducts.map((val) => (
+                {inventoryProducts?.map((val) => (
                   <InventoryCard
                     key={val._id}
                     name={val.name}

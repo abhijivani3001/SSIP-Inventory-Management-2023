@@ -98,7 +98,9 @@ const HeadReqOrdTwo = (props) => {
                 </thead>
                 <tbody>
                   {bulkOrder.orders.map((order) =>
-                    order.status === props.currentStatus ? (
+                    order.status === props.currentStatus ||
+                    (props.currentStatus === 'accepted' &&
+                      order.status === 'head-accepted') ? (
                       <HeadReqOrdThree
                         key={order.itemId}
                         imageUrl={order.imageUrl}
@@ -119,7 +121,9 @@ const HeadReqOrdTwo = (props) => {
                 <div className='flex bg-white justify-center gap-2'>
                   <button
                     className='blue_btn my-4'
-                    onClick={() => statusHandler(bulkOrder._id, 'accepted')}
+                    onClick={() =>
+                      statusHandler(bulkOrder._id, 'head-accepted')
+                    }
                   >
                     Approve
                   </button>

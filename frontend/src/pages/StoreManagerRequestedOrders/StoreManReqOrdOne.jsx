@@ -70,7 +70,12 @@ const StoreManReqOrdOne = (props) => {
               let flag = false;
 
               bulkOrder.orders.forEach((order) => {
-                if (order.status === props.currentStatus) flag = true;
+                if (
+                  order.status === props.currentStatus ||
+                  (props.currentStatus === 'pending' &&
+                    order.status === 'head-accepted')
+                )
+                  flag = true;
               });
 
               if (flag) {
