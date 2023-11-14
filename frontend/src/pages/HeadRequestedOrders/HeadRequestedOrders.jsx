@@ -4,6 +4,7 @@ import { useCart } from '../../store/CartProvider';
 import ROLES from '../../constants/ROLES';
 import HeadReqOrdData from './HeadReqOrdData';
 import HeadReqOrdOne from './HeadReqOrdOne';
+import { findBelowUsers } from '../../components/Helper/Helper';
 
 const HeadRequestedOrders = () => {
   const { cart, dispatch } = useCart();
@@ -16,39 +17,30 @@ const HeadRequestedOrders = () => {
   const [currentStatus, setCurrentStatus] = useState('pending');
   let mainFlag = false; // to check whether the placed order is empty or not
 
+  const getRequiredUserData = async () => {
+    try {
+      const res1 = await axios.get('api/user');
+      const currentUser = await res1.data.user;
+
+      const res2 = await axios.post(
+        '/api/user/users',
+        findBelowUsers(currentUser)
+      );
+      console.log(res2);
+
+      const data = await res2.data.users;
+      if (data?.length) {
+        setIsRequestedOrdersAvailable(true);
+        setUsersOfRequestedOrders(data);
+      } else setIsRequestedOrdersAvailable(false);
+    } catch (error) {
+      console.log(error.message);
+    }
+    setIsLoading(false);
+  };
+
   useEffect(() => {
-    (async () => {
-      try {
-        const res1 = await axios.get('api/user');
-        const user = await res1.data.user;
-
-        let roleOfRequestedUser = '';
-
-        if (user.role === ROLES.DEPARTMENT_HEAD) {
-          roleOfRequestedUser = ROLES.DEPARTMENT_STORE_MANAGER;
-        } else if (user.role === ROLES.BRANCH_HEAD) {
-          roleOfRequestedUser = ROLES.BRANCH_STORE_MANAGER;
-        } else if (user.role === ROLES.SUB_BRANCH_HEAD) {
-          roleOfRequestedUser = ROLES.SUB_BRANCH_STORE_MANAGER;
-        }
-
-        const res2 = await axios.post('api/user/users', {
-          ...user,
-          role: roleOfRequestedUser,
-        });
-
-        const data = await res2.data.users;
-
-        if (data?.length) {
-          setIsRequestedOrdersAvailable(true);
-          setUsersOfRequestedOrders(data);
-          console.log(data);
-        } else setIsRequestedOrdersAvailable(false);
-      } catch (error) {
-        console.log(error.message);
-      }
-      setIsLoading(false);
-    })();
+    getRequiredUserData();
   }, []);
 
   const handleTabClick = (status) => {

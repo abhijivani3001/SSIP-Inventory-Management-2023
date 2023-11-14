@@ -134,21 +134,24 @@ const StoreManReqOrdThree = (props) => {
           )?.quantity || 0}
         </td>
 
-        {props.currentStatus === 'pending' && (
+        {(props.currentStatus === 'pending' ||
+          props.currentStatus === 'accepted') && (
           <td className='px-6 w-80'>
             <div className='flex justify-between'>
-              <input
-                type='number'
-                value={allocationQuantity}
-                onChange={handleAllocationQuantity}
-                className='border-2 border-gray-700 w-12 h-8 p-0 my-auto text-center rounded-lg'
-              />
-              <button
-                className='blue_btn'
-                onClick={() => submitAllocation('accepted')}
-              >
-                Allocate
-              </button>
+              <div className='flex gap-2'>
+                <input
+                  type='number'
+                  value={allocationQuantity}
+                  onChange={handleAllocationQuantity}
+                  className='border-2 border-gray-700 w-12 h-8 p-0 my-auto text-center rounded-lg'
+                />
+                <button
+                  className='blue_btn'
+                  onClick={() => submitAllocation('accepted')}
+                >
+                  Allocate
+                </button>
+              </div>
               <button
                 className='trans_red_btn'
                 onClick={() => submitAllocation('rejected')}

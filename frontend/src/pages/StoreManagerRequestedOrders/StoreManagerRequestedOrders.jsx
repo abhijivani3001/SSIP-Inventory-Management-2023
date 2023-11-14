@@ -4,6 +4,7 @@ import { useCart } from '../../store/CartProvider';
 import ROLES from '../../constants/ROLES';
 import StoreReqOrdData from './StoreReqOrdData';
 import StoreManReqOrdOne from './StoreManReqOrdOne';
+import { findBelowUsers } from '../../components/Helper/Helper';
 
 const StoreManagerRequestedOrders = () => {
   const { cart, dispatch } = useCart();
@@ -56,40 +57,18 @@ const StoreManagerRequestedOrders = () => {
     });
   };
 
-  const getRequiredData = async () => {
+  const getRequiredUserData = async () => {
     try {
       const res1 = await axios.get('api/user');
-      const user = await res1.data.user;
+      const currentUser = await res1.data.user;
 
-      let roleOfRequestedUser = '';
-      let roleOfRequestedUser2 = '';
-
-      if (user.role === ROLES.DEPARTMENT_STORE_MANAGER) {
-        roleOfRequestedUser = ROLES.BRANCH_STORE_MANAGER;
-      } else if (user.role === ROLES.BRANCH_STORE_MANAGER) {
-        roleOfRequestedUser = ROLES.SUB_BRANCH_STORE_MANAGER;
-        roleOfRequestedUser2 = ROLES.BRANCH_HEAD;
-      } else if (user.role === ROLES.SUB_BRANCH_STORE_MANAGER) {
-        roleOfRequestedUser = ROLES.EMPLOYEE;
-        roleOfRequestedUser2 = ROLES.SUB_BRANCH_HEAD;
-      }
-
-      const res2 = await axios.post('api/user/users', {
-        ...user,
-        role: roleOfRequestedUser,
-      });
+      const res2 = await axios.post(
+        '/api/user/users',
+        findBelowUsers(currentUser)
+      );
+      console.log(res2);
 
       const data = await res2.data.users;
-
-      if (roleOfRequestedUser2) {
-        const res3 = await axios.post('api/user/users', {
-          ...user,
-          role: roleOfRequestedUser2,
-        });
-        const tempdata = await res3.data.users;
-        data.push(...tempdata);
-      }
-
       if (data?.length) {
         setIsRequestedOrdersAvailable(true);
         setUsersOfRequestedOrders(data);
@@ -101,7 +80,7 @@ const StoreManagerRequestedOrders = () => {
   };
 
   useEffect(() => {
-    getRequiredData();
+    getRequiredUserData();
   }, []);
 
   const handleTabClick = (status) => {
