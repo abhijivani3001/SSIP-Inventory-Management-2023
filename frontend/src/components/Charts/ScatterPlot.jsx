@@ -56,7 +56,7 @@ const ScatterPlot = () => {
             {orderData.length < 1 ? (
               <span className='not_available'>No order placed by you</span>
             ) : (
-              <div className='mx-10 my-5 border-gray-800 border rounded-2xl'>
+              <div className='mx-10 my-5 border-gray-800 '>
                 <h2 className='mx-5 my-5 text-2xl font-semibold'>
                   Order Quantity with date
                 </h2>
@@ -72,7 +72,7 @@ const ScatterPlot = () => {
                   <Legend />
                   <Scatter name='Orders' data={orderData} fill='#8884d8' />
                 </ScatterChart>
-                <CSVLink data={orderData} filename={'scatterChartData.csv'} className='border-gray-500 text-black p-2 border hover:bg-blue-800 hover:text-white rounded-2xl bg-blue-400 hover:border-blue-700'>
+                <CSVLink data={orderData} filename={'scatterChartData.csv'} className='border-gray-500 text-black p-2 hover:bg-blue-800 hover:text-white rounded-2xl bg-blue-400 hover:border-blue-700'>
                   Download CSV
                 </CSVLink>
               </div>

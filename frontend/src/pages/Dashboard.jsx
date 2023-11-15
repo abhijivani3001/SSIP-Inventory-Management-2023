@@ -87,9 +87,6 @@ const Dashboard = () => {
               <span className='not_available'>No order placed by you</span>
             ) : (
               <div className='flex flex-wrap justify-center'>
-                {/* <div className='mx-10 my-5'>
-                  <PieChart orderData={orderData.orderChartData} />
-                </div> */}
                 <div className='mx-10 my-5 border-gray-800 border rounded-2xl'>
                   <h2 className='mx-5 my-5 text-2xl font-semibold'>
                     Total Ordered Quantity with Names{' '}
@@ -102,11 +99,15 @@ const Dashboard = () => {
                   </h2>
                   <BarChart orderData={orderData?.barChartData} />
                 </div>
-                <div></div>
-                <StackedColumnChart />
-                <ScatterPlot />
-              </div>
+                <div className='mx-10 my-5 border-gray-800 border'>
 
+                  <StackedColumnChart />
+                </div>
+                <div className='mx-10 my-5 border-gray-800 border '>
+
+                  <ScatterPlot />
+                </div>
+              </div>
             )}
           </div>
         </>

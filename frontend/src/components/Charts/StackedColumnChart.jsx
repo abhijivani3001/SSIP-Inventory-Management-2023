@@ -92,6 +92,7 @@ const StackedColumnChart = () => {
     },
     xaxis: {
       type: 'category',
+      categories: orderData.length > 0 ? orderData[0].entries.map((entry) => entry.date) : [],
     },
     legend: {
       position: 'top',
@@ -103,14 +104,6 @@ const StackedColumnChart = () => {
     data: entries.map((entry) => entry.quantity),
   }));
 
-  const xaxisCategories = orderData.length > 0 ? orderData[0].entries.map((entry) => entry.date) : [];
-  const sortedXaxisCategories = xaxisCategories.slice().sort((a, b) => {
-    const dateA = new Date(a);
-    const dateB = new Date(b);
-    return dateA - dateB;
-  });
-
-
   return (
     <div className='p-4 bg-gray-100 rounded-lg shadow-lg'>
       {isLoading ? (
@@ -121,12 +114,12 @@ const StackedColumnChart = () => {
             {orderData.length < 1 ? (
               <span className='not_available'>No order placed by you</span>
             ) : (
-              <div className='mx-10 my-5 border-gray-800 border rounded-2xl'>
+              <div className='mx-10 my-5 border-gray-800  rounded-2xl'>
                 <h2 className='mx-5 my-5 text-2xl font-semibold'>
                   Date-wise order with Quantity
                 </h2>
                 <ReactApexChart
-                  options={{ ...options, xaxis: { categories: sortedXaxisCategories } }}
+                  options={options}
                   series={series}
                   type='bar'
                   height={400}
