@@ -38,8 +38,12 @@ const Login = (props) => {
   };
 
   return (
-    <div className='inset-0 flex items-center justify-center p-16'>
+    <div className='inset-0 flex flex-col items-center justify-center  p-16'>
+      
       <div className='bg-white w-96 p-8 rounded-lg shadow-lg'>
+      <div className='mb-2 ml-[85px]'>
+        <img src='https://cracku.in/latest-govt-jobs/wp-content/uploads/2019/07/Government-of-India.jpg' height="30px" width="140px"  />
+      </div>
         <h2 className='text-2xl font-semibold text-gray-800 mb-4 min-w-0 flex items-center justify-center'>
           Login
         </h2>
@@ -72,13 +76,13 @@ const Login = (props) => {
               required
             />
           </div>
-          <div className='text-center'>
+          <div className='text-center mt-7'>
             <button type='submit' className='blue_btn'>
               Login
             </button>
           </div>
 
-          <div className='text-center'>
+          <div className='text-center mt-3'>
             <Link
               to='/forgot-password'
               className='text-blue-600 hover:underline'
