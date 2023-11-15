@@ -4,6 +4,8 @@ import { useCart } from '../../store/CartProvider';
 import ROLES from '../../constants/ROLES';
 import StoreReqOrdData from './StoreReqOrdData';
 import StoreManReqOrdOne from './StoreManReqOrdOne';
+import { toast } from 'react-toastify';
+
 import {
   findBelowUsers,
   compareStatusForStoreManager,
@@ -22,6 +24,39 @@ const StoreManagerRequestedOrders = () => {
   let mainFlag = false; // to check whether the placed order is empty or not
 
   const handleMergeOrder = async () => {
+    toast.success('Order Merged Successfully', {
+      autoClose: 1500,
+    });
+
+    // to update the status of order
+    const updateStatus = async (userId, bulkOrderId, orderId) => {
+      const res = await axios.put(`api/order/${bulkOrderId}/${orderId}`, {
+        user_id: userId,
+        status: 'accepted',
+      });
+      console.log(res);
+      getRequiredUserData();
+    };
+
+    // let arr = [];
+    usersOfRequestedOrders.forEach((user) => {
+      // let arr2 = [];
+      user.bulkOrders.forEach((bulkOrder) => {
+        // let arr3 = [];
+        bulkOrder.orders.forEach((order) => {
+          if (order.status === 'pending') {
+            // arr3.push({ orderId: order.itemId });
+
+            updateStatus(user._id, bulkOrder._id, order._id);
+          }
+        });
+        // arr2.push({ bulkOrderId: arr3 });
+      });
+      // arr.push({ userId: arr2 });
+    });
+    // console.log(arr);
+
+    // -------
     const orderMap = new Map();
     usersOfRequestedOrders.forEach((user) => {
       user.bulkOrders.forEach((bulkOrder) => {
@@ -179,7 +214,6 @@ const StoreManagerRequestedOrders = () => {
                       currentStatus
                     )
                   ) {
-                    console.log('I M HERE');
                     flag = true;
                     mainFlag = true;
                   }

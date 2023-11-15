@@ -22,37 +22,37 @@ const CartItem = (props) => {
       });
     }
   };
-  console.log(props.item);
+
   return (
     <>
-      <div className="border-2 flex justify-between border-gray-300 bg-white rounded-lg my-2 px-2">
-        <div className="flex gap-4 my-1">
+      <div className='border-2 flex justify-between border-gray-300 bg-white rounded-lg my-2 px-2'>
+        <div className='flex gap-4 my-1'>
           <img
-            className="p-2 h-16 w-24 object-contain"
+            className='p-2 h-16 w-24 object-contain'
             src={props.item.imageUrl}
-            alt="cart"
+            alt='cart'
           />
-          <h5 className="text-xl my-auto font-semibold tracking-tight text-gray-900">
+          <h5 className='text-xl my-auto font-semibold tracking-tight text-gray-900'>
             {props.name}
           </h5>
         </div>
 
-        <div className="flex align-middle my-auto gap-2 mr-6">
+        <div className='flex align-middle my-auto gap-2 mr-6'>
           <button
-            className="red_btn mx-4"
+            className='red_btn mx-4'
             onClick={() => props.onRemoveFromCart(props.item)}
           >
             Delete
           </button>
           <button
-            className="gray_btn"
+            className='gray_btn'
             onClick={() => decrementHandler(props.item)}
           >
             -
           </button>
-          <div className="my-auto">{amount}</div>
+          <div className='my-auto'>{amount}</div>
           <button
-            className="gray_btn"
+            className='gray_btn'
             onClick={() => incrementHandler(props.item)}
           >
             +
