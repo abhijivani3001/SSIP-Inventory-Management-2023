@@ -189,16 +189,15 @@ const StoreReqOrdData = (props) => {
                             allocatedOrderData[index].quantity
                           )
                         }
-                        className={`blue_btn ${
-                          order.quantity - order.delivered !==
+                        className={`blue_btn ${order.quantity - order.delivered !==
                             allocatedOrderData[index].quantity ||
-                          allocatedOrderData[index].quantity === 0
+                            allocatedOrderData[index].quantity === 0
                             ? 'disabled:opacity-20 disabled:bg-gray-600 cursor-not-allowed hover:bg-gray-600'
                             : ''
-                        }`}
+                          }`}
                         disabled={
                           order.quantity - order.delivered !==
-                            allocatedOrderData[index].quantity ||
+                          allocatedOrderData[index].quantity ||
                           allocatedOrderData[index].quantity === 0
                         }
                       >

@@ -49,6 +49,12 @@ export const compareStatusForStoreManager = (
   ) {
     if (currentStatus === 'pending' && orderStatus === 'head-accepted')
       return true;
+    else if (currentStatus === 'accepted' && orderStatus === 'accepted')
+      return true;
+    else if (currentStatus === 'rejected' && orderStatus === 'rejected')
+      return true;
+    else if (currentStatus === 'completed' && orderStatus === 'completed')
+      return true;
   }
   return false;
 };

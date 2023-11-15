@@ -4,6 +4,7 @@ import AuthContext from '../store/auth-context';
 import PieChart from '../components/Charts/PieChart';
 import BarChart from '../components/Charts/BarChart';
 import StackedColumnChart from '../components/Charts/StackedColumnChart';
+import ScatterPlot from '../components/Charts/ScatterPlot';
 
 const Dashboard = () => {
   const authCtx = useContext(AuthContext);
@@ -103,11 +104,14 @@ const Dashboard = () => {
                 </div>
                 <div></div>
                 <StackedColumnChart />
+                <ScatterPlot />
               </div>
+
             )}
           </div>
         </>
-      )}
+      )
+      }
     </div >
   );
 };

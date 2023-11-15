@@ -41,7 +41,7 @@ const PieChart = ({ orderData }) => {
         options={chartData.options}
         series={chartData.series}
         type='pie'
-        width={550}
+        width={500}
       />
       <CSVLink
         data={orderData}

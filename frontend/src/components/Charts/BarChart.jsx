@@ -25,7 +25,7 @@ const BarChart = ({ orderData }) => {
         }}
         series={[{ data }]}
         type='bar'
-        width={600}
+        width={400}
       />
       <CSVLink
         data={orderData}

@@ -129,8 +129,8 @@ const StackedColumnChart = () => {
                   options={{ ...options, xaxis: { categories: sortedXaxisCategories } }}
                   series={series}
                   type='bar'
-                  height={600}
-                  width={700}
+                  height={400}
+                  width={400}
                 />
                 {/* <CSVLink data={orderData} filename={'stackedColumnChartData.csv'}>
                   Download CSV
