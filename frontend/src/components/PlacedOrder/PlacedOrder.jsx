@@ -1,23 +1,42 @@
 import axios from '../../api/AxiosUrl';
 import React from 'react';
+import { toast } from 'react-toastify';
 
 const PlacedOrder = (props) => {
   const handleReceivedClick = async () => {
     const res = await axios.get('/api/user');
+    const user = res.data.user;
+
     try {
-      const response = await axios.put(
+      // update status of order in placed order
+      const res2 = await axios.put(
         `api/order/${props.bulkOrderId}/${props.orderId}`,
         {
           status: 'completed',
-          user_id: res.data.user._id,
+          user_id: user._id,
         }
       );
 
-      if (response.status === 200) {
-        console.log('Order status updated successfully');
-        props.getOrders();
-      } else {
-        console.error('Error updating order status');
+      // to update inventory
+      try {
+        // const res3 = await axios.put('api/inventory', {
+        //   updatedQuantity: props.delivered,
+        //   inventoryId: props.itemId,
+        // });
+        // console.log(res3);
+
+        const res3 = await axios.post('api/inventory', [
+          {
+            itemId: props.itemId,
+            quantity: props.delivered,
+          },
+        ]);
+
+        toast.success('Item updated to inventory Successfully', {
+          autoClose: 1500,
+        });
+      } catch (error) {
+        console.log(error.message);
       }
     } catch (error) {
       console.error('Error updating order status:', error);

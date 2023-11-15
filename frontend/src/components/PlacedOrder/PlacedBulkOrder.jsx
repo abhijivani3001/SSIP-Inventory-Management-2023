@@ -97,6 +97,8 @@ const PlacedBulkOrder = (props) => {
                       orderId={item._id}
                       bulkOrderId={order._id}
                       getOrders={props.getOrders}
+
+                      itemId={item.itemId}
                     />
                   ) : (
                     ''
