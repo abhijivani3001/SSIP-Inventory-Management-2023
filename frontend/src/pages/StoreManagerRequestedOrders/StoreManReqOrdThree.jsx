@@ -43,7 +43,7 @@ const StoreManReqOrdThree = (props) => {
   const submitAllocation = async (status) => {
     try {
       if (status === 'rejected') {
-        const res2 = await axios.put(
+        const res = await axios.put(
           `api/order/${props.bulkOrderId}/${props.orderId}`,
           {
             user_id: props.userId,
@@ -53,6 +53,8 @@ const StoreManReqOrdThree = (props) => {
         toast.success('Order Rejected Successfully', {
           autoClose: 1500,
         });
+        props.getRequiredUserData();
+        getInventoryItemsQuantity();
         return;
       }
       let inventoryItemQuantity, inventoryId;
@@ -96,6 +98,8 @@ const StoreManReqOrdThree = (props) => {
       toast.success('Item allocated Successfully', {
         autoClose: 1500,
       });
+      props.getRequiredUserData();
+      getInventoryItemsQuantity();
     } catch (error) {
       console.log(error.message);
     }

@@ -84,6 +84,7 @@ const HeadReqOrdOne = (props) => {
                     bulkOrder={bulkOrder}
                     userId={props.userId}
                     currentStatus={props.currentStatus}
+                    getRequiredUserData={props.getRequiredUserData}
                   />
                 );
               }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import HeadReqOrdThree from './HeadReqOrdThree';
 import axios from '../../api/AxiosUrl';
+import { toast } from 'react-toastify';
 
 const HeadReqOrdTwo = (props) => {
   const bulkOrder = props.bulkOrder;
@@ -24,6 +25,16 @@ const HeadReqOrdTwo = (props) => {
         user_id: props.userId,
       });
       console.log(res);
+      if (status === 'head-accepted') {
+        toast.success('Order approved Successfully', {
+          autoClose: 1500,
+        });
+      } else if (status === 'rejected') {
+        toast.error('Order rejected Successfully', {
+          autoClose: 1500,
+        });
+      }
+      props.getRequiredUserData();
     } catch (error) {}
   };
 

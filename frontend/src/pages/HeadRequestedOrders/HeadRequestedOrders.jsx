@@ -119,6 +119,7 @@ const HeadRequestedOrders = () => {
                     createdAt={val.createdAt}
                     userId={val._id}
                     currentStatus={currentStatus}
+                    getRequiredUserData={getRequiredUserData}
                   />
                 );
               }

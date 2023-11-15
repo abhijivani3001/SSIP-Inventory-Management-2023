@@ -93,18 +93,18 @@ const StoreManagerRequestedOrders = () => {
   };
 
   return (
-    <div className="mx-10 mt-4">
+    <div className='mx-10 mt-4'>
       {isLoading && (
-        <div className="text-xl my-auto text-center ">Loading...</div>
+        <div className='text-xl my-auto text-center '>Loading...</div>
       )}
       {!isLoading && !isRequestedOrdersAvailable && (
-        <div className="not_available">No more orders are requested!</div>
+        <div className='not_available'>No more orders are requested!</div>
       )}
 
       {!isLoading && isRequestedOrdersAvailable && (
         <>
-          <div className="my-6">
-            <div className="flex justify-center overflow-x-auto whitespace-nowrap">
+          <div className='my-6'>
+            <div className='flex justify-center overflow-x-auto whitespace-nowrap'>
               <button
                 onClick={() => handleTabClick('pending')}
                 className={`default_tab ${
@@ -113,7 +113,7 @@ const StoreManagerRequestedOrders = () => {
                     : 'status_false_tab'
                 }`}
               >
-                <p className="mx-auto">Pending</p>
+                <p className='mx-auto'>Pending</p>
               </button>
 
               <button
@@ -124,7 +124,7 @@ const StoreManagerRequestedOrders = () => {
                     : 'status_false_tab'
                 }`}
               >
-                <p className="mx-auto">Accepted</p>
+                <p className='mx-auto'>Accepted</p>
               </button>
 
               <button
@@ -135,7 +135,7 @@ const StoreManagerRequestedOrders = () => {
                     : 'status_false_tab'
                 }`}
               >
-                <p className="mx-auto">Rejected</p>
+                <p className='mx-auto'>Rejected</p>
               </button>
 
               <button
@@ -146,7 +146,7 @@ const StoreManagerRequestedOrders = () => {
                     : 'status_false_tab'
                 }`}
               >
-                <p className="mx-auto">Completed</p>
+                <p className='mx-auto'>Completed</p>
               </button>
             </div>
 
@@ -200,21 +200,22 @@ const StoreManagerRequestedOrders = () => {
                     userId={val._id}
                     currentUserRole={currentUserRole.current}
                     currentStatus={currentStatus}
+                    getRequiredUserData={getRequiredUserData}
                   />
                 );
               }
               return <></>;
             })}
             {!mainFlag && (
-              <div className="not_available">
+              <div className='not_available'>
                 No more requested orders available.
               </div>
             )}
           </div>
 
           {mainFlag && currentStatus === 'pending' && (
-            <div className="text-center">
-              <button className="green_btn mb-4" onClick={handleMergeOrder}>
+            <div className='text-center'>
+              <button className='green_btn mb-4' onClick={handleMergeOrder}>
                 MERGE ALL ORDERS
               </button>
             </div>

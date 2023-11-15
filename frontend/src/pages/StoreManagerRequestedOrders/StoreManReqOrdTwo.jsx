@@ -95,11 +95,11 @@ const StoreManReqOrdTwo = (props) => {
                 </thead>
                 <tbody>
                   {bulkOrder.orders.map((order) =>
-                   compareStatusForStoreManager(
-                    props.currentUserRole,
-                    order.status,
-                    props.currentStatus
-                  ) ? (
+                    compareStatusForStoreManager(
+                      props.currentUserRole,
+                      order.status,
+                      props.currentStatus
+                    ) ? (
                       <StoreManReqOrdThree
                         key={order.itemId}
                         imageUrl={order.imageUrl}
@@ -112,6 +112,7 @@ const StoreManReqOrdTwo = (props) => {
                         orderId={order._id}
                         userId={props.userId}
                         currentStatus={props.currentStatus}
+                        getRequiredUserData={props.getRequiredUserData}
                       />
                     ) : (
                       ''

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 
 import axios from '../../api/AxiosUrl';
 
@@ -19,6 +20,9 @@ const InventoryCard = (props) => {
       const res = await axios.put('api/inventory', {
         updatedQuantity: availableItems,
         inventoryId: props.inventoryId,
+      });
+      toast.success('Item updated Successfully', {
+        autoClose: 1500,
       });
       props.getInventoryItems();
     } catch (error) {

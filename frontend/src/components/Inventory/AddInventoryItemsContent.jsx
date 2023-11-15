@@ -62,11 +62,7 @@ const AddInventoryItemsContent = (props) => {
             ))}
           </div>
           <div className='flex gap-4 justify-center mb-8'>
-            <button
-              className='trans_btn mb-4'
-              onClick={props.onClose}
-              mb='mb-4'
-            >
+            <button className='trans_btn mb-4' onClick={props.onClose}>
               close
             </button>
           </div>

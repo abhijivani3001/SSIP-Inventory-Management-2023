@@ -59,7 +59,6 @@ const ProductCard = (props) => {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 };
