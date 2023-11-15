@@ -3,6 +3,7 @@ import axios from '../api/AxiosUrl';
 import AuthContext from '../store/auth-context';
 import PieChart from '../components/Charts/PieChart';
 import BarChart from '../components/Charts/BarChart';
+import StackedColumnChart from '../components/Charts/StackedColumnChart';
 
 const Dashboard = () => {
   const authCtx = useContext(AuthContext);
@@ -81,7 +82,7 @@ const Dashboard = () => {
           <h1 className='text-2xl font-semibold mb-4'>Dashboard</h1>
           <div>
             {orderData.orderChartData?.length < 1 ||
-            orderData.barChartData?.length < 1 ? (
+              orderData.barChartData?.length < 1 ? (
               <span className='not_available'>No order placed by you</span>
             ) : (
               <div className='flex flex-wrap justify-center'>
@@ -100,12 +101,14 @@ const Dashboard = () => {
                   </h2>
                   <BarChart orderData={orderData?.barChartData} />
                 </div>
+                <div></div>
+                <StackedColumnChart />
               </div>
             )}
           </div>
         </>
       )}
-    </div>
+    </div >
   );
 };
 
