@@ -69,51 +69,49 @@ const Dashboard = () => {
         })
         .catch((error) => {
           console.error('Error fetching order data:', error);
+          localStorage.removeItem('token');
           setIsLoading(false);
         });
     }
   }, [authCtx.isLoggedIn]);
 
   return (
-    <div className='p-4 bg-gray-100 rounded-lg shadow-lg'>
+    <div className="p-4 bg-gray-100 rounded-lg shadow-lg">
       {isLoading ? (
         <p>Loading...</p>
       ) : (
         <>
-          <h1 className='text-2xl font-semibold mb-4'>Dashboard</h1>
+          <h1 className="text-2xl font-semibold mb-4">Dashboard</h1>
           <div>
             {orderData.orderChartData?.length < 1 ||
-              orderData.barChartData?.length < 1 ? (
-              <span className='not_available'>No order placed by you</span>
+            orderData.barChartData?.length < 1 ? (
+              <span className="not_available">No order placed by you</span>
             ) : (
-              <div className='flex flex-wrap justify-center'>
-                <div className='mx-10 my-5 border-gray-800 border rounded-2xl'>
-                  <h2 className='mx-5 my-5 text-2xl font-semibold'>
+              <div className="flex flex-wrap justify-center">
+                <div className="mx-10 my-5 border-gray-800 border rounded-2xl">
+                  <h2 className="mx-5 my-5 text-2xl font-semibold">
                     Total Ordered Quantity with Names{' '}
                   </h2>
                   <PieChart orderData={orderData?.orderChartData} />
                 </div>
-                <div className='mx-10 my-5 border-gray-800 border rounded-2xl'>
-                  <h2 className='mx-5 my-5 text-2xl font-semibold'>
+                <div className="mx-10 my-5 border-gray-800 border rounded-2xl">
+                  <h2 className="mx-5 my-5 text-2xl font-semibold">
                     Total Orders
                   </h2>
                   <BarChart orderData={orderData?.barChartData} />
                 </div>
-                <div className='mx-10 my-5 border-gray-800 border'>
-
+                <div className="mx-10 my-5 border-gray-800 border">
                   <StackedColumnChart />
                 </div>
-                <div className='mx-10 my-5 border-gray-800 border '>
-
+                <div className="mx-10 my-5 border-gray-800 border ">
                   <ScatterPlot />
                 </div>
               </div>
             )}
           </div>
         </>
-      )
-      }
-    </div >
+      )}
+    </div>
   );
 };
 
