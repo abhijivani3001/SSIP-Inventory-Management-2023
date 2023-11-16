@@ -39,6 +39,11 @@ const HeadReqOrdData = (props) => {
 
   const statusHandler = async (storeManagerId, status) => {
     try {
+      if (
+        status === 'rejected' &&
+        !window.confirm('DO YOU WANT TO REJECT ORDER')
+      )
+        return;
       const res = await axios.put('api/order', { storeManagerId, status });
       console.log(res);
     } catch (error) {}
@@ -51,14 +56,14 @@ const HeadReqOrdData = (props) => {
   console.log(mergeOrderData);
 
   return (
-    <div className='mx-8 mt-4'>
-      <div className='bg-slate-200 border-2 border-steal-200 rounded-lg m-4'>
-        <div className='text-3xl font-semibold mx-6 my-4 flex justify-between'>
+    <div className="mx-8 mt-4">
+      <div className="bg-slate-200 border-2 border-steal-200 rounded-lg m-4">
+        <div className="text-3xl font-semibold mx-6 my-4 flex justify-between">
           <div>{props.name}</div>
-          <div className='flex gap-4 mr-4'>
+          <div className="flex gap-4 mr-4">
             <div>
               <button
-                className='green_btn'
+                className="green_btn"
                 onClick={() => statusHandler(props.userId, 'accepted')}
               >
                 Accept
@@ -66,7 +71,7 @@ const HeadReqOrdData = (props) => {
             </div>
             <div>
               <button
-                className='red_btn'
+                className="red_btn"
                 onClick={() => statusHandler(props.userId, 'rejected')}
               >
                 Reject
@@ -77,17 +82,17 @@ const HeadReqOrdData = (props) => {
         {mergeOrderData.map((order, index) => (
           <div key={order.itemId}>
             {order.status === 'pending' && (
-              <div className='border text-xl'>
-                <div className='flex justify-between my-1 mx-10 gap-10'>
+              <div className="border text-xl">
+                <div className="flex justify-between my-1 mx-10 gap-10">
                   <div>{order.name}</div>
-                  <div className='flex gap-4 '>
-                    <div className='border border-black rounded w-20 h-7 text-center my-auto'>
-                      <span className='text-sm'>x</span>
+                  <div className="flex gap-4 ">
+                    <div className="border border-black rounded w-20 h-7 text-center my-auto">
+                      <span className="text-sm">x</span>
                       {order.quantity}
                     </div>
                   </div>
                 </div>
-                <div className='border border-gray-400 mx-8'></div>
+                <div className="border border-gray-400 mx-8"></div>
               </div>
             )}
           </div>

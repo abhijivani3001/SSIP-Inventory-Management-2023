@@ -42,6 +42,11 @@ const StoreManReqOrdThree = (props) => {
 
   const submitAllocation = async (status) => {
     try {
+      if (
+        status === 'rejected' &&
+        !window.confirm('DO YOU WANT TO REJECT ORDER')
+      )
+        return;
       if (status === 'rejected') {
         const res = await axios.put(
           `api/order/${props.bulkOrderId}/${props.orderId}`,
@@ -111,28 +116,28 @@ const StoreManReqOrdThree = (props) => {
 
   return (
     <>
-      <tr className='bg-white border-b divide-x hover:bg-gray-50'>
+      <tr className="bg-white border-b divide-x hover:bg-gray-50">
         <th
-          scope='row'
-          className='flex items-center px-4 py-1 text-gray-900 whitespace-nowrap'
+          scope="row"
+          className="flex items-center px-4 py-1 text-gray-900 whitespace-nowrap"
         >
-          <div className='text-base font-semibold flex gap-2'>
+          <div className="text-base font-semibold flex gap-2">
             <div>
               <img
-                className='p-2 h-16 w-24 object-contain'
+                className="p-2 h-16 w-24 object-contain"
                 src={props.imageUrl}
-                alt='productimage'
+                alt="productimage"
               />
             </div>
-            <div className='my-auto'>{props.name}</div>
+            <div className="my-auto">{props.name}</div>
           </div>
         </th>
 
-        <td className='px-6'>{props.quantity}</td>
+        <td className="px-6">{props.quantity}</td>
 
-        <td className='px-6'>{props.delivered}</td>
+        <td className="px-6">{props.delivered}</td>
 
-        <td className='px-6'>
+        <td className="px-6">
           {inventoryData?.find(
             (singleInventoryItem) => singleInventoryItem.itemId === props.itemId
           )?.quantity || 0}
@@ -140,24 +145,34 @@ const StoreManReqOrdThree = (props) => {
 
         {(props.currentStatus === 'pending' ||
           props.currentStatus === 'accepted') && (
-          <td className='px-6 w-80'>
-            <div className='flex justify-between'>
-              <div className='flex gap-2'>
+          <td className="px-6 w-80">
+            <div className="flex justify-between">
+              <div className="flex gap-2">
                 <input
-                  type='number'
+                  type="number"
                   value={allocationQuantity}
                   onChange={handleAllocationQuantity}
-                  className='border-2 border-gray-700 w-12 h-8 p-0 my-auto text-center rounded-lg'
+                  className="border-2 border-gray-700 w-12 h-8 p-0 my-auto text-center rounded-lg"
                 />
                 <button
-                  className='blue_btn'
+                  // className={`text-white bg-sky-600 hover:bg-sky-700 font-medium rounded-lg text-sm px-4 py-2 focus:outline-none ${
+                  //   allocationQuantity === props.quantity
+                  //     ? ''
+                  //     : 'disabled:opacity-20 bg-gray-600 disabled:bg-gray-600 cursor-not-allowed hover:bg-gray-600 '
+                  // }`}
+                  className={`blue_btn ${
+                    allocationQuantity !== props.quantity
+                      ? 'disabled:opacity-20 disabled:bg-gray-600 cursor-not-allowed hover:bg-gray-600'
+                      : ''
+                  }`}
+                  disabled={allocationQuantity !== props.quantity}
                   onClick={() => submitAllocation('accepted')}
                 >
                   Allocate
                 </button>
               </div>
               <button
-                className='trans_red_btn'
+                className="trans_red_btn"
                 onClick={() => submitAllocation('rejected')}
               >
                 Reject
