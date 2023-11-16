@@ -8,6 +8,8 @@ const ScatterPlot = () => {
   const authCtx = useContext(AuthContext);
   const [orderData, setOrderData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedOrderName, setSelectedOrderName] = useState('');
+
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -44,35 +46,65 @@ const ScatterPlot = () => {
         });
     }
   }, [authCtx.isLoggedIn]);
-
   return (
     <div className='p-4 bg-gray-100 rounded-lg shadow-lg'>
       {isLoading ? (
         <p>Loading...</p>
       ) : (
         <>
-          {/* <h1 className='text-2xl font-semibold mb-4'>Dashboard</h1> */}
           <div>
             {orderData.length < 1 ? (
               <span className='not_available'>No order placed by you</span>
             ) : (
+
               <div className='mx-10 my-5 border-gray-800 '>
                 <h2 className='mx-5 my-5 text-2xl font-semibold'>
-                  Order Quantity with date
+                  Order Quantity with date and name
                 </h2>
+                <div>
+                  <label>Select Order Name: </label>
+                  <select
+                    value={selectedOrderName}
+                    onChange={(e) => setSelectedOrderName(e.target.value)}
+                  >
+                    <option value="">Select order name</option>
+                    {Array.from(new Set(orderData.map((order) => order.name))).map((name) => (
+                      <option key={name} value={name}>
+                        {name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
                 <ScatterChart
-                  width={400}
+                  width={600}
                   height={400}
                   margin={{ top: 20, right: 20, bottom: 10, left: 10 }}
                 >
                   <CartesianGrid />
                   <XAxis type='category' dataKey='date' name='Date' />
                   <YAxis type='number' dataKey='quantity' name='Quantity' />
-                  <Tooltip cursor={{ strokeDasharray: '3 3' }} />
+                  <Tooltip
+                    cursor={{ strokeDasharray: '3 3' }}
+                    formatter={(value, name, props) => [
+                      value,
+                      `Name: ${props.payload.name}`,
+                      `Date: ${props.payload.date}`,
+                    ]}
+                  />
                   <Legend />
-                  <Scatter name='Orders' data={orderData} fill='#8884d8' />
+                  <Scatter
+                    name='Orders'
+                    data={orderData.filter((order) =>
+                      selectedOrderName ? order.name === selectedOrderName : true
+                    )}
+                    fill='#8884d8'
+                  />
                 </ScatterChart>
-                <CSVLink data={orderData} filename={'scatterChartData.csv'} className='border-gray-500 text-black p-2 hover:bg-blue-800 hover:text-white rounded-2xl bg-blue-400 hover:border-blue-700'>
+                <CSVLink
+                  data={orderData}
+                  filename={'scatterChartData.csv'}
+                  className='border-gray-500 text-black p-2 hover:bg-blue-800 hover:text-white rounded-2xl bg-blue-400 hover:border-blue-700'
+                >
                   Download CSV
                 </CSVLink>
               </div>
@@ -80,7 +112,7 @@ const ScatterPlot = () => {
           </div>
         </>
       )}
-    </div >
+    </div>
   );
 };
 
