@@ -45,6 +45,18 @@ const CartItems = () => {
     }
   };
 
+  const postNotifications = async () => {
+    try {
+      const res = await axios.post('/api/notification', {
+        // receiverId: '654cf8f57aab3df914e7f61c',
+        message: `You have got a new requested order!`,
+      });
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const submitHandler = (event) => {
     event.preventDefault();
     toast.success('Order placed successfully!', {
@@ -61,6 +73,8 @@ const CartItems = () => {
         status: 'pending',
       });
     });
+
+    postNotifications();
 
     postElement(orders);
 

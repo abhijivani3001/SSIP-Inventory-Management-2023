@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from '../../api/AxiosUrl';
 import UserDataCard from './UserDataCard';
 import { FaSearch } from 'react-icons/fa'; // Import the search icon
+import { findBelowUsers } from '../../components/Helper/Helper';
 
 const AdminDashboard = () => {
   const [userData, setUserData] = useState([]);
@@ -11,10 +12,14 @@ const AdminDashboard = () => {
   useEffect(() => {
     (async () => {
       try {
-        const res = await axios.post('/api/user/users', {
-          role: 'admin'
-        });
-        const data = await res.data.users;
+        const res1 = await axios.get('api/user');
+        const currentUser = await res1.data.user;
+
+        const res2 = await axios.post(
+          '/api/user/users',
+          findBelowUsers(currentUser)
+        );
+        const data = await res2.data.users;
         setUserData(data);
       } catch (error) {
         console.error(error);

@@ -46,10 +46,10 @@ const Navbar = () => {
   const dropdown = document.getElementById('user-dropdown');
   const navbarUser = document.getElementById('navbar-user');
   const toggleDropdown = () => {
-    dropdown.classList.toggle('hidden');
+    dropdown?.classList.toggle('hidden');
   };
   const toggleNavbarUser = () => {
-    navbarUser.classList.toggle('hidden');
+    navbarUser?.classList.toggle('hidden');
   };
 
   useEffect(() => {
