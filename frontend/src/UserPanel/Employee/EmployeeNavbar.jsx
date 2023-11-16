@@ -1,47 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
-import cartImg from '../../resources/shopping-cart.png';
-import notificationImg from '../../resources/notification.png';
 import { useLocation } from 'react-router-dom';
-import { useCart } from '../../store/CartProvider';
 
-const EmployeeNavbar = (props) => {
+const EmployeeNavbar = () => {
   const location = useLocation();
-  const { cart, dispatch } = useCart();
-
-  const [amount, setAmount] = useState(cart.items.length || 0);
-
-  useEffect(() => {
-    setAmount(cart.items.length);
-  }, [cart]);
 
   return (
     <>
-      {/* part-3: cart, notification */}
-      <div className='order-3 flex gap-4'>
-        <ul className='flex align-middle gap-4'>
-          <li className='my-auto'>
-            <Link to='/cart'>
-              <div className='flex gap-0'>
-                <div className='w-6 relative'>
-                  <img src={cartImg} alt='Cart' />
-                  <span className='absolute left-3 bottom-3 bg-teal-700 text-white py-0 px-1.5 text-sm rounded-full z-30'>
-                    {amount}
-                  </span>
-                </div>
-              </div>
-            </Link>
-          </li>
-
-          <li className='my-auto'>
-            <Link to='/notification'>
-              <img src={notificationImg} alt='Cart' className='w-6' />
-            </Link>
-          </li>
-        </ul>
-      </div>
-
       {/* part-2: main elements */}
       <div
         className='items-center justify-between hidden w-full md:flex md:w-auto md:order-1'

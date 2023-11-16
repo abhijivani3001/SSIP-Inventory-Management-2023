@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { useLocation } from 'react-router-dom';
 
-const AdminNavbar = (props) => {
+const AdminNavbar = () => {
   const location = useLocation();
 
   return (
