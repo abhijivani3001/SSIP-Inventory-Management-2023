@@ -67,14 +67,19 @@ const Navbar = () => {
 
   // Notifications:
   const [isNewNotification, setIsNewNotification] = useState(false);
+  console.log(cart.isNotificationUpdated);
 
   const getNotifications = async () => {
     try {
       const res = await axios.get('/api/notification');
       res.data.notifications.map((notification) => {
-        console.log(notification);
-        if (notification.isSeen === false) setIsNewNotification(true);
+        // if (notification.isSeen === false) setIsNewNotification(true);
+        if (notification.isSeen === false)
+          dispatch({ type: 'NOTIFICATION', payload: true });
       });
+
+      if (cart.isNotificationUpdated) setIsNewNotification(true);
+      else setIsNewNotification(false);
     } catch (error) {
       console.log(error);
     }
@@ -82,7 +87,7 @@ const Navbar = () => {
 
   useEffect(() => {
     getNotifications();
-  }, []);
+  }, [cart.isNotificationUpdated]);
 
   return (
     <nav className='sticky inset-x-0 top-0 z-10 text-gray-900 bg-gray-100 text-xl mx-2'>
@@ -146,7 +151,9 @@ const Navbar = () => {
                     <div className='flex gap-0'>
                       <div className='w-6 relative'>
                         <img src={notificationImg} alt='Cart' className='w-6' />
-                        {isNewNotification && <span className='absolute left-3 bottom-3 bg-rose-700 h-3 w-3 rounded-full z-30'></span>}
+                        {isNewNotification && (
+                          <span className='absolute left-3 bottom-3 bg-rose-700 h-3 w-3 rounded-full z-30'></span>
+                        )}
                       </div>
                     </div>
                   </Link>

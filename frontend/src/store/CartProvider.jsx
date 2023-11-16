@@ -4,6 +4,7 @@ import CartContext from './cart-context';
 
 const initialState = {
   items: [],
+  isNotificationUpdated: false,
 };
 
 const cartReducer = (state, action) => {
@@ -43,7 +44,13 @@ const cartReducer = (state, action) => {
 
     case 'CLEAR_CART':
       return initialState;
-      
+
+    case 'NOTIFICATION':
+      return {
+        ...state,
+        isNotificationUpdated: action.payload,
+      };
+
     default:
       return initialState;
   }
