@@ -17,6 +17,21 @@ const StoreManReqOrdTwo = (props) => {
     return date.toLocaleDateString(undefined, options);
   };
 
+  const countOrders = () => {
+    let count = 0;
+    bulkOrder.orders.forEach((order) => {
+      if (
+        compareStatusForStoreManager(
+          props.currentUserRole,
+          order.status,
+          props.currentStatus
+        )
+      )
+        count++;
+    });
+    return count;
+  };
+
   return (
     <>
       <div
@@ -38,7 +53,7 @@ const StoreManReqOrdTwo = (props) => {
                 isDropdownVisible ? 'border-b border-gray-600' : ''
               }`}
             >
-              <span>Ordered Products x{bulkOrder?.orders?.length}</span>
+              <span>Ordered Products x{countOrders()}</span>
               <div className='flex gap-8 justify-between align-middle'>
                 <div>Created at: {formatDate(bulkOrder?.createdAt)}</div>
                 <svg
