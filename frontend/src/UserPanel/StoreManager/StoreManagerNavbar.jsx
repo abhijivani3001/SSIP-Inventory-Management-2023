@@ -17,11 +17,10 @@ const StoreManagerNavbar = () => {
           <li>
             <Link
               to='/products'
-              className={`${
-                location.pathname === '/products'
+              className={`${location.pathname === '/products'
                   ? 'active-navbar-element'
                   : 'navbar-element'
-              }`}
+                }`}
             >
               Products
             </Link>
@@ -29,11 +28,10 @@ const StoreManagerNavbar = () => {
           <li>
             <Link
               to='/store-manager-requested-orders'
-              className={`${
-                location.pathname === '/store-manager-requested-orders'
+              className={`${location.pathname === '/store-manager-requested-orders'
                   ? 'active-navbar-element'
                   : 'navbar-element'
-              }`}
+                }`}
             >
               Requested orders
             </Link>
@@ -41,11 +39,10 @@ const StoreManagerNavbar = () => {
           <li>
             <Link
               to='/placed-orders'
-              className={`${
-                location.pathname === '/placed-orders'
+              className={`${location.pathname === '/placed-orders'
                   ? 'active-navbar-element'
                   : 'navbar-element'
-              }`}
+                }`}
             >
               Placed orders
             </Link>
@@ -53,11 +50,10 @@ const StoreManagerNavbar = () => {
           <li>
             <Link
               to='/inventory'
-              className={`${
-                location.pathname === '/inventory'
+              className={`${location.pathname === '/inventory'
                   ? 'active-navbar-element'
                   : 'navbar-element'
-              }`}
+                }`}
             >
               Inventory
             </Link>
@@ -65,11 +61,10 @@ const StoreManagerNavbar = () => {
           <li>
             <Link
               to='/dashboard'
-              className={`${
-                location.pathname === '/dashboard' || location.pathname === '/'
+              className={`${location.pathname === '/dashboard' || location.pathname === '/'
                   ? 'active-navbar-element'
                   : 'navbar-element'
-              }`}
+                }`}
             >
               Dashboard
             </Link>

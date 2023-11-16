@@ -15,7 +15,11 @@ const StackedColumnChart = () => {
     const day = date.getDate().toString().padStart(2, '0');
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const seconds = date.getSeconds().toString().padStart(2, '0');
+
+    return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
   };
 
   useEffect(() => {
@@ -92,7 +96,15 @@ const StackedColumnChart = () => {
     },
     xaxis: {
       type: 'category',
-      categories: orderData.length > 0 ? orderData[0].entries.map((entry) => entry.date) : [],
+      categories: orderData.length > 0
+        ? orderData[0].entries
+          .map((entry) => entry.date)
+          .sort((a, b) => {
+            const dateA = new Date(a.split('/').reverse().join('/'));
+            const dateB = new Date(b.split('/').reverse().join('/'));
+            return dateA - dateB;
+          })
+        : [],
     },
     legend: {
       position: 'top',

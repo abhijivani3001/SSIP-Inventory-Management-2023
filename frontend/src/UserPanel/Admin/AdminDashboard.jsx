@@ -1,7 +1,8 @@
+// AdminDashboard.jsx
 import React, { useState, useEffect } from 'react';
 import axios from '../../api/AxiosUrl';
 import UserDataCard from './UserDataCard';
-import { FaSearch } from 'react-icons/fa'; // Import the search icon
+import { FaSearch } from 'react-icons/fa';
 import { findBelowUsers } from '../../components/Helper/Helper';
 
 const AdminDashboard = () => {
@@ -29,7 +30,10 @@ const AdminDashboard = () => {
   }, []);
 
   const filteredUsers = userData.filter((user) =>
-    user.name.toLowerCase().includes(searchTerm.toLowerCase())
+    user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    user.branch.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (user.phone || '').toString().includes(searchTerm)
   );
 
   return (
@@ -40,7 +44,7 @@ const AdminDashboard = () => {
           <FaSearch />
           <input
             type='text'
-            placeholder='Search by name'
+            placeholder='Search user'
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className='bg-transparent outline-none ml-2'

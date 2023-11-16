@@ -19,6 +19,14 @@ const ScatterPlot = () => {
     return `${day}/${month}/${year}`;
   };
 
+  // const formatDate = (dateString) => {
+  //   const date = new Date(dateString);
+  //   const day = date.getDate().toString().padStart(2, '0');
+  //   const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  //   const year = date.getFullYear();
+  //   return `${year}-${month}-${day}`; // Return sortable date format (yyyy-mm-dd)
+  // };
+
   useEffect(() => {
     if (authCtx.isLoggedIn) {
       axios
@@ -35,6 +43,23 @@ const ScatterPlot = () => {
 
               chartData.push({ date, name, quantity });
             });
+          });
+
+          // Sort chartData by date in ascending order
+          chartData.sort((a, b) => {
+            const dateA = new Date(
+              parseInt(a.date.split('/')[2]),
+              parseInt(a.date.split('/')[1]) - 1,
+              parseInt(a.date.split('/')[0])
+            );
+
+            const dateB = new Date(
+              parseInt(b.date.split('/')[2]),
+              parseInt(b.date.split('/')[1]) - 1,
+              parseInt(b.date.split('/')[0])
+            );
+
+            return dateA - dateB;
           });
 
           setOrderData(chartData);
