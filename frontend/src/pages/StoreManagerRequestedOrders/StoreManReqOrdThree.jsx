@@ -155,11 +155,6 @@ const StoreManReqOrdThree = (props) => {
                   className="border-2 border-gray-700 w-12 h-8 p-0 my-auto text-center rounded-lg"
                 />
                 <button
-                  // className={`text-white bg-sky-600 hover:bg-sky-700 font-medium rounded-lg text-sm px-4 py-2 focus:outline-none ${
-                  //   allocationQuantity === props.quantity
-                  //     ? ''
-                  //     : 'disabled:opacity-20 bg-gray-600 disabled:bg-gray-600 cursor-not-allowed hover:bg-gray-600 '
-                  // }`}
                   className={`blue_btn ${
                     allocationQuantity !== props.quantity
                       ? 'disabled:opacity-20 disabled:bg-gray-600 cursor-not-allowed hover:bg-gray-600'
