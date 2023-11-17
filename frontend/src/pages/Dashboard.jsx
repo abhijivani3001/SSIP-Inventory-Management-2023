@@ -69,7 +69,6 @@ const Dashboard = () => {
         })
         .catch((error) => {
           console.error('Error fetching order data:', error);
-          localStorage.removeItem('token');
           setIsLoading(false);
         });
     }

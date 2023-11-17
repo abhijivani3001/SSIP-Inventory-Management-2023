@@ -11,8 +11,8 @@ const ProductCard = (props) => {
 
   const { cart, dispatch } = useCart();
 
-  const handleAddToCart = () => {
-    item = { ...item, amount: +freqOfItem }; // (+amount) : '+' is used to convert string to int
+  const handleAddToCart = (masterPassword = '') => {
+    item = { ...item, amount: +freqOfItem, masterPassword }; // (+amount) : '+' is used to convert string to int
 
     dispatch({ type: 'ADD_ITEM', payload: item });
     toast.success('Item added to cart successfully', {
@@ -29,7 +29,7 @@ const ProductCard = (props) => {
       <img
         className='p-8 rounded-t-lg h-48 m-auto'
         src={props.imageUrl}
-        alt='product image'
+        alt='product item'
       />
       <div className='px-5 pb-5 mt-4'>
         <h5 className='text-xl font-semibold tracking-tight text-gray-900'>
@@ -58,6 +58,14 @@ const ProductCard = (props) => {
             <button className='blue_btn' onClick={() => handleAddToCart()}>
               Add to cart
             </button>
+            {props.userRole.includes('head') && (
+              <button
+                className='yellow_btn ml-3'
+                onClick={() => handleAddToCart('1234')}
+              >
+                URGENT
+              </button>
+            )}
           </div>
         </div>
       </div>
