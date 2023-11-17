@@ -6,15 +6,15 @@ import AuthContext from '../../store/auth-context';
 import axios from '../../api/AxiosUrl';
 import ROLES from '../../constants/ROLES';
 
-import cartImg from '../../resources/shopping-cart.png';
-import notificationImg from '../../resources/notification.png';
+import { LuUserCircle2 } from 'react-icons/lu';
+import { MdNotificationsNone } from 'react-icons/md';
+import { PiShoppingCartBold } from 'react-icons/pi';
 
 import EmployeeNavbar from '../../UserPanel/Employee/EmployeeNavbar';
 import HeadNavbar from '../../UserPanel/Head/HeadNavbar';
 import StoreManagerNavbar from '../../UserPanel/StoreManager/StoreManagerNavbar';
 import AdminNavbar from '../../UserPanel/Admin/AdminNavbar';
 
-import userImg from '../../resources/user.png';
 import { useCart } from '../../store/CartProvider';
 
 const Navbar = () => {
@@ -136,8 +136,8 @@ const Navbar = () => {
                   <Link to='/cart'>
                     <div className='flex gap-0'>
                       <div className='w-6 relative'>
-                        <img src={cartImg} alt='Cart' />
-                        <span className='absolute left-3 bottom-3 bg-teal-700 text-white py-0 px-1.5 text-sm rounded-full z-30'>
+                        <PiShoppingCartBold className='icon' />
+                        <span className='absolute left-4 bottom-4 bg-teal-700 text-white py-0 px-1.5 text-sm rounded-full z-30'>
                           {amount}
                         </span>
                       </div>
@@ -150,9 +150,9 @@ const Navbar = () => {
                   <Link to='/notification'>
                     <div className='flex gap-0'>
                       <div className='w-6 relative'>
-                        <img src={notificationImg} alt='Cart' className='w-6' />
+                        <MdNotificationsNone className='icon' />
                         {isNewNotification && (
-                          <span className='absolute left-3 bottom-3 bg-rose-700 h-3 w-3 rounded-full z-30'></span>
+                          <span className='absolute left-4 bottom-4 bg-rose-600 h-3 w-3 rounded-full z-30'></span>
                         )}
                       </div>
                     </div>
@@ -173,11 +173,7 @@ const Navbar = () => {
                 onClick={toggleDropdown}
               >
                 <span className='sr-only'>Open user menu</span>
-                <img
-                  className='w-7 h-7 rounded-full'
-                  src={userImg}
-                  alt='user photo'
-                />
+                <LuUserCircle2 className='icon' />
               </button>
               <div
                 className='z-50 my-8 hidden overflow-hidden right-8 absolute text-base list-none bg-white divide-y divide-gray-200 rounded-lg shadow-lg'

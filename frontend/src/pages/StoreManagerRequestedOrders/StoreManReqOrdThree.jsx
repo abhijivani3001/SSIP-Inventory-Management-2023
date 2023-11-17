@@ -42,6 +42,7 @@ const StoreManReqOrdThree = (props) => {
 
   const submitAllocation = async (status) => {
     try {
+      console.log('reject');
       if (
         status === 'rejected' &&
         !window.confirm('DO YOU WANT TO REJECT ORDER')
@@ -62,6 +63,8 @@ const StoreManReqOrdThree = (props) => {
         getInventoryItemsQuantity();
         return;
       }
+
+      console.log('hey');
       let inventoryItemQuantity, inventoryId;
       inventoryData.forEach((item) => {
         if (item.itemId === props.itemId) {
@@ -116,28 +119,28 @@ const StoreManReqOrdThree = (props) => {
 
   return (
     <>
-      <tr className="bg-white border-b divide-x hover:bg-gray-50">
+      <tr className='bg-white border-b divide-x hover:bg-gray-50'>
         <th
-          scope="row"
-          className="flex items-center px-4 py-1 text-gray-900 whitespace-nowrap"
+          scope='row'
+          className='flex items-center px-4 py-1 text-gray-900 whitespace-nowrap'
         >
-          <div className="text-base font-semibold flex gap-2">
+          <div className='text-base font-semibold flex gap-2'>
             <div>
               <img
-                className="p-2 h-16 w-24 object-contain"
+                className='p-2 h-16 w-24 object-contain'
                 src={props.imageUrl}
-                alt="productimage"
+                alt='productimage'
               />
             </div>
-            <div className="my-auto">{props.name}</div>
+            <div className='my-auto'>{props.name}</div>
           </div>
         </th>
 
-        <td className="px-6">{props.quantity}</td>
+        <td className='px-6'>{props.quantity}</td>
 
-        <td className="px-6">{props.delivered}</td>
+        <td className='px-6'>{props.delivered}</td>
 
-        <td className="px-6">
+        <td className='px-6'>
           {inventoryData?.find(
             (singleInventoryItem) => singleInventoryItem.itemId === props.itemId
           )?.quantity || 0}
@@ -145,14 +148,14 @@ const StoreManReqOrdThree = (props) => {
 
         {(props.currentStatus === 'pending' ||
           props.currentStatus === 'accepted') && (
-          <td className="px-6 w-80">
-            <div className="flex justify-between">
-              <div className="flex gap-2">
+          <td className='px-6 w-80'>
+            <div className='flex justify-between'>
+              <div className='flex gap-2'>
                 <input
-                  type="number"
+                  type='number'
                   value={allocationQuantity}
                   onChange={handleAllocationQuantity}
-                  className="border-2 border-gray-700 w-12 h-8 p-0 my-auto text-center rounded-lg"
+                  className='border-2 border-gray-700 w-12 h-8 p-0 my-auto text-center rounded-lg'
                 />
                 <button
                   className={`blue_btn ${
@@ -167,7 +170,12 @@ const StoreManReqOrdThree = (props) => {
                 </button>
               </div>
               <button
-                className="trans_red_btn"
+                className={`${
+                  props.quantity === props.delivered
+                    ? 'trans_rejected_btn'
+                    : 'trans_red_btn'
+                }`}
+                disabled={props.quantity === props.delivered}
                 onClick={() => submitAllocation('rejected')}
               >
                 Reject

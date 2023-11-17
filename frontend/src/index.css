@@ -40,6 +40,9 @@ body {
 .trans_red_btn {
   @apply text-red-500 bg-transparent hover:bg-red-500 hover:text-white font-medium rounded-lg text-sm py-2 px-4 border border-red-400 hover:border-transparent;
 }
+.trans_rejected_btn {
+  @apply bg-gray-600 opacity-20 text-white font-medium text-sm px-4 py-2 rounded-lg disabled:bg-gray-600 cursor-not-allowed;
+}
 
 /* backdrop of overlay */
 .backdrop {
@@ -65,4 +68,9 @@ body {
 /* No more items available */
 .not_available {
   @apply text-3xl text-gray-700 text-center my-16;
+}
+
+/* Icons */
+.icon {
+  @apply text-3xl text-gray-700 my-auto;
 }
