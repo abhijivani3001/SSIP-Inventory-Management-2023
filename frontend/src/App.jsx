@@ -22,6 +22,7 @@ import Dashboard from './pages/Dashboard';
 import AdminDashboard from './UserPanel/Admin/AdminDashboard';
 import ResetPassword from './pages/ResetPassword';
 import { ToastContainer } from 'react-toastify';
+import SbsmEmpOrders from './UserPanel/StoreManager/SbsmEmpOrders';
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -96,6 +97,10 @@ function App() {
             userRole === ROLES.BRANCH_STORE_MANAGER ||
             userRole === ROLES.DEPARTMENT_STORE_MANAGER ||
             !isLoading) && <Route path='/inventory' element={<Inventory />} />}
+
+        {isLoggedIn && (userRole === ROLES.SUB_BRANCH_STORE_MANAGER || !isLoading) && (
+          <Route path='/sbsm-emp-orders' element={<SbsmEmpOrders />} />
+        )}
 
         {isLoggedIn &&
           userRole !== ROLES.ADMIN &&

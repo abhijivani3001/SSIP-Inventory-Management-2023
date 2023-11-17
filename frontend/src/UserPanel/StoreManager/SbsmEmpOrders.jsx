@@ -1,12 +1,12 @@
-// AdminDashboard.jsx
+// SbsmEmpOrder.jsx
 import React, { useState, useEffect } from 'react';
 import axios from '../../api/AxiosUrl';
-import UserDataCard from './UserDataCard';
+import UserDataCard from '../Admin/UserDataCard';
 import { FaSearch } from 'react-icons/fa';
 import { findBelowUsers } from '../../components/Helper/Helper';
-// import SbsmEmpOrder from '../StoreManager/SbsmEmpOrders';
 
-const AdminDashboard = () => {
+
+const SbsmEmpOrder = () => {
   const [userData, setUserData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -37,8 +37,6 @@ const AdminDashboard = () => {
     (user.phone || '').toString().includes(searchTerm)
   );
 
-
-
   return (
     <div className='mx-8 mt-4'>
       <div className='flex items-center justify-between mb-4'>
@@ -61,12 +59,10 @@ const AdminDashboard = () => {
           {filteredUsers.map((user) => (
             <UserDataCard user={user} key={user.id} />
           ))}
-          {/* <SbsmEmpOrder filteredUsers={filteredUsers} /> */}
-
         </div>
       )}
     </div>
   );
 };
 
-export default AdminDashboard;
+export default SbsmEmpOrder;
