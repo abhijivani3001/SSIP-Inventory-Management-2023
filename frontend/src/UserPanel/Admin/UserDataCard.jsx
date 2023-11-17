@@ -1,16 +1,9 @@
 import React, { useState } from 'react';
 
-const OrderList = (props) => {
-  // Logic to fetch and display order list for the user
-  return (
-    <div className="mt-3">
-      {/* Display the order list */}
-      <h3 className="text-xl font-semibold mb-2">Placed Order List: </h3>
-      {/* Include your logic to render the order details */}
-      <p className='text-xl font-semibold'>Loarem ipsum dolor sit amet consectetur adipisicing elit. Quaerat fugiat minima eius tempora excepturi voluptatibus placeat, amet aut nostrum totam ullam doloribus libero officiis. Eius laborum accusamus expedita aliquam eum sunt incidunt eaque, provident iste voluptatibus, ad debitis maiores maxime repudiandae modi tempore voluptatem perferendis necessitatibus dolore dolor deleniti accusantium odio. Nam enim nemo autem.</p>
-      {/* ... */}
-    </div>
-  );
+const formatDate = (dateString) => {
+  const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+  const formattedDate = new Date(dateString).toLocaleDateString('en-GB', options);
+  return formattedDate;
 };
 
 const UserDataCard = (props) => {
@@ -47,7 +40,31 @@ const UserDataCard = (props) => {
           </button>
         </div>
       </div>
-      {showDetails && <OrderList />}
+      {showDetails && (
+        <div className="mt-3">
+          {/* <h3 className="text-xl font-semibold mb-2">Placed Order List: </h3> */}
+          <table className="w-full border-collapse border border-gray-400 mt-2">
+            <thead>
+              <tr className="bg-gray-200">
+                <th className="border border-gray-400 p-2 text-xl">Order Name</th>
+                <th className="border border-gray-400 p-2 text-xl">Quantity</th>
+                <th className="border border-gray-400 p-2 text-xl">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {props.user.bulkOrders.map((bulkOrder) => (
+                bulkOrder.orders.map((order) => (
+                  <tr key={order.orderId}>
+                    <td className="border border-gray-400 p-2 text-xl">{order.name}</td>
+                    <td className="border border-gray-400 p-2 text-xl">{order.quantity}</td>
+                    <td className="border border-gray-400 p-2 text-xl">{formatDate(bulkOrder.updatedAt)}</td>
+                  </tr>
+                ))
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 };
