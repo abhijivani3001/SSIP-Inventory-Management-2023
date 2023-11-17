@@ -74,11 +74,16 @@ const StoreManReqOrdThree = (props) => {
       });
 
       if (inventoryItemQuantity - allocationQuantity < 10) {
-        const password = window.prompt('Enter Password');
-        const MASTER_PASSWORD = 12345;
+        console.log(props.masterPassword);
+        if (!props.masterPassword || props.masterPassword === 'none') {
+          toast.error('Items cannot be allocated.', {
+            autoClose: 1500,
+          });
+          return;
+        }
 
-        if (password !== MASTER_PASSWORD) {
-          toast.error('Incorrect password. Order not allocated.', {
+        if (!window.confirm('Are you sure you want to allocate items?')) {
+          toast.error('Order not allocated.', {
             autoClose: 1500,
           });
           return;

@@ -128,6 +128,7 @@ const StoreManReqOrdTwo = (props) => {
                         userId={props.userId}
                         currentStatus={props.currentStatus}
                         getRequiredUserData={props.getRequiredUserData}
+                        masterPassword={order.masterPassword}
                       />
                     ) : (
                       ''

@@ -11,9 +11,8 @@ const ProductCard = (props) => {
 
   const { cart, dispatch } = useCart();
 
-  const handleAddToCart = (masterPassword = '') => {
+  const handleAddToCart = (masterPassword = 'none') => {
     item = { ...item, amount: +freqOfItem, masterPassword }; // (+amount) : '+' is used to convert string to int
-
     dispatch({ type: 'ADD_ITEM', payload: item });
     toast.success('Item added to cart successfully', {
       position: 'top-right',

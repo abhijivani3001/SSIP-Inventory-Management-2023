@@ -38,8 +38,9 @@ const CartItems = () => {
 
   const postElement = async (orders) => {
     try {
+      console.log(orders);
       const res = await axios.post('api/order', orders);
-      // console.log(res);
+      console.log(res);
     } catch (error) {
       console.log(error.message);
     }
@@ -71,6 +72,7 @@ const CartItems = () => {
         quantity: val.amount,
         delivered: 0,
         status: 'pending',
+        masterPassword: val.masterPassword,
       });
     });
 
