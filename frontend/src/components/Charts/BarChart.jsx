@@ -33,7 +33,7 @@ const BarChart = ({ orderData }) => {
         className='border-gray-500 text-black p-2 border hover:bg-blue-800 hover:text-white rounded-2xl bg-blue-400 hover:border-blue-700'
       >
         Download CSV
-      </CSVLink>
+      </CSVLink>  
     </div>
   );
 };

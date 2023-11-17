@@ -84,7 +84,7 @@ const Dashboard = () => {
           <h1 className="text-2xl font-semibold mb-4">Dashboard</h1>
           <div>
             {orderData.orderChartData?.length < 1 ||
-            orderData.barChartData?.length < 1 ? (
+              orderData.barChartData?.length < 1 ? (
               <span className="not_available">No order placed by you</span>
             ) : (
               <div className="flex flex-wrap justify-center">

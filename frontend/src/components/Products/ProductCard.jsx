@@ -7,6 +7,8 @@ const ProductCard = (props) => {
   const [freqOfItem, setFreqOfItem] = useState(1);
   let item = props.val;
 
+  // console.log(props.title);
+
   const { cart, dispatch } = useCart();
 
   const handleAddToCart = () => {
