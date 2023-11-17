@@ -46,11 +46,11 @@ const CartItems = () => {
     }
   };
 
-  const postNotifications = async () => {
+  const postNotification = async (message) => {
     try {
       const res = await axios.post('/api/notification', {
         // receiverId: '654cf8f57aab3df914e7f61c',
-        message: `You have got a new requested order!`,
+        message: message,
       });
       console.log(res);
     } catch (error) {
@@ -76,7 +76,7 @@ const CartItems = () => {
       });
     });
 
-    postNotifications();
+    postNotification('You have got a new order');
 
     postElement(orders);
 

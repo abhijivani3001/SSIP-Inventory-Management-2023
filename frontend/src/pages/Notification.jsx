@@ -34,18 +34,6 @@ const Notification = () => {
     };
   }, []);
 
-  const postNotifications = async () => {
-    try {
-      const res = await axios.post('/api/notification', {
-        // receiverId: '654cf8f57aab3df914e7f61c',
-        message: 'test5',
-      });
-      console.log(res);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <div className='mx-10 my-4'>
       <div>
@@ -55,13 +43,6 @@ const Notification = () => {
       {notificationData?.map((notification) => (
         <NotificationCard key={notification._id} notification={notification} />
       ))}
-
-      <button className='blue_btn' onClick={postNotifications}>
-        post
-      </button>
-      <button className='blue_btn' onClick={getAndUpdateNotifications}>
-        Update
-      </button>
     </div>
   );
 };

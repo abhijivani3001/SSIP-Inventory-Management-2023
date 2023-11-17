@@ -40,6 +40,18 @@ const StoreManReqOrdThree = (props) => {
     );
   };
 
+  const postNotification = async (message) => {
+    try {
+      const res = await axios.post('/api/notification', {
+        receiverId: props.userId,
+        message: message,
+      });
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const submitAllocation = async (status) => {
     try {
       console.log('reject');
@@ -48,6 +60,7 @@ const StoreManReqOrdThree = (props) => {
         !window.confirm('DO YOU WANT TO REJECT ORDER')
       )
         return;
+
       if (status === 'rejected') {
         const res = await axios.put(
           `api/order/${props.bulkOrderId}/${props.orderId}`,
@@ -56,15 +69,20 @@ const StoreManReqOrdThree = (props) => {
             status: 'rejected',
           }
         );
+        console.log(res);
+
+        postNotification('Your order is Rejected by Branch Store Manager'); // send notification to below user
+
         toast.success('Order Rejected Successfully', {
           autoClose: 1500,
         });
-        props.getRequiredUserData();
-        getInventoryItemsQuantity();
+
+        props.getRequiredUserData(); // to refresh the page
+        getInventoryItemsQuantity(); // to update available inventory items
         return;
       }
 
-      console.log('hey');
+      // --- status!=='rejected' ---
       let inventoryItemQuantity, inventoryId;
       inventoryData.forEach((item) => {
         if (item.itemId === props.itemId) {
@@ -90,6 +108,7 @@ const StoreManReqOrdThree = (props) => {
         }
       }
 
+      // update inventory
       const res = await axios.put('api/inventory', {
         updatedQuantity: inventoryItemQuantity - allocationQuantity,
         inventoryId,
@@ -102,15 +121,21 @@ const StoreManReqOrdThree = (props) => {
       if (props.quantity === props.delivered + allocationQuantity) {
         orderOptions = { ...orderOptions, status: 'accepted' };
       }
+
+      // allocate item
       const res2 = await axios.put(
         `api/order/${props.bulkOrderId}/${props.orderId}`,
         {
           ...orderOptions,
         }
       );
+
+      postNotification('Your requeted item is allocated to you successfully');
+
       toast.success('Item allocated Successfully', {
         autoClose: 1500,
       });
+
       props.getRequiredUserData();
       getInventoryItemsQuantity();
     } catch (error) {
