@@ -7,10 +7,15 @@ const formatDate = (dateString) => {
 };
 
 const UserDataCard = (props) => {
-  const [showDetails, setShowDetails] = useState(false);
+  const [showDetails, setShowDetails] = useState(props.users.map(() => false));
+  console.log(props.users);
 
-  const handleViewDetails = () => {
-    setShowDetails((prevShowDetails) => !prevShowDetails);
+  const handleViewDetails = (index) => {
+    setShowDetails((prevShowDetails) => {
+      const newShowDetails = [...prevShowDetails];
+      newShowDetails[index] = !newShowDetails[index];
+      return newShowDetails;
+    });
   };
 
   return (
@@ -32,14 +37,14 @@ const UserDataCard = (props) => {
             </div>
             <div>
               <button
-                onClick={handleViewDetails}
+                onClick={() => handleViewDetails(index)}
                 className='bg-blue-500 text-gray-900 text-xl px-1 py-1 rounded-xl m-3 p-1'
               >
-                {showDetails ? 'View Less' : 'View Details'}
+                {showDetails[index] ? 'View Less' : 'View Details'}
               </button>
             </div>
           </div>
-          {showDetails && (
+          {showDetails[index] && (
             <div className="mt-3">
               {user.bulkOrders.length > 0 ? (
                 <table className="w-full border-collapse border border-gray-400 mt-2">
