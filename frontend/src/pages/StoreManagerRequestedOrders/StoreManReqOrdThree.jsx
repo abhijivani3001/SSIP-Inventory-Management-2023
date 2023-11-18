@@ -91,8 +91,9 @@ const StoreManReqOrdThree = (props) => {
           inventoryId = item._id;
         }
       });
-
-      if (inventoryItemQuantity - allocationQuantity < 10) {
+      // const { minValue } = props.items.find((item) => item.name === props.name);
+      const minValue = 10;
+      if (inventoryItemQuantity < minValue) {
         console.log(props.masterPassword);
         if (!props.masterPassword || props.masterPassword === 'none') {
           toast.error('Items cannot be allocated.', {
@@ -101,8 +102,8 @@ const StoreManReqOrdThree = (props) => {
           return;
         }
 
-        if (!window.confirm('Are you sure you want to allocate items?')) {
-          toast.error('Order not allocated.', {
+        if (window.prompt('Enter Master Password: ') !== props.masterPassword) {
+          toast.error("Master Password doesn't match", {
             autoClose: 1500,
           });
           return;
@@ -150,18 +151,12 @@ const StoreManReqOrdThree = (props) => {
 
   return (
     <>
-      <tr
-        className={`${
-          props.masterPassword !== 'none'
-            ? 'bg-red-50 text-red-800 hover:bg-red-100'
-            : 'bg-white text-gray-900 hover:bg-gray-50'
-        } border-b divide-x `}
-      >
+      <tr className='bg-white text-gray-900 hover:bg-gray-50 border-b divide-x'>
         <th
           scope='row'
           className='flex items-center px-4 py-1 whitespace-nowrap'
         >
-          <div className='text-base font-semibold flex gap-2'>
+          <div className='text-base font-semibold flex items-center gap-2'>
             <div>
               <img
                 className='p-2 h-16 w-24 object-contain'
@@ -169,9 +164,13 @@ const StoreManReqOrdThree = (props) => {
                 alt='productimage'
               />
             </div>
-            {props.masterPassword !== 'none' ? (
-              <div className='my-auto font-bold text-red-800'>{props.name}*</div>
-            ) : <div className='my-auto'>{props.name}</div>}
+            <div className='my-auto'>{props.name}</div>
+
+            {props.masterPassword !== 'none' && (
+              <div className='text-white bg-yellow-300 hover:bg-yellow-400 text-xs p-1 rounded'>
+                URGENT
+              </div>
+            )}
           </div>
         </th>
 

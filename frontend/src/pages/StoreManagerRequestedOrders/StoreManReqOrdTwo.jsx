@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import StoreManReqOrdThree from './StoreManReqOrdThree';
 import { compareStatusForStoreManager } from '../../components/Helper/Helper';
+import axios from '../../api/AxiosUrl';
 
 const StoreManReqOrdTwo = (props) => {
   const bulkOrder = props.bulkOrder;
 
   const [isDropdownVisible, setDropdownVisible] = useState(false);
+  const [items, setItems] = useState([]);
 
   const toggleDropdown = () => {
     setDropdownVisible((prev) => !prev);
@@ -31,6 +33,18 @@ const StoreManReqOrdTwo = (props) => {
     });
     return count;
   };
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const res = await axios.get('api/item');
+        setItems(res.data.items);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchItems();
+  }, []);
 
   return (
     <>
@@ -129,6 +143,7 @@ const StoreManReqOrdTwo = (props) => {
                         currentStatus={props.currentStatus}
                         getRequiredUserData={props.getRequiredUserData}
                         masterPassword={order.masterPassword}
+                        items={items}
                       />
                     ) : (
                       ''

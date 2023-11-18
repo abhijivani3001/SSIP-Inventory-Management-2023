@@ -23,6 +23,10 @@ const ProductCard = (props) => {
     });
   };
 
+  const generateRandomPassword = () => {
+    return (Math.random() + 1).toString(36).substring(2);
+  };
+
   return (
     <div className='w-72 bg-white border border-gray-200 rounded-lg shadow-lg m-4'>
       <img
@@ -60,7 +64,7 @@ const ProductCard = (props) => {
             {props.userRole.includes('head') && (
               <button
                 className='yellow_btn ml-3'
-                onClick={() => handleAddToCart('1234')}
+                onClick={() => handleAddToCart(generateRandomPassword())}
               >
                 URGENT
               </button>
