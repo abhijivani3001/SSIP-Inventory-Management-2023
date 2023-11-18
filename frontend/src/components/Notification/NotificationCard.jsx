@@ -4,7 +4,7 @@ const NotificationCard = (props) => {
   const notification = props.notification;
 
   const formattedDate = new Date(notification.createdAt).toLocaleString(
-    'en-US',
+    'en-UK',
     {
       year: 'numeric',
       month: 'numeric',
@@ -18,9 +18,8 @@ const NotificationCard = (props) => {
   return (
     <>
       <div
-        className={`border-2 flex justify-between ${
-          notification.isSeen ? 'bg-white' : 'bg-green-300'
-        } border-gray-300 px-4 py-2 rounded-lg my-2 shadow-lg`}
+        className={`border-2 flex justify-between ${notification.isSeen ? 'bg-white' : 'bg-green-300'
+          } border-gray-300 px-4 py-2 rounded-lg my-2 shadow-lg`}
       >
         <div>
           <div className='text-xl mb-2 my-auto font-semibold tracking-tight text-gray-800'>
