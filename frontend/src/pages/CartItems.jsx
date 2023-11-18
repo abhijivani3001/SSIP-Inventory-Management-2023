@@ -4,10 +4,27 @@ import { useCart } from '../store/CartProvider';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from '../api/AxiosUrl';
+import ROLES from '../constants/ROLES';
 
 const CartItems = () => {
   const { cart, dispatch } = useCart();
   const [isCartEmpty, setIsCartEmpty] = useState(true);
+  const [currentUserData, setCurrentUserData] = useState();
+
+  const getCurrentUser = async () => {
+    try {
+      const res = await axios.get('/api/user');
+      const data = await res.data.user;
+      setCurrentUserData(data);
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
 
   const clearCartOnReload = (event) => {
     if (cart?.items?.length > 0) {
@@ -46,11 +63,12 @@ const CartItems = () => {
     }
   };
 
-  const postNotification = async (message) => {
+  const postNotification = async (message, receiverId, up) => {
     try {
       const res = await axios.post('/api/notification', {
-        // receiverId: '654cf8f57aab3df914e7f61c',
+        receiverId: receiverId,
         message: message,
+        up: up,
       });
       console.log(res);
     } catch (error) {
@@ -76,7 +94,15 @@ const CartItems = () => {
       });
     });
 
-    postNotification('You have got a new order');
+    let up = true;
+    if (
+      currentUserData.role === ROLES.SUB_BRANCH_HEAD ||
+      currentUserData.role === ROLES.BRANCH_HEAD ||
+      currentUserData.role === ROLES.DEPARTMENT_HEAD
+    ) {
+      up = false;
+    }
+    postNotification('You have got a new order', '', up);
 
     postElement(orders);
 

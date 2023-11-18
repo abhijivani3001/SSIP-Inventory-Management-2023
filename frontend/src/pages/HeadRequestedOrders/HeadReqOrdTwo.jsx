@@ -18,11 +18,12 @@ const HeadReqOrdTwo = (props) => {
     return date.toLocaleDateString(undefined, options);
   };
 
-  const postNotification = async (message) => {
+  const postNotification = async (message, receiverId, up) => {
     try {
       const res = await axios.post('/api/notification', {
-        receiverId: props.userId,
+        receiverId: receiverId,
         message: message,
+        up: up,
       });
       console.log(res);
     } catch (error) {
@@ -44,13 +45,24 @@ const HeadReqOrdTwo = (props) => {
       });
       console.log(res);
 
+      let up = false;
       if (status === 'head-accepted') {
-        postNotification('Your order is Approved by Head of your branch');
+        postNotification(
+          'Your order is Approved by Head of your branch',
+          '',
+          up
+        );
+        up = true;
+        postNotification('You have got a new order', '', up);
         toast.success('Order approved Successfully', {
           autoClose: 1500,
         });
       } else if (status === 'rejected') {
-        postNotification('Your order is Rejected by Head of your branch');
+        postNotification(
+          'Your order is Rejected by Head of your branch',
+          '',
+          up
+        );
         toast.error('Order rejected Successfully', {
           autoClose: 1500,
         });

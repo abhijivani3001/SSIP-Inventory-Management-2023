@@ -31,16 +31,18 @@ const HeadReqOrdOne = (props) => {
             onClick={toggleDropdown}
           >
             <div
-              className={`flex justify-between w-full align-middle p-5 ${isDropdownVisible ? 'border-b border-gray-600' : ''
-                }`}
+              className={`flex justify-between w-full align-middle p-5 ${
+                isDropdownVisible ? 'border-b border-gray-600' : ''
+              }`}
             >
               <span>{props.name}</span>
               <div className='flex gap-8 justify-between align-middle'>
                 <div>Created at: {formatDate(props?.createdAt)}</div>
                 <svg
                   data-accordion-icon
-                  className={`w-3 h-3 transition-transform duration-500 my-auto ${!isDropdownVisible ? 'rotate-180' : ' rotate-0'
-                    }`}
+                  className={`w-3 h-3 transition-transform duration-500 my-auto ${
+                    !isDropdownVisible ? 'rotate-180' : ' rotate-0'
+                  }`}
                   aria-hidden='true'
                   xmlns='http://www.w3.org/2000/svg'
                   fill='none'
@@ -59,8 +61,9 @@ const HeadReqOrdOne = (props) => {
           </button>
 
           <div
-            className={`w-full rounded-b-lg ${isDropdownVisible ? '' : 'hidden'
-              }`}
+            className={`w-full rounded-b-lg ${
+              isDropdownVisible ? '' : 'hidden'
+            }`}
             aria-labelledby='accordion-collapse-heading-1'
           >
             {props.bulkOrders.map((bulkOrder) => {
@@ -82,6 +85,7 @@ const HeadReqOrdOne = (props) => {
                     userId={props.userId}
                     currentStatus={props.currentStatus}
                     getRequiredUserData={props.getRequiredUserData}
+                    userName={props.name}
                   />
                 );
               }
