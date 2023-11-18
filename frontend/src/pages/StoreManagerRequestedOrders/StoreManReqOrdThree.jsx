@@ -3,6 +3,7 @@ import axios from '../../api/AxiosUrl';
 import { toast } from 'react-toastify';
 
 const StoreManReqOrdThree = (props) => {
+  console.log(props.masterPassword ? 'y' : 'n');
   const [inventoryData, setInventoryData] = useState([]);
   const [allocationQuantity, setAllocationQuantity] = useState(0);
 
@@ -149,10 +150,16 @@ const StoreManReqOrdThree = (props) => {
 
   return (
     <>
-      <tr className='bg-white border-b divide-x hover:bg-gray-50'>
+      <tr
+        className={`${
+          props.masterPassword !== 'none'
+            ? 'bg-red-50 text-red-800 hover:bg-red-100'
+            : 'bg-white text-gray-900 hover:bg-gray-50'
+        } border-b divide-x `}
+      >
         <th
           scope='row'
-          className='flex items-center px-4 py-1 text-gray-900 whitespace-nowrap'
+          className='flex items-center px-4 py-1 whitespace-nowrap'
         >
           <div className='text-base font-semibold flex gap-2'>
             <div>
@@ -162,7 +169,9 @@ const StoreManReqOrdThree = (props) => {
                 alt='productimage'
               />
             </div>
-            <div className='my-auto'>{props.name}</div>
+            {props.masterPassword !== 'none' ? (
+              <div className='my-auto font-bold text-red-800'>{props.name}*</div>
+            ) : <div className='my-auto'>{props.name}</div>}
           </div>
         </th>
 

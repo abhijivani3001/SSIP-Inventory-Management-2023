@@ -4,11 +4,14 @@ import axios from '../../api/AxiosUrl';
 
 const AddProducts = () => {
   // Create state variables for the form fields
-  const [itemname, setItemName] = useState('');
-  const [description, setDescription] = useState('');
-  const [company, setCompany] = useState('');
-  const [category, setCategory] = useState('');
-  const [imageURL, setImageURL] = useState('');
+  const [formData, setFormData] = useState({
+    itemname: '',
+    description: '',
+    company: '',
+    category: '',
+    imageURL: '',
+    price: 0,
+  });
 
   // Submission function
   const submitHandler = async (event) => {
@@ -16,15 +19,34 @@ const AddProducts = () => {
 
     // Prepare the data to send to the backend
     const data = {
-      name: itemname,
-      description: description,
-      company: company,
-      category: category,
-      imageUrl: imageURL,
+      name: formData.itemname,
+      description: formData.description,
+      company: formData.company,
+      category: formData.category,
+      imageUrl: formData.imageURL,
+      price: formData.price,
     };
 
-    const res = await axios.post('api/item', data);
-    console.log(res);
+    try {
+      const res = await axios.post('api/item', data);
+      console.log(res);
+
+      // Clear the form after successful submission
+      setFormData({
+        itemname: '',
+        description: '',
+        company: '',
+        category: '',
+        imageURL: '',
+        price: 0,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleInputChange = (field, value) => {
+    setFormData({ ...formData, [field]: value });
   };
 
   return (
@@ -42,8 +64,8 @@ const AddProducts = () => {
               name='itemname'
               className='w-full px-3 py-2 border text-black rounded-lg focus:outline-none focus:border-blue-500'
               placeholder='Enter Item Name'
-              value={itemname}
-              onChange={(e) => setItemName(e.target.value)}
+              value={formData.itemname}
+              onChange={(e) => handleInputChange('itemname', e.target.value)}
               required
             />
           </div>
@@ -55,8 +77,8 @@ const AddProducts = () => {
               autoComplete='on'
               className='w-full px-3 py-2 border text-black rounded-lg focus:outline-none focus:border-blue-500'
               placeholder='Enter Description'
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              value={formData.description}
+              onChange={(e) => handleInputChange('description', e.target.value)}
               required
             />
           </div>
@@ -68,8 +90,8 @@ const AddProducts = () => {
               autoComplete='on'
               className='w-full px-3 py-2 border text-black rounded-lg focus:outline-none focus:border-blue-500'
               placeholder='Enter Company Name'
-              value={company}
-              onChange={(e) => setCompany(e.target.value)}
+              value={formData.company}
+              onChange={(e) => handleInputChange('company', e.target.value)}
               required
             />
           </div>
@@ -81,8 +103,8 @@ const AddProducts = () => {
               autoComplete='on'
               className='w-full px-3 py-2 border text-black rounded-lg focus:outline-none focus:border-blue-500'
               placeholder='Enter Category'
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              value={formData.category}
+              onChange={(e) => handleInputChange('category', e.target.value)}
               required
             />
           </div>
@@ -94,8 +116,24 @@ const AddProducts = () => {
               name='imageURL'
               className='w-full px-3 py-2 border text-black rounded-lg focus:outline-none focus:border-blue-500'
               placeholder='Enter Image URL'
-              value={imageURL}
-              onChange={(e) => setImageURL(e.target.value)}
+              value={formData.imageURL}
+              onChange={(e) => handleInputChange('imageURL', e.target.value)}
+              required
+            />
+          </div>
+          <div className='mb-4'>
+            <label className='block text-gray-800'>Price</label>
+            <input
+              type='number'
+              id='price'
+              name='price'
+              className='w-full px-3 py-2 border text-black rounded-lg focus:outline-none focus:border-blue-500'
+              placeholder='Enter the price'
+              value={formData.price}
+              min={0}
+              onChange={(e) =>
+                handleInputChange('price', Math.max(0, e.target.value))
+              }
               required
             />
           </div>
