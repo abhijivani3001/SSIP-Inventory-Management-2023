@@ -23,6 +23,7 @@ import AdminDashboard from './UserPanel/Admin/AdminDashboard';
 import ResetPassword from './pages/ResetPassword';
 import { ToastContainer } from 'react-toastify';
 import SbsmEmpOrders from './UserPanel/StoreManager/SbsmEmpOrders';
+import BudgetPlanning from './pages/BudgetPlanning/BudgetPlanning';
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -74,6 +75,10 @@ function App() {
         {/* --- */}
         {isLoggedIn && <Route path='/user' element={<UserProfile />} />}
 
+        {isLoggedIn && (
+          <Route path='/budget-planning' element={<BudgetPlanning />} />
+        )}
+
         {isLoggedIn && userRole !== ROLES.ADMIN && (
           <Route path='/dashboard' element={<Dashboard />} />
         )}
@@ -98,9 +103,10 @@ function App() {
             userRole === ROLES.DEPARTMENT_STORE_MANAGER ||
             !isLoading) && <Route path='/inventory' element={<Inventory />} />}
 
-        {isLoggedIn && (userRole === ROLES.SUB_BRANCH_STORE_MANAGER || !isLoading) && (
-          <Route path='/sbsm-emp-orders' element={<SbsmEmpOrders />} />
-        )}
+        {isLoggedIn &&
+          (userRole === ROLES.SUB_BRANCH_STORE_MANAGER || !isLoading) && (
+            <Route path='/sbsm-emp-orders' element={<SbsmEmpOrders />} />
+          )}
 
         {isLoggedIn &&
           userRole !== ROLES.ADMIN &&

@@ -195,28 +195,24 @@ const Navbar = () => {
                       Your profile
                     </Link>
                   </li>
-                  {userData?.role !== ROLES.ADMIN && (
-                    <li>
-                      <Link
-                        to='/dashboard'
-                        className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
-                        onClick={toggleDropdown}
-                      >
-                        Dashboard
-                      </Link>
-                    </li>
-                  )}
-                  {userData?.role === ROLES.ADMIN && (
-                    <li>
-                      <Link
-                        to='/dashboard'
-                        className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
-                        onClick={toggleDropdown}
-                      >
-                        Dashboard
-                      </Link>
-                    </li>
-                  )}
+                  <li>
+                    <Link
+                      to='/dashboard'
+                      className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+                      onClick={toggleDropdown}
+                    >
+                      Dashboard
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to='/budget-planning'
+                      className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+                      onClick={toggleDropdown}
+                    >
+                      Budget Planning
+                    </Link>
+                  </li>
                   <li>
                     <a
                       href='#'

@@ -45,7 +45,7 @@ const Inventory = (props) => {
   }, []);
 
   return (
-    <div className='mx-8 mt-4'>
+    <div className='mx-10 my-4'>
       {isLoading && (
         <div className='text-xl my-auto text-center '>Loading...</div>
       )}
