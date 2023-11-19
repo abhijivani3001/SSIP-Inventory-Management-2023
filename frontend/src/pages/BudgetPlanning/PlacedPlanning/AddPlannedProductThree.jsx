@@ -4,7 +4,6 @@ import axios from '../../../api/AxiosUrl';
 
 const AddPlannedProductThree = (props) => {
   const [freqOfItem, setFreqOfItem] = useState(1);
-  const [plannedOrders, setPlannedOrders] = useState([]);
 
   const addToInventoryHandler = async (event) => {
     event.preventDefault();

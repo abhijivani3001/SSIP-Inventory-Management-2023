@@ -95,6 +95,7 @@ const PlacedPlanning = (props) => {
                         itemId={order.itemId}
                         orderId={order._id}
                         index={currentIndex}
+                        getPlannedOrders={getPlannedOrders}
                         // userId={props.userId}
                         // currentStatus={props.currentStatus}
                         // getRequiredUserData={props.getRequiredUserData}

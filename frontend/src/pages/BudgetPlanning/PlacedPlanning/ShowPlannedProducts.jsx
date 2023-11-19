@@ -1,10 +1,29 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
+import axios from '../../../api/AxiosUrl';
 
 const ShowPlannedProducts = (props) => {
+  const deleteItemHandler = async () => {
+    try {
+      const res = await axios.delete(`api/planningorder/${props.orderId}`);
+      props.getPlannedOrders();
+
+      toast.success('Item added to inventory successfully', {
+        position: 'top-right',
+        autoClose: 1500,
+        style: {
+          marginTop: '70px',
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <tr
-        className={`bg-white text-gray-700 hover:bg-gray-100 border-b divide-x divide-slate-500`}
+        className={`bg-white text-gray-700 hover:bg-gray-100 border-b divide-x divide-slate-500 text-base`}
       >
         <th className='px-6'>{props.index}</th>
         <td scope='row' className='flex items-center py-1 whitespace-nowrap'>
@@ -25,7 +44,11 @@ const ShowPlannedProducts = (props) => {
 
         <td className='px-6'>total price</td>
         <td className='px-6'>details</td>
-        <td className='px-6'>delete</td>
+        <td className='px-6'>
+          <button className='trans_red_btn' onClick={deleteItemHandler}>
+            Delete
+          </button>
+        </td>
       </tr>
     </>
   );
