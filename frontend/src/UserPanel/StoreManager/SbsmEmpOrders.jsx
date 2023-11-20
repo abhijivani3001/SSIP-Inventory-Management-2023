@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../../api/AxiosUrl';
-import UserDataCard from '../Admin/UserDataCard';
+import UserDataCardSbsm from './UserDataCardSbsm';
 import { FaSearch } from 'react-icons/fa';
 import { findBelowUsers } from '../../components/Helper/Helper';
 
@@ -84,7 +84,7 @@ const SbsmEmpOrder = () => {
         <div className='text-xl my-auto mt-8 text-center '>Loading...</div>
       ) : (
         <div className='text-3xl border border-gray-400 py5 px-10 rounded-lg shadow-xl my-10'>
-          <UserDataCard users={roleWiseUsers[selectedRole] || filteredUsers} />
+          <UserDataCardSbsm users={roleWiseUsers[selectedRole] || filteredUsers} />
         </div>
       )}
     </div>

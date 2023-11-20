@@ -17,11 +17,10 @@ const HeadNavbar = () => {
           <li>
             <Link
               to='/products'
-              className={`${
-                location.pathname === '/products'
-                  ? 'active-navbar-element'
-                  : 'navbar-element'
-              }`}
+              className={`${location.pathname === '/products'
+                ? 'active-navbar-element'
+                : 'navbar-element'
+                }`}
             >
               Products
             </Link>
@@ -29,11 +28,10 @@ const HeadNavbar = () => {
           <li>
             <Link
               to='/head-requested-orders'
-              className={`${
-                location.pathname === '/head-requested-orders'
-                  ? 'active-navbar-element'
-                  : 'navbar-element'
-              }`}
+              className={`${location.pathname === '/head-requested-orders'
+                ? 'active-navbar-element'
+                : 'navbar-element'
+                }`}
             >
               Requested orders
             </Link>
@@ -41,23 +39,32 @@ const HeadNavbar = () => {
           <li>
             <Link
               to='/placed-orders'
-              className={`${
-                location.pathname === '/placed-orders'
-                  ? 'active-navbar-element'
-                  : 'navbar-element'
-              }`}
+              className={`${location.pathname === '/placed-orders'
+                ? 'active-navbar-element'
+                : 'navbar-element'
+                }`}
             >
               Placed orders
             </Link>
           </li>
           <li>
             <Link
+              to='/emp-orders'
+              className={`${location.pathname === '/emp-orders'
+                ? 'active-navbar-element'
+                : 'navbar-element'
+                }`}
+            >
+              Emp-Orders
+            </Link>
+          </li>
+          <li>
+            <Link
               to='/dashboard'
-              className={`${
-                location.pathname === '/dashboard' || location.pathname === '/'
-                  ? 'active-navbar-element'
-                  : 'navbar-element'
-              }`}
+              className={`${location.pathname === '/dashboard' || location.pathname === '/'
+                ? 'active-navbar-element'
+                : 'navbar-element'
+                }`}
             >
               Dashboard
             </Link>

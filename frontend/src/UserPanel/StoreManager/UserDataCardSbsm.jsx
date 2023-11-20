@@ -55,17 +55,32 @@ const UserDataCardSbsm = (props) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {user.bulkOrders.flatMap((bulkOrder) =>
-                      bulkOrder.orders.map((order) => (
-                        <tr key={order.orderId}>
-                          <td className="border border-gray-400 p-2 text-xl">{order.name}</td>
-                          <td className="border border-gray-400 p-2 text-xl">{order.quantity}</td>
+                    {user.bulkOrders
+                      .flatMap((bulkOrder) =>
+                        bulkOrder.orders.reduce((acc, order) => {
+                          const existingOrder = acc.find(
+                            (mergedOrder) =>
+                              mergedOrder.name === order.name &&
+                              formatDate(mergedOrder.date) === formatDate(bulkOrder.updatedAt)
+                          );
+                          if (existingOrder) {
+                            existingOrder.quantity += order.quantity;
+                          } else {
+                            acc.push({ ...order, date: bulkOrder.updatedAt });
+                          }
+                          return acc;
+                        }, [])
+                      )
+                      .sort((a, b) => new Date(a.date) - new Date(b.date))
+                      .map((mergedOrder, orderIndex) => (
+                        <tr key={orderIndex}>
+                          <td className="border border-gray-400 p-2 text-xl">{mergedOrder.name}</td>
+                          <td className="border border-gray-400 p-2 text-xl">{mergedOrder.quantity}</td>
                           <td className="border border-gray-400 p-2 text-xl">
-                            {formatDate(bulkOrder.updatedAt)}
+                            {formatDate(mergedOrder.date)}
                           </td>
                         </tr>
-                      ))
-                    )}
+                      ))}
                   </tbody>
                 </table>
               ) : (
