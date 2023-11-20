@@ -142,44 +142,40 @@ const StoreManagerRequestedOrders = () => {
             <div className='flex justify-center overflow-x-auto whitespace-nowrap'>
               <button
                 onClick={() => handleTabClick('pending')}
-                className={`default_tab ${
-                  currentStatus === 'pending'
+                className={`default_tab ${currentStatus === 'pending'
                     ? 'status_true_tab'
                     : 'status_false_tab'
-                }`}
+                  }`}
               >
                 <p className='mx-auto'>Pending</p>
               </button>
 
               <button
                 onClick={() => handleTabClick('accepted')}
-                className={`default_tab ${
-                  currentStatus === 'accepted'
+                className={`default_tab ${currentStatus === 'accepted'
                     ? 'status_true_tab'
                     : 'status_false_tab'
-                }`}
+                  }`}
               >
                 <p className='mx-auto'>Accepted</p>
               </button>
 
               <button
                 onClick={() => handleTabClick('rejected')}
-                className={`default_tab ${
-                  currentStatus === 'rejected'
+                className={`default_tab ${currentStatus === 'rejected'
                     ? 'status_true_tab'
                     : 'status_false_tab'
-                }`}
+                  }`}
               >
                 <p className='mx-auto'>Rejected</p>
               </button>
 
               <button
                 onClick={() => handleTabClick('completed')}
-                className={`default_tab ${
-                  currentStatus === 'completed'
+                className={`default_tab ${currentStatus === 'completed'
                     ? 'status_true_tab'
                     : 'status_false_tab'
-                }`}
+                  }`}
               >
                 <p className='mx-auto'>Completed</p>
               </button>

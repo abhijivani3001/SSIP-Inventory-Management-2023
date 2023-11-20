@@ -103,16 +103,13 @@ function App() {
             userRole === ROLES.DEPARTMENT_STORE_MANAGER ||
             !isLoading) && <Route path='/inventory' element={<Inventory />} />}
 
-<<<<<<< HEAD
         {isLoggedIn && (userRole === ROLES.SUB_BRANCH_STORE_MANAGER || ROLES.SUB_BRANCH_HEAD || !isLoading) && (
           <Route path='/emp-orders' element={<SbsmEmpOrders />} />
         )}
-=======
         {isLoggedIn &&
           (userRole === ROLES.SUB_BRANCH_STORE_MANAGER || !isLoading) && (
             <Route path='/sbsm-emp-orders' element={<SbsmEmpOrders />} />
           )}
->>>>>>> da6d41bc945cbe530cab8ce459265fc60451a242
 
         {/* {isLoggedIn && (userRole === ROLES.SUB_BRANCH_HEAD || !isLoading) && (
           <Route path='/head-emp-orders' element={<SbsmEmpOrders />} />

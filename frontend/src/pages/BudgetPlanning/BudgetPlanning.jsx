@@ -39,22 +39,20 @@ const BudgetPlanning = () => {
             <div className='flex justify-center overflow-x-auto whitespace-nowrap'>
               <button
                 onClick={() => handleTabClick('requested-plan')}
-                className={`default_tab ${
-                  currentStatus === 'requested-plan'
+                className={`default_tab ${currentStatus === 'requested-plan'
                     ? 'status_true_tab'
                     : 'status_false_tab'
-                }`}
+                  }`}
               >
                 <p className='mx-auto'>Requested Planned Orders</p>
               </button>
 
               <button
                 onClick={() => handleTabClick('your-plan')}
-                className={`default_tab ${
-                  currentStatus === 'your-plan'
+                className={`default_tab ${currentStatus === 'your-plan'
                     ? 'status_true_tab'
                     : 'status_false_tab'
-                }`}
+                  }`}
               >
                 <p className='mx-auto'>Your Planned Orders</p>
               </button>
