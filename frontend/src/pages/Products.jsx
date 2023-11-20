@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import Product from '../components/Products/Product';
 import axios from '../api/AxiosUrl';
+import SearchInput from 'react-search-input';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isProductsAvailable, setIsProductsAvailable] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,16 +37,12 @@ const Products = () => {
     fetchData();
   }, []);
 
-  const handleSearch = () => {
-    const lowerCaseQuery = searchQuery.toLowerCase();
+  const searchHandler = (term) => {
+    const lowerCaseQuery = term.toLowerCase();
     const filtered = products.filter((product) =>
       product.name.toLowerCase().includes(lowerCaseQuery)
     );
     setFilteredProducts(filtered);
-  };
-
-  const handleInputChange = (e) => {
-    setSearchQuery(e.target.value);
   };
 
   return (
@@ -59,19 +57,18 @@ const Products = () => {
           <div>
             <h1 className='page-title'>Products</h1>
             <div className='flex justify-end mb-4'>
-              <input
-                type='text'
-                placeholder='Search by name'
-                value={searchQuery}
-                onChange={handleInputChange}
-                className='border border-gray-400 px-2 py-1 rounded-md'
-              />
-              <button
-                onClick={handleSearch}
-                className='bg-blue-500 text-white px-4 py-1 ml-2 rounded-md'
-              >
-                Search
-              </button>
+              <div className='relative'>
+                <FontAwesomeIcon
+                  icon={faSearch}
+                  className='absolute left-2 top-5 text-gray-500'
+                  style={{ border: 'none', background: 'none', padding: 0 }}
+                />
+                <SearchInput
+                  className='border border-gray-400 pl-8 pr-2 py-1 rounded-md'
+                  placeholder='Search Product here'
+                  onChange={searchHandler}
+                />
+              </div>
             </div>
           </div>
           <div className='flex flex-wrap justify-center my-6'>
