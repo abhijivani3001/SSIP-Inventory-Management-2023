@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import StoreManReqOrdTwo from './StoreManReqOrdTwo';
-import { compareStatusForStoreManager } from '../../components/Helper/Helper';
+import ShowReqPlanningOrdTwo from './ShowReqPlanningOrdTwo';
 
-const StoreManReqOrdOne = (props) => {
+const ShowReqPlannigOrdOne = (props) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  // console.log(props.planningBulkOrders);
 
   const toggleDropdown = () => {
     setIsDropdownVisible((prev) => !prev);
@@ -38,7 +38,7 @@ const StoreManReqOrdOne = (props) => {
             >
               <span>{props.name}</span>
               <div className='flex gap-8 justify-between align-middle'>
-                <div>Created at: {formatDate(props?.createdAt)}</div>
+                <div>Created at: {formatDate(props.date)}</div>
                 <svg
                   data-accordion-icon
                   className={`w-3 h-3 transition-transform duration-500 my-auto ${
@@ -67,33 +67,52 @@ const StoreManReqOrdOne = (props) => {
             }`}
             aria-labelledby='accordion-collapse-heading-1'
           >
-            {props.bulkOrders.map((bulkOrder) => {
-              let flag = false;
-
-              bulkOrder.orders.forEach((order) => {
-                if (
-                  compareStatusForStoreManager(
-                    props.currentUserRole,
-                    order.status,
-                    props.currentStatus
-                  )
-                )
-                  flag = true;
-              });
-
-              if (flag) {
-                return (
-                  <StoreManReqOrdTwo
-                    bulkOrder={bulkOrder}
-                    currentStatus={props.currentStatus}
-                    userId={props.userId}
-                    currentUserRole={props.currentUserRole}
-                    getRequiredUserData={props.getRequiredUserData}
-                  />
-                );
-              }
-              return <></>;
-            })}
+            <div className='relative overflow-x-auto shadow-md rounded-b-lg'>
+              <table className='w-full divide-y text-sm text-left text-gray-500'>
+                <thead className='text-sm text-gray-700 uppercase bg-slate-100'>
+                  <tr className='divide-x'>
+                    <th scope='col' className='px-6 py-3'>
+                      Name
+                    </th>
+                    <th scope='col' className='px-6 py-3'>
+                      Price
+                    </th>
+                    <th scope='col' className='px-6 py-3'>
+                      Quantity
+                    </th>
+                    <th scope='col' className='px-6 py-3'>
+                      Total Price
+                    </th>
+                    {(props.currentStatus === 'pending' ||
+                      props.currentStatus === 'accepted') && (
+                      <th scope='col' className='px-6 py-3'>
+                        Action
+                      </th>
+                    )}
+                  </tr>
+                </thead>
+                <tbody>
+                  {props.planningBulkOrders.planningOrders.map((order) => {
+                    return (
+                      <ShowReqPlanningOrdTwo
+                        key={order._id}
+                        name={order.name}
+                        category={order.category}
+                        imageUrl={order.imageUrl}
+                        quantity={order.quantity}
+                        orderId={order.itemId}
+                      />
+                    );
+                  })}
+                </tbody>
+                <tr className='bg-white divide-x'>
+                  <td colSpan={3}></td>
+                  <td className='px-6 py-2 text-base font-semibold text-gray-700'>
+                    10000
+                  </td>
+                </tr>
+              </table>
+            </div>
           </div>
         </h2>
       </div>
@@ -101,4 +120,4 @@ const StoreManReqOrdOne = (props) => {
   );
 };
 
-export default StoreManReqOrdOne;
+export default ShowReqPlannigOrdOne;

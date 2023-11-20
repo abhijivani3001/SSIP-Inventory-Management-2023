@@ -54,7 +54,7 @@ const PlacedPlanning = (props) => {
           {isPlannedProductsAvailable && (
             <div className='relative overflow-x-auto shadow-lg border border-slate-600'>
               <table className='w-full divide-y divide-slate-500 text-sm text-left text-gray-500'>
-                <thead className='text-xs  text-gray-700 uppercase bg-slate-200'>
+                <thead className='text-sm text-gray-700 uppercase bg-slate-200'>
                   <tr className='divide-x divide-slate-500'>
                     <th scope='col' className='px-6 py-3'>
                       Sr. no
