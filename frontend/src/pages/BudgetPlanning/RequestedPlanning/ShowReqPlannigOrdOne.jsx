@@ -3,7 +3,6 @@ import ShowReqPlanningOrdTwo from './ShowReqPlanningOrdTwo';
 
 const ShowReqPlannigOrdOne = (props) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  // console.log(props.planningBulkOrders);
 
   const toggleDropdown = () => {
     setIsDropdownVisible((prev) => !prev);
@@ -111,6 +110,20 @@ const ShowReqPlannigOrdOne = (props) => {
                     10000
                   </td>
                 </tr>
+                {props.currentUser.role.includes('head') && (
+                  <tr className='bg-white'>
+                    <td colSpan={4}>
+                      <div className='flex gap-2 justify-center'>
+                        <button className='green_btn my-2 uppercase'>
+                          Approve
+                        </button>
+                        <button className='trans_red_btn my-2 uppercase'>
+                          Reject
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                )}
               </table>
             </div>
           </div>

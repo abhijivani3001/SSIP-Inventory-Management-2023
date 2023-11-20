@@ -26,8 +26,11 @@ const ShowPlannedProducts = (props) => {
         className={`bg-white text-gray-700 hover:bg-gray-100 border-b divide-x divide-slate-500 text-base`}
       >
         <th className='px-6'>{props.index}</th>
-        <td scope='row' className='flex items-center py-1 whitespace-nowrap'>
-          <div className='text-base font-semibold flex gap-2'>
+        <td
+          scope='row'
+          className='flex items-center py-1 px-2 whitespace-nowrap'
+        >
+          <div className='text-base font-semibold flex gap-2 '>
             <div>
               <img
                 className='p-2 h-16 w-24 object-contain'

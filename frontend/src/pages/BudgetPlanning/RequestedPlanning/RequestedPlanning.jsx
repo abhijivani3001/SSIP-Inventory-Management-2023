@@ -3,8 +3,9 @@ import axios from '../../../api/AxiosUrl';
 
 import { findBelowUsers } from '../../../components/Helper/Helper';
 import ShowReqPlannigOrdOne from './ShowReqPlannigOrdOne';
+import ROLES from '../../../constants/ROLES';
 
-const RequestedPlanning = () => {
+const RequestedPlanning = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [usersOfRequestedPlans, setUsersOfRequestedPlans] = useState([]);
   const [isRequestedPlansAvailable, setIsRequestedPlansAvailable] =
@@ -46,7 +47,7 @@ const RequestedPlanning = () => {
         )}
 
         {!isLoading && (
-          <>
+          <div className='my-6'>
             {usersOfRequestedPlans?.map((user) => {
               let flag = false;
 
@@ -68,6 +69,7 @@ const RequestedPlanning = () => {
                     role={user.role}
                     userId={user._id}
                     status={user.planningBulkOrders.status}
+                    currentUser={props.currentUser}
                   />
                 );
               }
@@ -80,11 +82,15 @@ const RequestedPlanning = () => {
             )}
 
             {mainFlag && (
-              <div className='text-center'>
-                <button className='green_btn'>MERGE ALL ORDERS</button>
-              </div>
+              <>
+                {props.currentUser.role.includes('store') && (
+                  <div className='text-center'>
+                    <button className='green_btn my-6 uppercase'>Merge</button>
+                  </div>
+                )}
+              </>
             )}
-          </>
+          </div>
         )}
       </div>
     </>

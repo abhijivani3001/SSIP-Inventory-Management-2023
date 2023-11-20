@@ -64,10 +64,16 @@ const BudgetPlanning = () => {
             )}
 
             {currentStatus === 'requested-plan' && (
-              <RequestedPlanning currentStatus={currentStatus} />
+              <RequestedPlanning
+                currentStatus={currentStatus}
+                currentUser={currentUser}
+              />
             )}
             {currentStatus === 'your-plan' && (
-              <PlacedPlanning currentStatus={currentStatus} />
+              <PlacedPlanning
+                currentStatus={currentStatus}
+                currentUser={currentUser}
+              />
             )}
           </div>
         </>
