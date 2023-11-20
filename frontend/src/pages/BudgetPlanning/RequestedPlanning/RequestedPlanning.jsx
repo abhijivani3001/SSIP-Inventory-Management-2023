@@ -23,7 +23,7 @@ const RequestedPlanning = (props) => {
         findBelowUsers(currentUser)
       );
       const data = await res2.data.users;
-      // console.log(data);
+      console.log(data);
 
       if (data?.length) {
         setUsersOfRequestedPlans(data);

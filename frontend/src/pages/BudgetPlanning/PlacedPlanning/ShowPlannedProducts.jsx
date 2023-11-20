@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import axios from '../../../api/AxiosUrl';
+import ROLES from '../../../constants/ROLES';
 
 const ShowPlannedProducts = (props) => {
   const deleteItemHandler = async () => {
@@ -30,7 +31,7 @@ const ShowPlannedProducts = (props) => {
           scope='row'
           className='flex items-center py-1 px-2 whitespace-nowrap'
         >
-          <div className='text-base font-semibold flex gap-2 '>
+          <div className='text-base mx-4 font-semibold flex gap-2 '>
             <div>
               <img
                 className='p-2 h-16 w-24 object-contain'
@@ -42,11 +43,17 @@ const ShowPlannedProducts = (props) => {
           </div>
         </td>
 
-        <td className='px-6'>$5</td>
+        {props.currentUser.role !== ROLES.EMPLOYEE && (
+          <td className='px-6'>{props.price}</td>
+        )}
         <td className='px-6'>{props.quantity}</td>
 
-        <td className='px-6'>total price</td>
-        <td className='px-6'>details</td>
+        {props.currentUser.role !== ROLES.EMPLOYEE && (
+          <>
+            <td className='px-6'>{props.quantity * props.price}</td>
+            <td className='px-6'>details</td>
+          </>
+        )}
         <td className='px-6'>
           <button className='trans_red_btn' onClick={deleteItemHandler}>
             Delete

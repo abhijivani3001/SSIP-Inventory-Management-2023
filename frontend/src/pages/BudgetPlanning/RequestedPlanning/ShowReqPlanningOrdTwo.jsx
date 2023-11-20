@@ -20,9 +20,9 @@ const ShowReqPlanningOrdTwo = (props) => {
           </div>
         </th>
 
-        <td className='px-6'>400</td>
+        <td className='px-6'>{props.price}</td>
         <td className='px-6'>{props.quantity}</td>
-        <td className='px-6'>5000</td>
+        <td className='px-6'>{props.price * props.quantity}</td>
       </tr>
     </>
   );

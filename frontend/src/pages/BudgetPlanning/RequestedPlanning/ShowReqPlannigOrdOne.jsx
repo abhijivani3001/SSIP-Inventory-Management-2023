@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ShowReqPlanningOrdTwo from './ShowReqPlanningOrdTwo';
 
 const ShowReqPlannigOrdOne = (props) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const toggleDropdown = () => {
     setIsDropdownVisible((prev) => !prev);
@@ -13,6 +14,14 @@ const ShowReqPlannigOrdOne = (props) => {
     const date = new Date(dateString);
     return date.toLocaleDateString(undefined, options);
   };
+
+  let price = 0;
+  useEffect(() => {
+    props.planningBulkOrders.planningOrders.forEach((order) => {
+      price += order.quantity * order.price;
+    });
+    setTotalPrice(price);
+  }, [props.planningBulkOrders]);
 
   return (
     <>
@@ -98,6 +107,7 @@ const ShowReqPlannigOrdOne = (props) => {
                         name={order.name}
                         category={order.category}
                         imageUrl={order.imageUrl}
+                        price={order.price}
                         quantity={order.quantity}
                         orderId={order.itemId}
                       />
@@ -107,7 +117,7 @@ const ShowReqPlannigOrdOne = (props) => {
                 <tr className='bg-white divide-x'>
                   <td colSpan={3}></td>
                   <td className='px-6 py-2 text-base font-semibold text-gray-700'>
-                    10000
+                    {totalPrice}
                   </td>
                 </tr>
                 {props.currentUser.role.includes('head') && (
