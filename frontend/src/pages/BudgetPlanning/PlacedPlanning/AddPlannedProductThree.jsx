@@ -1,21 +1,22 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import axios from '../../api/AxiosUrl';
+import axios from '../../../api/AxiosUrl';
 
-const AddInventoryCard = (props) => {
+const AddPlannedProductThree = (props) => {
   const [freqOfItem, setFreqOfItem] = useState(1);
 
   const addToInventoryHandler = async (event) => {
     event.preventDefault();
+
     try {
       console.log(props.itemId, freqOfItem);
-      const res = await axios.post('api/inventory', [
+      const res = await axios.post('api/planningorder', [
         {
-          itemId: props.itemId,
           quantity: freqOfItem,
+          itemId: props.itemId,
         },
       ]);
+      console.log(res);
 
       toast.success('Item added to inventory successfully', {
         position: 'top-right',
@@ -25,7 +26,7 @@ const AddInventoryCard = (props) => {
         },
       });
 
-      props.getInventoryItems();
+      props.getPlannedOrders();
     } catch (error) {
       console.log(error.message);
     }
@@ -63,7 +64,7 @@ const AddInventoryCard = (props) => {
 
           <div className='mt-2'>
             <button className='blue_btn' onClick={addToInventoryHandler}>
-              Add to Inventory
+              Add to Your Plan
             </button>
           </div>
         </div>
@@ -72,4 +73,4 @@ const AddInventoryCard = (props) => {
   );
 };
 
-export default AddInventoryCard;
+export default AddPlannedProductThree;
