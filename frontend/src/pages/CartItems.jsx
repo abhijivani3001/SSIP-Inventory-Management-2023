@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from '../api/AxiosUrl';
 import ROLES from '../constants/ROLES';
+import { findBelowUsers } from '../components/Helper/Helper';
 
 const CartItems = () => {
   const { cart, dispatch } = useCart();
@@ -53,11 +54,33 @@ const CartItems = () => {
     dispatch({ type: 'REMOVE_ITEM', payload: item });
   };
 
+  const updateStatus = async (userId, bulkOrderId, orderId) => {
+    const res = await axios.put(`api/order/${bulkOrderId}/${orderId}`, {
+      user_id: userId,
+      status: 'accepted',
+    });
+  };
+
   const postElement = async (orders) => {
     try {
       console.log(orders);
       const res = await axios.post('api/order', orders);
-      console.log(res);
+      const res1 = await axios.get('api/user');
+      const currentUser = await res1.data.user;
+      const res2 = await axios.post(
+        '/api/user/users',
+        findBelowUsers(currentUser)
+      );
+      const users = await res2.data.users;
+      users.forEach((user) => {
+        user.bulkOrders.forEach((bulkOrder) => {
+          bulkOrder.orders.forEach((order) => {
+            if (order.status === 'pending') {
+              updateStatus(user._id, bulkOrder._id, order._id);
+            }
+          });
+        });
+      });
     } catch (error) {
       console.log(error.message);
     }

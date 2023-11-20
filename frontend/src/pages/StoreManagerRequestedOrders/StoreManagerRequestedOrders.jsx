@@ -28,33 +28,7 @@ const StoreManagerRequestedOrders = () => {
       autoClose: 1500,
     });
 
-    // to update the status of order
-    const updateStatus = async (userId, bulkOrderId, orderId) => {
-      const res = await axios.put(`api/order/${bulkOrderId}/${orderId}`, {
-        user_id: userId,
-        status: 'accepted',
-      });
-      console.log(res);
-      getRequiredUserData();
-    };
-
     // let arr = [];
-    usersOfRequestedOrders.forEach((user) => {
-      // let arr2 = [];
-      user.bulkOrders.forEach((bulkOrder) => {
-        // let arr3 = [];
-        bulkOrder.orders.forEach((order) => {
-          if (order.status === 'pending') {
-            // arr3.push({ orderId: order.itemId });
-
-            updateStatus(user._id, bulkOrder._id, order._id);
-          }
-        });
-        // arr2.push({ bulkOrderId: arr3 });
-      });
-      // arr.push({ userId: arr2 });
-    });
-    // console.log(arr);
 
     // -------
     const orderMap = new Map();
@@ -88,6 +62,7 @@ const StoreManagerRequestedOrders = () => {
         amount: value.quantity,
         name: value.name,
         imageUrl: value.imageUrl,
+        masterPassword: 'none',
       });
     });
 
@@ -142,40 +117,44 @@ const StoreManagerRequestedOrders = () => {
             <div className='flex justify-center overflow-x-auto whitespace-nowrap'>
               <button
                 onClick={() => handleTabClick('pending')}
-                className={`default_tab ${currentStatus === 'pending'
+                className={`default_tab ${
+                  currentStatus === 'pending'
                     ? 'status_true_tab'
                     : 'status_false_tab'
-                  }`}
+                }`}
               >
                 <p className='mx-auto'>Pending</p>
               </button>
 
               <button
                 onClick={() => handleTabClick('accepted')}
-                className={`default_tab ${currentStatus === 'accepted'
+                className={`default_tab ${
+                  currentStatus === 'accepted'
                     ? 'status_true_tab'
                     : 'status_false_tab'
-                  }`}
+                }`}
               >
                 <p className='mx-auto'>Accepted</p>
               </button>
 
               <button
                 onClick={() => handleTabClick('rejected')}
-                className={`default_tab ${currentStatus === 'rejected'
+                className={`default_tab ${
+                  currentStatus === 'rejected'
                     ? 'status_true_tab'
                     : 'status_false_tab'
-                  }`}
+                }`}
               >
                 <p className='mx-auto'>Rejected</p>
               </button>
 
               <button
                 onClick={() => handleTabClick('completed')}
-                className={`default_tab ${currentStatus === 'completed'
+                className={`default_tab ${
+                  currentStatus === 'completed'
                     ? 'status_true_tab'
                     : 'status_false_tab'
-                  }`}
+                }`}
               >
                 <p className='mx-auto'>Completed</p>
               </button>

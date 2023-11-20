@@ -4,7 +4,7 @@ import { useCart } from '../../store/CartProvider';
 const CartItem = (props) => {
   const [amount, setAmount] = useState(props.amount);
   const { cart, dispatch } = useCart();
-
+  console.log(props.item);
   const incrementHandler = (item) => {
     setAmount(+amount + 1);
     dispatch({
