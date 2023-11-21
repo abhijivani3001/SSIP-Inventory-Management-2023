@@ -64,21 +64,19 @@ const RequestedPlanning = (props) => {
     usersOfRequestedPlans.forEach((user) => {
       if (checkStatus(user)) {
         user.planningBulkOrders.planningOrders.forEach((order) => {
-          if (order.status === 'submitted' || order.status === 'accepted') {
-            if (orderMap.has(order.itemId)) {
-              const mapItem = orderMap.get(order.itemId);
-              let updatedOrder = {
-                ...mapItem,
-                quantity: order.quantity + mapItem.quantity,
-              };
-              orderMap.set(order.itemId, updatedOrder);
-            } else {
-              orderMap.set(order.itemId, {
-                name: order.name,
-                quantity: order.quantity,
-                imageUrl: order.imageUrl,
-              });
-            }
+          if (orderMap.has(order.itemId)) {
+            const mapItem = orderMap.get(order.itemId);
+            let updatedOrder = {
+              ...mapItem,
+              quantity: order.quantity + mapItem.quantity,
+            };
+            orderMap.set(order.itemId, updatedOrder);
+          } else {
+            orderMap.set(order.itemId, {
+              name: order.name,
+              quantity: order.quantity,
+              imageUrl: order.imageUrl,
+            });
           }
         });
       }
