@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from '../../api/AxiosUrl';
 import UserDataCard from './UserDataCard';
 import { FaSearch } from 'react-icons/fa';
-import { findBelowUsers } from '../../components/Helper/Helper';
+import { findBelowUsers } from '../../Helper/Helper';
 
 const AdminDashboard = () => {
   const [userData, setUserData] = useState([]);
@@ -22,7 +22,7 @@ const AdminDashboard = () => {
         );
         const data = await res2.data.users;
         setUserData(data);
-        console.log("dt", data);
+        console.log('dt', data);
       } catch (error) {
         console.error(error);
       }
@@ -56,14 +56,16 @@ const AdminDashboard = () => {
       <div className='flex items-center justify-between mb-4'>
         <h1 className='page-title'>All registered users</h1>
         <div className='flex items-center'>
-          <label htmlFor="roleSelect" className='mr-2 text-lg'>Select Role:</label>
+          <label htmlFor='roleSelect' className='mr-2 text-lg'>
+            Select Role:
+          </label>
           <select
-            id="roleSelect"
+            id='roleSelect'
             value={selectedRole}
             onChange={handleRoleChange}
             className='p-2 border rounded-lg'
           >
-            <option value="">All</option>
+            <option value=''>All</option>
             {Object.keys(roleWiseUsers).map((role) => (
               <option key={role} value={role}>
                 {role}

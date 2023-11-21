@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import StoreManReqOrdTwo from './StoreManReqOrdTwo';
-import { compareStatusForStoreManager } from '../../components/Helper/Helper';
+import { compareStatusForStoreManager } from '../../Helper/Helper';
 
 const StoreManReqOrdOne = (props) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import StoreManReqOrdThree from './StoreManReqOrdThree';
-import { compareStatusForStoreManager } from '../../components/Helper/Helper';
+import { compareStatusForStoreManager } from '../../Helper/Helper';
 import axios from '../../api/AxiosUrl';
 
 const StoreManReqOrdTwo = (props) => {

@@ -4,7 +4,7 @@ import { useCart } from '../../store/CartProvider';
 import ROLES from '../../constants/ROLES';
 import HeadReqOrdData from './HeadReqOrdData';
 import HeadReqOrdOne from './HeadReqOrdOne';
-import { findBelowUsers } from '../../components/Helper/Helper';
+import { findBelowUsers } from '../../Helper/Helper';
 
 const HeadRequestedOrders = () => {
   const { cart, dispatch } = useCart();

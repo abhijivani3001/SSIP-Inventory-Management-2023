@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from '../../api/AxiosUrl';
 import { useCart } from '../../store/CartProvider';
-import ROLES from '../../constants/ROLES';
 import StoreReqOrdData from './StoreReqOrdData';
 import StoreManReqOrdOne from './StoreManReqOrdOne';
 import { toast } from 'react-toastify';
@@ -9,7 +8,7 @@ import { toast } from 'react-toastify';
 import {
   findBelowUsers,
   compareStatusForStoreManager,
-} from '../../components/Helper/Helper';
+} from '../../Helper/Helper';
 
 const StoreManagerRequestedOrders = () => {
   const { cart, dispatch } = useCart();

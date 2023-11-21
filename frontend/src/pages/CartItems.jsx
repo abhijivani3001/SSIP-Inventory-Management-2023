@@ -5,7 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from '../api/AxiosUrl';
 import ROLES from '../constants/ROLES';
-import { findBelowUsers } from '../components/Helper/Helper';
+import { findBelowUsers } from '../Helper/Helper';
 
 const CartItems = () => {
   const { cart, dispatch } = useCart();

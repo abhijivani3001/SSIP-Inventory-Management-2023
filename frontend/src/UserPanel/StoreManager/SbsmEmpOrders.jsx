@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from '../../api/AxiosUrl';
 import UserDataCardSbsm from './UserDataCardSbsm';
 import { FaSearch } from 'react-icons/fa';
-import { findBelowUsers } from '../../components/Helper/Helper';
+import { findBelowUsers } from '../../Helper/Helper';
 
 const SbsmEmpOrder = () => {
   const [userData, setUserData] = useState([]);
@@ -29,11 +29,12 @@ const SbsmEmpOrder = () => {
     })();
   }, []);
 
-  const filteredUsers = userData.filter((user) =>
-    user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.branch.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (user.phone || '').toString().includes(searchTerm)
+  const filteredUsers = userData.filter(
+    (user) =>
+      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.branch.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (user.phone || '').toString().includes(searchTerm)
   );
 
   const roleWiseUsers = {};
@@ -54,14 +55,16 @@ const SbsmEmpOrder = () => {
       <div className='flex items-center justify-between mb-4'>
         <h1 className='page-title'>All registered users</h1>
         <div className='flex items-center'>
-          <label htmlFor="roleSelect" className='mr-2 text-lg'>Select Role:</label>
+          <label htmlFor='roleSelect' className='mr-2 text-lg'>
+            Select Role:
+          </label>
           <select
-            id="roleSelect"
+            id='roleSelect'
             value={selectedRole}
             onChange={handleRoleChange}
             className='p-2 border rounded-lg'
           >
-            <option value="">All</option>
+            <option value=''>All</option>
             {Object.keys(roleWiseUsers).map((role) => (
               <option key={role} value={role}>
                 {role}
@@ -84,7 +87,9 @@ const SbsmEmpOrder = () => {
         <div className='text-xl my-auto mt-8 text-center '>Loading...</div>
       ) : (
         <div className='text-3xl border border-gray-400 py5 px-10 rounded-lg shadow-xl my-10'>
-          <UserDataCardSbsm users={roleWiseUsers[selectedRole] || filteredUsers} />
+          <UserDataCardSbsm
+            users={roleWiseUsers[selectedRole] || filteredUsers}
+          />
         </div>
       )}
     </div>

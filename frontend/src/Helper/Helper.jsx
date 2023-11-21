@@ -1,4 +1,4 @@
-import ROLES from '../../constants/ROLES';
+import ROLES from '../constants/ROLES';
 
 export const findBelowUsers = (currentUser) => {
   let { role, subBranch, branch, department } = currentUser;
