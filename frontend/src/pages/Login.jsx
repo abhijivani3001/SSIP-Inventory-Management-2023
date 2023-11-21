@@ -8,10 +8,40 @@ const Login = (props) => {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [expectedCaptchaValue, setExpectedCaptchaValue] = useState('');
+  const [captchaImage, setCaptchaImage] = useState('');
+  const [userCaptchaValue, setUserCaptchaValue] = useState('');
   const authCtx = useContext(AuthContext);
+
+  useEffect(() => {
+    // Fetch captcha when component mounts
+    fetchCaptcha();
+  }, []);
+
+  const fetchCaptcha = async () => {
+    try {
+      const response = await axios.get('/api/captcha');
+      const captchaData = response.data;
+
+      if (captchaData.success) {
+        setExpectedCaptchaValue(captchaData.value);
+        setCaptchaImage(captchaData.imagePath);
+      } else {
+        console.error('Failed to fetch captcha');
+      }
+    } catch (error) {
+      console.error('Error fetching captcha:', error);
+    }
+  };
 
   const submitHandler = async (event) => {
     event.preventDefault();
+
+    // Check if the entered captcha value matches the expected captcha value
+    if (userCaptchaValue.toLowerCase() !== expectedCaptchaValue.toLowerCase()) {
+      alert('Captcha verification failed. Please try again.');
+      return;
+    }
 
     try {
       const res = await axios.post('/api/user/login', {
@@ -24,7 +54,6 @@ const Login = (props) => {
         alert('Login Successfully');
         authCtx.login(data.token);
         navigate('/');
-
         window.location.reload(); // bad-practice
       } else {
         alert('Login failed');
@@ -35,15 +64,18 @@ const Login = (props) => {
 
     setUsername('');
     setPassword('');
+    setUserCaptchaValue('');
+
+    // Fetch a new captcha after form submission
+    fetchCaptcha();
   };
 
   return (
     <div className='inset-0 flex flex-col items-center justify-center  p-16'>
-      
       <div className='bg-white w-96 p-8 rounded-lg shadow-lg'>
-      <div className='mb-2 ml-[85px]'>
-        <img src='https://cracku.in/latest-govt-jobs/wp-content/uploads/2019/07/Government-of-India.jpg' height="30px" width="140px"  />
-      </div>
+        <div className='mb-2 ml-[85px]'>
+          <img src='https://cracku.in/latest-govt-jobs/wp-content/uploads/2019/07/Government-of-India.jpg' height="30px" width="140px" alt="Government of India" />
+        </div>
         <h2 className='text-2xl font-semibold text-gray-800 mb-4 min-w-0 flex items-center justify-center'>
           Login
         </h2>
@@ -73,6 +105,22 @@ const Login = (props) => {
               placeholder='Enter your password'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <div className='mb-4'>
+            <label htmlFor='captcha' className='block text-gray-700'>
+              Captcha
+            </label>
+            <img src={`${captchaImage}`} alt='captcha' />
+            <input
+              type='text'
+              id='captcha'
+              name='captcha'
+              className='w-full px-3 py-2 border text-black rounded-lg focus:outline-none focus:border-blue-500'
+              placeholder='Enter the characters above'
+              value={userCaptchaValue}
+              onChange={(e) => setUserCaptchaValue(e.target.value)}
               required
             />
           </div>

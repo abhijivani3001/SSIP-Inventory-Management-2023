@@ -10,6 +10,7 @@ const Products = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isProductsAvailable, setIsProductsAvailable] = useState(false);
+  const [isNoMatch, setIsNoMatch] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,6 +26,7 @@ const Products = () => {
         });
 
         setProducts(finalData);
+        setFilteredProducts(finalData);
 
         if (finalData?.length) setIsProductsAvailable(true);
         else setIsProductsAvailable(false);
@@ -42,6 +44,13 @@ const Products = () => {
     const filtered = products.filter((product) =>
       product.name.toLowerCase().includes(lowerCaseQuery)
     );
+
+    if (filtered.length > 0) {
+      setIsNoMatch(false);
+    } else {
+      setIsNoMatch(true);
+    }
+
     setFilteredProducts(filtered);
   };
 
@@ -72,7 +81,11 @@ const Products = () => {
             </div>
           </div>
           <div className='flex flex-wrap justify-center my-6'>
-            <Product data={filteredProducts.length ? filteredProducts : products} />
+            {filteredProducts.length > 0 ? (
+              <Product data={filteredProducts} />
+            ) : (
+              isNoMatch && <div>No items matched your search.</div>
+            )}
           </div>
         </>
       )}
