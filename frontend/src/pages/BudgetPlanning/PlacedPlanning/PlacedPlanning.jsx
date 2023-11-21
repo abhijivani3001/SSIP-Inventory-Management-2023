@@ -20,8 +20,8 @@ const PlacedPlanning = (props) => {
     setIsAddProductsShown(false);
   };
 
-  let price = 0;
   useEffect(() => {
+    let price = 0;
     plannedBulkOrders?.planningOrders?.forEach((order) => {
       price += order.quantity * order.price;
     });

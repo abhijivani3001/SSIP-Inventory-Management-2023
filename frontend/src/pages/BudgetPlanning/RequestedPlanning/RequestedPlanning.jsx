@@ -4,6 +4,7 @@ import axios from '../../../api/AxiosUrl';
 import { findBelowUsers } from '../../../Helper/Helper';
 import ShowReqPlannigOrdOne from './ShowReqPlannigOrdOne';
 import ROLES from '../../../constants/ROLES';
+import { toast } from 'react-toastify';
 
 const RequestedPlanning = (props) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -35,10 +36,6 @@ const RequestedPlanning = (props) => {
     setIsLoading(false);
   };
 
-  useEffect(() => {
-    getRequiredUserData();
-  }, []);
-
   const checkStatus = (user) => {
     if (user.planningBulkOrders.planningOrders.length) {
       if (
@@ -54,6 +51,54 @@ const RequestedPlanning = (props) => {
     }
     return false;
   };
+
+  const handleMergeOrder = async () => {
+    toast.success('Order Merged Successfully', {
+      autoClose: 1500,
+    });
+
+    // let arr = [];
+
+    // -------
+    const orderMap = new Map();
+    usersOfRequestedPlans.forEach((user) => {
+      if (checkStatus(user)) {
+        user.planningBulkOrders.planningOrders.forEach((order) => {
+          if (order.status === 'submitted' || order.status === 'accepted') {
+            if (orderMap.has(order.itemId)) {
+              const mapItem = orderMap.get(order.itemId);
+              let updatedOrder = {
+                ...mapItem,
+                quantity: order.quantity + mapItem.quantity,
+              };
+              orderMap.set(order.itemId, updatedOrder);
+            } else {
+              orderMap.set(order.itemId, {
+                name: order.name,
+                quantity: order.quantity,
+                imageUrl: order.imageUrl,
+              });
+            }
+          }
+        });
+      }
+    });
+
+    let ordersArray = [];
+    orderMap.forEach((value, key) => {
+      ordersArray.push({
+        itemId: key,
+        quantity: value.quantity,
+      });
+    });
+    console.log(orderMap);
+    const res = await axios.post('api/planningorder', [...ordersArray]);
+    console.log(res);
+  };
+
+  useEffect(() => {
+    getRequiredUserData();
+  }, []);
 
   return (
     <>
@@ -97,7 +142,7 @@ const RequestedPlanning = (props) => {
             {mainFlag && (
               <>
                 {props.currentUser.role.includes('store') && (
-                  <div className='text-center'>
+                  <div className='text-center' onClick={handleMergeOrder}>
                     <button className='green_btn my-6 uppercase'>Merge</button>
                   </div>
                 )}
