@@ -48,6 +48,17 @@ const PlacedPlanning = (props) => {
     getPlannedOrders();
   }, []);
 
+  const submitHandler = async (status) => {
+    try {
+      const res = await axios.put('api/planningorder', {
+        status,
+      });
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className='mx-10 my-4'>
       {isLoading && (
@@ -144,7 +155,12 @@ const PlacedPlanning = (props) => {
               Add Item
             </button>
             {isPlannedProductsAvailable && (
-              <button className='green_btn'>Submit</button>
+              <button
+                className='green_btn'
+                onClick={() => submitHandler('submitted')}
+              >
+                Submit
+              </button>
             )}
           </div>
 

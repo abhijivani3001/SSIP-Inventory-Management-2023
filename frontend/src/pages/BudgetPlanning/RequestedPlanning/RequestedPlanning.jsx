@@ -39,6 +39,22 @@ const RequestedPlanning = (props) => {
     getRequiredUserData();
   }, []);
 
+  const checkStatus = (user) => {
+    if (user.planningBulkOrders.planningOrders.length) {
+      if (
+        props.currentUser.role ===
+        (ROLES.BRANCH_STORE_MANAGER || ROLES.DEPARTMENT_STORE_MANAGER)
+      ) {
+        if (user.planningBulkOrders.status === 'accepted') return true;
+        return false;
+      } else if (user.planningBulkOrders.status === 'submitted') {
+        return true;
+      }
+      return false;
+    }
+    return false;
+  };
+
   return (
     <>
       <div className='mx-10 my-4'>
@@ -51,10 +67,7 @@ const RequestedPlanning = (props) => {
             {usersOfRequestedPlans?.map((user) => {
               let flag = false;
 
-              if (
-                user.planningBulkOrders.planningOrders.length &&
-                user.planningBulkOrders.planningOrders.status !== 'pending'
-              ) {
+              if (checkStatus(user)) {
                 flag = true;
                 mainFlag = true;
               }

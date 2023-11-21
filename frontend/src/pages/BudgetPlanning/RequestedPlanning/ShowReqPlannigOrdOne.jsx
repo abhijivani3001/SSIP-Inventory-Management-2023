@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ShowReqPlanningOrdTwo from './ShowReqPlanningOrdTwo';
+import axios from '../../../api/AxiosUrl';
 
 const ShowReqPlannigOrdOne = (props) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
@@ -22,6 +23,18 @@ const ShowReqPlannigOrdOne = (props) => {
     });
     setTotalPrice(price);
   }, [props.planningBulkOrders]);
+
+  const headApprovalHandler = async (status, userId) => {
+    try {
+      const res = await axios.put('api/planningorder', {
+        status,
+        user_id: userId,
+      });
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -124,7 +137,12 @@ const ShowReqPlannigOrdOne = (props) => {
                   <tr className='bg-white'>
                     <td colSpan={4}>
                       <div className='flex gap-2 justify-center'>
-                        <button className='green_btn my-2 uppercase'>
+                        <button
+                          className='green_btn my-2 uppercase'
+                          onClick={() =>
+                            headApprovalHandler('accepted', props.userId)
+                          }
+                        >
                           Approve
                         </button>
                         <button className='trans_red_btn my-2 uppercase'>
