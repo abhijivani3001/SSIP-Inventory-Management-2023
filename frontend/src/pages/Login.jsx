@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import AuthContext from '../store/auth-context';
 import axios from '../api/AxiosUrl';
-import 'react-toastify/dist/ReactToastify.css';
 
 const Login = (props) => {
   const navigate = useNavigate();
@@ -34,12 +35,25 @@ const Login = (props) => {
     }
   };
 
+  const showToast = (message, type) => {
+    toast[type](message, { position: toast.POSITION.TOP_CENTER });
+  };
+
+  useEffect(() => {
+    // Close toast when isLoggedIn changes
+    if (authCtx.isLoggedIn) {
+      const closeToast = () => toast.dismiss();
+      setTimeout(closeToast, 1500);
+    }
+  }, [authCtx.isLoggedIn]);
+
+
   const submitHandler = async (event) => {
     event.preventDefault();
 
     // Check if the entered captcha value matches the expected captcha value
     if (userCaptchaValue.toLowerCase() !== expectedCaptchaValue.toLowerCase()) {
-      alert('Captcha verification failed. Please try again.');
+      showToast('Captcha verification failed. Please try again.', 'error');
       return;
     }
 
@@ -51,15 +65,15 @@ const Login = (props) => {
       const data = await res.data;
 
       if (data.success === true) {
-        alert('Login Successfully');
+        showToast('Login Successful', 'success');
         authCtx.login(data.token);
         navigate('/');
         window.location.reload(); // bad-practice
       } else {
-        alert('Login failed');
+        showToast('Login failed. Please check your credentials.', 'error');
       }
     } catch (err) {
-      alert('Error, please try again');
+      showToast('Error. Please try again.', 'error');
     }
 
     setUsername('');
@@ -140,6 +154,7 @@ const Login = (props) => {
           </div>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 };

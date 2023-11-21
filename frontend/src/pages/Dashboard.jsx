@@ -99,9 +99,9 @@ const Dashboard = () => {
                   </h2>
                   <BarChart orderData={orderData?.barChartData} />
                 </div>
-                <div className="mx-10 my-5 border-gray-800 border">
+                {/* <div className="mx-10 my-5 border-gray-800 border">
                   <StackedColumnChart />
-                </div>
+                </div> */}
                 <div className="mx-10 my-5 border-gray-800 border ">
                   <ScatterPlot />
                 </div>
