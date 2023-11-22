@@ -3,6 +3,7 @@ import axios from '../../api/AxiosUrl';
 import RequestedPlanning from './RequestedPlanning/RequestedPlanning';
 import PlacedPlanning from './PlacedPlanning/PlacedPlanning';
 import ROLES from '../../constants/ROLES';
+import AdminPlan from './AdminBudgetPlanning/AdminPlan';
 
 const BudgetPlanning = () => {
   const [currentStatus, setCurrentStatus] = useState('your-plan');
@@ -34,10 +35,10 @@ const BudgetPlanning = () => {
         <div className='text-xl my-auto text-center '>Loading...</div>
       )}
 
-      {!isLoading && (
+      {!isLoading && currentUser?.role !== ROLES.ADMIN && (
         <>
           <div className='my-6'>
-            {currentUser.role !== ROLES.EMPLOYEE && (
+            {currentUser?.role !== ROLES.EMPLOYEE && (
               <div className='flex justify-center overflow-x-auto whitespace-nowrap'>
                 <button
                   onClick={() => handleTabClick('requested-plan')}
@@ -77,6 +78,12 @@ const BudgetPlanning = () => {
             )}
           </div>
         </>
+      )}
+
+      {!isLoading && currentUser?.role === ROLES.ADMIN && (
+        <div>
+          <AdminPlan />
+        </div>
       )}
     </div>
   );
