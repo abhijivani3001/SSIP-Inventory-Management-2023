@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import AuthContext from '../store/auth-context';
 import axios from '../api/AxiosUrl';
 
-const Login = (props) => {
+const Login = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -43,10 +43,9 @@ const Login = (props) => {
     // Close toast when isLoggedIn changes
     if (authCtx.isLoggedIn) {
       const closeToast = () => toast.dismiss();
-      setTimeout(closeToast, 1500);
+      setTimeout(closeToast, 3000); // Adjust the timeout as needed
     }
   }, [authCtx.isLoggedIn]);
-
 
   const submitHandler = async (event) => {
     event.preventDefault();
@@ -68,7 +67,6 @@ const Login = (props) => {
         showToast('Login Successful', 'success');
         authCtx.login(data.token);
         navigate('/');
-        window.location.reload(); // bad-practice
       } else {
         showToast('Login failed. Please check your credentials.', 'error');
       }
@@ -82,10 +80,15 @@ const Login = (props) => {
 
     // Fetch a new captcha after form submission
     fetchCaptcha();
+
+    // Adjust the timeout as needed
+    setTimeout(() => {
+      toast.dismiss();
+    }, 3000);
   };
 
   return (
-    <div className='inset-0 flex flex-col items-center justify-center  p-16'>
+    <div className='inset-0 flex flex-col items-center justify-center p-16'>
       <div className='bg-white w-96 p-8 rounded-lg shadow-lg'>
         <div className='mb-2 ml-[85px]'>
           <img src='https://cracku.in/latest-govt-jobs/wp-content/uploads/2019/07/Government-of-India.jpg' height="30px" width="140px" alt="Government of India" />
