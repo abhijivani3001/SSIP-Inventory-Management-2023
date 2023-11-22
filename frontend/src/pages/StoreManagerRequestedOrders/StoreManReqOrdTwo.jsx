@@ -37,7 +37,7 @@ const StoreManReqOrdTwo = (props) => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const res = await axios.get('api/item');
+        const res = await axios.post('api/item/getitems');
         setItems(res.data.items);
       } catch (err) {
         console.log(err);

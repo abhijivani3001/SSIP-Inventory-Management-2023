@@ -77,6 +77,27 @@ const EmployeeNavbar = () => {
               ></div>
             </div>
           </li>
+          <li>
+            <div className='navbar-element-parent group'>
+              <Link
+                to='/add-products-emp'
+                className={`${
+                  location.pathname === '/add-products-emp'
+                    ? 'active-navbar-element'
+                    : 'navbar-element'
+                }`}
+              >
+                Add Products
+              </Link>
+              <div
+                className={`${
+                  location.pathname === '/add-products-emp'
+                    ? 'active-navbar-underline'
+                    : 'navbar-underline'
+                } `}
+              ></div>
+            </div>
+          </li>
         </ul>
       </div>
     </>

@@ -14,6 +14,8 @@ import Inventory from './pages/Inventory';
 import ROLES from './constants/ROLES';
 import RegisterUser from './UserPanel/Admin/RegisterUser';
 import AddProducts from './UserPanel/Admin/AddProducts';
+import AddProductsEmp from './UserPanel/Employee/AddProductsEmp';
+import ItemRequests from './UserPanel/StoreManager/ItemRequests';
 
 import axios from './api/AxiosUrl';
 import HeadRequestedOrders from './pages/HeadRequestedOrders/HeadRequestedOrders';
@@ -62,6 +64,9 @@ function App() {
         {isLoggedIn && (userRole === ROLES.ADMIN || !isLoading) && (
           <Route path='/add-products' element={<AddProducts />} />
         )}
+        {isLoggedIn && (userRole === ROLES.EMPLOYEE || !isLoading) && (
+          <Route path='/add-products-emp' element={<AddProductsEmp />} />
+        )}
         {/* {isLoggedIn && userRole === ROLES.ADMIN && (
           <Route path='/dashboard' element={<AdminDashboard />} />
         )} */}
@@ -94,6 +99,9 @@ function App() {
         )}
         {isLoggedIn && userRole !== ROLES.ADMIN && (
           <Route path='/notification' element={<Notification />} />
+        )}
+        {isLoggedIn  && (
+          <Route path='/item-requests' element={<ItemRequests />} />
         )}
 
         {isLoggedIn &&

@@ -10,7 +10,7 @@ const AddPlannedProductTwo = (props) => {
   useEffect(() => {
     (async () => {
       try {
-        const result = await axios.get('api/item');
+        const result = await axios.post('api/item/getitems');
         const data = await result.data.items;
 
         const finalData = data.map((item) => {

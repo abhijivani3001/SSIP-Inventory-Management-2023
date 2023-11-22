@@ -4,11 +4,13 @@ import axios from '../api/AxiosUrl';
 import AddInventoryItem from '../components/Inventory/AddInventoryItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { toast } from 'react-toastify';
 
 const Inventory = (props) => {
   const [inventoryProducts, setInventoryProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isInventoryProductsAvailable, setIsInventoryProductsAvailable] = useState(false);
+  const [isInventoryProductsAvailable, setIsInventoryProductsAvailable] =
+    useState(false);
   const [isAddProductsShown, setIsAddProductsShown] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -16,13 +18,21 @@ const Inventory = (props) => {
     try {
       const result = await axios.get('api/inventory');
       const data = await result.data.inventory;
-
+      let flag = false;
       const finalData = data.map((item) => {
+        if (item.quantity < 10) {
+          flag = true;
+        }
         if (item.description.length > 40) {
           item.description = item.description.slice(0, 30) + '...';
         }
         return item;
       });
+      if (flag === true) {
+        toast.error('Some items are below minimum required quantity!', {
+          autoClose: 1000,
+        });
+      }
       setInventoryProducts(finalData);
 
       if (data?.length) setIsInventoryProductsAvailable(true);

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from '../../api/AxiosUrl';
 
-const AddProducts = () => {
+const AddProductsEmp = () => {
   // Create state variables for the form fields
   const [formData, setFormData] = useState({
     itemname: '',
@@ -25,7 +25,7 @@ const AddProducts = () => {
       category: formData.category,
       imageUrl: formData.imageURL,
       price: formData.price,
-      status: 'accepted',
+      status: 'pending',
     };
 
     try {
@@ -155,4 +155,4 @@ const AddProducts = () => {
   );
 };
 
-export default AddProducts;
+export default AddProductsEmp;

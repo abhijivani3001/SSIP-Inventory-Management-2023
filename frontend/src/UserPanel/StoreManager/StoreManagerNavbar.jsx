@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import axios from '../../api/AxiosUrl';
+import ROLES from '../../constants/ROLES';
 import { useLocation } from 'react-router-dom';
 
 const StoreManagerNavbar = () => {
   const location = useLocation();
+
+  const [currentUserRole, setCurrentUserRole] = useState('');
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await axios.get('api/user');
+        setCurrentUserRole(res.data.user.role);
+      } catch (err) {
+        console.log(err.message);
+      }
+    })();
+  }, []);
 
   return (
     <>
@@ -119,6 +133,29 @@ const StoreManagerNavbar = () => {
               ></div>
             </div>
           </li>
+          {currentUserRole === ROLES.DEPARTMENT_STORE_MANAGER && (
+            <li>
+              <div className='navbar-element-parent group'>
+                <Link
+                  to='/item-requests'
+                  className={`${
+                    location.pathname === '/item-requests'
+                      ? 'active-navbar-element'
+                      : 'navbar-element'
+                  }`}
+                >
+                  Item Requests
+                </Link>
+                <div
+                  className={`${
+                    location.pathname === '/item-requests'
+                      ? 'active-navbar-underline'
+                      : 'navbar-underline'
+                  } `}
+                ></div>
+              </div>
+            </li>
+          )}
           <li>
             <div className='navbar-element-parent group'>
               <Link

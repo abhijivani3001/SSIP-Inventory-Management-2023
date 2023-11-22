@@ -15,7 +15,7 @@ const Products = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await axios.get('api/item');
+        const result = await axios.post('api/item/getitems');
         const data = result.data.items;
 
         const finalData = data.map((item) => {
@@ -56,7 +56,9 @@ const Products = () => {
 
   return (
     <div className='mx-8 mt-4'>
-      {isLoading && <div className='text-xl my-auto text-center'>Loading...</div>}
+      {isLoading && (
+        <div className='text-xl my-auto text-center'>Loading...</div>
+      )}
       {!isLoading && !isProductsAvailable && (
         <div className='not_available'>Products are not available</div>
       )}
