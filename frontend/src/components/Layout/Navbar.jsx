@@ -93,7 +93,7 @@ const Navbar = () => {
     <div className='sticky inset-x-0 top-0 z-40 h-16 bg-gray-900 text-gray-300 shadow-xl'>
       <div className='flex flex-wrap items-center justify-between mx-auto p-0 h-16 px-10'>
         {/* Part-1: logo */}
-        <Link to='/dashboard'>
+        <Link to='/'>
           <div className='flex items-center'>
             <img
               src='https://flowbite.com/docs/images/logo.svg'
@@ -148,8 +148,20 @@ const Navbar = () => {
                   <Link to='/cart'>
                     <div className='flex gap-0 group'>
                       <div className='w-6 relative'>
-                        <PiShoppingCartBold className='icon group-hover:text-gray-200' />
-                        <span className='absolute left-4 bottom-4 bg-teal-300 group-hover:bg-teal-200 group-hover:font-bold text-black font-medium py-0 px-1.5 text-sm rounded-full z-30'>
+                        <PiShoppingCartBold
+                          className={`${
+                            location.pathname === '/cart'
+                              ? 'active-icon'
+                              : 'icon group-hover:text-gray-200'
+                          } `}
+                        />
+                        <span
+                          className={`absolute left-4 bottom-4 ${
+                            location.pathname === '/cart'
+                              ? 'bg-teal-300 font-bold'
+                              : 'bg-teal-400 group-hover:bg-teal-300 group-hover:font-bold'
+                          }  text-black font-medium py-0 px-1.5 text-sm rounded-full z-30`}
+                        >
                           {amount}
                         </span>
                       </div>
@@ -162,9 +174,21 @@ const Navbar = () => {
                   <Link to='/notification'>
                     <div className='flex gap-0 group'>
                       <div className='w-6 relative'>
-                        <MdNotificationsNone className='icon group-hover:text-gray-200' />
+                        <MdNotificationsNone
+                          className={`${
+                            location.pathname === '/notification'
+                              ? 'active-icon'
+                              : 'icon group-hover:text-gray-200'
+                          } `}
+                        />
                         {isNewNotification && (
-                          <span className='absolute left-4 bottom-4 bg-rose-500 group-hover:bg-rose-400 h-3 w-3 rounded-full z-30'></span>
+                          <span
+                            className={`absolute left-4 bottom-4 ${
+                              location.pathname === '/notification'
+                                ? 'bg-rose-400'
+                                : 'bg-rose-500 group-hover:bg-rose-400'
+                            }  h-3 w-3 rounded-full z-30`}
+                          ></span>
                         )}
                       </div>
                     </div>
