@@ -3,18 +3,27 @@
 @tailwind utilities;
 
 body {
-  @apply bg-gray-100 max-w-[100%] overflow-x-hidden overflow-y-auto;
+  @apply bg-gray-50 max-w-[100%] overflow-x-hidden overflow-y-auto;
 }
 
 /* navbar */
 .navbar-title {
   @apply hover:underline active:underline active:text-gray-900 text-gray-900 font-bold underline;
 }
+.navbar-element-parent {
+  @apply flex flex-col justify-between align-middle h-full px-4 hover:bg-gray-800;
+}
 .navbar-element {
-  @apply block py-2 pl-3 pr-4 rounded md:bg-transparent md:p-0 hover:text-sky-600 hover:underline hover:underline-offset-4;
+  @apply block rounded group-hover:text-white mt-4;
 }
 .active-navbar-element {
-  @apply block py-2 pl-3 pr-4 rounded md:bg-transparent md:p-0 text-sky-600 underline underline-offset-4;
+  @apply block p-0 text-white mt-4;
+}
+.navbar-underline {
+  @apply group-hover:h-[2px] group-hover:bg-gray-200;
+}
+.active-navbar-underline {
+  @apply h-[3px] bg-sky-200;
 }
 
 .page-title {
@@ -76,5 +85,5 @@ body {
 
 /* Icons */
 .icon {
-  @apply text-3xl text-gray-700 my-auto;
+  @apply text-3xl text-gray-400 hover:text-gray-200 my-auto;
 }

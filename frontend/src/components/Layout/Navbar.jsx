@@ -18,6 +18,8 @@ import AdminNavbar from '../../UserPanel/Admin/AdminNavbar';
 import { useCart } from '../../store/CartProvider';
 
 const Navbar = () => {
+  const location = useLocation();
+
   // Auth:
   const authCtx = useContext(AuthContext);
   const isLoggedIn = authCtx.isLoggedIn;
@@ -25,8 +27,6 @@ const Navbar = () => {
   const logoutHandler = () => {
     authCtx.logout();
   };
-
-  const location = useLocation();
 
   // Cart:
   const { cart, dispatch } = useCart();
@@ -90,8 +90,8 @@ const Navbar = () => {
   }, [cart.isNotificationUpdated]);
 
   return (
-    <nav className='sticky inset-x-0 top-0 z-10 text-gray-900 bg-gray-100 text-xl mx-2'>
-      <div className='flex flex-wrap items-center justify-between mx-auto p-4 px-10'>
+    <div className='sticky inset-x-0 top-0 z-40 h-16 bg-gray-900 text-gray-300 shadow-xl'>
+      <div className='flex flex-wrap items-center justify-between mx-auto p-0 h-16 px-10'>
         {/* Part-1: logo */}
         <Link to='/dashboard'>
           <div className='flex items-center'>
@@ -100,7 +100,7 @@ const Navbar = () => {
               className='h-8 mr-3'
               alt='Flowbite Logo'
             />
-            <span className='self-center text-2xl font-bold whitespace-nowrap'>
+            <span className='self-center text-2xl text-gray-100 font-bold whitespace-nowrap hover:text-white'>
               Inventory Management
             </span>
           </div>
@@ -108,19 +108,31 @@ const Navbar = () => {
 
         {/* login */}
         {!isLoggedIn && (
-          <div className='order-last flex gap-4'>
-            <ul className='flex align-middle gap-4'>
+          <div
+            className='items-center justify-between hidden w-full md:flex md:w-auto md:order-1 h-full'
+            id='navbar-user'
+          >
+            <ul className='flex font-medium text-lg p-0 m-0 h-full align-middle rounded-lg'>
               <li>
-                <Link
-                  to='/login'
-                  className={`navbar-element ${
-                    location.pathname === '/login' || location.pathname === '/'
-                      ? 'active-navbar-element'
-                      : ''
-                  }`}
-                >
-                  Login
-                </Link>
+                <div className='navbar-element-parent group'>
+                  <Link
+                    to='/'
+                    className={`${
+                      location.pathname === '/'
+                        ? 'active-navbar-element'
+                        : 'navbar-element'
+                    }`}
+                  >
+                    <div>Login</div>
+                  </Link>
+                  <div
+                    className={`${
+                      location.pathname === '/'
+                        ? 'active-navbar-underline'
+                        : 'navbar-underline'
+                    } `}
+                  ></div>
+                </div>
               </li>
             </ul>
           </div>
@@ -134,10 +146,10 @@ const Navbar = () => {
                 {/* cart */}
                 <li className='my-auto'>
                   <Link to='/cart'>
-                    <div className='flex gap-0'>
+                    <div className='flex gap-0 group'>
                       <div className='w-6 relative'>
-                        <PiShoppingCartBold className='icon' />
-                        <span className='absolute left-4 bottom-4 bg-teal-700 text-white py-0 px-1.5 text-sm rounded-full z-30'>
+                        <PiShoppingCartBold className='icon group-hover:text-gray-200' />
+                        <span className='absolute left-4 bottom-4 bg-teal-300 group-hover:bg-teal-200 group-hover:font-bold text-black font-medium py-0 px-1.5 text-sm rounded-full z-30'>
                           {amount}
                         </span>
                       </div>
@@ -148,11 +160,11 @@ const Navbar = () => {
                 {/* notification */}
                 <li className='my-auto'>
                   <Link to='/notification'>
-                    <div className='flex gap-0'>
+                    <div className='flex gap-0 group'>
                       <div className='w-6 relative'>
-                        <MdNotificationsNone className='icon' />
+                        <MdNotificationsNone className='icon group-hover:text-gray-200' />
                         {isNewNotification && (
-                          <span className='absolute left-4 bottom-4 bg-rose-600 h-3 w-3 rounded-full z-30'></span>
+                          <span className='absolute left-4 bottom-4 bg-rose-500 group-hover:bg-rose-400 h-3 w-3 rounded-full z-30'></span>
                         )}
                       </div>
                     </div>
@@ -165,7 +177,7 @@ const Navbar = () => {
             <div className='flex items justify-start flex-col order-last'>
               <button
                 type='button'
-                className='flex mr-3 text-sm rounded-full md:mr-0 hover:ring-4 hover:ring-gray-300 '
+                className='flex text-sm rounded-full mr-0'
                 id='user-menu-button'
                 aria-expanded='false'
                 data-dropdown-toggle='user-dropdown'
@@ -287,8 +299,8 @@ const Navbar = () => {
       </div>
 
       {/* horizontal-line */}
-      <div className='border border-gray-400 mx-8'></div>
-    </nav>
+      {/* <div className='border border-gray-400 mx-8'></div> */}
+    </div>
   );
 };
 

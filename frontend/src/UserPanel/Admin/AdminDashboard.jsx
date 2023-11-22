@@ -3,6 +3,7 @@ import axios from '../../api/AxiosUrl';
 import UserDataCard from './UserDataCard';
 import { FaSearch } from 'react-icons/fa';
 import { findBelowUsers } from '../../Helper/Helper';
+import Loader from '../../components/ChakraUI/Loader';
 
 const AdminDashboard = () => {
   const [userData, setUserData] = useState([]);
@@ -52,9 +53,8 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className='mx-8 mt-4'>
+    <div className='mx-8 bg-gray-50 mt-4'>
       <div className='flex items-center justify-between mb-4'>
-        <h1 className='page-title'>All registered users</h1>
         <div className='flex items-center'>
           <label htmlFor='roleSelect' className='mr-2 text-lg'>
             Select Role:
@@ -84,8 +84,9 @@ const AdminDashboard = () => {
           />
         </div>
       </div>
+
       {isLoading ? (
-        <div className='text-xl my-auto mt-8 text-center '>Loading...</div>
+        <Loader />
       ) : (
         <div className='text-3xl border border-gray-400 py5 px-10 rounded-lg shadow-xl my-10'>
           <UserDataCard users={roleWiseUsers[selectedRole] || filteredUsers} />

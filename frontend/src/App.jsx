@@ -51,7 +51,7 @@ function App() {
     <Layout>
       <ToastContainer />
       <Routes>
-        {!isLoggedIn && <Route path='/login' element={<Login />} />}
+        {/* {!isLoggedIn && <Route path='/login' element={<Login />} />} */}
         {!isLoggedIn && <Route path='/' element={<Login />} />}
         {/* {!isLoggedIn && <Route path='/forgot-password' element={<ForgotPassword />} />} */}
 
@@ -62,9 +62,9 @@ function App() {
         {isLoggedIn && (userRole === ROLES.ADMIN || !isLoading) && (
           <Route path='/add-products' element={<AddProducts />} />
         )}
-        {isLoggedIn && userRole === ROLES.ADMIN && (
+        {/* {isLoggedIn && userRole === ROLES.ADMIN && (
           <Route path='/dashboard' element={<AdminDashboard />} />
-        )}
+        )} */}
         {isLoggedIn && userRole === ROLES.ADMIN && (
           <Route path='/' element={<AdminDashboard />} />
         )}
@@ -79,9 +79,9 @@ function App() {
           <Route path='/budget-planning' element={<BudgetPlanning />} />
         )}
 
-        {isLoggedIn && userRole !== ROLES.ADMIN && (
+        {/* {isLoggedIn && userRole !== ROLES.ADMIN && (
           <Route path='/dashboard' element={<Dashboard />} />
-        )}
+        )} */}
         {isLoggedIn && userRole !== ROLES.ADMIN && (
           <Route path='/' element={<Dashboard />} />
         )}
@@ -103,9 +103,12 @@ function App() {
             userRole === ROLES.DEPARTMENT_STORE_MANAGER ||
             !isLoading) && <Route path='/inventory' element={<Inventory />} />}
 
-        {isLoggedIn && (userRole === ROLES.SUB_BRANCH_STORE_MANAGER || ROLES.SUB_BRANCH_HEAD || !isLoading) && (
-          <Route path='/emp-orders' element={<SbsmEmpOrders />} />
-        )}
+        {isLoggedIn &&
+          (userRole === ROLES.SUB_BRANCH_STORE_MANAGER ||
+            ROLES.SUB_BRANCH_HEAD ||
+            !isLoading) && (
+            <Route path='/emp-orders' element={<SbsmEmpOrders />} />
+          )}
         {isLoggedIn &&
           (userRole === ROLES.SUB_BRANCH_STORE_MANAGER || !isLoading) && (
             <Route path='/sbsm-emp-orders' element={<SbsmEmpOrders />} />
