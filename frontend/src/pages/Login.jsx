@@ -4,6 +4,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AuthContext from '../store/auth-context';
 import axios from '../api/AxiosUrl';
+import { LuRefreshCcw } from 'react-icons/lu';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -90,11 +91,16 @@ const Login = () => {
   return (
     <div className='inset-0 flex bg-gray-50 flex-col items-center justify-center p-8'>
       <div className='bg-white w-96 p-8 rounded-lg shadow-lg'>
-        <div className='mb-2 ml-[85px]'>
-          <img src='https://cracku.in/latest-govt-jobs/wp-content/uploads/2019/07/Government-of-India.jpg' height="30px" width="140px" alt="Government of India" />
+        <div className='mb-2 flex justify-center'>
+          <img
+            src='https://cracku.in/latest-govt-jobs/wp-content/uploads/2019/07/Government-of-India.jpg'
+            height='30px'
+            width='100px'
+            alt='Government of India'
+          />
         </div>
         <h2 className='text-2xl font-semibold text-gray-800 mb-4 min-w-0 flex items-center justify-center'>
-          Login
+          LOGIN
         </h2>
         <form onSubmit={submitHandler}>
           <div className='mb-4'>
@@ -129,7 +135,13 @@ const Login = () => {
             <label htmlFor='captcha' className='block text-gray-700'>
               Captcha
             </label>
-            <img src={`${captchaImage}`} alt='captcha' />
+            <div className='flex items-end'>
+              <img className='mb-3' src={`${captchaImage}`} alt='captcha' />
+              <LuRefreshCcw
+                className='mb-4 ml-4 text-3xl cursor-pointer'
+                onClick={fetchCaptcha}
+              />
+            </div>
             <input
               type='text'
               id='captcha'

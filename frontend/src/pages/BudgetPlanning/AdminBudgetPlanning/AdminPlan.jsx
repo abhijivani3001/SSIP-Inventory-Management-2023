@@ -23,7 +23,11 @@ const AdminPlan = () => {
       {isLoading && (
         <div className='text-xl my-auto text-center '>Loading...</div>
       )}
-      {!isLoading && currentPlan ? <ShowAdminPlans /> : <CreateAdminPlan />}
+      {!isLoading && currentPlan ? (
+        <ShowAdminPlans currentPlan={currentPlan} />
+      ) : (
+        <CreateAdminPlan />
+      )}
     </div>
   );
 };
