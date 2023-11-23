@@ -27,7 +27,7 @@ const ScatterPlot = () => {
         .get('api/order')
         .then((orderResponse) => {
           const bulkOrders = orderResponse.data.bulkOrders;
-          const chartData = [];
+          const chartData = {};
 
           bulkOrders.forEach((item) => {
             item.orders.forEach((order) => {
@@ -35,12 +35,20 @@ const ScatterPlot = () => {
               const quantity = order.quantity;
               const date = formatDate(item.createdAt);
 
-              chartData.push({ date, name, quantity });
+              const key = `${date}-${name}`;
+              if (chartData[key]) {
+                chartData[key].quantity += quantity;
+              } else {
+                chartData[key] = { date, name, quantity };
+              }
             });
           });
 
-          // Sort chartData by date in ascending order
-          chartData.sort((a, b) => {
+          // Convert the object values to an array
+          const chartDataArray = Object.values(chartData);
+
+          // Sort chartDataArray by date in ascending order
+          chartDataArray.sort((a, b) => {
             const dateA = new Date(
               parseInt(a.date.split('/')[2]),
               parseInt(a.date.split('/')[1]) - 1,
@@ -56,7 +64,7 @@ const ScatterPlot = () => {
             return dateA - dateB;
           });
 
-          setOrderData(chartData);
+          setOrderData(chartDataArray);
           setIsLoading(false);
         })
         .catch((error) => {
@@ -93,6 +101,7 @@ const ScatterPlot = () => {
     setSelectedFilter(value);
     localStorage.setItem('selectedFilter', value);
   };
+
   return (
     <div className='p-4 bg-gray-100 rounded-lg shadow-lg'>
       {isLoading ? (

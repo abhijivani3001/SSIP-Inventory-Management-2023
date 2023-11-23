@@ -35,17 +35,20 @@ const Dashboard = () => {
               console.log(name, quantity);
               const date = formatDate(item.createdAt);
 
-              if (orderMap.has(name)) {
-                orderMap.set(name, orderMap.get(name) + quantity);
-              } else {
-                orderMap.set(name, quantity);
+              if (order.status === 'completed') {
+                if (orderMap.has(name)) {
+                  orderMap.set(name, orderMap.get(name) + quantity);
+                } else {
+                  orderMap.set(name, quantity);
+                }
+
+                if (dateOrderMap.has(date)) {
+                  dateOrderMap.set(date, dateOrderMap.get(date) + quantity);
+                } else {
+                  dateOrderMap.set(date, quantity);
+                }
               }
 
-              if (dateOrderMap.has(date)) {
-                dateOrderMap.set(date, dateOrderMap.get(date) + quantity);
-              } else {
-                dateOrderMap.set(date, quantity);
-              }
             });
           });
 

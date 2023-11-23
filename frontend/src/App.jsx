@@ -27,6 +27,7 @@ import { ToastContainer } from 'react-toastify';
 import SbsmEmpOrders from './UserPanel/StoreManager/SbsmEmpOrders';
 import BudgetPlanning from './pages/BudgetPlanning/BudgetPlanning';
 import ActualVsPlanning from './pages/BudgetPlanning/ActualVsPlanning';
+import BsmEmpOrders from './UserPanel/StoreManager/BsmEmpOrders';
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -121,6 +122,10 @@ function App() {
         {isLoggedIn &&
           (userRole === ROLES.SUB_BRANCH_STORE_MANAGER || !isLoading) && (
             <Route path="/sbsm-emp-orders" element={<SbsmEmpOrders />} />
+          )}
+        {isLoggedIn &&
+          (userRole === ROLES.BRANCH_STORE_MANAGER || !isLoading) && (
+            <Route path="/bsm-emp-orders" element={<BsmEmpOrders />} />
           )}
 
         {/* {isLoggedIn && (userRole === ROLES.SUB_BRANCH_HEAD || !isLoading) && (

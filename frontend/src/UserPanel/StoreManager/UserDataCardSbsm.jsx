@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import Chart from 'chart.js/auto';
 
 const formatDate = (dateString) => {
   const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -9,6 +10,10 @@ const formatDate = (dateString) => {
 const UserDataCardSbsm = (props) => {
   const [showDetails, setShowDetails] = useState(props.users.map(() => false));
   const [showPlanningOrders, setShowPlanningOrders] = useState(props.users.map(() => false));
+  const [showComparisonCharts, setShowComparisonCharts] = useState(props.users.map(() => false));
+
+  // Move useRef outside the component
+  const canvasRefs = useRef(props.users.map(() => React.createRef()));
 
   const handleViewDetails = (index) => {
     setShowDetails((prevShowDetails) => {
@@ -25,6 +30,81 @@ const UserDataCardSbsm = (props) => {
       return newShowPlanningOrders;
     });
   };
+
+  const handleCompare = (index) => {
+    setShowComparisonCharts((prevShowComparisonCharts) => {
+      const newShowComparisonCharts = [...prevShowComparisonCharts];
+      newShowComparisonCharts[index] = !newShowComparisonCharts[index];
+      return newShowComparisonCharts;
+    });
+    createComparisonChart(index);
+  };
+
+  const createComparisonChart = (index) => {
+    if (showComparisonCharts[index]) {
+      const user = props.users[index];
+      const comparisonData = {
+        labels: Array.from(new Set(user.bulkOrders.flatMap((bulkOrder) => bulkOrder.orders.map((order) => order.name)))),
+        mergedOrderQuantities: user.bulkOrders.flatMap((bulkOrder) =>
+          bulkOrder.orders.reduce((acc, order) => {
+            const existingOrder = acc.find((mergedOrder) => mergedOrder.name === order.name);
+            if (existingOrder) {
+              existingOrder.quantity += order.quantity;
+            } else {
+              acc.push({ ...order });
+            }
+            return acc;
+          }, [])
+        ),
+        planningOrderQuantities: user.planningBulkOrders
+          ? user.planningBulkOrders.planningOrders.map((planningOrder) => planningOrder.quantity)
+          : [],
+      };
+
+      const ctx = canvasRefs.current[index].current;
+      const existingChart = Chart.getChart(ctx);
+
+      if (existingChart) {
+        existingChart.destroy();
+      }
+
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: comparisonData.labels,
+          datasets: [
+            {
+              label: 'Merged Order Quantity',
+              backgroundColor: 'rgba(75, 192, 192, 0.2)',
+              borderColor: 'rgba(75, 192, 192, 1)',
+              borderWidth: 1,
+              data: comparisonData.mergedOrderQuantities.map((order) => order.quantity),
+            },
+            {
+              label: 'Planning Order Quantity',
+              backgroundColor: 'rgba(255, 99, 132, 0.2)',
+              borderColor: 'rgba(255, 99, 132, 1)',
+              borderWidth: 1,
+              data: comparisonData.planningOrderQuantities,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+    }
+  };
+
+  useEffect(() => {
+    props.users.forEach((user, index) => {
+      createComparisonChart(index);
+    });
+  }, [showComparisonCharts]);
 
   return (
     <div>
@@ -56,6 +136,12 @@ const UserDataCardSbsm = (props) => {
               >
                 {showPlanningOrders[index] ? 'Hide Planning Orders' : 'View Planning Orders'}
               </button>
+              <button
+                onClick={() => handleCompare(index)}
+                className='bg-purple-500 text-gray-900 text-xl px-1 py-1 rounded-xl m-3 p-1'
+              >
+                {showComparisonCharts[index] ? 'Hide Comparison Chart' : 'Compare'}
+              </button>
             </div>
           </div>
           {showDetails[index] && (
@@ -72,20 +158,23 @@ const UserDataCardSbsm = (props) => {
                   <tbody>
                     {user.bulkOrders
                       .flatMap((bulkOrder) =>
-                        bulkOrder.orders.reduce((acc, order) => {
-                          const existingOrder = acc.find(
-                            (mergedOrder) =>
-                              mergedOrder.name === order.name &&
-                              formatDate(mergedOrder.date) === formatDate(bulkOrder.updatedAt)
-                          );
-                          if (existingOrder) {
-                            existingOrder.quantity += order.quantity;
-                          } else {
-                            acc.push({ ...order, date: bulkOrder.updatedAt });
-                          }
-                          return acc;
-                        }, [])
+                        bulkOrder.orders.map((order) => ({
+                          ...order,
+                          date: bulkOrder.updatedAt,
+                        }))
                       )
+                      .reduce((acc, order) => {
+                        const existingOrderIndex = acc.findIndex(
+                          (mergedOrder) =>
+                            mergedOrder.name === order.name && formatDate(mergedOrder.date) === formatDate(order.date)
+                        );
+                        if (existingOrderIndex !== -1) {
+                          acc[existingOrderIndex].quantity += order.quantity;
+                        } else {
+                          acc.push(order);
+                        }
+                        return acc;
+                      }, [])
                       .sort((a, b) => new Date(a.date) - new Date(b.date))
                       .map((mergedOrder, orderIndex) => (
                         <tr key={orderIndex}>
@@ -127,6 +216,11 @@ const UserDataCardSbsm = (props) => {
               ) : (
                 <p className="text-xl text-black p-2 mx-20">No planning orders for {user.name}.</p>
               )}
+            </div>
+          )}
+          {showComparisonCharts[index] && (
+            <div className="mt-3">
+              <canvas id={`comparison-chart-${index}`} width="200" height="50" ref={canvasRefs.current[index]}></canvas>
             </div>
           )}
         </div>
