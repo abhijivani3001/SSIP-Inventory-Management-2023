@@ -8,12 +8,21 @@ const formatDate = (dateString) => {
 
 const UserDataCardSbsm = (props) => {
   const [showDetails, setShowDetails] = useState(props.users.map(() => false));
+  const [showPlanningOrders, setShowPlanningOrders] = useState(props.users.map(() => false));
 
   const handleViewDetails = (index) => {
     setShowDetails((prevShowDetails) => {
       const newShowDetails = [...prevShowDetails];
       newShowDetails[index] = !newShowDetails[index];
       return newShowDetails;
+    });
+  };
+
+  const handleViewPlanningOrders = (index) => {
+    setShowPlanningOrders((prevShowPlanningOrders) => {
+      const newShowPlanningOrders = [...prevShowPlanningOrders];
+      newShowPlanningOrders[index] = !newShowPlanningOrders[index];
+      return newShowPlanningOrders;
     });
   };
 
@@ -40,6 +49,12 @@ const UserDataCardSbsm = (props) => {
                 className='bg-blue-500 text-gray-900 text-xl px-1 py-1 rounded-xl m-3 p-1'
               >
                 {showDetails[index] ? 'View Less' : 'View Details'}
+              </button>
+              <button
+                onClick={() => handleViewPlanningOrders(index)}
+                className='bg-green-500 text-gray-900 text-xl px-1 py-1 rounded-xl m-3 p-1'
+              >
+                {showPlanningOrders[index] ? 'Hide Planning Orders' : 'View Planning Orders'}
               </button>
             </div>
           </div>
@@ -85,6 +100,32 @@ const UserDataCardSbsm = (props) => {
                 </table>
               ) : (
                 <p className="text-xl text-black p-2 mx-20">No orders placed by {user.name}.</p>
+              )}
+            </div>
+          )}
+          {showPlanningOrders[index] && (
+            <div className="mt-3">
+              {user.planningBulkOrders && user.planningBulkOrders.planningOrders.length > 0 ? (
+                <table className="w-full border-collapse border border-gray-400 mt-2">
+                  <thead>
+                    <tr className="bg-gray-200">
+                      <th className="border border-gray-400 p-2 text-xl">Planning Order Name</th>
+                      <th className="border border-gray-400 p-2 text-xl">Quantity</th>
+                      {/* Add more columns as needed for planning orders */}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {user.planningBulkOrders.planningOrders.map((planningOrder, orderIndex) => (
+                      <tr key={orderIndex}>
+                        <td className="border border-gray-400 p-2 text-xl">{planningOrder.name}</td>
+                        <td className="border border-gray-400 p-2 text-xl">{planningOrder.quantity}</td>
+                        {/* Add more cells as needed for planning orders */}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <p className="text-xl text-black p-2 mx-20">No planning orders for {user.name}.</p>
               )}
             </div>
           )}

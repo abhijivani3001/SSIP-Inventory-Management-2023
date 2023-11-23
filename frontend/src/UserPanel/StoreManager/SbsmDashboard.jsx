@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from '../api/AxiosUrl';
-import { Box, Heading, Spinner, Flex, Center, Text } from '@chakra-ui/react';
-import AuthContext from '../store/auth-context';
-import PieChart from '../components/Charts/PieChart';
-import BarChart from '../components/Charts/BarChart';
-import ScatterPlot from '../components/Charts/ScatterPlot';
+import axios from '../../api/AxiosUrl';
+import AuthContext from '../../store/auth-context';
+import PieChart from '../../components/Charts/PieChart';
+import BarChart from '../../components/Charts/BarChart';
+import StackedColumnChart from '../../components/Charts/StackedColumnChart';
+import ScatterPlot from '../../components/Charts/ScatterPlot';
 
-const Dashboard = () => {
+const SbsmDashboard = () => {
   const authCtx = useContext(AuthContext);
   const [orderData, setOrderData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -75,49 +75,43 @@ const Dashboard = () => {
   }, [authCtx.isLoggedIn]);
 
   return (
-    <Box p={4} bg="gray.100" rounded="lg" shadow="lg">
+    <div className="p-4 bg-gray-100 rounded-lg shadow-lg">
       {isLoading ? (
-        <Center>
-          <Spinner size="xl" />
-        </Center>
+        <p>Loading...</p>
       ) : (
         <>
-          <Heading as="h1" fontSize="2xl" fontWeight="semibold" mb={4}>
-            Dashboard
-          </Heading>
-          <Flex wrap="wrap" justify="center">
+          <h1 className="text-2xl font-semibold mb-4">Dashboard</h1>
+          <div>
             {orderData.orderChartData?.length < 1 ||
               orderData.barChartData?.length < 1 ? (
-              <Text fontSize="lg" color="gray.600">
-                No order placed by you
-              </Text>
+              <span className="not_available">No order placed by you</span>
             ) : (
-              <>
-                <Box mx={10} my={5} border="1px" rounded="2xl">
-                  <Heading mx={5} my={5} fontSize="2xl" fontWeight="semibold">
-                    Total Ordered Quantity with Names
-                  </Heading>
+              <div className="flex flex-wrap justify-center">
+                <div className="mx-10 my-5 border-gray-800 border rounded-2xl">
+                  <h2 className="mx-5 my-5 text-2xl font-semibold">
+                    Total Ordered Quantity with Names{' '}
+                  </h2>
                   <PieChart orderData={orderData?.orderChartData} />
-                </Box>
-                <Box mx={10} my={5} border="1px" rounded="2xl">
-                  <Heading mx={5} my={5} fontSize="2xl" fontWeight="semibold">
+                </div>
+                <div className="mx-10 my-5 border-gray-800 border rounded-2xl">
+                  <h2 className="mx-5 my-5 text-2xl font-semibold">
                     Total Orders
-                  </Heading>
+                  </h2>
                   <BarChart orderData={orderData?.barChartData} />
-                </Box>
-                {/* <Box mx={10} my={5} border="1px" rounded="2xl">
+                </div>
+                {/* <div className="mx-10 my-5 border-gray-800 border">
                   <StackedColumnChart />
-                </Box> */}
-                <Box mx={10} my={5} border="1px" rounded="2xl">
+                </div> */}
+                <div className="mx-10 my-5 border-gray-800 border ">
                   <ScatterPlot />
-                </Box>
-              </>
+                </div>
+              </div>
             )}
-          </Flex>
+          </div>
         </>
       )}
-    </Box>
+    </div>
   );
 };
 
-export default Dashboard;
+export default SbsmDashboard;
