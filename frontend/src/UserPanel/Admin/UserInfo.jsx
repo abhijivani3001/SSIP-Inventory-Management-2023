@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Calender, Email, Phone } from '../../icons/icons';
 import PlacedBulkOrder from '../../components/PlacedOrder/PlacedBulkOrder';
 
+import multiavatar from '@multiavatar/multiavatar';
+import DangerousHTML from 'react-dangerous-html';
+
 const UserInfo = (props) => {
   const userData = props.userData;
   const [isDataShown, setIsDataShown] = useState(false);
@@ -10,25 +13,18 @@ const UserInfo = (props) => {
     setIsDataShown((prev) => !prev);
   };
 
+  let svgCode = multiavatar(userData.profileIcon || '66493f858b6dc78b85');
+
   return (
     <>
-      <link
-        rel='stylesheet'
-        href='https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css'
-      />
-
-      <div className='relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg mt-16'>
+      <div className='relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg mt-24'>
         <div className='flex flex-wrap justify-center bg-slate-100 rounded-t-lg'>
           <div className='w-full px-4 flex justify-center'>
-            <div className='relative'>
-              <img
-                alt='...'
-                src='https://demos.creative-tim.com/notus-js/assets/img/team-2-800x800.jpg'
-                className='shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px'
-              />
+            <div className='w-48 shadow-2xl rounded-full -mt-24'>
+              <DangerousHTML html={svgCode} />
             </div>
           </div>
-          <div className='w-full px-4 text-center mt-20'>
+          <div className='w-full px-4 text-center'>
             <div className='flex justify-center align-middle gap-6 py-4'>
               <div className='p-3 text-center'>
                 <span className='text-xl font-bold block uppercase tracking-wide text-slate-600'>

@@ -1,10 +1,16 @@
 import React from 'react';
-import { CircularProgress, CircularProgressLabel } from '@chakra-ui/react';
+import {
+  ChakraProvider,
+  CircularProgress,
+  CircularProgressLabel,
+} from '@chakra-ui/react';
 
 const Loader = () => {
   return (
-    <div className='text-center'>
-      <CircularProgress isIndeterminate color='blue.400' size='40px' />
+    <div className='h-screen flex py-72 align-middle justify-center'>
+      <ChakraProvider>
+        <CircularProgress isIndeterminate color='blue.400' size='40px' />
+      </ChakraProvider>
     </div>
   );
 };
