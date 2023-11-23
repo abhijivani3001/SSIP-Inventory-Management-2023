@@ -7,7 +7,7 @@ import {
 
 const Loader = () => {
   return (
-    <div className='h-screen flex py-72 align-middle justify-center'>
+    <div className='h-full flex py-[42vh] align-middle justify-center'>
       <ChakraProvider>
         <CircularProgress isIndeterminate color='blue.400' size='40px' />
       </ChakraProvider>

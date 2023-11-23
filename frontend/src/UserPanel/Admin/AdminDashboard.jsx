@@ -6,7 +6,6 @@ import { findBelowUsers } from '../../Helper/Helper';
 import AllRegisteredUsers from './AllRegisteredUsers';
 
 import Loader from '../../components/ChakraUI/Loader';
-import { ChakraProvider } from '@chakra-ui/react';
 
 const AdminDashboard = () => {
   const [userData, setUserData] = useState([]);
@@ -55,51 +54,50 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className='bg-gray-50 py-4 px-10'>
-      <div className='flex items-center justify-between mb-4'>
-        <div className='flex items-center'>
-          <label htmlFor='roleSelect' className='mr-2 text-lg'>
-            Select Role:
-          </label>
-          <select
-            id='roleSelect'
-            value={selectedRole}
-            onChange={handleRoleChange}
-            className='p-2 border rounded-lg bg-white shadow-md'
-          >
-            <option value=''>All</option>
-            {Object.keys(roleWiseUsers).map((role) => (
-              <option key={role} value={role}>
-                {role}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className='flex items-center border rounded-lg px-3 bg-white shadow-md'>
-          <FaSearch className='text-xl text-gray-700 ' />
-          <input
-            type='text'
-            placeholder='Search user'
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className='bg-transparent border-none focus:outline-none mx-2'
-          />
-        </div>
-      </div>
+    <>
+      {isLoading && <Loader />}
+      {!isLoading && (
+        <div className='bg-gray-50 py-4 px-10'>
+          <div className='flex items-center justify-between mb-4'>
+            <div className='flex items-center'>
+              <label htmlFor='roleSelect' className='mr-2 text-lg'>
+                Select Role:
+              </label>
+              <select
+                id='roleSelect'
+                value={selectedRole}
+                onChange={handleRoleChange}
+                className='p-2 border rounded-lg bg-white shadow-md'
+              >
+                <option value=''>All</option>
+                {Object.keys(roleWiseUsers).map((role) => (
+                  <option key={role} value={role}>
+                    {role}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className='flex items-center border rounded-lg px-3 bg-white shadow-md'>
+              <FaSearch className='text-xl text-gray-700 ' />
+              <input
+                type='text'
+                placeholder='Search user'
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className='bg-transparent border-none focus:outline-none mx-2'
+              />
+            </div>
+          </div>
 
-      {isLoading ? (
-        <ChakraProvider>
-          <Loader />
-        </ChakraProvider>
-      ) : (
-        <div>
-          {/* <UserDataCard users={roleWiseUsers[selectedRole] || filteredUsers} /> */}
-          <AllRegisteredUsers
-            userData={roleWiseUsers[selectedRole] || filteredUsers}
-          />
+          <div>
+            {/* <UserDataCard users={roleWiseUsers[selectedRole] || filteredUsers} /> */}
+            <AllRegisteredUsers
+              userData={roleWiseUsers[selectedRole] || filteredUsers}
+            />
+          </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
