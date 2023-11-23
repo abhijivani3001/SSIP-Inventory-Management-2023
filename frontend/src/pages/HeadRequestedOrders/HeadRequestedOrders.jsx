@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../../api/AxiosUrl';
 import { useCart } from '../../store/CartProvider';
-import HeadReqOrdData from './HeadReqOrdData';
 import HeadReqOrdOne from './HeadReqOrdOne';
 import { findBelowUsers } from '../../Helper/Helper';
 import { FaTimes } from 'react-icons/fa';
@@ -128,8 +127,12 @@ const HeadRequestedOrders = () => {
                       order.status === 'head-accepted')
                   ) {
                     if (
-                      order.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                      order.itemId.toLowerCase().includes(searchTerm.toLowerCase())
+                      order.name
+                        .toLowerCase()
+                        .includes(searchTerm.toLowerCase()) ||
+                      order.itemId
+                        .toLowerCase()
+                        .includes(searchTerm.toLowerCase())
                     ) {
                       flag = true;
                       mainFlag = true;

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from '../../api/AxiosUrl';
 import { useCart } from '../../store/CartProvider';
-import StoreReqOrdData from './StoreReqOrdData';
 import StoreManReqOrdOne from './StoreManReqOrdOne';
 import { toast } from 'react-toastify';
 import { FaTimes } from 'react-icons/fa';
@@ -100,7 +99,7 @@ const StoreManagerRequestedOrders = () => {
 
   const handleTabClick = (status) => {
     setCurrentStatus(status);
-    setSearchTerm(''); 
+    setSearchTerm('');
   };
 
   const handleSearchInputChange = (event) => {
@@ -126,40 +125,44 @@ const StoreManagerRequestedOrders = () => {
             <div className='flex justify-center overflow-x-auto whitespace-nowrap'>
               <button
                 onClick={() => handleTabClick('pending')}
-                className={`default_tab ${currentStatus === 'pending'
-                  ? 'status_true_tab'
-                  : 'status_false_tab'
-                  }`}
+                className={`default_tab ${
+                  currentStatus === 'pending'
+                    ? 'status_true_tab'
+                    : 'status_false_tab'
+                }`}
               >
                 <p className='mx-auto'>Pending</p>
               </button>
 
               <button
                 onClick={() => handleTabClick('accepted')}
-                className={`default_tab ${currentStatus === 'accepted'
-                  ? 'status_true_tab'
-                  : 'status_false_tab'
-                  }`}
+                className={`default_tab ${
+                  currentStatus === 'accepted'
+                    ? 'status_true_tab'
+                    : 'status_false_tab'
+                }`}
               >
                 <p className='mx-auto'>Accepted</p>
               </button>
 
               <button
                 onClick={() => handleTabClick('rejected')}
-                className={`default_tab ${currentStatus === 'rejected'
-                  ? 'status_true_tab'
-                  : 'status_false_tab'
-                  }`}
+                className={`default_tab ${
+                  currentStatus === 'rejected'
+                    ? 'status_true_tab'
+                    : 'status_false_tab'
+                }`}
               >
                 <p className='mx-auto'>Rejected</p>
               </button>
 
               <button
                 onClick={() => handleTabClick('completed')}
-                className={`default_tab ${currentStatus === 'completed'
-                  ? 'status_true_tab'
-                  : 'status_false_tab'
-                  }`}
+                className={`default_tab ${
+                  currentStatus === 'completed'
+                    ? 'status_true_tab'
+                    : 'status_false_tab'
+                }`}
               >
                 <p className='mx-auto'>Completed</p>
               </button>
@@ -190,8 +193,12 @@ const StoreManagerRequestedOrders = () => {
                       order.status,
                       currentStatus
                     ) &&
-                    (order.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                      order.itemId.toLowerCase().includes(searchTerm.toLowerCase()))
+                    (order.name
+                      .toLowerCase()
+                      .includes(searchTerm.toLowerCase()) ||
+                      order.itemId
+                        .toLowerCase()
+                        .includes(searchTerm.toLowerCase()))
                   ) {
                     flag = true;
                     mainFlag = true;

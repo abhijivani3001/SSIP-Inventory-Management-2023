@@ -30,7 +30,7 @@ const PlacedOrderList = () => {
 
   const handleTabClick = (status) => {
     setCurrentStatus(status);
-    setSearchTerm(''); 
+    setSearchTerm('');
   };
 
   const handleSearchInputChange = (event) => {
@@ -40,7 +40,6 @@ const PlacedOrderList = () => {
   const clearSearchTerm = () => {
     setSearchTerm('');
   };
-  
 
   return (
     <div className='mx-10 my-4'>
@@ -115,28 +114,31 @@ const PlacedOrderList = () => {
           </div>
 
           <div className='my-4'>
-            {placedOrders
-              ?.filter((order) =>
-                order.orders.some(
-                  (o) =>
-                    o.status === currentStatus ||
-                    (currentStatus === 'accepted' && o.status === 'head-accepted')
-                )
-              )
-              .filter((order) =>
-                order.orders.some(
-                  (o) =>
-                    o.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    o.itemId.toLowerCase().includes(searchTerm.toLowerCase())
-                )
-              )
-              .map((order) => (
-                <PlacedBulkOrder
-                  order={order}
-                  getOrders={getOrders}
-                  currentStatus={currentStatus}
-                />
-              ))}
+            {placedOrders?.map((order) => {
+              let flag = false;
+              order.orders.forEach((order) => {
+                if (order.status === currentStatus) {
+                  flag = true;
+                  mainFlag = true;
+                } else if (
+                  currentStatus === 'accepted' &&
+                  order.status === 'head-accepted'
+                ) {
+                  flag = true;
+                  mainFlag = true;
+                }
+              });
+
+              if (flag) {
+                return (
+                  <PlacedBulkOrder
+                    order={order}
+                    getOrders={getOrders}
+                    currentStatus={currentStatus}
+                  />
+                );
+              }
+            })}
             {!mainFlag && (
               <div className='not_available'>
                 No more placed orders available.
@@ -150,4 +152,3 @@ const PlacedOrderList = () => {
 };
 
 export default PlacedOrderList;
-
