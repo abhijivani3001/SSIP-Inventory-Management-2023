@@ -18,20 +18,18 @@ const HeadNavbar = () => {
             <div className='navbar-element-parent group'>
               <Link
                 to='/products'
-                className={`${
-                  location.pathname === '/products'
-                    ? 'active-navbar-element'
-                    : 'navbar-element'
-                }`}
+                className={`${location.pathname === '/products'
+                  ? 'active-navbar-element'
+                  : 'navbar-element'
+                  }`}
               >
                 <div>Products</div>
               </Link>
               <div
-                className={`${
-                  location.pathname === '/products'
-                    ? 'active-navbar-underline'
-                    : 'navbar-underline'
-                } `}
+                className={`${location.pathname === '/products'
+                  ? 'active-navbar-underline'
+                  : 'navbar-underline'
+                  } `}
               ></div>
             </div>
           </li>
@@ -40,20 +38,18 @@ const HeadNavbar = () => {
             <div className='navbar-element-parent group'>
               <Link
                 to='/head-requested-orders'
-                className={`${
-                  location.pathname === '/head-requested-orders'
-                    ? 'active-navbar-element'
-                    : 'navbar-element'
-                }`}
+                className={`${location.pathname === '/head-requested-orders'
+                  ? 'active-navbar-element'
+                  : 'navbar-element'
+                  }`}
               >
                 <div>Requested Orders</div>
               </Link>
               <div
-                className={`${
-                  location.pathname === '/head-requested-orders'
-                    ? 'active-navbar-underline'
-                    : 'navbar-underline'
-                } `}
+                className={`${location.pathname === '/head-requested-orders'
+                  ? 'active-navbar-underline'
+                  : 'navbar-underline'
+                  } `}
               ></div>
             </div>
           </li>
@@ -62,42 +58,57 @@ const HeadNavbar = () => {
             <div className='navbar-element-parent group'>
               <Link
                 to='/placed-orders'
-                className={`${
-                  location.pathname === '/placed-orders'
-                    ? 'active-navbar-element'
-                    : 'navbar-element'
-                }`}
+                className={`${location.pathname === '/placed-orders'
+                  ? 'active-navbar-element'
+                  : 'navbar-element'
+                  }`}
               >
                 <div>Placed Orders</div>
               </Link>
               <div
-                className={`${
-                  location.pathname === '/placed-orders'
-                    ? 'active-navbar-underline'
-                    : 'navbar-underline'
-                } `}
+                className={`${location.pathname === '/placed-orders'
+                  ? 'active-navbar-underline'
+                  : 'navbar-underline'
+                  } `}
               ></div>
             </div>
           </li>
 
-          <li>
+          {/* <li>
             <div className='navbar-element-parent group'>
               <Link
                 to='/emp-orders'
-                className={`${
-                  location.pathname === '/emp-orders'
-                    ? 'active-navbar-element'
-                    : 'navbar-element'
-                }`}
+                className={`${location.pathname === '/emp-orders'
+                  ? 'active-navbar-element'
+                  : 'navbar-element'
+                  }`}
               >
                 <div>Emp Orders</div>
               </Link>
               <div
-                className={`${
-                  location.pathname === '/emp-orders'
-                    ? 'active-navbar-underline'
-                    : 'navbar-underline'
-                } `}
+                className={`${location.pathname === '/emp-orders'
+                  ? 'active-navbar-underline'
+                  : 'navbar-underline'
+                  } `}
+              ></div>
+            </div>
+          </li> */}
+          <li>
+            <div className='navbar-element-parent group'>
+              <Link
+                to='/sbh-emp-orders'
+                className={`${location.pathname === '/sbh-emp-orders'
+                  ? 'active-navbar-element'
+                  : 'navbar-element'
+                  }`}
+              >
+                <div>Emp Orders</div>
+              </Link>
+              <div
+                className={`${location.pathname === '/sbh-emp-orders'
+                  ? 'active-navbar-underline'
+                  : 'navbar-underline'
+                  } `}
               ></div>
             </div>
           </li>
@@ -106,20 +117,18 @@ const HeadNavbar = () => {
             <div className='navbar-element-parent group'>
               <Link
                 to='/'
-                className={`${
-                  location.pathname === '/'
-                    ? 'active-navbar-element'
-                    : 'navbar-element'
-                }`}
+                className={`${location.pathname === '/'
+                  ? 'active-navbar-element'
+                  : 'navbar-element'
+                  }`}
               >
                 <div>Dashboard</div>
               </Link>
               <div
-                className={`${
-                  location.pathname === '/'
-                    ? 'active-navbar-underline'
-                    : 'navbar-underline'
-                } `}
+                className={`${location.pathname === '/'
+                  ? 'active-navbar-underline'
+                  : 'navbar-underline'
+                  } `}
               ></div>
             </div>
           </li>

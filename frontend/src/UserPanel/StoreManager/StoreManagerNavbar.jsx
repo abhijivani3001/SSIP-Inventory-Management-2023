@@ -129,6 +129,27 @@ const StoreManagerNavbar = () => {
             <li>
               <div className='navbar-element-parent group'>
                 <Link
+                  to='/dsm-emp-orders'
+                  className={`${location.pathname === '/dsm-emp-orders'
+                    ? 'active-navbar-element'
+                    : 'navbar-element'
+                    }`}
+                >
+                  Emp-orders
+                </Link>
+                <div
+                  className={`${location.pathname === '/dsm-emp-orders'
+                    ? 'active-navbar-underline'
+                    : 'navbar-underline'
+                    } `}
+                ></div>
+              </div>
+            </li>
+          )}
+          {currentUserRole === ROLES.DEPARTMENT_STORE_MANAGER && (
+            <li>
+              <div className='navbar-element-parent group'>
+                <Link
                   to='/item-requests'
                   className={`${location.pathname === '/item-requests'
                     ? 'active-navbar-element'

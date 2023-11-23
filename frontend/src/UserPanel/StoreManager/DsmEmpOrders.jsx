@@ -1,34 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../../api/AxiosUrl';
-import UserDataCardSbsm from './UserDataCardSbsm';
 import { FaSearch } from 'react-icons/fa';
-import { findBelowUsers } from '../../Helper/Helper';
 import ROLES from '../../constants/ROLES';
+import UserDataCardBsm from './UserDataCardBsm';  // Assuming UserDataCardBsm is the correct component for DSM (replace with the actual component name)
+import UserDataCardDsm from './UserDataCardDsm';
 
-const SbsmEmpOrder = () => {
+const DsmEmpOrders = () => {
   const [userData, setUserData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedRole, setSelectedRole] = useState('');
+  const [selectedBranch, setSelectedBranch] = useState('');
 
   useEffect(() => {
     (async () => {
       try {
         const res1 = await axios.get('api/user');
-        console.log("res1", res1);
         const currentUser = await res1.data.user;
 
         const res2 = await axios.post(
-          '/api/user/users', {
-          role: ROLES.EMPLOYEE
-        }
-          // findBelowUsers(currentUser)
-
+          '/api/user/users',
+          {
+            role: [ROLES.EMPLOYEE, ROLES.SUB_BRANCH_HEAD, ROLES.SUB_BRANCH_STORE_MANAGER, ROLES.BRANCH_HEAD],  // Assuming DSM_ROLE is the correct role for DSM (replace with the actual role)
+          }
         );
         const data = await res2.data.users;
-        console.log("res2", data);
         setUserData(data);
-        console.log("dt", data);
       } catch (error) {
         console.error(error);
       }
@@ -51,11 +48,18 @@ const SbsmEmpOrder = () => {
       roleWiseUsers[role] = [];
     }
     roleWiseUsers[role].push(user);
-    console.log(roleWiseUsers);
   });
+
+  const branchWiseUsers = selectedBranch
+    ? filteredUsers.filter((user) => user.branch === selectedBranch)
+    : filteredUsers;
 
   const handleRoleChange = (event) => {
     setSelectedRole(event.target.value);
+  };
+
+  const handleBranchChange = (event) => {
+    setSelectedBranch(event.target.value);
   };
 
   return (
@@ -80,6 +84,24 @@ const SbsmEmpOrder = () => {
             ))}
           </select>
         </div>
+        <div className='flex items-center'>
+          <label htmlFor='branchSelect' className='mr-2 text-lg'>
+            Select Branch:
+          </label>
+          <select
+            id='branchSelect'
+            value={selectedBranch}
+            onChange={handleBranchChange}
+            className='p-2 border rounded-lg'
+          >
+            <option value=''>All</option>
+            {Array.from(new Set(filteredUsers.map((user) => user.branch))).map((branch) => (
+              <option key={branch} value={branch}>
+                {branch}
+              </option>
+            ))}
+          </select>
+        </div>
         <div className='flex items-center border rounded-lg px-3'>
           <FaSearch className='text-xl text-gray-700' />
           <input
@@ -95,13 +117,11 @@ const SbsmEmpOrder = () => {
         <div className='text-xl my-auto mt-8 text-center '>Loading...</div>
       ) : (
         <div className='text-3xl border border-gray-400 py5 px-10 rounded-lg shadow-xl my-10'>
-          <UserDataCardSbsm
-            users={roleWiseUsers[selectedRole] || filteredUsers}
-          />
+          <UserDataCardDsm users={roleWiseUsers[selectedRole] || branchWiseUsers} />
         </div>
       )}
     </div>
   );
 };
 
-export default SbsmEmpOrder;
+export default DsmEmpOrders;

@@ -7,13 +7,11 @@ const formatDate = (dateString) => {
   return formattedDate;
 };
 
-const UserDataCardSbsm = (props) => {
-  console.log(props);
+const UserDataCardBsm = (props) => {
   const [showDetails, setShowDetails] = useState(props.users.map(() => false));
   const [showPlanningOrders, setShowPlanningOrders] = useState(props.users.map(() => false));
   const [showComparisonCharts, setShowComparisonCharts] = useState(props.users.map(() => false));
 
-  // Move useRef outside the component
   const canvasRefs = useRef(props.users.map(() => React.createRef()));
 
   const handleViewDetails = (index) => {
@@ -230,4 +228,4 @@ const UserDataCardSbsm = (props) => {
   );
 };
 
-export default UserDataCardSbsm;
+export default UserDataCardBsm;

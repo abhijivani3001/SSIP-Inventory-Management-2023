@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../../api/AxiosUrl';
-import UserDataCardSbsm from './UserDataCardSbsm';
+// import UserDataCardSbsm from './UserDataCardSbsm';
 import { FaSearch } from 'react-icons/fa';
-import { findBelowUsers } from '../../Helper/Helper';
+// import { findBelowUsers } from '../../Helper/Helper';
+import ROLES from '../../constants/ROLES';
+import UserDataCardBsm from './UserDataCardBsm';
 
 const BsmEmpOrders = () => {
   const [userData, setUserData] = useState([]);
@@ -19,7 +21,9 @@ const BsmEmpOrders = () => {
 
         const res2 = await axios.post(
           '/api/user/users',
-          findBelowUsers(currentUser)
+          {
+            role: [ROLES.SUB_BRANCH_STORE_MANAGER, ROLES.EMPLOYEE],
+          }
         );
         const data = await res2.data.users;
         setUserData(data);
@@ -114,7 +118,7 @@ const BsmEmpOrders = () => {
         <div className='text-xl my-auto mt-8 text-center '>Loading...</div>
       ) : (
         <div className='text-3xl border border-gray-400 py5 px-10 rounded-lg shadow-xl my-10'>
-          <UserDataCardSbsm users={roleWiseUsers[selectedRole] || branchWiseUsers} />
+          <UserDataCardBsm users={roleWiseUsers[selectedRole] || branchWiseUsers} />
         </div>
       )}
     </div>
