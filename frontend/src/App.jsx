@@ -28,6 +28,7 @@ import SbsmEmpOrders from './UserPanel/StoreManager/SbsmEmpOrders';
 import BudgetPlanning from './pages/BudgetPlanning/BudgetPlanning';
 import ActualVsPlanning from './pages/BudgetPlanning/ActualVsPlanning';
 import BsmEmpOrders from './UserPanel/StoreManager/BsmEmpOrders';
+import DepartmentReport from './pages/Report/DepartmentReport';
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -163,6 +164,8 @@ function App() {
         {isLoggedIn && (
           <Route path="/actual-vs-planning" element={<ActualVsPlanning />} />
         )}
+
+        {isLoggedIn && <Route path="/report" element={<DepartmentReport />} />}
 
         {!isLoading && <Route path="*" element={<NotFound />} />}
       </Routes>
