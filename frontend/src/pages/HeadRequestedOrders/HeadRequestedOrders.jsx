@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../../api/AxiosUrl';
 import { useCart } from '../../store/CartProvider';
-import ROLES from '../../constants/ROLES';
 import HeadReqOrdData from './HeadReqOrdData';
 import HeadReqOrdOne from './HeadReqOrdOne';
 import { findBelowUsers } from '../../Helper/Helper';
+import { FaTimes } from 'react-icons/fa';
 
 const HeadRequestedOrders = () => {
   const { cart, dispatch } = useCart();
@@ -15,6 +15,7 @@ const HeadRequestedOrders = () => {
     useState(false);
 
   const [currentStatus, setCurrentStatus] = useState('pending');
+  const [searchTerm, setSearchTerm] = useState('');
   let mainFlag = false; // to check whether the placed order is empty or not
 
   const getRequiredUserData = async () => {
@@ -26,7 +27,6 @@ const HeadRequestedOrders = () => {
         '/api/user/users',
         findBelowUsers(currentUser)
       );
-      console.log(res2);
 
       const data = await res2.data.users;
       if (data?.length) {
@@ -45,6 +45,15 @@ const HeadRequestedOrders = () => {
 
   const handleTabClick = (status) => {
     setCurrentStatus(status);
+    setSearchTerm('');
+  };
+
+  const handleSearchInputChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const clearSearchTerm = () => {
+    setSearchTerm('');
   };
 
   return (
@@ -92,8 +101,23 @@ const HeadRequestedOrders = () => {
               <p className='mx-auto'>Rejected</p>
             </button>
           </div>
+          <div className='flex items-center mt-4 justify-end'>
+            <input
+              type='text'
+              placeholder='Search product here...'
+              value={searchTerm}
+              onChange={handleSearchInputChange}
+              className='border rounded px-2 py-1 mr-2'
+            />
+            {searchTerm && (
+              <FaTimes
+                onClick={clearSearchTerm}
+                className='text-gray-500 cursor-pointer'
+              />
+            )}
+          </div>
 
-          <div className='my-6'>
+          <div className='my-4'>
             {usersOfRequestedOrders.map((val) => {
               let flag = false;
               val.bulkOrders.forEach((bulkOrder) => {
@@ -103,8 +127,13 @@ const HeadRequestedOrders = () => {
                     (currentStatus === 'accepted' &&
                       order.status === 'head-accepted')
                   ) {
-                    flag = true;
-                    mainFlag = true;
+                    if (
+                      order.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                      order.itemId.toLowerCase().includes(searchTerm.toLowerCase())
+                    ) {
+                      flag = true;
+                      mainFlag = true;
+                    }
                   }
                 });
               });
