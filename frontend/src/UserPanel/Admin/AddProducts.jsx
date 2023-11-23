@@ -11,6 +11,8 @@ const AddProducts = () => {
     category: '',
     imageURL: '',
     price: 0,
+    minValue: 0,
+    maxValue: 0,
   });
 
   // Submission function
@@ -26,6 +28,8 @@ const AddProducts = () => {
       imageUrl: formData.imageURL,
       price: formData.price,
       status: 'accepted',
+      minValue: formData.minValue,
+      maxValue: formData.maxValue,
     };
 
     try {
@@ -40,6 +44,8 @@ const AddProducts = () => {
         category: '',
         imageURL: '',
         price: 0,
+        minValue: 0,
+        maxValue: 0,
       });
     } catch (error) {
       console.log(error);
@@ -52,8 +58,8 @@ const AddProducts = () => {
 
   return (
     <div className='inset-0 flex items-center justify-center p-8'>
-      <div className='bg-white w-96 p-8 text-lg font-semibold rounded-lg shadow-lg'>
-        <h2 className='text-2xl font-semibold text-black mb-4 min-w-0 flex items-center justify-center'>
+      <div className='bg-white w-1/3 p-8 text-lg font-semibold rounded-lg shadow-lg'>
+        <h2 className='text-2xl font-semibold text-gray-700 mb-4 min-w-0 flex items-center justify-center border-b pb-2'>
           Add Item
         </h2>
         <form onSubmit={submitHandler}>
@@ -122,13 +128,13 @@ const AddProducts = () => {
               required
             />
           </div>
-          <div className='mb-4'>
+          <div className='mb-4 flex gap-2'>
             <label className='block text-gray-800'>Price</label>
             <input
               type='number'
               id='price'
               name='price'
-              className='w-full px-3 py-2 border text-black rounded-lg focus:outline-none focus:border-blue-500'
+              className='border-2 border-gray-700 w-20 h-8 p-0 text-center my-auto rounded-lg'
               placeholder='Enter the price'
               value={formData.price}
               min={0}
@@ -138,7 +144,39 @@ const AddProducts = () => {
               required
             />
           </div>
-          <div className='flex justify-center align-middle gap-2'>
+          <div className='mb-4 flex gap-2'>
+            <label className='block text-gray-800'>Minimum Quantity</label>
+            <input
+              type='number'
+              id='minValue'
+              name='minValue'
+              className='border-2 border-gray-700 w-20 h-8 p-0 text-center my-auto rounded-lg'
+              placeholder='Enter the minimum quantity'
+              value={formData.minValue}
+              min={0}
+              onChange={(e) =>
+                handleInputChange('minValue', Math.max(0, e.target.value))
+              }
+              required
+            />
+          </div>
+          <div className='mb-4 flex gap-2'>
+            <label className='block text-gray-800'>Maximum Quantity</label>
+            <input
+              type='number'
+              id='maxValue'
+              name='maxValue'
+              className='border-2 border-gray-700 w-20 h-8 p-0 text-center my-auto rounded-lg'
+              placeholder='Enter the maximum quantity'
+              value={formData.maxValue}
+              min={0}
+              onChange={(e) =>
+                handleInputChange('maxValue', Math.max(0, e.target.value))
+              }
+              required
+            />
+          </div>
+          <div className='flex justify-center align-middle gap-2 mt-4 border-t p-4'>
             <button type='submit' className='blue_btn'>
               Add
             </button>

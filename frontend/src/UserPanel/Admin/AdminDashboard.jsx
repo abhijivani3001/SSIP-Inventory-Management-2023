@@ -65,7 +65,7 @@ const AdminDashboard = () => {
             id='roleSelect'
             value={selectedRole}
             onChange={handleRoleChange}
-            className='p-2 border rounded-lg'
+            className='p-2 border rounded-lg bg-white shadow-md'
           >
             <option value=''>All</option>
             {Object.keys(roleWiseUsers).map((role) => (
@@ -75,14 +75,14 @@ const AdminDashboard = () => {
             ))}
           </select>
         </div>
-        <div className='flex items-center border rounded-lg px-3'>
-          <FaSearch className='text-xl text-gray-700' />
+        <div className='flex items-center border rounded-lg px-3 bg-white shadow-md'>
+          <FaSearch className='text-xl text-gray-700 ' />
           <input
             type='text'
             placeholder='Search user'
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className='bg-transparent border-none outline-none mx-2'
+            className='bg-transparent border-none focus:outline-none mx-2'
           />
         </div>
       </div>

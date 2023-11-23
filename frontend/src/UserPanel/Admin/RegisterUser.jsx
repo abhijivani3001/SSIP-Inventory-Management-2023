@@ -34,6 +34,19 @@ const RegisterUser = () => {
 
       if (data.success === true) {
         alert('Registration Successful');
+
+        // Clear the form after successful submission
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          password: '',
+          subBranch: '',
+          branch: '',
+          department: '',
+          role: 'employee',
+          profileIcon: '',
+        });
       } else {
         alert('Registration failed');
       }
