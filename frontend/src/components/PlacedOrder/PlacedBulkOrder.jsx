@@ -15,6 +15,20 @@ const PlacedBulkOrder = (props) => {
     return date.toLocaleDateString(undefined, options);
   };
 
+  const countOrders = () => {
+    let count = 0;
+    order?.orders.forEach((item) => {
+      if (
+        item.status === props.currentStatus ||
+        props.currentStatus === 'super' ||
+        (props.currentStatus === 'accepted' && item.status === 'head-accepted')
+      ) {
+        count++;
+      }
+    });
+    return count;
+  };
+
   return (
     <div
       id='accordion-collapse'
@@ -35,7 +49,8 @@ const PlacedBulkOrder = (props) => {
               isDropdownVisible ? 'border-b' : ''
             }`}
           >
-            <span>Ordered Products x{order?.orders.length}</span>
+            {/* <span>Ordered Products x{order?.orders.length}</span> */}
+            <span>Ordered Products x{countOrders()}</span>
             <div className='flex gap-8 justify-between align-middle'>
               <div>Created at: {formatDate(order?.createdAt)}</div>
               <svg

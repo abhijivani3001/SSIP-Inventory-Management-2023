@@ -19,12 +19,6 @@ const PlacedOrder = (props) => {
 
       // to update inventory
       try {
-        // const res3 = await axios.put('api/inventory', {
-        //   updatedQuantity: props.delivered,
-        //   inventoryId: props.itemId,
-        // });
-        // console.log(res3);
-
         const res3 = await axios.post('api/inventory', [
           {
             itemId: props.itemId,
@@ -41,6 +35,7 @@ const PlacedOrder = (props) => {
     } catch (error) {
       console.error('Error updating order status:', error);
     }
+    props.getOrders();
   };
 
   const isAllQuantityReceived = props.quantity === props.delivered;
@@ -80,7 +75,7 @@ const PlacedOrder = (props) => {
                 {props.currentStatus === 'super' && (
                   <div className='flex items-center'>
                     <div className='h-2.5 w-2.5 rounded-full bg-yellow-300 mr-2'></div>
-                    Pending
+                    Sent
                   </div>
                 )}
               </button>
@@ -108,13 +103,12 @@ const PlacedOrder = (props) => {
             )}
 
             {(props.status === 'head-accepted' ||
-              props.status === 'accepted') &&
-              isAllQuantityReceived && (
-                <div className='flex items-center'>
-                  <div className='h-2.5 w-2.5 rounded-full bg-green-300 mr-2'></div>
-                  Accepted
-                </div>
-              )}
+              (props.status === 'accepted' && !isAllQuantityReceived)) && (
+              <div className='flex items-center'>
+                <div className='h-2.5 w-2.5 rounded-full bg-green-300 mr-2'></div>
+                Accepted
+              </div>
+            )}
           </div>
         </td>
       </tr>
