@@ -33,22 +33,22 @@ const AllRegisteredUsers = (props) => {
                     <table className='w-full divide-y text-left text-gray-500'>
                       <thead className='text-base text-gray-700 uppercase bg-slate-100'>
                         <tr className='divide-x'>
-                          <th scope='col' className='px-6 py-3 w-32'>
+                          <th scope='col' className='px-6 py- w-32'>
                             Sr. no
                           </th>
-                          <th scope='col' className='px-6 py-3'>
+                          <th scope='col' className='px-6 py-1'>
                             Name
                           </th>
-                          <th scope='col' className='px-6 py-3 w-1/5'>
+                          <th scope='col' className='px-6 py-1 w-1/5'>
                             Email
                           </th>
-                          <th scope='col' className='px-6 py-3 w-[16rem]'>
+                          <th scope='col' className='px-6 py-1 w-[16rem]'>
                             Sub-branch
                           </th>
-                          <th scope='col' className='px-6 py-3 w-[16rem]'>
+                          <th scope='col' className='px-6 py-1 w-[16rem]'>
                             Branch
                           </th>
-                          <th scope='col' className='px-6 py-3 w-[16rem]'>
+                          <th scope='col' className='px-6 py-1 w-[16rem]'>
                             Department
                           </th>
                         </tr>

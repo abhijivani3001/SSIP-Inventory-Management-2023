@@ -35,17 +35,17 @@ const PlacedOrderList = () => {
   };
 
   return (
-    <div className="mx-10 my-4">
+    <div className='mx-10 my-4'>
       {isLoading && (
-        <div className="text-xl my-auto text-center ">Loading...</div>
+        <div className='text-xl my-auto text-center '>Loading...</div>
       )}
       {!isLoading && !isOrdersPlaced && (
-        <div className="not_available">Placed orders is empty</div>
+        <div className='not_available'>Placed orders is empty</div>
       )}
 
       {!isLoading && isOrdersPlaced && (
         <>
-          <div className="flex justify-center overflow-x-auto whitespace-nowrap">
+          <div className='flex justify-center overflow-x-auto whitespace-nowrap'>
             <button
               onClick={() => handleTabClick('pending')}
               className={`default_tab ${
@@ -54,7 +54,7 @@ const PlacedOrderList = () => {
                   : 'status_false_tab'
               }`}
             >
-              <p className="mx-auto">Pending</p>
+              <p className='mx-auto'>Pending</p>
             </button>
 
             <button
@@ -65,7 +65,7 @@ const PlacedOrderList = () => {
                   : 'status_false_tab'
               }`}
             >
-              <p className="mx-auto">Accepted</p>
+              <p className='mx-auto'>Accepted</p>
             </button>
 
             <button
@@ -76,7 +76,7 @@ const PlacedOrderList = () => {
                   : 'status_false_tab'
               }`}
             >
-              <p className="mx-auto">Rejected</p>
+              <p className='mx-auto'>Rejected</p>
             </button>
 
             <button
@@ -87,11 +87,11 @@ const PlacedOrderList = () => {
                   : 'status_false_tab'
               }`}
             >
-              <p className="mx-auto">Completed</p>
+              <p className='mx-auto'>Completed</p>
             </button>
           </div>
 
-          <div className="my-4">
+          <div className='my-4'>
             {placedOrders?.map((order) => {
               let flag = false;
               order.orders.forEach((order) => {
@@ -118,7 +118,7 @@ const PlacedOrderList = () => {
               }
             })}
             {!mainFlag && (
-              <div className="not_available">
+              <div className='not_available'>
                 No more placed orders available.
               </div>
             )}

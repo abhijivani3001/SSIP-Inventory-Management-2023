@@ -4,6 +4,7 @@ import axios from '../../api/AxiosUrl';
 
 const Product = (props) => {
   const [userRole, setUserRole] = useState('');
+
   useEffect(() => {
     (async () => {
       try {
@@ -15,6 +16,7 @@ const Product = (props) => {
       }
     })();
   }, []);
+
   return (
     <>
       {props.data.map((val) => (

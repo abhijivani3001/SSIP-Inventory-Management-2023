@@ -3,8 +3,10 @@ import axios from '../../api/AxiosUrl';
 import UserDataCard from './UserDataCard';
 import { FaSearch } from 'react-icons/fa';
 import { findBelowUsers } from '../../Helper/Helper';
-import Loader from '../../components/ChakraUI/Loader';
 import AllRegisteredUsers from './AllRegisteredUsers';
+
+import Loader from '../../components/ChakraUI/Loader';
+import { ChakraProvider } from '@chakra-ui/react';
 
 const AdminDashboard = () => {
   const [userData, setUserData] = useState([]);
@@ -86,7 +88,9 @@ const AdminDashboard = () => {
       </div>
 
       {isLoading ? (
-        <Loader />
+        <ChakraProvider>
+          <Loader />
+        </ChakraProvider>
       ) : (
         <div>
           {/* <UserDataCard users={roleWiseUsers[selectedRole] || filteredUsers} /> */}

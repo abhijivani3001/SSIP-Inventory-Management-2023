@@ -6,11 +6,11 @@ import { BrowserRouter } from 'react-router-dom';
 import { AuthContextProvider } from './store/auth-context';
 import CartProvider from './store/CartProvider';
 
-import { ChakraProvider } from '@chakra-ui/react';
+// import { ChakraProvider } from '@chakra-ui/react';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <ChakraProvider>
+  // <ChakraProvider>
     <AuthContextProvider>
       <CartProvider>
         <BrowserRouter>
@@ -18,5 +18,5 @@ root.render(
         </BrowserRouter>
       </CartProvider>
     </AuthContextProvider>
-  </ChakraProvider>
+  // </ChakraProvider>
 );
