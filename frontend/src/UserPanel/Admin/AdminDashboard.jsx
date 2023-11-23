@@ -4,6 +4,7 @@ import UserDataCard from './UserDataCard';
 import { FaSearch } from 'react-icons/fa';
 import { findBelowUsers } from '../../Helper/Helper';
 import Loader from '../../components/ChakraUI/Loader';
+import AllRegisteredUsers from './AllRegisteredUsers';
 
 const AdminDashboard = () => {
   const [userData, setUserData] = useState([]);
@@ -23,7 +24,6 @@ const AdminDashboard = () => {
         );
         const data = await res2.data.users;
         setUserData(data);
-        console.log('dt', data);
       } catch (error) {
         console.error(error);
       }
@@ -53,7 +53,7 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className='mx-8 bg-gray-50 mt-4'>
+    <div className='bg-gray-50 py-4 px-10'>
       <div className='flex items-center justify-between mb-4'>
         <div className='flex items-center'>
           <label htmlFor='roleSelect' className='mr-2 text-lg'>
@@ -88,8 +88,11 @@ const AdminDashboard = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <div className='text-3xl border border-gray-400 py5 px-10 rounded-lg shadow-xl my-10'>
-          <UserDataCard users={roleWiseUsers[selectedRole] || filteredUsers} />
+        <div>
+          {/* <UserDataCard users={roleWiseUsers[selectedRole] || filteredUsers} /> */}
+          <AllRegisteredUsers
+            userData={roleWiseUsers[selectedRole] || filteredUsers}
+          />
         </div>
       )}
     </div>

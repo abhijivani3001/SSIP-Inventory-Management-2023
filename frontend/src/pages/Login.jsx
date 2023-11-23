@@ -88,7 +88,7 @@ const Login = () => {
   };
 
   return (
-    <div className='inset-0 flex flex-col items-center justify-center p-16'>
+    <div className='inset-0 flex bg-gray-50 flex-col items-center justify-center p-8'>
       <div className='bg-white w-96 p-8 rounded-lg shadow-lg'>
         <div className='mb-2 ml-[85px]'>
           <img src='https://cracku.in/latest-govt-jobs/wp-content/uploads/2019/07/Government-of-India.jpg' height="30px" width="140px" alt="Government of India" />

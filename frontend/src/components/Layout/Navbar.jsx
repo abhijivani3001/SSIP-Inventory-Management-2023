@@ -90,7 +90,7 @@ const Navbar = () => {
   }, [cart.isNotificationUpdated]);
 
   return (
-    <div className='sticky inset-x-0 top-0 z-40 h-16 bg-gray-900 text-gray-300 shadow-xl'>
+    <div className='sticky inset-x-0 top-0 z-10 h-16 bg-gray-900 text-gray-300 shadow-xl'>
       <div className='flex flex-wrap items-center justify-between mx-auto p-0 h-16 px-10'>
         {/* Part-1: logo */}
         <Link to='/'>
