@@ -4,7 +4,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import Product from '../components/Products/Product';
 import axios from '../api/AxiosUrl';
 import SearchInput from 'react-search-input';
-import { ChakraProvider, Select } from '@chakra-ui/react';
+import { Select } from '@chakra-ui/react';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -75,53 +75,51 @@ const Products = () => {
   };
 
   return (
-    <div className="mx-8 mt-4">
+    <div className='mx-8 mt-4'>
       {isLoading && (
-        <div className="text-xl my-auto text-center">Loading...</div>
+        <div className='text-xl my-auto text-center'>Loading...</div>
       )}
       {!isLoading && !isProductsAvailable && (
-        <div className="not_available">Products are not available</div>
+        <div className='not_available'>Products are not available</div>
       )}
 
       {!isLoading && isProductsAvailable && (
         <div>
           <div>
-            <div className="flex justify-end mb-4">
-              <div className="flex items-center">
-                <div className="mr-5">
-                  <ChakraProvider>
-                    <Select
-                      placeholder="Select Category"
-                      className="cursor-pointer"
-                      onChange={(e) => categoryHandler(e.target.value)}
-                    >
-                      <option value="all">All</option>
-                      <option value="Stationary">Stationary</option>
-                      <option value="Electronics">Electronics</option>
-                      <option value="Furniture">Furniture</option>
-                      <option value="Telecommunication">
-                        TeleCommunications
-                      </option>
-                    </Select>
-                  </ChakraProvider>
+            <div className='flex justify-end mb-4'>
+              <div className='flex items-center'>
+                <div className='mr-5'>
+                  <Select
+                    placeholder='Select Category'
+                    className='cursor-pointer'
+                    onChange={(e) => categoryHandler(e.target.value)}
+                  >
+                    <option value='all'>All</option>
+                    <option value='Stationary'>Stationary</option>
+                    <option value='Electronics'>Electronics</option>
+                    <option value='Furniture'>Furniture</option>
+                    <option value='Telecommunication'>
+                      TeleCommunications
+                    </option>
+                  </Select>
                 </div>
-                <div className="relative flex">
+                <div className='relative flex'>
                   <FontAwesomeIcon
                     icon={faSearch}
-                    className="absolute left-2 top-5 text-gray-500"
+                    className='absolute left-2 top-5 text-gray-500'
                     style={{ border: 'none', background: 'none', padding: 0 }}
                   />
 
                   <SearchInput
-                    className="border border-gray-400 pl-8 pr-2 py-1 rounded-md"
-                    placeholder="Search Product here"
+                    className='border border-gray-400 pl-8 pr-2 py-1 rounded-md'
+                    placeholder='Search Product here'
                     onChange={searchHandler}
                   />
                 </div>
               </div>
             </div>
           </div>
-          <div className="flex flex-wrap justify-center my-6">
+          <div className='flex flex-wrap justify-center my-6'>
             {filteredProducts.length > 0 ? (
               <Product data={filteredProducts} />
             ) : (

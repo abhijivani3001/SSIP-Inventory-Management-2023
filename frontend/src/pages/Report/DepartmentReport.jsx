@@ -48,21 +48,21 @@ const DepartmentReport = () => {
         Download PDF
       </button>
       <div ref={targetRef}>
-        <div className="m-5">
+        <div className='m-5'>
           {isLoading && (
-            <div className="text-xl my-auto text-center ">Loading...</div>
+            <div className='text-xl my-auto text-center '>Loading...</div>
           )}
           {!isLoading && (
-            <table className="w-full divide-y text-left text-gray-500">
-              <thead className="text-xl my-2 text-gray-700 uppercase bg-slate-100">
-                <tr className="divide-x">
-                  <th scope="col" className="px-6 py-1 w-32">
+            <table className='w-full divide-y text-left text-gray-500'>
+              <thead className='text-xl my-2 text-gray-700 uppercase bg-slate-100'>
+                <tr className='divide-x'>
+                  <th scope='col' className='px-6 py-1 w-32'>
                     Sr. no
                   </th>
-                  <th scope="col" className="px-6 py-1">
+                  <th scope='col' className='px-6 py-1'>
                     Product Name
                   </th>
-                  <th scope="col" className="px-6 py-1 w-1/5">
+                  <th scope='col' className='px-6 py-1 w-1/5'>
                     Quantity Used
                   </th>
                 </tr>
@@ -70,10 +70,10 @@ const DepartmentReport = () => {
               <tbody>
                 {orders.map((order, index) => {
                   return (
-                    <tr className="bg-white text-gray-900 text-xl font-normal hover:bg-gray-50 border-b divide-x">
-                      <td className="px-6">{index + 1}.</td>
-                      <td className="px-6">{order.name}</td>
-                      <td className="px-6">{order.quantity}</td>
+                    <tr className='bg-white text-gray-900 text-xl font-normal hover:bg-gray-50 border-b divide-x'>
+                      <td className='px-6 py-2'>{index + 1}.</td>
+                      <td className='px-6 py-2'>{order.name}</td>
+                      <td className='px-6 py-2'>{order.quantity}</td>
                     </tr>
                   );
                 })}
