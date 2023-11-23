@@ -3,6 +3,7 @@ import {
   Card,
   CardBody,
   CardHeader,
+  ChakraProvider,
   Heading,
   Stack,
   StackDivider,
@@ -34,50 +35,52 @@ const ShowAdminPlans = ({ currentPlan }) => {
   return (
     <div>
       <div className='text-3xl font-bold mb-5'>Your Active Budget Plans</div>
-      <Card className=' max-w-[1200px]'>
-        <CardHeader>
-          <Heading size='md'>
-            Budget Plan For {year} Quarter {quarter}
-          </Heading>
-        </CardHeader>
+      <ChakraProvider>
+        <Card className=' max-w-[1200px]'>
+          <CardHeader>
+            <Heading size='md'>
+              Budget Plan For {year} Quarter {quarter}
+            </Heading>
+          </CardHeader>
 
-        <CardBody>
-          <Stack divider={<StackDivider />} spacing='4'>
-            <Box>
-              <Heading size='xs' textTransform='uppercase'>
-                Start Date
-              </Heading>
-              <Text pt='2' fontSize='sm'>
-                {formatDate(startDate)}
-              </Text>
-            </Box>
-            <Box>
-              <Heading size='xs' textTransform='uppercase'>
-                End Date
-              </Heading>
-              <Text pt='2' fontSize='sm'>
-                {formatDate(endDate)}
-              </Text>
-            </Box>
-            <Box>
-              <Heading size='xs' textTransform='uppercase'>
-                Each Phase Duration
-              </Heading>
-              <Text pt='2' fontSize='sm'>
-                {currentPlan.phaseDuration} Days
-              </Text>
-            </Box>
-            <Box>
-              <Heading size='xs' textTransform='uppercase'>
-                Current Phase
-              </Heading>
-              <Text pt='2' fontSize='sm'>
-                <DisplayPhase phase={currentPlan.phase} />
-              </Text>
-            </Box>
-          </Stack>
-        </CardBody>
-      </Card>
+          <CardBody>
+            <Stack divider={<StackDivider />} spacing='4'>
+              <Box>
+                <Heading size='xs' textTransform='uppercase'>
+                  Start Date
+                </Heading>
+                <Text pt='2' fontSize='sm'>
+                  {formatDate(startDate)}
+                </Text>
+              </Box>
+              <Box>
+                <Heading size='xs' textTransform='uppercase'>
+                  End Date
+                </Heading>
+                <Text pt='2' fontSize='sm'>
+                  {formatDate(endDate)}
+                </Text>
+              </Box>
+              <Box>
+                <Heading size='xs' textTransform='uppercase'>
+                  Each Phase Duration
+                </Heading>
+                <Text pt='2' fontSize='sm'>
+                  {currentPlan.phaseDuration} Days
+                </Text>
+              </Box>
+              <Box>
+                <Heading size='xs' textTransform='uppercase'>
+                  Current Phase
+                </Heading>
+                <Text pt='2' fontSize='sm'>
+                  <DisplayPhase phase={currentPlan.phase} />
+                </Text>
+              </Box>
+            </Stack>
+          </CardBody>
+        </Card>
+      </ChakraProvider>
     </div>
   );
 };
