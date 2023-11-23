@@ -9,6 +9,8 @@ import ROLES from '../../constants/ROLES';
 import { LuUserCircle2 } from 'react-icons/lu';
 import { MdNotificationsNone } from 'react-icons/md';
 import { PiShoppingCartBold } from 'react-icons/pi';
+import multiavatar from '@multiavatar/multiavatar';
+import DangerousHTML from 'react-dangerous-html';
 
 import EmployeeNavbar from '../../UserPanel/Employee/EmployeeNavbar';
 import HeadNavbar from '../../UserPanel/Head/HeadNavbar';
@@ -41,6 +43,7 @@ const Navbar = () => {
 
   const name = userData?.name;
   const email = userData?.email;
+  const profileIcon = userData?.profileIcon;
 
   // user profile dropdown:
   const dropdown = document.getElementById('user-dropdown');
@@ -51,19 +54,6 @@ const Navbar = () => {
   const toggleNavbarUser = () => {
     navbarUser?.classList.toggle('hidden');
   };
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await axios.get('/api/user');
-        const data = await res.data.user;
-        setUserData(data);
-      } catch (error) {
-        console.error(error);
-      }
-      setIsLoading(false);
-    })();
-  }, []);
 
   // Notifications:
   const [isNewNotification, setIsNewNotification] = useState(false);
@@ -84,6 +74,22 @@ const Navbar = () => {
       console.log(error);
     }
   };
+
+  // user profile icon:
+  let svgCode = multiavatar(profileIcon || '66493f858b6dc78b85');
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await axios.get('/api/user');
+        const data = await res.data.user;
+        setUserData(data);
+      } catch (error) {
+        console.error(error);
+      }
+      setIsLoading(false);
+    })();
+  }, []);
 
   useEffect(() => {
     getNotifications();
@@ -209,7 +215,11 @@ const Navbar = () => {
                 onClick={toggleDropdown}
               >
                 <span className='sr-only'>Open user menu</span>
-                <LuUserCircle2 className='icon' />
+                {/* <LuUserCircle2 className='icon' /> */}
+
+                <div className='w-8 hover:shadow-lg hover:ring-2 hover:ring-gray-300 hover:rounded-full'>
+                  <DangerousHTML html={svgCode} />
+                </div>
               </button>
               <div
                 className='z-50 my-8 hidden overflow-hidden right-8 absolute text-base list-none bg-white divide-y divide-gray-200 rounded-lg shadow-lg'

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from '../../api/AxiosUrl';
 import ROLES from '../../constants/ROLES';
@@ -14,6 +14,7 @@ const RegisterUser = () => {
     branch: '',
     department: '',
     role: 'employee',
+    profileIcon: '',
   });
 
   const handleChange = (e) => {
@@ -41,113 +42,133 @@ const RegisterUser = () => {
     }
   };
 
+  // for user profile icon
+  const generateRandomString = (length) => {
+    const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    let randomString = '';
+
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      randomString += characters.charAt(randomIndex);
+    }
+
+    return randomString;
+  };
+
+  useEffect(() => {
+    const randomString = generateRandomString(15);
+    if (!formData.profileIcon) {
+      setFormData({ ...formData, profileIcon: randomString });
+    }
+  }, []);
+
   return (
-    <div className="inset-0 flex items-center justify-center p-8">
-      <div className="bg-white text-xl text-gray-800 font-semibold w-1/3 p-8 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4 min-w-0 flex items-center justify-center">
+    <div className='inset-0 flex items-center justify-center p-8'>
+      <div className='bg-white text-xl text-gray-800 font-semibold w-1/3 p-8 rounded-lg shadow-lg'>
+        <h2 className='text-2xl font-semibold text-gray-800 mb-4 min-w-0 flex items-center justify-center'>
           Register User
         </h2>
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-gray-800">Name</label>
+          <div className='mb-4'>
+            <label className='block text-gray-800'>Name</label>
             <input
-              type="text"
-              id="name"
-              name="name"
-              className="w-full px-3 py-2 border text-black rounded-lg focus:outline-none focus:border-blue-500"
-              placeholder="Enter your name"
+              type='text'
+              id='name'
+              name='name'
+              className='w-full px-3 py-2 border text-black rounded-lg focus:outline-none focus:border-blue-500'
+              placeholder='Enter your name'
               value={formData.name}
               onChange={handleChange}
               required
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-800">Email</label>
+          <div className='mb-4'>
+            <label className='block text-gray-800'>Email</label>
             <input
-              type="email"
-              id="email"
-              name="email"
-              className="w-full px-3 py-2 border text-black rounded-lg focus:outline-none focus:border-blue-500"
-              placeholder="Enter your email"
+              type='email'
+              id='email'
+              name='email'
+              className='w-full px-3 py-2 border text-black rounded-lg focus:outline-none focus:border-blue-500'
+              placeholder='Enter your email'
               value={formData.email}
               onChange={handleChange}
               required
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-800">Phone</label>
+          <div className='mb-4'>
+            <label className='block text-gray-800'>Phone</label>
             <input
-              type="tel"
-              id="phone"
-              name="phone"
-              className="w-full px-3 py-2 border text-black rounded-lg focus:outline-none focus:border-blue-500"
-              placeholder="Enter your phone number"
+              type='tel'
+              id='phone'
+              name='phone'
+              className='w-full px-3 py-2 border text-black rounded-lg focus:outline-none focus:border-blue-500'
+              placeholder='Enter your phone number'
               value={formData.phone}
               onChange={handleChange}
               required
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-800">Password</label>
+          <div className='mb-4'>
+            <label className='block text-gray-800'>Password</label>
             <input
-              type="password"
-              id="password"
-              name="password"
-              autoComplete="on"
-              className="w-full px-3 py-2 border text-black rounded-lg focus:outline-none focus:border-blue-500"
-              placeholder="Enter your password"
+              type='password'
+              id='password'
+              name='password'
+              autoComplete='on'
+              className='w-full px-3 py-2 border text-black rounded-lg focus:outline-none focus:border-blue-500'
+              placeholder='Enter your password'
               value={formData.password}
               onChange={handleChange}
               required
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-800">Sub Branch</label>
+          <div className='mb-4'>
+            <label className='block text-gray-800'>Sub Branch</label>
             <input
-              type="text"
-              id="subBranch"
-              name="subBranch"
-              className="w-full px-3 py-2 border text-black rounded-lg focus:outline-none focus:border-blue-500"
-              placeholder="Enter your sub branch"
+              type='text'
+              id='subBranch'
+              name='subBranch'
+              className='w-full px-3 py-2 border text-black rounded-lg focus:outline-none focus:border-blue-500'
+              placeholder='Enter your sub branch'
               value={formData.subBranch}
               onChange={handleChange}
               required
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-800">Branch</label>
+          <div className='mb-4'>
+            <label className='block text-gray-800'>Branch</label>
             <input
-              type="text"
-              id="branch"
-              name="branch"
-              className="w-full px-3 py-2 border text-black rounded-lg focus:outline-none focus:border-blue-500"
-              placeholder="Enter your branch"
+              type='text'
+              id='branch'
+              name='branch'
+              className='w-full px-3 py-2 border text-black rounded-lg focus:outline-none focus:border-blue-500'
+              placeholder='Enter your branch'
               value={formData.branch}
               onChange={handleChange}
               required
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-800">Department</label>
+          <div className='mb-4'>
+            <label className='block text-gray-800'>Department</label>
             <input
-              type="text"
-              id="department"
-              name="department"
-              className="w-full px-3 py-2 border text-black rounded-lg focus:outline-none focus:border-blue-500"
-              placeholder="Enter your department"
+              type='text'
+              id='department'
+              name='department'
+              className='w-full px-3 py-2 border text-black rounded-lg focus:outline-none focus:border-blue-500'
+              placeholder='Enter your department'
               value={formData.department}
               onChange={handleChange}
               required
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-800" for="role">
+          <div className='mb-4'>
+            <label className='block text-gray-800' for='role'>
               Role
             </label>
             <select
-              id="role"
-              name="role"
-              className="w-full px-3 py-2 border text-black rounded-lg focus:outline-none focus:border-blue-500"
+              id='role'
+              name='role'
+              className='w-full px-3 py-2 border text-black rounded-lg focus:outline-none focus:border-blue-500'
               onChange={handleChange}
               required
             >
@@ -164,16 +185,16 @@ const RegisterUser = () => {
                 Department Store Manager
               </option>
               <option value={ROLES.DEPARTMENT_HEAD}>Department Head</option>
-              <option value="admin">Admin</option>
+              <option value='admin'>Admin</option>
             </select>
           </div>
-          <div className="flex justify-center align-middle gap-2">
-            <button type="submit" className="blue_btn">
+          <div className='flex justify-center align-middle gap-2'>
+            <button type='submit' className='blue_btn'>
               Register
             </button>
 
-            <div className="my-auto">
-              <Link to="/" className="trans_btn">
+            <div className='my-auto'>
+              <Link to='/' className='trans_btn'>
                 Close
               </Link>
             </div>
