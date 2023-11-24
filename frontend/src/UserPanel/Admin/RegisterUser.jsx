@@ -70,7 +70,6 @@ const RegisterUser = () => {
 
   useEffect(() => {
     const randomString = generateRandomString(15);
-    console.log('hihih');
     if (!formData.profileIcon) {
       setFormData((prevFormData) => ({
         ...prevFormData,

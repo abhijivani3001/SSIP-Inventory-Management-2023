@@ -5,8 +5,7 @@ import { FaSearch } from 'react-icons/fa';
 import { findBelowUsers } from '../../Helper/Helper';
 import ROLES from '../../constants/ROLES';
 import Loader from '../../components/ChakraUI/Loader';
-import DashboardChart from '../../pages/DashboardChart';
-
+import DashboardChart from '../../pages/Dashboard/DashboardChart';
 
 const SbsmEmpOrder = () => {
   const [userData, setUserData] = useState([]);

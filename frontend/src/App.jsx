@@ -20,7 +20,7 @@ import ItemRequests from './UserPanel/StoreManager/ItemRequests';
 import axios from './api/AxiosUrl';
 import HeadRequestedOrders from './pages/HeadRequestedOrders/HeadRequestedOrders';
 import StoreManagerRequestedOrders from './pages/StoreManagerRequestedOrders/StoreManagerRequestedOrders';
-import Dashboard from './pages/Dashboard';
+import Dashboard from './pages/Dashboard/Dashboard';
 import AdminDashboard from './UserPanel/Admin/AdminDashboard';
 import ResetPassword from './pages/ResetPassword';
 import { ToastContainer } from 'react-toastify';
@@ -29,7 +29,6 @@ import BudgetPlanning from './pages/BudgetPlanning/BudgetPlanning';
 import ActualVsPlanning from './pages/BudgetPlanning/ActualVsPlanning';
 import BsmEmpOrders from './UserPanel/StoreManager/BsmEmpOrders';
 import DepartmentReport from './pages/Report/DepartmentReport';
-import EmpDashboard from './pages/Dashboard/EmpDashboard';
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -91,14 +90,8 @@ function App() {
         {/* {isLoggedIn && userRole !== ROLES.ADMIN && (
           <Route path='/dashboard' element={<Dashboard />} />
         )} */}
-        {isLoggedIn &&
-          userRole !== ROLES.ADMIN &&
-          userRole !== ROLES.EMPLOYEE && (
-            <Route path='/' element={<Dashboard />} />
-          )}
-
-        {isLoggedIn && userRole === ROLES.EMPLOYEE && (
-          <Route path='/' element={<EmpDashboard />} />
+        {isLoggedIn && userRole !== ROLES.ADMIN && (
+          <Route path='/' element={<Dashboard />} />
         )}
 
         {isLoggedIn && userRole !== ROLES.ADMIN && (
