@@ -6,6 +6,9 @@ import { Allocated, Plan, Rejected, Request } from '../../icons/icons';
 import DashboardChart from './DashboardChart';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import ROLES from '../../constants/ROLES';
+
+import { findBelowUsers } from '../../Helper/Helper';
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -13,15 +16,21 @@ const Dashboard = () => {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [fromDate, setFromDate] = useState(null);
   const [toDate, setToDate] = useState(null);
+  const [belowUsers, setBelowUsers] = useState([]);
 
   useEffect(() => {
     (async () => {
       try {
         const res = await axios.get('/api/user');
         const data = await res.data.user;
-        console.log(data);
         setUserData(data);
-        console.log(data);
+
+        const res2 = await axios.post('/api/user/users', findBelowUsers(data));
+        const data2 = await res2.data.users;
+
+        if (data2?.length) {
+          setBelowUsers(data2);
+        }
       } catch (error) {
         console.error(error);
       }
@@ -155,9 +164,10 @@ const Dashboard = () => {
               </>
             )}
           </div>
-          <div className='relative border flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg mt-24'>
+          <div className='relative border flex flex-col min-w-0 break-words bg-slate-50 w-full mb-6 shadow-lg rounded-lg mt-24'>
             <div className='flex flex-wrap justify-center rounded-t-lg'>
-              <div className='w-full p-4 flex justify-center'>
+              {/* common */}
+              <div className='w-full p-4 flex flex-wrap justify-center'>
                 <div className='-mt-20 flex justify-center gap-8'>
                   <DashboardCard
                     bg={'bg-teal-500'}
@@ -165,6 +175,7 @@ const Dashboard = () => {
                     orders={plannedOrders}
                     text={'Planned Orders'}
                     icon={<Plan />}
+                    role={'common'}
                   />
                   <DashboardCard
                     bg={'bg-yellow-300'}
@@ -172,6 +183,7 @@ const Dashboard = () => {
                     orders={requestedOrders}
                     text={'Requested Orders'}
                     icon={<Request />}
+                    role={'common'}
                   />
                   <DashboardCard
                     bg={'bg-emerald-500'}
@@ -179,6 +191,7 @@ const Dashboard = () => {
                     orders={allocatedOrders}
                     text={'Allocated Orders'}
                     icon={<Allocated />}
+                    role={'common'}
                   />
                   <DashboardCard
                     bg={'bg-red-500'}
@@ -186,9 +199,58 @@ const Dashboard = () => {
                     orders={rejectedOrders}
                     text={'Rejected Orders'}
                     icon={<Rejected />}
+                    role={'common'}
                   />
                 </div>
               </div>
+
+              {/* store-manager */}
+              {(userData.role === ROLES.SUB_BRANCH_STORE_MANAGER ||
+                userData.role === ROLES.BRANCH_STORE_MANAGER ||
+                userData.role === ROLES.DEPARTMENT_STORE_MANAGER) && (
+                <div className='w-full p-4 flex flex-wrap justify-center'>
+                  <div className='-mt- flex justify-center gap-8'>
+                    <DashboardCard
+                      bg={'bg-sky-500'}
+                      hover={'hover:bg-teal-600'}
+                      belowUsers={belowUsers}
+                      icon={<Plan />}
+                      role={'store-manager'}
+                      tag={'1'}
+                      text={'Employees'}
+                    />
+                    <DashboardCard
+                      bg={'bg-yellow-300'}
+                      hover={'hover:bg-yellow-400'}
+                      orders={requestedOrders}
+                      text={'Requested Orders'}
+                      icon={<Request />}
+                      role={'store-manager'}
+                      tag={'2'}
+                    />
+                    <DashboardCard
+                      bg={'bg-emerald-500'}
+                      hover={'hover:bg-emerald-600'}
+                      orders={allocatedOrders}
+                      text={'Allocated Orders'}
+                      icon={<Allocated />}
+                      role={'store-manager'}
+                      tag={'3'}
+                    />
+                    <DashboardCard
+                      bg={'bg-red-500'}
+                      hover={'hover:bg-red-600'}
+                      orders={rejectedOrders}
+                      text={'Rejected Orders'}
+                      icon={<Rejected />}
+                      role={'store-manager'}
+                      tag={'4'}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* --- */}
             </div>
             <div className='border-t-2 text-center my-8 py-8 px-6'>
               <div className='flex flex-row justify-evenly align-middle'>

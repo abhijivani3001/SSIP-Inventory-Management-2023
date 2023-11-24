@@ -161,7 +161,7 @@ const DashboardChart = (props) => {
           </div> */}
 
           {/* Canvas for the comparison chart */}
-          <div className='bg-indigo-500 py-2 flex flex-col shadow-xl rounded-xl relative text-center w-64 mx-auto'>
+          <div className='bg-indigo-500 py-2 flex flex-col shadow-xl rounded-xl relative text-center w-64 mx-auto hover:scale-105 transition duration-500'>
             <div className='font-bold text-2xl text-white'>Analytics</div>
 
             <div className='text-lg text-gray-100'>Overview</div>
@@ -176,7 +176,7 @@ const DashboardChart = (props) => {
 
           {/* Table */}
           <div className='my-10 border-t-2 p-10 mx-8'>
-            {user.bulkOrders.length > 0 ? (
+            {user?.bulkOrders?.length > 0 ? (
               <table className='w-full border-collapse border border-slate-200 shadow-lg'>
                 <thead>
                   <tr className='bg-slate-100'>
@@ -189,7 +189,7 @@ const DashboardChart = (props) => {
                     <th className='border border-gray-400 p-1 text-xl'>Date</th>
                   </tr>
                 </thead>
-                <tbody className='text-base text-gray-700'>
+                <tbody className='text-base text-gray-700 bg-white'>
                   {user.bulkOrders
                     .flatMap((bulkOrder) =>
                       bulkOrder.orders.map((order) => ({

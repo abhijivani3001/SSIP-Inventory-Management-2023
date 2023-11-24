@@ -36,7 +36,7 @@ const AllRegisteredUsers = (props) => {
                           <th scope='col' className='px-6 py- w-32'>
                             Sr. no
                           </th>
-                          <th scope='col' className='px-6 py-1'>
+                          <th scope='col' className='px-6 py-1 w-[32rem]'>
                             Name
                           </th>
                           <th scope='col' className='px-6 py-1 w-1/5'>

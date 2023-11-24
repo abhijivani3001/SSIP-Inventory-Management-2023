@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import UserInfo from './UserInfo';
+import UserInfo from '../../UserPanel/Admin/UserInfo';
 
 import {
   Modal,
@@ -17,7 +17,7 @@ import {
 import multiavatar from '@multiavatar/multiavatar';
 import DangerousHTML from 'react-dangerous-html';
 
-const AllRegisteredUsersTwo = (props) => {
+const EmployeeDataTwo = (props) => {
   const userData = props.userData;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [scrollBehavior, setScrollBehavior] = useState('inside');
@@ -82,4 +82,4 @@ const AllRegisteredUsersTwo = (props) => {
   );
 };
 
-export default AllRegisteredUsersTwo;
+export default EmployeeDataTwo;
