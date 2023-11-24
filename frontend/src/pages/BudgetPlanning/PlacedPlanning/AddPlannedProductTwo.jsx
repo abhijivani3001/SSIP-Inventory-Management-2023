@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../../../api/AxiosUrl';
 import AddPlannedProductThree from './AddPlannedProductThree';
+import Loader from '../../../components/ChakraUI/Loader';
 
 const AddPlannedProductTwo = (props) => {
   const [products, setProducts] = useState([]);
@@ -31,41 +32,45 @@ const AddPlannedProductTwo = (props) => {
   }, []);
 
   return (
-    <div className='mx-8 mb-8'>
-      {isLoading && (
-        <div className='text-xl my-auto text-center '>Loading...</div>
-      )}
-      {!isLoading && !isProductsAvailable && (
-        <div className='not_available'>Products is not available</div>
-      )}
+    <>
+      {isLoading && <Loader />}
+      {!isLoading && (
+        <div className='mx-8 mb-8'>
+          {!isProductsAvailable && (
+            <div className='not_available'>Products is not available</div>
+          )}
 
-      {!isLoading && isProductsAvailable && (
-        <>
-          <div>
-            <h1 className='text-4xl font-light'>Add Products to your Plan</h1>
-          </div>
-          <div className='flex flex-wrap justify-center my-3'>
-            {products.map((val) => (
-              <AddPlannedProductThree
-                key={val._id}
-                title={val.name}
-                description={val.description}
-                company={val.company}
-                imageUrl={val.imageUrl}
-                category={val.category}
-                itemId={val._id}
-                getPlannedOrders={props.getPlannedOrders}
-              />
-            ))}
-          </div>
-          <div className='flex gap-4 justify-center mb-8'>
-            <button className='trans_btn mb-4' onClick={props.onClose}>
-              close
-            </button>
-          </div>
-        </>
+          {isProductsAvailable && (
+            <>
+              <div>
+                <h1 className='text-4xl font-light'>
+                  Add Products to your Plan
+                </h1>
+              </div>
+              <div className='flex flex-wrap justify-center my-3'>
+                {products.map((val) => (
+                  <AddPlannedProductThree
+                    key={val._id}
+                    title={val.name}
+                    description={val.description}
+                    company={val.company}
+                    imageUrl={val.imageUrl}
+                    category={val.category}
+                    itemId={val._id}
+                    getPlannedOrders={props.getPlannedOrders}
+                  />
+                ))}
+              </div>
+              <div className='flex gap-4 justify-center mb-8'>
+                <button className='trans_btn mb-4' onClick={props.onClose}>
+                  close
+                </button>
+              </div>
+            </>
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

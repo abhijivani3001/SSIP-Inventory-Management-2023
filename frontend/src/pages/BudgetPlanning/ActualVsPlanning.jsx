@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../../api/AxiosUrl';
+import Loader from '../../components/ChakraUI/Loader';
 
 const ActualVsPlanning = () => {
   const [actualOrders, setActualOrders] = useState(null);
@@ -52,9 +53,7 @@ const ActualVsPlanning = () => {
 
   return (
     <div>
-      {isLoading && (
-        <div className="text-xl my-auto text-center ">Loading...</div>
-      )}
+      {isLoading && <Loader />}
       {!isLoading && <div></div>}
     </div>
   );

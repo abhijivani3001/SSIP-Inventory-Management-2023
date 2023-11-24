@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from '../../api/AxiosUrl';
 import CProductCard from './CProductCard';
+import Loader from '../ChakraUI/Loader';
 
 const CProducts = () => {
   const [categoryMap, setCategoryMap] = useState();
@@ -29,15 +30,16 @@ const CProducts = () => {
   }, []);
 
   return (
-    <div className="grid grid-cols-3 gap-4 m-7">
-      {isLoading && (
-        <div className="text-xl my-auto text-center">Loading...</div>
+    <>
+      {isLoading && <Loader />}
+      {!isLoading && (
+        <div className='grid grid-cols-3 gap-4 m-7'>
+          {categoryMap.forEach((items) => {
+            return <CProductCard items={items} />;
+          })}
+        </div>
       )}
-      {!isLoading &&
-        categoryMap.forEach((items) => {
-          return <CProductCard items={items} />;
-        })}
-    </div>
+    </>
   );
 };
 

@@ -1,8 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from '../../api/AxiosUrl';
 import AuthContext from '../../store/auth-context';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+} from 'recharts';
 import { CSVLink } from 'react-csv';
+import Loader from '../ChakraUI/Loader';
 
 const ScatterPlot = () => {
   const authCtx = useContext(AuthContext);
@@ -103,11 +112,10 @@ const ScatterPlot = () => {
   };
 
   return (
-    <div className='p-4 bg-gray-100 rounded-lg shadow-lg'>
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : (
-        <>
+    <>
+      {isLoading && <Loader />}
+      {!isLoading && (
+        <div className='p-4 bg-gray-100 rounded-lg shadow-lg'>
           <div>
             {orderData.length < 1 ? (
               <span className='not_available'>No order placed by you</span>
@@ -135,9 +143,9 @@ const ScatterPlot = () => {
                     value={selectedFilter}
                     onChange={(e) => handleFilterChange(e.target.value)}
                   >
-                    <option value="week">Last 7 days</option>
-                    <option value="month">Last 30 days</option>
-                    <option value="year">Last 365 days</option>
+                    <option value='week'>Last 7 days</option>
+                    <option value='month'>Last 30 days</option>
+                    <option value='year'>Last 365 days</option>
                   </select>
                 </div>
                 <LineChart
@@ -175,9 +183,9 @@ const ScatterPlot = () => {
               </div>
             )}
           </div>
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

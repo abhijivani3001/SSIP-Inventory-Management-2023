@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import Product from '../components/Products/Product';
 import axios from '../api/AxiosUrl';
-import SearchInput from 'react-search-input';
 import { Select } from '@chakra-ui/react';
+import { FaSearch } from 'react-icons/fa';
+import SearchInput from 'react-search-input';
+import Loader from '../components/ChakraUI/Loader';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -75,23 +76,21 @@ const Products = () => {
   };
 
   return (
-    <div className='mx-8 mt-4'>
-      {isLoading && (
-        <div className='text-xl my-auto text-center'>Loading...</div>
-      )}
-      {!isLoading && !isProductsAvailable && (
-        <div className='not_available'>Products are not available</div>
-      )}
+    <>
+      {isLoading && <Loader />}
+      {!isLoading && (
+        <div className='mx-10 my-4'>
+          {!isProductsAvailable && (
+            <div className='not_available'>Products are not available</div>
+          )}
 
-      {!isLoading && isProductsAvailable && (
-        <div>
-          <div>
-            <div className='flex justify-end mb-4'>
-              <div className='flex items-center'>
-                <div className='mr-5'>
+          {isProductsAvailable && (
+            <div>
+              <div className='flex items-center justify-between mb-4 border-b p-4'>
+                <div className='flex items-center bg-white'>
                   <Select
                     placeholder='Select Category'
-                    className='cursor-pointer'
+                    className='cursor-pointer border border-gray-200 rounded-lg'
                     onChange={(e) => categoryHandler(e.target.value)}
                   >
                     <option value='all'>All</option>
@@ -103,32 +102,28 @@ const Products = () => {
                     </option>
                   </Select>
                 </div>
-                <div className='relative flex'>
-                  <FontAwesomeIcon
-                    icon={faSearch}
-                    className='absolute left-2 top-5 text-gray-500'
-                    style={{ border: 'none', background: 'none', padding: 0 }}
-                  />
-
+                <div className='flex items-center border rounded-lg px-3 bg-white shadow-md'>
+                  <FaSearch className='text-xl text-gray-700' />
                   <SearchInput
-                    className='border border-gray-400 pl-8 pr-2 py-1 rounded-md'
+                    className='outline-none border-none px-4 rounded-md'
                     placeholder='Search Product here'
                     onChange={searchHandler}
                   />
                 </div>
               </div>
+
+              <div className='flex flex-wrap justify-center my-6'>
+                {filteredProducts.length > 0 ? (
+                  <Product data={filteredProducts} />
+                ) : (
+                  isNoMatch && <div>No items matched your search.</div>
+                )}
+              </div>
             </div>
-          </div>
-          <div className='flex flex-wrap justify-center my-6'>
-            {filteredProducts.length > 0 ? (
-              <Product data={filteredProducts} />
-            ) : (
-              isNoMatch && <div>No items matched your search.</div>
-            )}
-          </div>
+          )}
         </div>
       )}
-    </div>
+    </>
   );
 };
 

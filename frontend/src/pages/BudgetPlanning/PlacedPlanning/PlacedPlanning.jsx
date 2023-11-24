@@ -4,6 +4,7 @@ import AddPlannedProduct from './AddPlannedProduct';
 import ShowPlannedProducts from './ShowPlannedProducts';
 import ROLES from '../../../constants/ROLES';
 import { toast } from 'react-toastify';
+import Loader from '../../../components/ChakraUI/Loader';
 
 const PlacedPlanning = (props) => {
   const [plannedBulkOrders, setPlannedBulkOrders] = useState([]); // whole bulk array, which contains status
@@ -68,124 +69,129 @@ const PlacedPlanning = (props) => {
   };
 
   return (
-    <div className="mx-10 my-4">
-      {isLoading && (
-        <div className="text-xl my-auto text-center ">Loading...</div>
-      )}
+    <>
+      {isLoading && <Loader />}
+      {!isLoading && (
+        <div className='mx-10 my-4'>
+          {isSubmitted ? (
+            <div className='text-xl my-auto text-center '>
+              You have already submitted your budget.
+            </div>
+          ) : (
+            <>
+              {/* products empty */}
+              {!isPlannedProductsAvailable && (
+                <div className='not_available'>
+                  Your Planned Products is empty
+                </div>
+              )}
 
-      {!isLoading && isSubmitted ? (
-        <div className="text-xl my-auto text-center ">
-          You have already submitted your budget.
-        </div>
-      ) : (
-        <>
-          {/* products empty */}
-          {!isPlannedProductsAvailable && (
-            <div className="not_available">Your Planned Products is empty</div>
-          )}
+              {/* Show planned products */}
+              {isPlannedProductsAvailable && (
+                <div className='relative overflow-x-auto shadow-lg border border-slate-600'>
+                  <table className='w-full divide-y divide-slate-500 text-sm text-left text-gray-500'>
+                    <thead className='text-sm text-gray-700 uppercase bg-slate-200'>
+                      <tr className='divide-x divide-slate-500'>
+                        <th scope='col' className='px-6 py-3'>
+                          Sr. no
+                        </th>
+                        <th scope='col' className='px-6 py-3'>
+                          Name
+                        </th>
+                        {props.currentUser.role !== ROLES.EMPLOYEE && (
+                          <th scope='col' className='px-6 py-3'>
+                            Price(₹)
+                          </th>
+                        )}
+                        <th scope='col' className='px-6 py-3'>
+                          Quantity
+                        </th>
+                        {props.currentUser.role !== ROLES.EMPLOYEE && (
+                          <>
+                            <th scope='col' className='px-6 py-3'>
+                              Total Price(₹)
+                            </th>
+                            <th scope='col' className='px-6 py-3'>
+                              Details
+                            </th>
+                          </>
+                        )}
+                        <th scope='col' className='px-6 py-3'>
+                          Delete
+                        </th>
+                      </tr>
+                    </thead>
 
-          {/* Show planned products */}
-          {isPlannedProductsAvailable && (
-            <div className="relative overflow-x-auto shadow-lg border border-slate-600">
-              <table className="w-full divide-y divide-slate-500 text-sm text-left text-gray-500">
-                <thead className="text-sm text-gray-700 uppercase bg-slate-200">
-                  <tr className="divide-x divide-slate-500">
-                    <th scope="col" className="px-6 py-3">
-                      Sr. no
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                      Name
-                    </th>
-                    {props.currentUser.role !== ROLES.EMPLOYEE && (
-                      <th scope="col" className="px-6 py-3">
-                        Price(₹)
-                      </th>
-                    )}
-                    <th scope="col" className="px-6 py-3">
-                      Quantity
-                    </th>
+                    <tbody>
+                      {plannedBulkOrders.planningOrders.map(
+                        (order, arrayIndex) => {
+                          const currentIndex = index + arrayIndex;
+
+                          return (
+                            <ShowPlannedProducts
+                              key={order.itemId}
+                              imageUrl={order.imageUrl}
+                              name={order.name}
+                              quantity={order.quantity}
+                              price={order.price}
+                              category={order.category}
+                              company={order.company}
+                              description={order.description}
+                              itemId={order.itemId}
+                              orderId={order._id}
+                              index={currentIndex}
+                              getPlannedOrders={getPlannedOrders}
+                              currentUser={props.currentUser}
+                              planningOrderId={order._id}
+                            />
+                          );
+                        }
+                      )}
+                    </tbody>
+
                     {props.currentUser.role !== ROLES.EMPLOYEE && (
                       <>
-                        <th scope="col" className="px-6 py-3">
-                          Total Price(₹)
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                          Details
-                        </th>
+                        <tr className='divide-y divide-slate-500'></tr>
+
+                        <tr className='bg-white divide-x divide-slate-500'>
+                          <td colSpan={4}></td>
+                          <td className='px-6 py-2 text-base font-semibold text-gray-700'>
+                            {totalPrice}
+                          </td>
+                          <td colSpan={2}></td>
+                        </tr>
                       </>
                     )}
-                    <th scope="col" className="px-6 py-3">
-                      Delete
-                    </th>
-                  </tr>
-                </thead>
+                  </table>
+                </div>
+              )}
 
-                <tbody>
-                  {plannedBulkOrders.planningOrders.map((order, arrayIndex) => {
-                    const currentIndex = index + arrayIndex;
-
-                    return (
-                      <ShowPlannedProducts
-                        key={order.itemId}
-                        imageUrl={order.imageUrl}
-                        name={order.name}
-                        quantity={order.quantity}
-                        price={order.price}
-                        category={order.category}
-                        company={order.company}
-                        description={order.description}
-                        itemId={order.itemId}
-                        orderId={order._id}
-                        index={currentIndex}
-                        getPlannedOrders={getPlannedOrders}
-                        currentUser={props.currentUser}
-                        planningOrderId={order._id}
-                      />
-                    );
-                  })}
-                </tbody>
-
-                {props.currentUser.role !== ROLES.EMPLOYEE && (
-                  <>
-                    <tr className="divide-y divide-slate-500"></tr>
-
-                    <tr className="bg-white divide-x divide-slate-500">
-                      <td colSpan={4}></td>
-                      <td className="px-6 py-2 text-base font-semibold text-gray-700">
-                        {totalPrice}
-                      </td>
-                      <td colSpan={2}></td>
-                    </tr>
-                  </>
+              {/* Add products */}
+              <div className='my-6 flex gap-2 justify-center'>
+                <button className='blue_btn' onClick={showProductsToAdd}>
+                  Add Item
+                </button>
+                {isPlannedProductsAvailable && (
+                  <button
+                    className='green_btn'
+                    onClick={() => submitHandler('submitted')}
+                  >
+                    Submit
+                  </button>
                 )}
-              </table>
-            </div>
-          )}
+              </div>
 
-          {/* Add products */}
-          <div className="my-6 flex gap-2 justify-center">
-            <button className="blue_btn" onClick={showProductsToAdd}>
-              Add Item
-            </button>
-            {isPlannedProductsAvailable && (
-              <button
-                className="green_btn"
-                onClick={() => submitHandler('submitted')}
-              >
-                Submit
-              </button>
-            )}
-          </div>
-
-          {isAddProductsShown && (
-            <AddPlannedProduct
-              getPlannedOrders={getPlannedOrders}
-              onClose={hideProductsToAdd}
-            />
+              {isAddProductsShown && (
+                <AddPlannedProduct
+                  getPlannedOrders={getPlannedOrders}
+                  onClose={hideProductsToAdd}
+                />
+              )}
+            </>
           )}
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

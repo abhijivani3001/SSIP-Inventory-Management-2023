@@ -9,6 +9,7 @@ import {
   findBelowUsers,
   compareStatusForStoreManager,
 } from '../../Helper/Helper';
+import Loader from '../../components/ChakraUI/Loader';
 
 const StoreManagerRequestedOrders = () => {
   const { cart, dispatch } = useCart();
@@ -111,138 +112,140 @@ const StoreManagerRequestedOrders = () => {
   };
 
   return (
-    <div className='mx-10 mt-4'>
-      {isLoading && (
-        <div className='text-xl my-auto text-center '>Loading...</div>
-      )}
-      {!isLoading && !isRequestedOrdersAvailable && (
-        <div className='not_available'>No more orders are requested!</div>
-      )}
-
-      {!isLoading && isRequestedOrdersAvailable && (
-        <>
-          <div className='my-6'>
-            <div className='flex justify-center overflow-x-auto whitespace-nowrap'>
-              <button
-                onClick={() => handleTabClick('pending')}
-                className={`default_tab ${
-                  currentStatus === 'pending'
-                    ? 'status_true_tab'
-                    : 'status_false_tab'
-                }`}
-              >
-                <p className='mx-auto'>Pending</p>
-              </button>
-
-              <button
-                onClick={() => handleTabClick('accepted')}
-                className={`default_tab ${
-                  currentStatus === 'accepted'
-                    ? 'status_true_tab'
-                    : 'status_false_tab'
-                }`}
-              >
-                <p className='mx-auto'>Accepted</p>
-              </button>
-
-              <button
-                onClick={() => handleTabClick('rejected')}
-                className={`default_tab ${
-                  currentStatus === 'rejected'
-                    ? 'status_true_tab'
-                    : 'status_false_tab'
-                }`}
-              >
-                <p className='mx-auto'>Rejected</p>
-              </button>
-
-              <button
-                onClick={() => handleTabClick('completed')}
-                className={`default_tab ${
-                  currentStatus === 'completed'
-                    ? 'status_true_tab'
-                    : 'status_false_tab'
-                }`}
-              >
-                <p className='mx-auto'>Completed</p>
-              </button>
-            </div>
-            <div className='flex items-center mt-4 mb-4 justify-end'>
-              <input
-                type='text'
-                placeholder='Search product here...'
-                value={searchTerm}
-                onChange={handleSearchInputChange}
-                className='border rounded px-2 py-1 mr-2'
-              />
-              {searchTerm && (
-                <FaTimes
-                  onClick={clearSearchTerm}
-                  className='text-gray-500 cursor-pointer'
-                />
-              )}
-            </div>
-
-            {usersOfRequestedOrders?.map((val) => {
-              let flag = false;
-              val.bulkOrders.forEach((bulkOrder) => {
-                bulkOrder.orders.forEach((order) => {
-                  if (
-                    compareStatusForStoreManager(
-                      currentUserRole.current,
-                      order.status,
-                      currentStatus
-                    ) &&
-                    (order.name
-                      .toLowerCase()
-                      .includes(searchTerm.toLowerCase()) ||
-                      order.itemId
-                        .toLowerCase()
-                        .includes(searchTerm.toLowerCase()))
-                  ) {
-                    flag = true;
-                    mainFlag = true;
-                  }
-                });
-              });
-
-              if (flag) {
-                return (
-                  <StoreManReqOrdOne
-                    key={val._id}
-                    name={val.name}
-                    branch={val.branch}
-                    subBranch={val.subBranch}
-                    department={val.department}
-                    role={val.role}
-                    bulkOrders={val.bulkOrders}
-                    createdAt={val.createdAt}
-                    userId={val._id}
-                    currentUserRole={currentUserRole.current}
-                    currentStatus={currentStatus}
-                    getRequiredUserData={getRequiredUserData}
-                  />
-                );
-              }
-              return <></>;
-            })}
-            {!mainFlag && (
-              <div className='not_available'>
-                No more requested orders available.
-              </div>
-            )}
-          </div>
-
-          {mainFlag && currentStatus === 'pending' && (
-            <div className='text-center'>
-              <button className='green_btn mb-4' onClick={handleMergeOrder}>
-                MERGE ALL ORDERS
-              </button>
-            </div>
+    <>
+      {isLoading && <Loader />}
+      {!isLoading && (
+        <div className='mx-10 mt-4'>
+          {!isRequestedOrdersAvailable && (
+            <div className='not_available'>No more orders are requested!</div>
           )}
-        </>
+
+          {isRequestedOrdersAvailable && (
+            <>
+              <div className='my-6'>
+                <div className='flex justify-center overflow-x-auto whitespace-nowrap'>
+                  <button
+                    onClick={() => handleTabClick('pending')}
+                    className={`default_tab ${
+                      currentStatus === 'pending'
+                        ? 'status_true_tab'
+                        : 'status_false_tab'
+                    }`}
+                  >
+                    <p className='mx-auto'>Pending</p>
+                  </button>
+
+                  <button
+                    onClick={() => handleTabClick('accepted')}
+                    className={`default_tab ${
+                      currentStatus === 'accepted'
+                        ? 'status_true_tab'
+                        : 'status_false_tab'
+                    }`}
+                  >
+                    <p className='mx-auto'>Accepted</p>
+                  </button>
+
+                  <button
+                    onClick={() => handleTabClick('rejected')}
+                    className={`default_tab ${
+                      currentStatus === 'rejected'
+                        ? 'status_true_tab'
+                        : 'status_false_tab'
+                    }`}
+                  >
+                    <p className='mx-auto'>Rejected</p>
+                  </button>
+
+                  <button
+                    onClick={() => handleTabClick('completed')}
+                    className={`default_tab ${
+                      currentStatus === 'completed'
+                        ? 'status_true_tab'
+                        : 'status_false_tab'
+                    }`}
+                  >
+                    <p className='mx-auto'>Completed</p>
+                  </button>
+                </div>
+                <div className='flex items-center mt-4 mb-4 justify-end'>
+                  <input
+                    type='text'
+                    placeholder='Search product here...'
+                    value={searchTerm}
+                    onChange={handleSearchInputChange}
+                    className='border rounded px-2 py-1 mr-2'
+                  />
+                  {searchTerm && (
+                    <FaTimes
+                      onClick={clearSearchTerm}
+                      className='text-gray-500 cursor-pointer'
+                    />
+                  )}
+                </div>
+
+                {usersOfRequestedOrders?.map((val) => {
+                  let flag = false;
+                  val.bulkOrders.forEach((bulkOrder) => {
+                    bulkOrder.orders.forEach((order) => {
+                      if (
+                        compareStatusForStoreManager(
+                          currentUserRole.current,
+                          order.status,
+                          currentStatus
+                        ) &&
+                        (order.name
+                          .toLowerCase()
+                          .includes(searchTerm.toLowerCase()) ||
+                          order.itemId
+                            .toLowerCase()
+                            .includes(searchTerm.toLowerCase()))
+                      ) {
+                        flag = true;
+                        mainFlag = true;
+                      }
+                    });
+                  });
+
+                  if (flag) {
+                    return (
+                      <StoreManReqOrdOne
+                        key={val._id}
+                        name={val.name}
+                        branch={val.branch}
+                        subBranch={val.subBranch}
+                        department={val.department}
+                        role={val.role}
+                        bulkOrders={val.bulkOrders}
+                        createdAt={val.createdAt}
+                        userId={val._id}
+                        currentUserRole={currentUserRole.current}
+                        currentStatus={currentStatus}
+                        getRequiredUserData={getRequiredUserData}
+                      />
+                    );
+                  }
+                  return <></>;
+                })}
+                {!mainFlag && (
+                  <div className='not_available'>
+                    No more requested orders available.
+                  </div>
+                )}
+              </div>
+
+              {mainFlag && currentStatus === 'pending' && (
+                <div className='text-center'>
+                  <button className='green_btn mb-4' onClick={handleMergeOrder}>
+                    MERGE ALL ORDERS
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

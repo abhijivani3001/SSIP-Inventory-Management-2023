@@ -5,6 +5,7 @@ import { findBelowUsers } from '../../../Helper/Helper';
 import ShowReqPlannigOrdOne from './ShowReqPlannigOrdOne';
 import ROLES from '../../../constants/ROLES';
 import { toast } from 'react-toastify';
+import Loader from '../../../components/ChakraUI/Loader';
 
 const RequestedPlanning = (props) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -100,55 +101,50 @@ const RequestedPlanning = (props) => {
 
   return (
     <>
-      <div className='mx-10 my-4'>
-        {isLoading && (
-          <div className='text-xl my-auto text-center '>Loading...</div>
-        )}
+      {isLoading && <Loader />}
+      {!isLoading && (
+        <div className='mx-10 my-6'>
+          {usersOfRequestedPlans?.map((user) => {
+            let flag = false;
 
-        {!isLoading && (
-          <div className='my-6'>
-            {usersOfRequestedPlans?.map((user) => {
-              let flag = false;
+            if (checkStatus(user)) {
+              flag = true;
+              mainFlag = true;
+            }
 
-              if (checkStatus(user)) {
-                flag = true;
-                mainFlag = true;
-              }
+            if (flag) {
+              return (
+                <ShowReqPlannigOrdOne
+                  key={user._id}
+                  name={user.name}
+                  date={user.planningBulkOrders.updatedAt}
+                  planningBulkOrders={user.planningBulkOrders}
+                  role={user.role}
+                  userId={user._id}
+                  status={user.planningBulkOrders.status}
+                  currentUser={props.currentUser}
+                />
+              );
+            }
+            return <></>;
+          })}
+          {!mainFlag && (
+            <div className='not_available'>
+              No more requested orders available.
+            </div>
+          )}
 
-              if (flag) {
-                return (
-                  <ShowReqPlannigOrdOne
-                    key={user._id}
-                    name={user.name}
-                    date={user.planningBulkOrders.updatedAt}
-                    planningBulkOrders={user.planningBulkOrders}
-                    role={user.role}
-                    userId={user._id}
-                    status={user.planningBulkOrders.status}
-                    currentUser={props.currentUser}
-                  />
-                );
-              }
-              return <></>;
-            })}
-            {!mainFlag && (
-              <div className='not_available'>
-                No more requested orders available.
-              </div>
-            )}
-
-            {mainFlag && (
-              <>
-                {props.currentUser.role.includes('store') && (
-                  <div className='text-center' onClick={handleMergeOrder}>
-                    <button className='green_btn my-6 uppercase'>Merge</button>
-                  </div>
-                )}
-              </>
-            )}
-          </div>
-        )}
-      </div>
+          {mainFlag && (
+            <>
+              {props.currentUser.role.includes('store') && (
+                <div className='text-center' onClick={handleMergeOrder}>
+                  <button className='green_btn my-6 uppercase'>Merge</button>
+                </div>
+              )}
+            </>
+          )}
+        </div>
+      )}
     </>
   );
 };

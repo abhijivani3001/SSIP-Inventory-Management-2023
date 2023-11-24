@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react';
 import NotificationCard from '../components/Notification/NotificationCard';
 import axios from './../api/AxiosUrl';
 import { useCart } from '../store/CartProvider';
+import Loader from '../components/ChakraUI/Loader';
 
 const Notification = () => {
   const [notificationData, setNotificationData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
   const { dispatch } = useCart();
 
   const getAndUpdateNotifications = async () => {
@@ -24,6 +27,7 @@ const Notification = () => {
     } catch (error) {
       console.log(error);
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -35,15 +39,19 @@ const Notification = () => {
   }, []);
 
   return (
-    <div className='mx-10 my-4'>
-      <div>
-        <h1 className='page-title'>Notifications</h1>
-      </div>
-
-      {notificationData?.map((notification) => (
-        <NotificationCard key={notification._id} notification={notification} />
-      ))}
-    </div>
+    <>
+      {isLoading && <Loader />}
+      {!isLoading && (
+        <div className='mx-10 my-4'>
+          {notificationData?.map((notification) => (
+            <NotificationCard
+              key={notification._id}
+              notification={notification}
+            />
+          ))}
+        </div>
+      )}
+    </>
   );
 };
 

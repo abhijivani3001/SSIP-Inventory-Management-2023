@@ -4,6 +4,7 @@ import RequestedPlanning from './RequestedPlanning/RequestedPlanning';
 import PlacedPlanning from './PlacedPlanning/PlacedPlanning';
 import ROLES from '../../constants/ROLES';
 import AdminPlan from './AdminBudgetPlanning/AdminPlan';
+import Loader from '../../components/ChakraUI/Loader';
 
 const BudgetPlanning = () => {
   const [currentStatus, setCurrentStatus] = useState('your-plan');
@@ -30,62 +31,63 @@ const BudgetPlanning = () => {
   }, []);
 
   return (
-    <div className='mx-10 my-4'>
-      {isLoading && (
-        <div className='text-xl my-auto text-center '>Loading...</div>
-      )}
+    <>
+      {isLoading && <Loader />}
+      {!isLoading && (
+        <div className='mx-10 my-4'>
+          {currentUser?.role !== ROLES.ADMIN && (
+            <>
+              <div className='my-6'>
+                {currentUser?.role !== ROLES.EMPLOYEE && (
+                  <div className='flex justify-center overflow-x-auto whitespace-nowrap'>
+                    <button
+                      onClick={() => handleTabClick('requested-plan')}
+                      className={`default_tab ${
+                        currentStatus === 'requested-plan'
+                          ? 'status_true_tab'
+                          : 'status_false_tab'
+                      }`}
+                    >
+                      <p className='mx-auto'>Requested Planned Orders</p>
+                    </button>
 
-      {!isLoading && currentUser?.role !== ROLES.ADMIN && (
-        <>
-          <div className='my-6'>
-            {currentUser?.role !== ROLES.EMPLOYEE && (
-              <div className='flex justify-center overflow-x-auto whitespace-nowrap'>
-                <button
-                  onClick={() => handleTabClick('requested-plan')}
-                  className={`default_tab ${
-                    currentStatus === 'requested-plan'
-                      ? 'status_true_tab'
-                      : 'status_false_tab'
-                  }`}
-                >
-                  <p className='mx-auto'>Requested Planned Orders</p>
-                </button>
+                    <button
+                      onClick={() => handleTabClick('your-plan')}
+                      className={`default_tab ${
+                        currentStatus === 'your-plan'
+                          ? 'status_true_tab'
+                          : 'status_false_tab'
+                      }`}
+                    >
+                      <p className='mx-auto'>Your Planned Orders</p>
+                    </button>
+                  </div>
+                )}
 
-                <button
-                  onClick={() => handleTabClick('your-plan')}
-                  className={`default_tab ${
-                    currentStatus === 'your-plan'
-                      ? 'status_true_tab'
-                      : 'status_false_tab'
-                  }`}
-                >
-                  <p className='mx-auto'>Your Planned Orders</p>
-                </button>
+                {currentStatus === 'requested-plan' && (
+                  <RequestedPlanning
+                    currentStatus={currentStatus}
+                    currentUser={currentUser}
+                  />
+                )}
+                {currentStatus === 'your-plan' && (
+                  <PlacedPlanning
+                    currentStatus={currentStatus}
+                    currentUser={currentUser}
+                  />
+                )}
               </div>
-            )}
+            </>
+          )}
 
-            {currentStatus === 'requested-plan' && (
-              <RequestedPlanning
-                currentStatus={currentStatus}
-                currentUser={currentUser}
-              />
-            )}
-            {currentStatus === 'your-plan' && (
-              <PlacedPlanning
-                currentStatus={currentStatus}
-                currentUser={currentUser}
-              />
-            )}
-          </div>
-        </>
-      )}
-
-      {!isLoading && currentUser?.role === ROLES.ADMIN && (
-        <div>
-          <AdminPlan />
+          {currentUser?.role === ROLES.ADMIN && (
+            <div>
+              <AdminPlan />
+            </div>
+          )}
         </div>
       )}
-    </div>
+    </>
   );
 };
 

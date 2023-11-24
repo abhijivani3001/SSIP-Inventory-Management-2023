@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from '../../../api/AxiosUrl';
 import ShowAdminPlans from './ShowAdminPlans';
 import CreateAdminPlan from './CreateAdminPlan';
+import Loader from '../../../components/ChakraUI/Loader';
 
 const AdminPlan = () => {
   const [currentPlan, setCurrentPlan] = useState(null);
@@ -19,16 +20,18 @@ const AdminPlan = () => {
   }, []);
 
   return (
-    <div>
-      {isLoading && (
-        <div className='text-xl my-auto text-center '>Loading...</div>
+    <>
+      {isLoading && <Loader />}
+      {!isLoading && (
+        <div>
+          {currentPlan ? (
+            <ShowAdminPlans currentPlan={currentPlan} />
+          ) : (
+            <CreateAdminPlan />
+          )}
+        </div>
       )}
-      {!isLoading && currentPlan ? (
-        <ShowAdminPlans currentPlan={currentPlan} />
-      ) : (
-        <CreateAdminPlan />
-      )}
-    </div>
+    </>
   );
 };
 

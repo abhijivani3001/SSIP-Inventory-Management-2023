@@ -33,12 +33,12 @@ const PlacedBulkOrder = (props) => {
     <div
       id='accordion-collapse'
       data-accordion='collapse'
-      className='bg-white rounded-lg border border-gray-300 shadow-lg my-2'
+      className='bg-slate-500 rounded-lg border border-gray-300 shadow-lg my-2'
     >
       <h2 id='accordion-collapse-heading-1'>
         <button
           type='button'
-          className='flex flex-col items-center justify-between w-full font-medium text-left text-gray-600 border-gray-700 rounded-lg focus:outline-none'
+          className='flex flex-col items-center justify-between w-full font-medium text-left text-white border-gray-700 rounded-lg focus:outline-none'
           data-accordion-target='#accordion-collapse-body-1'
           aria-expanded='true'
           aria-controls='accordion-collapse-body-1'

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../../api/AxiosUrl';
 import ReactApexChart from 'react-apexcharts';
+import Loader from '../ChakraUI/Loader';
 
 const UserOrdersChart = () => {
   const [userData, setUserData] = useState([]);
@@ -17,17 +18,19 @@ const UserOrdersChart = () => {
         // Fetch order data for each user
         Promise.all(
           usersFromAPI.map((user) =>
-            axios.get(`api/user/users/${user.id}/order`).then((orderResponse) => {
-              const orderDataFromAPI = orderResponse.data.orders;
-              console.log(orderDataFromAPI);
-              console.log(orderDataFromAPI)
-              const totalQuantity = orderDataFromAPI.reduce(
-                (acc, order) => acc + order.quantity,
-                0
-              );
+            axios
+              .get(`api/user/users/${user.id}/order`)
+              .then((orderResponse) => {
+                const orderDataFromAPI = orderResponse.data.orders;
+                console.log(orderDataFromAPI);
+                console.log(orderDataFromAPI);
+                const totalQuantity = orderDataFromAPI.reduce(
+                  (acc, order) => acc + order.quantity,
+                  0
+                );
 
-              userOrderData[user.name] = totalQuantity;
-            })
+                userOrderData[user.name] = totalQuantity;
+              })
           )
         )
           .then(() => {
@@ -52,27 +55,30 @@ const UserOrdersChart = () => {
   }, []);
 
   return (
-    <div className='p-4 bg-white rounded-lg shadow-lg'>
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : (
-        userData.length > 0 && (
-          <div>
-            <h2 className='text-xl font-semibold mt-4'>Total Orders by User</h2>
-            <ReactApexChart
-              options={{
-                xaxis: {
-                  categories: userData.map((data) => data.x),
-                },
-              }}
-              series={[{ data: userData.map((data) => data.y) }]}
-              type='bar'
-              width='500'
-            />
-          </div>
-        )
+    <>
+      {isLoading && <Loader />}
+      {!isLoading && (
+        <div className='p-4 bg-white rounded-lg shadow-lg'>
+          {userData.length > 0 && (
+            <div>
+              <h2 className='text-xl font-semibold mt-4'>
+                Total Orders by User
+              </h2>
+              <ReactApexChart
+                options={{
+                  xaxis: {
+                    categories: userData.map((data) => data.x),
+                  },
+                }}
+                series={[{ data: userData.map((data) => data.y) }]}
+                type='bar'
+                width='500'
+              />
+            </div>
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

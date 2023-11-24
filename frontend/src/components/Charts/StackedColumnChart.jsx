@@ -4,6 +4,7 @@ import axios from '../../api/AxiosUrl';
 import AuthContext from '../../store/auth-context';
 import ReactApexChart from 'react-apexcharts';
 import { CSVLink } from 'react-csv';
+import Loader from '../ChakraUI/Loader';
 
 const StackedColumnChart = () => {
   const authCtx = useContext(AuthContext);
@@ -42,7 +43,9 @@ const StackedColumnChart = () => {
               // Add quantity to the existing data or create a new entry
               if (mergedData[key]) {
                 // Check if the date already exists for this order name
-                const existingDate = mergedData[key].find((entry) => entry.date === date);
+                const existingDate = mergedData[key].find(
+                  (entry) => entry.date === date
+                );
 
                 if (existingDate) {
                   existingDate.quantity += quantity;
@@ -56,23 +59,24 @@ const StackedColumnChart = () => {
           });
 
           // Convert the mergedData object into an array
-          const chartData = Object.entries(mergedData).map(([name, entries]) => {
-            // Sum up the quantities for the same date
-            const aggregatedEntries = entries.reduce(
-              (acc, entry) => {
-                const existingDate = acc.find((item) => item.date === entry.date);
+          const chartData = Object.entries(mergedData).map(
+            ([name, entries]) => {
+              // Sum up the quantities for the same date
+              const aggregatedEntries = entries.reduce((acc, entry) => {
+                const existingDate = acc.find(
+                  (item) => item.date === entry.date
+                );
                 if (existingDate) {
                   existingDate.quantity += entry.quantity;
                 } else {
                   acc.push({ date: entry.date, quantity: entry.quantity });
                 }
                 return acc;
-              },
-              []
-            );
+              }, []);
 
-            return { name, entries: aggregatedEntries };
-          });
+              return { name, entries: aggregatedEntries };
+            }
+          );
 
           setOrderData(chartData);
           setIsLoading(false);
@@ -96,15 +100,20 @@ const StackedColumnChart = () => {
     },
     xaxis: {
       type: 'category',
-      categories: orderData.length > 0
-        ? orderData[0].entries
-          .map((entry) => entry.date)
-          .sort((a, b) => {
-            const dateA = new Date(a.split('/').reverse().join('/')).getTime();
-            const dateB = new Date(b.split('/').reverse().join('/')).getTime();
-            return dateA - dateB;
-          })
-        : [],
+      categories:
+        orderData.length > 0
+          ? orderData[0].entries
+              .map((entry) => entry.date)
+              .sort((a, b) => {
+                const dateA = new Date(
+                  a.split('/').reverse().join('/')
+                ).getTime();
+                const dateB = new Date(
+                  b.split('/').reverse().join('/')
+                ).getTime();
+                return dateA - dateB;
+              })
+          : [],
     },
 
     legend: {
@@ -118,11 +127,10 @@ const StackedColumnChart = () => {
   }));
 
   return (
-    <div className='p-4 bg-gray-100 rounded-lg shadow-lg'>
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : (
-        <>
+    <>
+      {isLoading && <Loader />}
+      {!isLoading && (
+        <div className='p-4 bg-gray-100 rounded-lg shadow-lg'>
           <div>
             {orderData.length < 1 ? (
               <span className='not_available'>No order placed by you</span>
@@ -144,9 +152,9 @@ const StackedColumnChart = () => {
               </div>
             )}
           </div>
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

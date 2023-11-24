@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import axios from '../../api/AxiosUrl';
 import generatePDF from 'react-to-pdf';
+import Loader from '../../components/ChakraUI/Loader';
 
 const DepartmentReport = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -43,46 +44,48 @@ const DepartmentReport = () => {
   }, []);
 
   return (
-    <div>
-      <button onClick={() => generatePDF(targetRef, { filename: 'page.pdf' })}>
-        Download PDF
-      </button>
-      <div ref={targetRef}>
-        <div className='m-5'>
-          {isLoading && (
-            <div className='text-xl my-auto text-center '>Loading...</div>
-          )}
-          {!isLoading && (
-            <table className='w-full divide-y text-left text-gray-500'>
-              <thead className='text-xl my-2 text-gray-700 uppercase bg-slate-100'>
-                <tr className='divide-x'>
-                  <th scope='col' className='px-6 py-1 w-32'>
-                    Sr. no
-                  </th>
-                  <th scope='col' className='px-6 py-1'>
-                    Product Name
-                  </th>
-                  <th scope='col' className='px-6 py-1 w-1/5'>
-                    Quantity Used
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {orders.map((order, index) => {
-                  return (
-                    <tr className='bg-white text-gray-900 text-xl font-normal hover:bg-gray-50 border-b divide-x'>
-                      <td className='px-6 py-2'>{index + 1}.</td>
-                      <td className='px-6 py-2'>{order.name}</td>
-                      <td className='px-6 py-2'>{order.quantity}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          )}
+    <>
+      {isLoading && <Loader />}
+      {!isLoading && (
+        <div>
+          <button
+            onClick={() => generatePDF(targetRef, { filename: 'page.pdf' })}
+          >
+            Download PDF
+          </button>
+          <div ref={targetRef}>
+            <div className='m-5'>
+              <table className='w-full divide-y text-left text-gray-500'>
+                <thead className='text-xl my-2 text-gray-700 uppercase bg-slate-100'>
+                  <tr className='divide-x'>
+                    <th scope='col' className='px-6 py-1 w-32'>
+                      Sr. no
+                    </th>
+                    <th scope='col' className='px-6 py-1'>
+                      Product Name
+                    </th>
+                    <th scope='col' className='px-6 py-1 w-1/5'>
+                      Quantity Used
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {orders.map((order, index) => {
+                    return (
+                      <tr className='bg-white text-gray-900 text-xl font-normal hover:bg-gray-50 border-b divide-x'>
+                        <td className='px-6 py-2'>{index + 1}.</td>
+                        <td className='px-6 py-2'>{order.name}</td>
+                        <td className='px-6 py-2'>{order.quantity}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 

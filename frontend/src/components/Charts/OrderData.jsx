@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../../api/AxiosUrl';
 import ReactApexChart from 'react-apexcharts';
+import Loader from '../ChakraUI/Loader';
 
 const OrderData = () => {
   const [orderData, setOrderData] = useState([]);
@@ -47,26 +48,27 @@ const OrderData = () => {
   }, []);
 
   return (
-    <div className='p-4 bg-white rounded-lg shadow-lg border-2 border-gray-800'>
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : (
-        orderData.length > 0 && (
-          <div>
-            <h2 className='text-xl font-semibold mt-4'>Order Data Chart</h2>
-            <ReactApexChart
-              options={{
-                labels: orderData.map((data) => data.x),
-              }}
-              series={orderData.map((data) => data.y)}
-              type='pie'
-              width='500'
-              height='500'
-            />
-          </div>
-        )
+    <>
+      {isLoading && <Loader />}
+      {!isLoading && (
+        <div className='p-4 bg-white rounded-lg shadow-lg border-2 border-gray-800'>
+          {orderData.length > 0 && (
+            <div>
+              <h2 className='text-xl font-semibold mt-4'>Order Data Chart</h2>
+              <ReactApexChart
+                options={{
+                  labels: orderData.map((data) => data.x),
+                }}
+                series={orderData.map((data) => data.y)}
+                type='pie'
+                width='500'
+                height='500'
+              />
+            </div>
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 };
 
