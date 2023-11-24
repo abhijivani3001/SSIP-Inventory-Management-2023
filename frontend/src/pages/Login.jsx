@@ -10,10 +10,12 @@ const Login = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [expectedCaptchaValue, setExpectedCaptchaValue] = useState('');
   const [captchaImage, setCaptchaImage] = useState('');
   const [userCaptchaValue, setUserCaptchaValue] = useState('');
+  const [expectedCaptchaValue, setExpectedCaptchaValue] = useState('');
+  const [captchaData, setCaptchaData] = useState('');
   const authCtx = useContext(AuthContext);
+
 
   useEffect(() => {
     // Fetch captcha when component mounts
@@ -24,10 +26,11 @@ const Login = () => {
     try {
       const response = await axios.get('/api/captcha');
       const captchaData = response.data;
+      console.log(response);
 
       if (captchaData.success) {
-        setExpectedCaptchaValue(captchaData.value);
-        setCaptchaImage(captchaData.imagePath);
+        setExpectedCaptchaValue(captchaData.text);
+        setCaptchaData(captchaData);
       } else {
         console.error('Failed to fetch captcha');
       }
@@ -51,11 +54,17 @@ const Login = () => {
   const submitHandler = async (event) => {
     event.preventDefault();
 
-    // Check if the entered captcha value matches the expected captcha value
-    if (userCaptchaValue.toLowerCase() !== expectedCaptchaValue.toLowerCase()) {
+    console.log(userCaptchaValue, expectedCaptchaValue);
+    if (userCaptchaValue !== expectedCaptchaValue) {
       showToast('Captcha verification failed. Please try again.', 'error');
       return;
     }
+
+    // Check if the entered captcha value matches the expected captcha value
+    // if (userCaptchaValue?.toLowerCase() !== expectedCaptchaValue?.toLowerCase()) {
+    //   showToast('Captcha verification failed. Please try again.', 'error');
+    //   return;
+    // }
 
     try {
       const res = await axios.post('/api/user/login', {
@@ -132,27 +141,27 @@ const Login = () => {
             />
           </div>
           <div className='mb-4'>
-            <label htmlFor='captcha' className='block text-gray-700'>
-              Captcha
-            </label>
-            <div className='flex items-end'>
-              <img className='mb-3' src={`${captchaImage}`} alt='captcha' />
-              <LuRefreshCcw
-                className='mb-4 ml-4 text-3xl cursor-pointer'
-                onClick={fetchCaptcha}
-              />
-            </div>
-            <input
-              type='text'
-              id='captcha'
-              name='captcha'
-              className='w-full px-3 py-2 border text-black rounded-lg focus:outline-none focus:border-blue-500'
-              placeholder='Enter the characters above'
-              value={userCaptchaValue}
-              onChange={(e) => setUserCaptchaValue(e.target.value)}
-              required
-            />
-          </div>
+      <label htmlFor='captcha' className='block text-gray-700'>
+        Captcha
+      </label>
+      <div className='flex items-end'>
+        <img className='mb-3' src={`data:image/svg+xml;base64,${btoa(captchaData.data)}`} alt='captcha' />
+        <LuRefreshCcw
+          className='mb-4 ml-4 text-3xl cursor-pointer'
+          onClick={fetchCaptcha}
+        />
+      </div>
+      <input
+        type='text'
+        id='captcha'
+        name='captcha'
+        className='w-full px-3 py-2 border text-black rounded-lg focus:outline-none focus:border-blue-500'
+        placeholder='Enter the characters above'
+        value={userCaptchaValue}
+        onChange={(e) => setUserCaptchaValue(e.target.value)}
+        required
+      />
+    </div>
           <div className='text-center mt-7'>
             <button type='submit' className='blue_btn'>
               Login
