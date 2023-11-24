@@ -16,7 +16,12 @@ const Dashboard = () => {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [fromDate, setFromDate] = useState(null);
   const [toDate, setToDate] = useState(null);
+
+  // store-manager
   const [belowUsers, setBelowUsers] = useState([]);
+  const [lowStock, setLowStock] = useState(0);
+
+  
 
   useEffect(() => {
     (async () => {
@@ -59,6 +64,7 @@ const Dashboard = () => {
     });
   };
 
+  // -----
   let requestedOrders = [];
   let allocatedOrders = [];
   let rejectedOrders = [];
@@ -222,8 +228,8 @@ const Dashboard = () => {
                     <DashboardCard
                       bg={'bg-yellow-300'}
                       hover={'hover:bg-yellow-400'}
-                      orders={requestedOrders}
-                      text={'Requested Orders'}
+                      inventory={userData?.inventory}
+                      text={'Inventory Items'}
                       icon={<Request />}
                       role={'store-manager'}
                       tag={'2'}
@@ -231,8 +237,7 @@ const Dashboard = () => {
                     <DashboardCard
                       bg={'bg-emerald-500'}
                       hover={'hover:bg-emerald-600'}
-                      orders={allocatedOrders}
-                      text={'Allocated Orders'}
+                      text={'Low Stock'}
                       icon={<Allocated />}
                       role={'store-manager'}
                       tag={'3'}

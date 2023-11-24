@@ -90,6 +90,7 @@ const DashboardCard = (props) => {
               {props.icon}
               <span className='font-bold text-4xl text-white'>
                 {props.tag === '1' ? props?.belowUsers?.length : ''}
+                {props.tag === '2' ? props?.inventory?.length : ''}
               </span>
             </div>
 

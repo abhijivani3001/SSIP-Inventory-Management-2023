@@ -3,7 +3,6 @@ import axios from '../../api/AxiosUrl';
 import { useCart } from '../../store/CartProvider';
 import StoreManReqOrdOne from './StoreManReqOrdOne';
 import { toast } from 'react-toastify';
-import { FaTimes } from 'react-icons/fa';
 
 import {
   findBelowUsers,
@@ -20,7 +19,6 @@ const StoreManagerRequestedOrders = () => {
     useState(false);
 
   const [currentStatus, setCurrentStatus] = useState('pending');
-  const [searchTerm, setSearchTerm] = useState('');
   const currentUserRole = useRef('');
   let mainFlag = false; // to check whether the placed order is empty or not
 
@@ -100,15 +98,6 @@ const StoreManagerRequestedOrders = () => {
 
   const handleTabClick = (status) => {
     setCurrentStatus(status);
-    setSearchTerm('');
-  };
-
-  const handleSearchInputChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
-  const clearSearchTerm = () => {
-    setSearchTerm('');
   };
 
   return (
@@ -168,21 +157,6 @@ const StoreManagerRequestedOrders = () => {
                     <p className='mx-auto'>Completed</p>
                   </button>
                 </div>
-                <div className='flex items-center mt-4 mb-4 justify-end'>
-                  <input
-                    type='text'
-                    placeholder='Search product here...'
-                    value={searchTerm}
-                    onChange={handleSearchInputChange}
-                    className='border rounded px-2 py-1 mr-2'
-                  />
-                  {searchTerm && (
-                    <FaTimes
-                      onClick={clearSearchTerm}
-                      className='text-gray-500 cursor-pointer'
-                    />
-                  )}
-                </div>
 
                 {usersOfRequestedOrders?.map((val) => {
                   let flag = false;
@@ -193,13 +167,7 @@ const StoreManagerRequestedOrders = () => {
                           currentUserRole.current,
                           order.status,
                           currentStatus
-                        ) &&
-                        (order.name
-                          .toLowerCase()
-                          .includes(searchTerm.toLowerCase()) ||
-                          order.itemId
-                            .toLowerCase()
-                            .includes(searchTerm.toLowerCase()))
+                        )
                       ) {
                         flag = true;
                         mainFlag = true;

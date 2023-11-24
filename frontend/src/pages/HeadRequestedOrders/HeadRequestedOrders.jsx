@@ -3,7 +3,6 @@ import axios from '../../api/AxiosUrl';
 import { useCart } from '../../store/CartProvider';
 import HeadReqOrdOne from './HeadReqOrdOne';
 import { findBelowUsers } from '../../Helper/Helper';
-import { FaTimes } from 'react-icons/fa';
 import Loader from '../../components/ChakraUI/Loader';
 
 const HeadRequestedOrders = () => {
@@ -15,7 +14,6 @@ const HeadRequestedOrders = () => {
     useState(false);
 
   const [currentStatus, setCurrentStatus] = useState('pending');
-  const [searchTerm, setSearchTerm] = useState('');
   let mainFlag = false; // to check whether the placed order is empty or not
 
   const getRequiredUserData = async () => {
@@ -45,15 +43,6 @@ const HeadRequestedOrders = () => {
 
   const handleTabClick = (status) => {
     setCurrentStatus(status);
-    setSearchTerm('');
-  };
-
-  const handleSearchInputChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
-  const clearSearchTerm = () => {
-    setSearchTerm('');
   };
 
   return (
@@ -101,23 +90,8 @@ const HeadRequestedOrders = () => {
                   <p className='mx-auto'>Rejected</p>
                 </button>
               </div>
-              <div className='flex items-center mt-4 justify-end'>
-                <input
-                  type='text'
-                  placeholder='Search product here...'
-                  value={searchTerm}
-                  onChange={handleSearchInputChange}
-                  className='border rounded px-2 py-1 mr-2'
-                />
-                {searchTerm && (
-                  <FaTimes
-                    onClick={clearSearchTerm}
-                    className='text-gray-500 cursor-pointer'
-                  />
-                )}
-              </div>
 
-              <div className='my-4'>
+              <div className='my-6'>
                 {usersOfRequestedOrders.map((val) => {
                   let flag = false;
                   val.bulkOrders.forEach((bulkOrder) => {
@@ -127,17 +101,8 @@ const HeadRequestedOrders = () => {
                         (currentStatus === 'accepted' &&
                           order.status === 'head-accepted')
                       ) {
-                        if (
-                          order.name
-                            .toLowerCase()
-                            .includes(searchTerm.toLowerCase()) ||
-                          order.itemId
-                            .toLowerCase()
-                            .includes(searchTerm.toLowerCase())
-                        ) {
-                          flag = true;
-                          mainFlag = true;
-                        }
+                        flag = true;
+                        mainFlag = true;
                       }
                     });
                   });
