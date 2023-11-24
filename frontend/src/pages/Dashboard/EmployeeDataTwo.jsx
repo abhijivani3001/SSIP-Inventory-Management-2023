@@ -33,7 +33,7 @@ const EmployeeDataTwo = (props) => {
           <button
             onClick={onOpen}
             ref={btnRef}
-            className='font-medium px-6 flex justify-center gap-4 text-gray-700 hover:text-blue-500 hover:underline'
+            className='font-medium flex justify-center gap-4 text-gray-700 hover:text-blue-500 hover:underline'
           >
             <div className='w-8 shadow-2xl rounded-full'>
               <DangerousHTML html={svgCode} />

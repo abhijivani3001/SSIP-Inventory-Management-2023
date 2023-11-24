@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import ROLES from '../../constants/ROLES';
-import AllRegisteredUsersTwo from '../../UserPanel/Admin/AllRegisteredUsersTwo';
 import EmployeeDataTwo from './EmployeeDataTwo';
 
 const EmployeeData = (props) => {
@@ -38,7 +36,6 @@ const EmployeeData = (props) => {
           </thead>
           <tbody>
             {props.userData.map((user, arrayIndex) => {
-              // const currentIndex = index + 1;
               const currentIndex = index + arrayIndex;
 
               return (
@@ -47,7 +44,6 @@ const EmployeeData = (props) => {
                   userData={user}
                   index={currentIndex}
                 />
-                // <></>
               );
             })}
           </tbody>
