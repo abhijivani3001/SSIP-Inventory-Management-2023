@@ -3,6 +3,7 @@ import Loader from '../../components/ChakraUI/Loader';
 import DashboardCard from './DashboardCard';
 import axios from '../../api/AxiosUrl';
 import { Allocated, Plan, Rejected, Request } from '../../icons/icons';
+import DashboardChart from '../DashboardChart';
 
 const EmpDashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -14,10 +15,13 @@ const EmpDashboard = () => {
   // const [rejectedOrders, setRejectedOrders] = useState([]);
 
   useEffect(() => {
+
+
     (async () => {
       try {
         const res = await axios.get('/api/user');
         const data = await res.data.user;
+        console.log(data);
         setUserData(data);
         console.log(data);
       } catch (error) {
@@ -117,7 +121,9 @@ const EmpDashboard = () => {
                 chart
               </h3>
               <div className='flex flex-row justify-evenly align-middle'>
-                hey
+                <DashboardChart
+                  users={[userData]}
+                />
               </div>
             </div>
           </div>

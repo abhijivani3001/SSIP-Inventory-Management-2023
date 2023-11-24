@@ -5,6 +5,8 @@ import { FaSearch } from 'react-icons/fa';
 import { findBelowUsers } from '../../Helper/Helper';
 import ROLES from '../../constants/ROLES';
 import Loader from '../../components/ChakraUI/Loader';
+import DashboardChart from '../../pages/DashboardChart';
+
 
 const SbsmEmpOrder = () => {
   const [userData, setUserData] = useState([]);
@@ -97,6 +99,9 @@ const SbsmEmpOrder = () => {
           </div>
           <div className='text-3xl border border-gray-400 py5 px-10 rounded-lg shadow-xl my-10'>
             <UserDataCardSbsm
+              users={roleWiseUsers[selectedRole] || filteredUsers}
+            />
+            <DashboardChart
               users={roleWiseUsers[selectedRole] || filteredUsers}
             />
           </div>
