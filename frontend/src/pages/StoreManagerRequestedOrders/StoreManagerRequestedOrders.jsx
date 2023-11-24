@@ -27,7 +27,33 @@ const StoreManagerRequestedOrders = () => {
       autoClose: 1500,
     });
 
+    // to update the status of order
+    const updateStatus = async (userId, bulkOrderId, orderId) => {
+      const res = await axios.put(`api/order/${bulkOrderId}/${orderId}`, {
+        user_id: userId,
+        status: 'accepted',
+      });
+      // console.log(res);
+      getRequiredUserData();
+    };
+
     // let arr = [];
+    usersOfRequestedOrders.forEach((user) => {
+      // let arr2 = [];
+      user.bulkOrders.forEach((bulkOrder) => {
+        // let arr3 = [];
+        bulkOrder.orders.forEach((order) => {
+          if (order.status === 'pending' || order.status === 'head-accepted') {
+            // arr3.push({ orderId: order.itemId });
+
+            updateStatus(user._id, bulkOrder._id, order._id);
+          }
+        });
+        // arr2.push({ bulkOrderId: arr3 });
+      });
+      // arr.push({ userId: arr2 });
+    });
+    // console.log(arr);
 
     // -------
     const orderMap = new Map();
@@ -61,7 +87,6 @@ const StoreManagerRequestedOrders = () => {
         amount: value.quantity,
         name: value.name,
         imageUrl: value.imageUrl,
-        masterPassword: 'none',
       });
     });
 

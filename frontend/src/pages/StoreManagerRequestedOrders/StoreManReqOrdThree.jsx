@@ -55,7 +55,6 @@ const StoreManReqOrdThree = (props) => {
 
   const submitAllocation = async (status) => {
     try {
-      console.log('reject');
       if (
         status === 'rejected' &&
         !window.confirm('DO YOU WANT TO REJECT ORDER')
@@ -70,7 +69,7 @@ const StoreManReqOrdThree = (props) => {
             status: 'rejected',
           }
         );
-        console.log(res);
+        // console.log(res);
 
         postNotification('Your order is Rejected by Branch Store Manager'); // send notification to below user
 

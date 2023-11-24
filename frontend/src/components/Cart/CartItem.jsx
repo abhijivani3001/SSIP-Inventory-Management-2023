@@ -35,16 +35,18 @@ const CartItem = (props) => {
           <h5 className='text-xl my-auto font-semibold tracking-tight text-gray-900'>
             {props.name}
           </h5>
-          {props.item.masterPassword !== 'none' && (
-            <div className='flex items-center'>
-              <div className='text-white bg-yellow-300 hover:bg-yellow-400 text-xs p-1 rounded'>
-                URGENT
+
+          {props.item.masterPassword &&
+            props.item.masterPassword !== 'none' && (
+              <div className='flex items-center'>
+                <div className='text-white bg-yellow-300 hover:bg-yellow-400 text-xs p-1 rounded'>
+                  URGENT
+                </div>
+                <div className='ml-2'>
+                  Master Password: {props.item.masterPassword}
+                </div>
               </div>
-              <div className='ml-2'>
-                Master Password: {props.item.masterPassword}
-              </div>
-            </div>
-          )}
+            )}
         </div>
 
         <div className='flex align-middle my-auto gap-2 mr-6'>
