@@ -4,15 +4,15 @@ import DashboardCard from './DashboardCard';
 import axios from '../../api/AxiosUrl';
 import { Allocated, Plan, Rejected, Request } from '../../icons/icons';
 import DashboardChart from './DashboardChart';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState([]);
-
-  // const [plannedOrders, setPlannedOrders] = useState([]);
-  // const [requestedOrders, setRequestedOrders] = useState([]);
-  // const [allocatedOrders, setAllocatedOrders] = useState([]);
-  // const [rejectedOrders, setRejectedOrders] = useState([]);
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [fromDate, setFromDate] = useState(null);
+  const [toDate, setToDate] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -29,56 +29,132 @@ const Dashboard = () => {
     })();
   }, []);
 
-  const mergedOrders = {}; // req
-  const mergedOrders2 = {}; // completed
-  const mergedOrders3 = {}; // rejected
-  userData?.bulkOrders?.forEach((bulkOrder) => {
-    bulkOrder.orders.forEach((order) => {
-      if (order.status === 'completed') {
-        const itemId = order.itemId;
-        const existingOrder = mergedOrders2[itemId];
+  const handleYearChange = (date) => {
+    setSelectedYear(date.getFullYear());
+    setFromDate(null);
+    setToDate(null);
+  };
 
-        if (existingOrder) {
-          existingOrder.quantity += order.quantity;
-        } else {
-          mergedOrders2[itemId] = { ...order };
-        }
-      }
-      if (order.status === 'rejected') {
-        const itemId = order.itemId;
-        const existingOrder = mergedOrders3[itemId];
+  const handleFromDateChange = (date) => {
+    setFromDate(date);
+  };
 
-        if (existingOrder) {
-          existingOrder.quantity += order.quantity;
-        } else {
-          mergedOrders3[itemId] = { ...order };
-        }
-      }
+  const handleToDateChange = (date) => {
+    setToDate(date);
+  };
 
-      const itemId = order.itemId;
-      const existingOrder = mergedOrders[itemId];
-
-      if (existingOrder) {
-        existingOrder.quantity += order.quantity;
-      } else {
-        mergedOrders[itemId] = { ...order };
-      }
+  const filterOrdersByDate = (orders, startDate, endDate) => {
+    return orders.filter((order) => {
+      const orderDate = new Date(order.updatedAt);
+      return orderDate >= startDate && orderDate <= endDate;
     });
-  });
+  };
 
-  // Convert the mergedOrders object back to an array
-  const requestedOrders = Object.values(mergedOrders);
-  const allocatedOrders = Object.values(mergedOrders2);
-  const rejectedOrders = Object.values(mergedOrders3);
-  const plannedOrders = userData?.planningBulkOrders?.planningOrders;
+  let requestedOrders = [];
+  let allocatedOrders = [];
+  let rejectedOrders = [];
+  let plannedOrders = [];
 
-  console.log(allocatedOrders);
+  if (userData?.bulkOrders) {
+    const mergedOrders = {}; // req
+    const mergedOrders2 = {}; // completed
+    const mergedOrders3 = {}; // rejected
+
+    userData.bulkOrders.forEach((bulkOrder) => {
+      bulkOrder.orders.forEach((order) => {
+        const orderDate = new Date(bulkOrder.updatedAt);
+
+        if (orderDate >= fromDate && orderDate <= toDate) {
+          if (order.status === 'completed') {
+            const itemId = order.itemId;
+            const existingOrder = mergedOrders2[itemId];
+
+            if (existingOrder) {
+              existingOrder.quantity += order.quantity;
+            } else {
+              mergedOrders2[itemId] = { ...order };
+            }
+          }
+          if (order.status === 'rejected') {
+            const itemId = order.itemId;
+            const existingOrder = mergedOrders3[itemId];
+
+            if (existingOrder) {
+              existingOrder.quantity += order.quantity;
+            } else {
+              mergedOrders3[itemId] = { ...order };
+            }
+          }
+
+          const itemId = order.itemId;
+          const existingOrder = mergedOrders[itemId];
+
+          if (existingOrder) {
+            existingOrder.quantity += order.quantity;
+          } else {
+            mergedOrders[itemId] = { ...order };
+          }
+        }
+      });
+    });
+
+    requestedOrders = Object.values(mergedOrders);
+    allocatedOrders = Object.values(mergedOrders2);
+    rejectedOrders = Object.values(mergedOrders3);
+  }
+
+  if (userData?.planningBulkOrders?.planningOrders) {
+    plannedOrders = userData?.planningBulkOrders?.planningOrders;
+  }
 
   return (
     <>
       {isLoading && <Loader />}
       {!isLoading && (
         <div className='my-8 mx-4'>
+          <div className='flex justify-start mt-4'>
+            <div className='flex flex-wrap justify-center rounded-t-lg'>
+              <span className='mr-2'>Select Year:</span>
+              <DatePicker
+                selected={selectedYear}
+                onChange={handleYearChange}
+                dateFormat='yyyy'
+                showYearPicker
+                yearItemNumber={15}
+                scrollableYearDropdown
+              />
+            </div>
+            {selectedYear && (
+              <>
+                <div className='mr-4'>
+                  <span className='mr-2'>From Date:</span>
+                  <DatePicker
+                    selected={fromDate}
+                    onChange={handleFromDateChange}
+                    dateFormat='dd/MM/yyyy'
+                    showYearDropdown
+                    yearDropdownItemNumber={15}
+                    scrollableYearDropdown
+                    minDate={new Date(selectedYear, 0, 1)}
+                    maxDate={toDate || new Date(selectedYear, 11, 31)}
+                  />
+                </div>
+                <div>
+                  <span className='mr-2'>To Date:</span>
+                  <DatePicker
+                    selected={toDate}
+                    onChange={handleToDateChange}
+                    dateFormat='dd/MM/yyyy'
+                    showYearDropdown
+                    yearDropdownItemNumber={15}
+                    scrollableYearDropdown
+                    minDate={fromDate || new Date(selectedYear, 0, 1)}
+                    maxDate={new Date(selectedYear, 11, 31)}
+                  />
+                </div>
+              </>
+            )}
+          </div>
           <div className='relative border flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg mt-24'>
             <div className='flex flex-wrap justify-center bg-slate-100 rounded-t-lg'>
               <div className='w-full p-4 flex justify-center'>
@@ -114,10 +190,7 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
-            <div className='text-center my-8 px-6'>
-              <h3 className='text-3xl font-semibold leading-normal mb-8 text-slate-700'>
-                chart
-              </h3>
+            <div className='border-t-2 text-center my-8 py-8 px-6'>
               <div className='flex flex-row justify-evenly align-middle'>
                 <DashboardChart users={[userData]} />
               </div>
