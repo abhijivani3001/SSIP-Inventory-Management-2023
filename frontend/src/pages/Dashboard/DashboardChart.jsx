@@ -4,7 +4,10 @@ import 'chartjs-plugin-datalabels';
 
 const formatDate = (dateString) => {
   const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-  const formattedDate = new Date(dateString).toLocaleDateString('en-GB', options);
+  const formattedDate = new Date(dateString).toLocaleDateString(
+    'en-GB',
+    options
+  );
   return formattedDate;
 };
 
@@ -22,12 +25,22 @@ const DashboardChart = (props) => {
   const createComparisonChart = (index) => {
     const user = props.users[index];
     const comparisonData = {
-      labels: Array.from(new Set(user.bulkOrders.flatMap((bulkOrder) => bulkOrder.orders.map((order) => order.name)))),
+      labels: Array.from(
+        new Set(
+          user.bulkOrders.flatMap((bulkOrder) =>
+            bulkOrder.orders.map((order) => order.name)
+          )
+        )
+      ),
       requestedOrderQuantities: user.bulkOrders.flatMap((bulkOrder) =>
         bulkOrder.orders
-          .filter((order) => ['pending', 'accepted', 'rejected'].includes(order.status)) // Filter orders with specific statuses
+          .filter((order) =>
+            ['pending', 'accepted', 'rejected'].includes(order.status)
+          ) // Filter orders with specific statuses
           .reduce((acc, order) => {
-            const existingOrder = acc.find((requestedOrder) => requestedOrder.name === order.name);
+            const existingOrder = acc.find(
+              (requestedOrder) => requestedOrder.name === order.name
+            );
             if (existingOrder) {
               existingOrder.quantity += order.quantity;
             } else {
@@ -37,13 +50,17 @@ const DashboardChart = (props) => {
           }, [])
       ),
       planningOrderQuantities: user.planningBulkOrders
-        ? user.planningBulkOrders.planningOrders.map((planningOrder) => planningOrder.quantity)
+        ? user.planningBulkOrders.planningOrders.map(
+            (planningOrder) => planningOrder.quantity
+          )
         : [],
       allocatedOrderQuantities: user.bulkOrders.flatMap((bulkOrder) =>
         bulkOrder.orders
           .filter((order) => order.status === 'completed') // Filter completed orders
           .reduce((acc, order) => {
-            const existingOrder = acc.find((allocatedOrder) => allocatedOrder.name === order.name);
+            const existingOrder = acc.find(
+              (allocatedOrder) => allocatedOrder.name === order.name
+            );
             if (existingOrder) {
               existingOrder.quantity += order.quantity;
             } else {
@@ -71,7 +88,9 @@ const DashboardChart = (props) => {
             backgroundColor: 'rgba(75, 192, 192, 0.2)',
             borderColor: 'rgba(75, 192, 192, 1)',
             borderWidth: 1,
-            data: comparisonData.requestedOrderQuantities.map((order) => order.quantity),
+            data: comparisonData.requestedOrderQuantities.map(
+              (order) => order.quantity
+            ),
           },
           {
             label: 'Planned Quantity',
@@ -85,7 +104,9 @@ const DashboardChart = (props) => {
             backgroundColor: 'rgba(255, 206, 86, 0.2)',
             borderColor: 'rgba(255, 206, 86, 1)',
             borderWidth: 1,
-            data: comparisonData.allocatedOrderQuantities.map((order) => order.quantity),
+            data: comparisonData.allocatedOrderQuantities.map(
+              (order) => order.quantity
+            ),
           },
         ],
       },
@@ -115,12 +136,12 @@ const DashboardChart = (props) => {
   }, [props.users]);
 
   return (
-    <div>
+    <>
       {props.users.map((user, index) => (
-        <div key={index} className='mt-3'>
-          <div className="mb-3">
-            {/* Optional: Dropdown for item selection */}
-            {/* <label htmlFor={`itemDropdown-${index}`} className="mr-2 text-lg">
+        <div key={index} className='mt-3 w-full'>
+          {/* <div className='mb-3'>
+            Optional: Dropdown for item selection
+            <label htmlFor={`itemDropdown-${index}`} className="mr-2 text-lg">
               Select Item:
             </label>
             <select
@@ -136,74 +157,85 @@ const DashboardChart = (props) => {
                   {bulkOrder.name}
                 </option>
               ))}
-            </select> */}
-          </div>
+            </select>
+          </div> */}
+
           {/* Canvas for the comparison chart */}
-          <canvas id={`comparison-chart-${index}`} width="800" height="500" ref={canvasRefs.current[index]}></canvas>
-          <div className='p-5 m-5 text-2xl text-bold'>
-            Order Table
+          <div className='bg-indigo-500 py-2 flex flex-col shadow-xl rounded-xl relative text-center w-64 mx-auto'>
+            <div className='font-bold text-2xl text-white'>Analytics</div>
+
+            <div className='text-lg text-gray-100'>Overview</div>
           </div>
-          {user.bulkOrders.length > 0 ? (
-            <table className='w-full border-collapse border border-gray-400 mt-2'>
-              <thead>
-                <tr className='bg-gray-200'>
-                  <th className='border border-gray-400 p-2 text-xl'>
-                    Order Name
-                  </th>
-                  <th className='border border-gray-400 p-2 text-xl'>
-                    Quantity
-                  </th>
-                  <th className='border border-gray-400 p-2 text-xl'>
-                    Date
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {user.bulkOrders
-                  .flatMap((bulkOrder) =>
-                    bulkOrder.orders.map((order) => ({
-                      ...order,
-                      date: bulkOrder.updatedAt,
-                    }))
-                  )
-                  .reduce((acc, order) => {
-                    const existingOrderIndex = acc.findIndex(
-                      (mergedOrder) =>
-                        mergedOrder.name === order.name &&
-                        formatDate(mergedOrder.date) ===
-                        formatDate(order.date)
-                    );
-                    if (existingOrderIndex !== -1) {
-                      acc[existingOrderIndex].quantity += order.quantity;
-                    } else {
-                      acc.push(order);
-                    }
-                    return acc;
-                  }, [])
-                  .sort((a, b) => new Date(a.date) - new Date(b.date))
-                  .map((mergedOrder, orderIndex) => (
-                    <tr key={orderIndex}>
-                      <td className='border border-gray-400 p-2 text-xl'>
-                        {mergedOrder.name}
-                      </td>
-                      <td className='border border-gray-400 p-2 text-xl'>
-                        {mergedOrder.quantity}
-                      </td>
-                      <td className='border border-gray-400 p-2 text-xl'>
-                        {formatDate(mergedOrder.date)}
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          ) : (
-            <p className='text-xl text-black p-2 mx-20'>
-              No orders placed by {user.name}.
-            </p>
-          )}
+          <div className='bg-white p-8 rounded-lg border w-[50rem] h-[32rem] border-indigo-500 shadow-xl -mt-6 mx-auto'>
+            <canvas
+              id={`comparison-chart-${index}`}
+              className='mx-auto px-4 w-full'
+              ref={canvasRefs.current[index]}
+            ></canvas>
+          </div>
+
+          {/* Table */}
+          <div className='my-10 border-t-2 p-10 mx-8'>
+            {user.bulkOrders.length > 0 ? (
+              <table className='w-full border-collapse border border-slate-200 shadow-lg'>
+                <thead>
+                  <tr className='bg-slate-100'>
+                    <th className='border border-gray-400 p-1 text-xl'>
+                      Order Name
+                    </th>
+                    <th className='border border-gray-400 p-1 text-xl'>
+                      Quantity
+                    </th>
+                    <th className='border border-gray-400 p-1 text-xl'>Date</th>
+                  </tr>
+                </thead>
+                <tbody className='text-base text-gray-700'>
+                  {user.bulkOrders
+                    .flatMap((bulkOrder) =>
+                      bulkOrder.orders.map((order) => ({
+                        ...order,
+                        date: bulkOrder.updatedAt,
+                      }))
+                    )
+                    .reduce((acc, order) => {
+                      const existingOrderIndex = acc.findIndex(
+                        (mergedOrder) =>
+                          mergedOrder.name === order.name &&
+                          formatDate(mergedOrder.date) ===
+                            formatDate(order.date)
+                      );
+                      if (existingOrderIndex !== -1) {
+                        acc[existingOrderIndex].quantity += order.quantity;
+                      } else {
+                        acc.push(order);
+                      }
+                      return acc;
+                    }, [])
+                    .sort((a, b) => new Date(a.date) - new Date(b.date))
+                    .map((mergedOrder, orderIndex) => (
+                      <tr key={orderIndex}>
+                        <td className='border border-gray-400 p-1 '>
+                          {mergedOrder.name}
+                        </td>
+                        <td className='border border-gray-400 p-1 '>
+                          {mergedOrder.quantity}
+                        </td>
+                        <td className='border border-gray-400 p-1 '>
+                          {formatDate(mergedOrder.date)}
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            ) : (
+              <p className='text-xl text-gray-700 my-6 p-2 mx-20'>
+                No orders placed by {user.name}.
+              </p>
+            )}
+          </div>
         </div>
       ))}
-    </div>
+    </>
   );
 };
 

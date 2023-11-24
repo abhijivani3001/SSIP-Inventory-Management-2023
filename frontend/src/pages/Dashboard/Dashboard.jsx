@@ -156,7 +156,7 @@ const Dashboard = () => {
             )}
           </div>
           <div className='relative border flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg mt-24'>
-            <div className='flex flex-wrap justify-center bg-slate-100 rounded-t-lg'>
+            <div className='flex flex-wrap justify-center rounded-t-lg'>
               <div className='w-full p-4 flex justify-center'>
                 <div className='-mt-20 flex justify-center gap-8'>
                   <DashboardCard
