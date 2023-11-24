@@ -29,6 +29,7 @@ import BudgetPlanning from './pages/BudgetPlanning/BudgetPlanning';
 import ActualVsPlanning from './pages/BudgetPlanning/ActualVsPlanning';
 import BsmEmpOrders from './UserPanel/StoreManager/BsmEmpOrders';
 import DepartmentReport from './pages/Report/DepartmentReport';
+import EmpDashboard from './pages/Dashboard/EmpDashboard';
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -57,54 +58,60 @@ function App() {
       <ToastContainer />
       <Routes>
         {/* {!isLoggedIn && <Route path='/login' element={<Login />} />} */}
-        {!isLoggedIn && <Route path="/" element={<Login />} />}
+        {!isLoggedIn && <Route path='/' element={<Login />} />}
         {/* {!isLoggedIn && <Route path='/forgot-password' element={<ForgotPassword />} />} */}
 
         {/* admin */}
         {isLoggedIn && (userRole === ROLES.ADMIN || !isLoading) && (
-          <Route path="/register-user" element={<RegisterUser />} />
+          <Route path='/register-user' element={<RegisterUser />} />
         )}
         {isLoggedIn && (userRole === ROLES.ADMIN || !isLoading) && (
-          <Route path="/add-products" element={<AddProducts />} />
+          <Route path='/add-products' element={<AddProducts />} />
         )}
         {isLoggedIn && (userRole === ROLES.EMPLOYEE || !isLoading) && (
-          <Route path="/add-products-emp" element={<AddProductsEmp />} />
+          <Route path='/add-products-emp' element={<AddProductsEmp />} />
         )}
         {/* {isLoggedIn && userRole === ROLES.ADMIN && (
           <Route path='/dashboard' element={<AdminDashboard />} />
         )} */}
         {isLoggedIn && userRole === ROLES.ADMIN && (
-          <Route path="/" element={<AdminDashboard />} />
+          <Route path='/' element={<AdminDashboard />} />
         )}
         {isLoggedIn && (userRole === ROLES.ADMIN || !isLoading) && (
-          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path='/reset-password' element={<ResetPassword />} />
         )}
 
         {/* --- */}
-        {isLoggedIn && <Route path="/user" element={<UserProfile />} />}
+        {isLoggedIn && <Route path='/user' element={<UserProfile />} />}
 
         {isLoggedIn && (
-          <Route path="/budget-planning" element={<BudgetPlanning />} />
+          <Route path='/budget-planning' element={<BudgetPlanning />} />
         )}
 
         {/* {isLoggedIn && userRole !== ROLES.ADMIN && (
           <Route path='/dashboard' element={<Dashboard />} />
         )} */}
-        {isLoggedIn && userRole !== ROLES.ADMIN && (
-          <Route path="/" element={<Dashboard />} />
+        {isLoggedIn &&
+          userRole !== ROLES.ADMIN &&
+          userRole !== ROLES.EMPLOYEE && (
+            <Route path='/' element={<Dashboard />} />
+          )}
+
+        {isLoggedIn && userRole === ROLES.EMPLOYEE && (
+          <Route path='/' element={<EmpDashboard />} />
         )}
 
         {isLoggedIn && userRole !== ROLES.ADMIN && (
-          <Route path="/products" element={<Products />} />
+          <Route path='/products' element={<Products />} />
         )}
         {isLoggedIn && userRole !== ROLES.ADMIN && (
-          <Route path="/cart" element={<CartItems />} />
+          <Route path='/cart' element={<CartItems />} />
         )}
         {isLoggedIn && userRole !== ROLES.ADMIN && (
-          <Route path="/notification" element={<Notification />} />
+          <Route path='/notification' element={<Notification />} />
         )}
         {isLoggedIn && (
-          <Route path="/item-requests" element={<ItemRequests />} />
+          <Route path='/item-requests' element={<ItemRequests />} />
         )}
 
         {isLoggedIn &&
@@ -112,21 +119,21 @@ function App() {
           (userRole === ROLES.SUB_BRANCH_STORE_MANAGER ||
             userRole === ROLES.BRANCH_STORE_MANAGER ||
             userRole === ROLES.DEPARTMENT_STORE_MANAGER ||
-            !isLoading) && <Route path="/inventory" element={<Inventory />} />}
+            !isLoading) && <Route path='/inventory' element={<Inventory />} />}
 
         {isLoggedIn &&
           (userRole === ROLES.SUB_BRANCH_STORE_MANAGER ||
             ROLES.SUB_BRANCH_HEAD ||
             !isLoading) && (
-            <Route path="/emp-orders" element={<SbsmEmpOrders />} />
+            <Route path='/emp-orders' element={<SbsmEmpOrders />} />
           )}
         {isLoggedIn &&
           (userRole === ROLES.SUB_BRANCH_STORE_MANAGER || !isLoading) && (
-            <Route path="/sbsm-emp-orders" element={<SbsmEmpOrders />} />
+            <Route path='/sbsm-emp-orders' element={<SbsmEmpOrders />} />
           )}
         {isLoggedIn &&
           (userRole === ROLES.BRANCH_STORE_MANAGER || !isLoading) && (
-            <Route path="/bsm-emp-orders" element={<BsmEmpOrders />} />
+            <Route path='/bsm-emp-orders' element={<BsmEmpOrders />} />
           )}
 
         {/* {isLoggedIn && (userRole === ROLES.SUB_BRANCH_HEAD || !isLoading) && (
@@ -140,7 +147,7 @@ function App() {
             userRole === ROLES.DEPARTMENT_STORE_MANAGER ||
             !isLoading) && (
             <Route
-              path="/store-manager-requested-orders"
+              path='/store-manager-requested-orders'
               element={<StoreManagerRequestedOrders />}
             />
           )}
@@ -152,22 +159,22 @@ function App() {
             userRole === ROLES.DEPARTMENT_HEAD ||
             !isLoading) && (
             <Route
-              path="/head-requested-orders"
+              path='/head-requested-orders'
               element={<HeadRequestedOrders />}
             />
           )}
 
         {isLoggedIn && userRole !== ROLES.ADMIN && (
-          <Route path="/placed-orders" element={<PlacedOrderList />} />
+          <Route path='/placed-orders' element={<PlacedOrderList />} />
         )}
 
         {isLoggedIn && (
-          <Route path="/actual-vs-planning" element={<ActualVsPlanning />} />
+          <Route path='/actual-vs-planning' element={<ActualVsPlanning />} />
         )}
 
-        {isLoggedIn && <Route path="/report" element={<DepartmentReport />} />}
+        {isLoggedIn && <Route path='/report' element={<DepartmentReport />} />}
 
-        {!isLoading && <Route path="*" element={<NotFound />} />}
+        {!isLoading && <Route path='*' element={<NotFound />} />}
       </Routes>
     </Layout>
   );

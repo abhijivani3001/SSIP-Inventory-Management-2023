@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import UserInfo from './UserInfo';
 
 import {
   Modal,
@@ -13,8 +12,9 @@ import {
   Button,
   ChakraProvider,
 } from '@chakra-ui/react';
+import DashboardCardTwo from './DashboardCardTwo';
 
-const AllRegisteredUsersTwo = (props) => {
+const DashboardCard = (props) => {
   const userData = props.userData;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [scrollBehavior, setScrollBehavior] = useState('inside');
@@ -22,27 +22,21 @@ const AllRegisteredUsersTwo = (props) => {
 
   return (
     <>
-      <tr className='bg-white text-gray-900 text-base font-normal hover:bg-gray-50 border-b divide-x'>
-        <td className='px-6'>{props.index}.</td>
-        <td className='px-6'>
-          <button
-            onClick={onOpen}
-            ref={btnRef}
-            className='font-medium text-gray-700 hover:text-blue-500 hover:underline'
-          >
-            {userData.name}
-          </button>
-          {/* <ChakraProvider>
-            <Button ref={btnRef} onClick={onOpen}>
-              Open Modal
-            </Button>
-          </ChakraProvider> */}
-        </td>
-        <td className='px-6'>{userData.email}</td>
-        <td className='px-6'>{userData.subBranch}</td>
-        <td className='px-6'>{userData.branch}</td>
-        <td className='px-6'>{userData.department}</td>
-      </tr>
+      <button
+        onClick={onOpen}
+        ref={btnRef}
+        className={`flex h-32 w-60 flex-col items-center justify-center ${props.bg} ${props.hover} rounded-md text-white shadow-2xl border-none ease-in-out hover:border-gray-400/80 hover:scale-105 transition duration-500`}
+      >
+        <div className='flex flex-row items-center justify-center gap-4'>
+          {/* svg */}
+          {props.icon}
+          <span className='font-bold text-4xl text-white'>
+            {props.orders.length}
+          </span>
+        </div>
+
+        <div className='mt-2 text-xl text-gray-100'>{props.text}</div>
+      </button>
 
       <ChakraProvider>
         <Modal
@@ -64,7 +58,7 @@ const AllRegisteredUsersTwo = (props) => {
             <ModalHeader></ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              <UserInfo userData={userData} />
+              <DashboardCardTwo orders={props.orders} title={props.text} />
             </ModalBody>
 
             <ModalFooter>
@@ -79,4 +73,4 @@ const AllRegisteredUsersTwo = (props) => {
   );
 };
 
-export default AllRegisteredUsersTwo;
+export default DashboardCard;

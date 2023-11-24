@@ -5,6 +5,7 @@ import AuthContext from '../store/auth-context';
 import PieChart from '../components/Charts/PieChart';
 import BarChart from '../components/Charts/BarChart';
 import ScatterPlot from '../components/Charts/ScatterPlot';
+import Loader from '../components/ChakraUI/Loader';
 
 const Dashboard = () => {
   const authCtx = useContext(AuthContext);
@@ -48,7 +49,6 @@ const Dashboard = () => {
                   dateOrderMap.set(date, quantity);
                 }
               }
-
             });
           });
 
@@ -78,48 +78,59 @@ const Dashboard = () => {
   }, [authCtx.isLoggedIn]);
 
   return (
-    <Box p={4} bg="gray.100" rounded="lg" shadow="lg">
-      {isLoading ? (
-        <Center>
-          <Spinner size="xl" />
-        </Center>
-      ) : (
+    // <Box p={4} bg="gray.100" rounded="lg" shadow="lg">
+    //   {isLoading ? (
+    //     <Center>
+    //       <Spinner size="xl" />
+    //     </Center>
+    //   ) : (
+    //     <>
+    //       <Heading as="h1" fontSize="2xl" fontWeight="semibold" mb={4}>
+    //         Dashboard
+    //       </Heading>
+    //       <Flex wrap="wrap" justify="center">
+    //         {orderData.orderChartData?.length < 1 ||
+    //           orderData.barChartData?.length < 1 ? (
+    //           <Text fontSize="lg" color="gray.600">
+    //             No order placed by you
+    //           </Text>
+    //         ) : (
+    //           <>
+    //             <Box mx={10} my={5} border="1px" rounded="2xl">
+    //               <Heading mx={5} my={5} fontSize="2xl" fontWeight="semibold">
+    //                 Total Ordered Quantity with Names
+    //               </Heading>
+    //               <PieChart orderData={orderData?.orderChartData} />
+    //             </Box>
+    //             <Box mx={10} my={5} border="1px" rounded="2xl">
+    //               <Heading mx={5} my={5} fontSize="2xl" fontWeight="semibold">
+    //                 Total Orders
+    //               </Heading>
+    //               <BarChart orderData={orderData?.barChartData} />
+    //             </Box>
+    //             {/* <Box mx={10} my={5} border="1px" rounded="2xl">
+    //               <StackedColumnChart />
+    //             </Box> */}
+    //             <Box mx={10} my={5} border="1px" rounded="2xl">
+    //               <ScatterPlot />
+    //             </Box>
+    //           </>
+    //         )}
+    //       </Flex>
+    //     </>
+    //   )}
+    // </Box>
+
+    <>
+      {isLoading && <Loader />}
+      {!isLoading && (
         <>
-          <Heading as="h1" fontSize="2xl" fontWeight="semibold" mb={4}>
-            Dashboard
-          </Heading>
-          <Flex wrap="wrap" justify="center">
-            {orderData.orderChartData?.length < 1 ||
-              orderData.barChartData?.length < 1 ? (
-              <Text fontSize="lg" color="gray.600">
-                No order placed by you
-              </Text>
-            ) : (
-              <>
-                <Box mx={10} my={5} border="1px" rounded="2xl">
-                  <Heading mx={5} my={5} fontSize="2xl" fontWeight="semibold">
-                    Total Ordered Quantity with Names
-                  </Heading>
-                  <PieChart orderData={orderData?.orderChartData} />
-                </Box>
-                <Box mx={10} my={5} border="1px" rounded="2xl">
-                  <Heading mx={5} my={5} fontSize="2xl" fontWeight="semibold">
-                    Total Orders
-                  </Heading>
-                  <BarChart orderData={orderData?.barChartData} />
-                </Box>
-                {/* <Box mx={10} my={5} border="1px" rounded="2xl">
-                  <StackedColumnChart />
-                </Box> */}
-                <Box mx={10} my={5} border="1px" rounded="2xl">
-                  <ScatterPlot />
-                </Box>
-              </>
-            )}
-          </Flex>
+          {/* <div className='flex flex-wrap justify-center gap-6 align-middle'> */}
+
+          {/* </div> */}
         </>
       )}
-    </Box>
+    </>
   );
 };
 
