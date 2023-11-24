@@ -70,14 +70,18 @@ const RegisterUser = () => {
 
   useEffect(() => {
     const randomString = generateRandomString(15);
+    console.log('hihih');
     if (!formData.profileIcon) {
-      setFormData({ ...formData, profileIcon: randomString });
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        profileIcon: randomString,
+      }));
     }
-  }, []);
+  }, [formData.profileIcon]);
 
   return (
     <div className='inset-0 flex items-center justify-center p-8'>
-      <div className='bg-white text-xl text-gray-800 font-semibold w-1/3 p-8 rounded-lg shadow-lg'>
+      <div className='bg-white text-xl text-gray-800 font-semibold w-[32rem] p-8 rounded-lg shadow-lg'>
         <h2 className='text-2xl font-semibold text-gray-800 mb-4 min-w-0 flex items-center justify-center'>
           Register User
         </h2>

@@ -222,7 +222,7 @@ const Navbar = () => {
                 </div>
               </button>
               <div
-                className='z-50 my-8 hidden overflow-hidden right-8 absolute text-base list-none bg-white divide-y divide-gray-200 rounded-lg shadow-lg'
+                className='z-50 my-10 w-48 hidden overflow-hidden right-9 absolute text-base list-none bg-white divide-y divide-gray-200 rounded-lg shadow-lg'
                 id='user-dropdown'
               >
                 <div className='px-4 py-3'>
