@@ -101,13 +101,13 @@ const Navbar = () => {
         {/* Part-1: logo */}
         <Link to='/'>
           <div className='flex items-center'>
-            <img
-              src='https://flowbite.com/docs/images/logo.svg'
+            {/* <img
+              // src='https://flowbite.com/docs/images/logo.svg'
               className='h-8 mr-3'
-              alt='Flowbite Logo'
-            />
+              // alt='Flowbite Logo'
+            /> */}
             <span className='self-center text-2xl text-gray-100 font-bold whitespace-nowrap hover:text-white'>
-              Inventory Management
+            સંચલનYantra
             </span>
           </div>
         </Link>
