@@ -16,6 +16,7 @@ import {
 
 import multiavatar from '@multiavatar/multiavatar';
 import DangerousHTML from 'react-dangerous-html';
+import DashboardChart from '../../pages/Dashboard/DashboardChart';
 
 const AllRegisteredUsersTwo = (props) => {
   const userData = props.userData;
@@ -68,6 +69,7 @@ const AllRegisteredUsersTwo = (props) => {
             <ModalCloseButton />
             <ModalBody>
               <UserInfo userData={userData} />
+              {/* <DashboardChart users={[userData]} /> */}
             </ModalBody>
 
             <ModalFooter>

@@ -27,6 +27,7 @@ const Dashboard = () => {
   const [belowUsers, setBelowUsers] = useState([]);
   // const [lowStock, setLowStock] = useState(0);
   const [lowStock, setLowStock] = useState([]);
+  // let lowStock=[];
 
   // useEffect(() => {
 
@@ -47,15 +48,6 @@ const Dashboard = () => {
         }
         console.log(data2);
 
-        let temp = [];
-        data?.inventory?.forEach((item) => {
-          // console.log(item);
-          if (item.quantity < 10 + (10 * 20) / 100) {
-            temp.push(item);
-          }
-        });
-        setLowStock(temp);
-
         // pending
         data2?.forEach((user) => {
           user.bulkOrders.forEach((bulkOrder) => {
@@ -66,6 +58,26 @@ const Dashboard = () => {
             });
           });
         });
+
+        // low stock
+        const temp3 = [];
+        const res3 = await axios.get('api/inventory');
+        const data3 = await res3?.data.inventory;
+        // console.log(data3);
+        data3.forEach((inventoryItem) => {
+          if (
+            inventoryItem.quantity <
+            (20 * inventoryItem.minValue) / 100 + inventoryItem.minValue
+          ) {
+            temp3.push(inventoryItem);
+          }
+        });
+        setLowStock(temp3)
+        // console.log(lowStock);
+
+
+        
+
       } catch (error) {
         console.error(error);
       }

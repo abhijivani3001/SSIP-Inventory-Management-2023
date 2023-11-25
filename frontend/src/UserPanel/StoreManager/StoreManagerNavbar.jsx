@@ -112,7 +112,7 @@ const StoreManagerNavbar = () => {
               ></div>
             </div>
           </li>
-          {currentUserRole === ROLES.SUB_BRANCH_STORE_MANAGER && (
+          {/* {currentUserRole === ROLES.SUB_BRANCH_STORE_MANAGER && (
             <li>
               <div className='navbar-element-parent group'>
                 <Link
@@ -134,8 +134,8 @@ const StoreManagerNavbar = () => {
                 ></div>
               </div>
             </li>
-          )}
-          {currentUserRole === ROLES.DEPARTMENT_STORE_MANAGER && (
+          )} */}
+          {/* {currentUserRole === ROLES.DEPARTMENT_STORE_MANAGER && (
             <li>
               <div className='navbar-element-parent group'>
                 <Link
@@ -157,7 +157,7 @@ const StoreManagerNavbar = () => {
                 ></div>
               </div>
             </li>
-          )}
+          )} */}
           {currentUserRole === ROLES.DEPARTMENT_STORE_MANAGER && (
             <li>
               <div className='navbar-element-parent group'>
@@ -181,7 +181,7 @@ const StoreManagerNavbar = () => {
               </div>
             </li>
           )}
-          {currentUserRole === ROLES.BRANCH_STORE_MANAGER && (
+          {/* {currentUserRole === ROLES.BRANCH_STORE_MANAGER && (
             <li>
               <div className='navbar-element-parent group'>
                 <Link
@@ -203,7 +203,7 @@ const StoreManagerNavbar = () => {
                 ></div>
               </div>
             </li>
-          )}
+          )} */}
 
           <li>
             <div className='navbar-element-parent group'>

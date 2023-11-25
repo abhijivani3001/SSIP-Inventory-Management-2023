@@ -105,6 +105,8 @@ const Inventory = (props) => {
                       quantity={val.quantity}
                       inventoryId={val._id}
                       getInventoryItems={getInventoryItems}
+                      minValue={val.minValue}
+                      maxValue={val.maxValue}
                     />
                   ))}
                 </div>

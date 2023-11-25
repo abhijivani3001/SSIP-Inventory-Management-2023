@@ -7,7 +7,7 @@ const InventoryCard = (props) => {
   const [availableItems, setAvailableItems] = useState(props.quantity);
   const [isEditing, setIsEditing] = useState(false);
 
-  const isLowQuantity = availableItems < 10;
+  const isLowQuantity = availableItems < props.minValue;
 
   const handleUpdateClick = () => {
     setIsEditing(!isEditing);
@@ -84,6 +84,13 @@ const InventoryCard = (props) => {
                 <span className='my-auto'>{props.quantity}</span>
               )}
             </div>
+
+            <div className='flex justify-center gap-6 font-medium text-gray-600'>
+              <div>Min: {props.minValue}</div>
+              <div>Max: {props.maxValue}</div>
+            </div>
+
+            <div className='border h-[1px] w-full border-gray-500 bg-gray-200'></div>
 
             <div className='mt-2 mx-2 flex gap-2'>
               {isEditing ? (

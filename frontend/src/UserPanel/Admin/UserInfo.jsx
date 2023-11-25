@@ -4,6 +4,7 @@ import PlacedBulkOrder from '../../components/PlacedOrder/PlacedBulkOrder';
 
 import multiavatar from '@multiavatar/multiavatar';
 import DangerousHTML from 'react-dangerous-html';
+import DashboardChart from '../../pages/Dashboard/DashboardChart';
 
 const UserInfo = (props) => {
   const userData = props.userData;
@@ -88,31 +89,33 @@ const UserInfo = (props) => {
           </div>
         )}
         {isDataShown && (
-          <>
-            <div className='mt-10 px-6 py-8 border-t border-slate-200 text-center'>
-              <div className='flex flex-wrap justify-center'>
-                <div className='w-full'>
-                  {userData.bulkOrders?.map((order) => {
-                    return (
-                      <PlacedBulkOrder order={order} currentStatus={'super'} />
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-            <div className='mt-4 px-6 py-10 text-center'>
-              <div className='flex flex-wrap justify-center'>
-                <div className='w-full lg:w-9/12 px-4'>
-                  <button
-                    className='font-normal text-sky-500 outline-none focus:outline-none'
-                    onClick={toggleHandler}
-                  >
-                    Show less
-                  </button>
-                </div>
-              </div>
-            </div>
-          </>
+          <DashboardChart users={[props.userData]} />
+          
+          // <>
+          //   <div className='mt-10 px-6 py-8 border-t border-slate-200 text-center'>
+          //     <div className='flex flex-wrap justify-center'>
+          //       <div className='w-full'>
+          //         {userData.bulkOrders?.map((order) => {
+          //           return (
+          //             <PlacedBulkOrder order={order} currentStatus={'super'} />
+          //           );
+          //         })}
+          //       </div>
+          //     </div>
+          //   </div>
+          //   <div className='mt-4 px-6 py-10 text-center'>
+          //     <div className='flex flex-wrap justify-center'>
+          //       <div className='w-full lg:w-9/12 px-4'>
+          //         <button
+          //           className='font-normal text-sky-500 outline-none focus:outline-none'
+          //           onClick={toggleHandler}
+          //         >
+          //           Show less
+          //         </button>
+          //       </div>
+          //     </div>
+          //   </div>
+          // </>
         )}
       </div>
     </>
