@@ -22,9 +22,6 @@ import { findBelowUsers } from '../../Helper/Helper';
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState([]);
-  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-  const [fromDate, setFromDate] = useState(null);
-  const [toDate, setToDate] = useState(null);
 
   // store-manager
   const [belowUsers, setBelowUsers] = useState([]);
@@ -76,27 +73,6 @@ const Dashboard = () => {
     })();
   }, []);
 
-  const handleYearChange = (date) => {
-    setSelectedYear(date.getFullYear());
-    setFromDate(null);
-    setToDate(null);
-  };
-
-  const handleFromDateChange = (date) => {
-    setFromDate(date);
-  };
-
-  const handleToDateChange = (date) => {
-    setToDate(date);
-  };
-
-  const filterOrdersByDate = (orders, startDate, endDate) => {
-    return orders.filter((order) => {
-      const orderDate = new Date(order.updatedAt);
-      return orderDate >= startDate && orderDate <= endDate;
-    });
-  };
-
   // -----
   let requestedOrders = [];
   let allocatedOrders = [];
@@ -116,36 +92,34 @@ const Dashboard = () => {
       bulkOrder.orders.forEach((order) => {
         const orderDate = new Date(bulkOrder.updatedAt);
 
-        if (orderDate >= fromDate && orderDate <= toDate) {
-          if (order.status === 'completed') {
-            const itemId = order.itemId;
-            const existingOrder = mergedOrders2[itemId];
-
-            if (existingOrder) {
-              existingOrder.quantity += order.quantity;
-            } else {
-              mergedOrders2[itemId] = { ...order };
-            }
-          }
-          if (order.status === 'rejected') {
-            const itemId = order.itemId;
-            const existingOrder = mergedOrders3[itemId];
-
-            if (existingOrder) {
-              existingOrder.quantity += order.quantity;
-            } else {
-              mergedOrders3[itemId] = { ...order };
-            }
-          }
-
+        if (order.status === 'completed') {
           const itemId = order.itemId;
-          const existingOrder = mergedOrders[itemId];
+          const existingOrder = mergedOrders2[itemId];
 
           if (existingOrder) {
             existingOrder.quantity += order.quantity;
           } else {
-            mergedOrders[itemId] = { ...order };
+            mergedOrders2[itemId] = { ...order };
           }
+        }
+        if (order.status === 'rejected') {
+          const itemId = order.itemId;
+          const existingOrder = mergedOrders3[itemId];
+
+          if (existingOrder) {
+            existingOrder.quantity += order.quantity;
+          } else {
+            mergedOrders3[itemId] = { ...order };
+          }
+        }
+
+        const itemId = order.itemId;
+        const existingOrder = mergedOrders[itemId];
+
+        if (existingOrder) {
+          existingOrder.quantity += order.quantity;
+        } else {
+          mergedOrders[itemId] = { ...order };
         }
       });
     });
@@ -161,32 +135,16 @@ const Dashboard = () => {
     plannedOrders = userData?.planningBulkOrders?.planningOrders;
   }
 
-  // useEffect(() => {
-  //   console.log(belowUsers, 'hi');
-
-  // }, [belowUsers]);
-
   return (
     <>
       {isLoading && <Loader />}
       {!isLoading && (
         <div className='my-8 mx-4'>
           <div className='flex justify-start mt-4'>
-            <div className='flex flex-wrap justify-center rounded-t-lg'>
-              <span className='mr-2'>Select Year:</span>
-              <DatePicker
-                selected={selectedYear}
-                onChange={handleYearChange}
-                dateFormat='yyyy'
-                showYearPicker
-                yearItemNumber={15}
-                scrollableYearDropdown
-              />
-            </div>
-            {selectedYear && (
-              <>
-                <div className='mr-4'>
-                  <span className='mr-2'>From Date:</span>
+            <div className='flex flex-wrap justify-center rounded-t-lg'></div>
+            <>
+              <div className='mr-4'>
+                {/* <span className='mr-2'>From Date:</span>
                   <DatePicker
                     selected={fromDate}
                     onChange={handleFromDateChange}
@@ -196,10 +154,10 @@ const Dashboard = () => {
                     scrollableYearDropdown
                     minDate={new Date(selectedYear, 0, 1)}
                     maxDate={toDate || new Date(selectedYear, 11, 31)}
-                  />
-                </div>
-                <div>
-                  <span className='mr-2'>To Date:</span>
+                  /> */}
+              </div>
+              <div>
+                {/* <span className='mr-2'>To Date:</span>
                   <DatePicker
                     selected={toDate}
                     onChange={handleToDateChange}
@@ -209,10 +167,9 @@ const Dashboard = () => {
                     scrollableYearDropdown
                     minDate={fromDate || new Date(selectedYear, 0, 1)}
                     maxDate={new Date(selectedYear, 11, 31)}
-                  />
-                </div>
-              </>
-            )}
+                  /> */}
+              </div>
+            </>
           </div>
           <div className='relative border flex flex-col min-w-0 break-words bg-slate-50 w-full mb-6 shadow-lg rounded-lg mt-24'>
             <div className='flex flex-wrap justify-center rounded-t-lg'>

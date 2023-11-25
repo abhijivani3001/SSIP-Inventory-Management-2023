@@ -19,6 +19,8 @@ const Inventory = (props) => {
     try {
       const result = await axios.get('api/inventory');
       const data = await result.data.inventory;
+      console.log(data);
+      
       let flag = false;
       const finalData = data.map((item) => {
         if (item.quantity < 10) {

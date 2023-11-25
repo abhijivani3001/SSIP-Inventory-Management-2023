@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from '../../api/AxiosUrl';
 import ROLES from '../../constants/ROLES';
 import 'react-toastify/dist/ReactToastify.css';
+import validator from 'validator';
 
 const RegisterUser = () => {
   const [formData, setFormData] = useState({
@@ -18,6 +19,8 @@ const RegisterUser = () => {
   });
 
   const handleChange = (e) => {
+    validate(e.target.value);
+
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -78,6 +81,24 @@ const RegisterUser = () => {
     }
   }, [formData.profileIcon]);
 
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const validate = (value) => {
+    if (
+      validator.isStrongPassword(value, {
+        minLength: 8,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+      })
+    ) {
+      setErrorMessage('Success');
+    } else {
+      setErrorMessage('Please enter the strong password!');
+    }
+  };
+
   return (
     <div className='inset-0 flex items-center justify-center p-8'>
       <div className='bg-white text-xl text-gray-800 font-semibold w-[32rem] p-8 rounded-lg shadow-lg'>
@@ -126,6 +147,10 @@ const RegisterUser = () => {
           </div>
           <div className='mb-4'>
             <label className='block text-gray-800'>Password</label>
+            <span className='text-gray-400 text-sm'>
+              (minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1,
+              minSymbols: 1)
+            </span>
             <input
               type='password'
               id='password'
@@ -137,6 +162,19 @@ const RegisterUser = () => {
               onChange={handleChange}
               required
             />
+            {errorMessage === '' ? null : (
+              <>
+                {errorMessage.includes('Please') ? (
+                  <span className=' text-base font-medium text-red-500'>
+                    {errorMessage}
+                  </span>
+                ) : (
+                  <span className='text-base font-medium text-green-500'>
+                    {errorMessage}
+                  </span>
+                )}
+              </>
+            )}
           </div>
           <div className='mb-4'>
             <label className='block text-gray-800'>Sub Branch</label>
