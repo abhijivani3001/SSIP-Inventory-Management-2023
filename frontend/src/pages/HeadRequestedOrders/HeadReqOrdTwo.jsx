@@ -64,7 +64,7 @@ const HeadReqOrdTwo = (props) => {
           up
         );
         toast.error('Order rejected Successfully', {
-          autoClose: 1500,
+          autoClose: 1000,
         });
       }
 
