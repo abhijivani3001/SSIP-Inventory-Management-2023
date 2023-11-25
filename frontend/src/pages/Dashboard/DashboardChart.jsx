@@ -15,6 +15,8 @@ const DashboardChart = (props) => {
   const canvasRefs = useRef(props.users.map(() => React.createRef()));
   const [selectedItem, setSelectedItem] = useState('');
   const [selectedDate, setSelectedDate] = useState(null);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
   const fetchDataForItem = (item, index) => {
     setSelectedItem(item);
@@ -52,8 +54,8 @@ const DashboardChart = (props) => {
       ),
       planningOrderQuantities: user.planningBulkOrders
         ? user.planningBulkOrders.planningOrders.map(
-            (planningOrder) => planningOrder.quantity
-          )
+          (planningOrder) => planningOrder.quantity
+        )
         : [],
       allocatedOrderQuantities: user.bulkOrders.flatMap((bulkOrder) =>
         bulkOrder.orders
@@ -86,15 +88,15 @@ const DashboardChart = (props) => {
         datasets: [
           {
             label: 'Planned Quantity',
-            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-            borderColor: 'rgba(255, 99, 132, 1)',
+            backgroundColor: 'rgba(25, 139, 238, 0.95)',
+            // borderColor: 'rgba(255, 99, 132, 1)',
             borderWidth: 1,
             data: comparisonData.planningOrderQuantities,
           },
           {
             label: 'Requested Quantity',
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            borderColor: 'rgba(75, 192, 192, 1)',
+            backgroundColor: 'rgb(244 63 94)',
+            // borderColor: 'rgba(75, 192, 192, 1)',
             borderWidth: 1,
             data: comparisonData.requestedOrderQuantities.map(
               (order) => order.quantity
@@ -102,8 +104,8 @@ const DashboardChart = (props) => {
           },
           {
             label: 'Allocated Quantity',
-            backgroundColor: 'rgba(255, 206, 86, 0.2)',
-            borderColor: 'rgba(255, 206, 86, 1)',
+            backgroundColor: 'rgba(25, 229, 78, 0.95)',
+            // borderColor: 'rgba(255, 206, 86, 1)',
             borderWidth: 1,
             data: comparisonData.allocatedOrderQuantities.map(
               (order) => order.quantity
@@ -115,6 +117,7 @@ const DashboardChart = (props) => {
         scales: {
           y: {
             beginAtZero: true,
+
           },
         },
         plugins: {
@@ -140,35 +143,48 @@ const DashboardChart = (props) => {
               // (!selectedDate || formatDate(bulkOrder.updatedAt) === selectedDate)
               true
           )
-          .map((order) => ({
-            ...order,
-            date: bulkOrder.updatedAt,
-          }))
-      )
-      .reduce(
-        (acc, order) => {
-          const row = [
-            order.name,
-            order.quantity,
-            order.plannedQuantity || 0, // Add planned quantity
-            order.requestedQuantity || 0, // Add requested quantity
-            order.allocatedQuantity || 0, // Add allocated quantity
-            formatDate(order.date),
-          ].join(',');
-          acc.push(row);
-          return acc;
-        },
-        [
-          'Order Name,Quantity,Planned Quantity,Requested Quantity,Allocated Quantity,Date',
-        ]
-      )
-      .join('\n');
+          .map((order) => {
+            console.log(order.name);
+            const allocatedItem =
+              user.planningBulkOrders.planningOrders.find(
+                (order2) => order2.itemId === order.itemId
+              );
+            return {
+              ...order,
+              date: bulkOrder.updatedAt,
+              plannedQuantity: allocatedItem
+                ? allocatedItem.quantity
+                : 0,
+              allocatedQuantity:
+                order.status === 'completed' ? order.quantity : 0,
+              requestedQuantity: order.quantity,
+            };
+          })
+          .reduce(
+            (acc, order) => {
+              const row = [
+                order.name,
+                // order.quantity,
+                order.plannedQuantity || 0, // Add planned quantity
+                order.requestedQuantity || 0, // Add requested quantity
+                order.allocatedQuantity || 0, // Add allocated quantity
+                formatDate(order.date),
+              ].join(',');
+              acc.push(row);
+              console.log(acc)
+              return acc;
+            },
+            [
+              'Order Name,Planned Quantity,Requested Quantity,Allocated Quantity,Date',
+            ]
+          )
+          .join('\n'));
 
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
     const url = URL.createObjectURL(blob);
     link.href = url;
-    link.setAttribute('download', 'table_data.csv');
+    link.setAttribute('download', 'Order_Details.csv');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -185,34 +201,29 @@ const DashboardChart = (props) => {
       {props.users.map((user, index) => (
         <div key={index} className='mt-3 w-full'>
           <div className='mb-3 flex space-x-4'>
-            <label htmlFor={`itemDropdown-${index}`} className='mr-2 text-lg'>
-              Select Item:
-            </label>
-            <select
-              id={`itemDropdown-${index}`}
-              onChange={(event) => fetchDataForItem(event.target.value, index)}
-              className='p-2 border border-gray-400 rounded'
-            >
-              <option value=''>Select an item</option>
-              {user.bulkOrders.map((bulkOrder, orderIndex) => (
-                <option key={orderIndex} value={bulkOrder.name}>
-                  {bulkOrder.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className='mb-3 flex space-x-4'>
-            <label htmlFor={`datePicker-${index}`} className='mr-2 text-lg'>
-              Select Date:
+            <label htmlFor={`fromDatePicker-${index}`} className='mr-2 mx-2 text-lg'>
+              From Date:
             </label>
             <input
               type='date'
-              id={`datePicker-${index}`}
-              onChange={(event) => setSelectedDate(event.target.value)}
+              id={`fromDatePicker-${index}`}
+              onChange={(event) => setStartDate(event.target.value)}
+              className='p-2 border border-gray-400 rounded'
+            />
+            <label htmlFor={`toDatePicker-${index}`} className='mr-2 text-lg'>
+              To Date:
+            </label>
+            <input
+              type='date'
+              id={`toDatePicker-${index}`}
+              onChange={(event) => setEndDate(event.target.value)}
               className='p-2 border border-gray-400 rounded'
             />
           </div>
+
+          {/* <div className='mb-3 flex space-x-4'>
+
+          </div> */}
 
           <div className='bg-indigo-500 py-2 flex flex-col shadow-xl rounded-xl relative text-center w-64 mx-auto hover:scale-105 transition duration-500'>
             <div className='font-bold text-2xl text-white'>Analysis</div>
@@ -235,9 +246,9 @@ const DashboardChart = (props) => {
                     <th className='border border-gray-400 p-1 text-xl'>
                       Order Name
                     </th>
-                    <th className='border border-gray-400 p-1 text-xl'>
+                    {/* <th className='border border-gray-400 p-1 text-xl'>
                       Quantity
-                    </th>
+                    </th> */}
                     <th className='border border-gray-400 p-1 text-xl'>
                       Planned Quantity
                     </th>
@@ -282,7 +293,7 @@ const DashboardChart = (props) => {
                           (mergedOrder) =>
                             mergedOrder.name === order.name &&
                             formatDate(mergedOrder.date) ===
-                              formatDate(order.date)
+                            formatDate(order.date)
                         );
                         if (existingOrderIndex !== -1) {
                           acc[existingOrderIndex].quantity += order.quantity;
@@ -309,9 +320,9 @@ const DashboardChart = (props) => {
                           <td className='border border-gray-400 p-1 '>
                             {mergedOrder.name}
                           </td>
-                          <td className='border border-gray-400 p-1 '>
+                          {/* <td className='border border-gray-400 p-1 '>
                             {mergedOrder.quantity}
-                          </td>
+                          </td> */}
                           <td className='border border-gray-400 p-1 '>
                             {mergedOrder.plannedQuantity || 0}
                           </td>
