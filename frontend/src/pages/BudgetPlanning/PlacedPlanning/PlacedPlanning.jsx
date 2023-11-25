@@ -44,9 +44,6 @@ const PlacedPlanning = (props) => {
       if (data?.planningOrders?.length) {
         setIsPlannedProductsAvailable(true);
       }
-      toast.success('Budget Submitted Successfully', {
-        autoClose: 1500,
-      });
     } catch (error) {
       console.log(error);
     }
@@ -62,6 +59,13 @@ const PlacedPlanning = (props) => {
       const res = await axios.put('api/planningorder', {
         status,
       });
+      toast.success('Budget submitted successfully', {
+        position: 'top-right',
+        autoClose: 1500,
+        style: {
+          marginTop: '70px',
+        },
+      });
       console.log(res);
     } catch (error) {
       console.log(error);
@@ -72,52 +76,125 @@ const PlacedPlanning = (props) => {
     <>
       {isLoading && <Loader />}
       {!isLoading && (
-        <div className='mx-10 my-4'>
+        <div className="mx-10 my-4">
           {isSubmitted ? (
-            <div className='text-xl my-auto text-center '>
-              You have already submitted your budget.
+            <div className="text-xl my-auto text-center ">
+              <div className='mb-5'>You have already submitted your budget.</div>
+              <div className="relative overflow-x-auto shadow-lg border border-slate-600">
+                <table className="w-full divide-y divide-slate-500 text-sm text-left text-gray-500">
+                  <thead className="text-sm text-gray-700 uppercase bg-slate-200">
+                    <tr className="divide-x divide-slate-500">
+                      <th scope="col" className="px-6 py-3">
+                        Sr. no
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Name
+                      </th>
+                      {props.currentUser.role !== ROLES.EMPLOYEE && (
+                        <th scope="col" className="px-6 py-3">
+                          Price(₹)
+                        </th>
+                      )}
+                      <th scope="col" className="px-6 py-3">
+                        Quantity
+                      </th>
+                      {props.currentUser.role !== ROLES.EMPLOYEE && (
+                        <>
+                          <th scope="col" className="px-6 py-3">
+                            Total Price(₹)
+                          </th>
+                        </>
+                      )}
+                      {!isSubmitted && (
+                        <th scope="col" className="px-6 py-3">
+                          Action
+                        </th>
+                      )}
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {plannedBulkOrders.planningOrders.map(
+                      (order, arrayIndex) => {
+                        const currentIndex = index + arrayIndex;
+
+                        return (
+                          <ShowPlannedProducts
+                            isSubmitted={isSubmitted}
+                            key={order.itemId}
+                            imageUrl={order.imageUrl}
+                            name={order.name}
+                            quantity={order.quantity}
+                            price={order.price}
+                            category={order.category}
+                            company={order.company}
+                            description={order.description}
+                            itemId={order.itemId}
+                            orderId={order._id}
+                            index={currentIndex}
+                            getPlannedOrders={getPlannedOrders}
+                            currentUser={props.currentUser}
+                            planningOrderId={order._id}
+                          />
+                        );
+                      }
+                    )}
+                  </tbody>
+
+                  {props.currentUser.role !== ROLES.EMPLOYEE && (
+                    <>
+                      <tr className="divide-y divide-slate-500"></tr>
+
+                      <tr className="bg-white divide-x divide-slate-500">
+                        <td colSpan={4}></td>
+                        <td className="px-6 py-2 text-base font-semibold text-gray-700">
+                          {totalPrice}
+                        </td>
+                        <td colSpan={2}></td>
+                      </tr>
+                    </>
+                  )}
+                </table>
+              </div>
             </div>
           ) : (
             <>
               {/* products empty */}
               {!isPlannedProductsAvailable && (
-                <div className='not_available'>
+                <div className="not_available">
                   Your Planned Products is empty
                 </div>
               )}
 
               {/* Show planned products */}
               {isPlannedProductsAvailable && (
-                <div className='relative overflow-x-auto shadow-lg border border-slate-600'>
-                  <table className='w-full divide-y divide-slate-500 text-sm text-left text-gray-500'>
-                    <thead className='text-sm text-gray-700 uppercase bg-slate-200'>
-                      <tr className='divide-x divide-slate-500'>
-                        <th scope='col' className='px-6 py-3'>
+                <div className="relative overflow-x-auto shadow-lg border border-slate-600">
+                  <table className="w-full divide-y divide-slate-500 text-sm text-left text-gray-500">
+                    <thead className="text-sm text-gray-700 uppercase bg-slate-200">
+                      <tr className="divide-x divide-slate-500">
+                        <th scope="col" className="px-6 py-3">
                           Sr. no
                         </th>
-                        <th scope='col' className='px-6 py-3'>
+                        <th scope="col" className="px-6 py-3">
                           Name
                         </th>
                         {props.currentUser.role !== ROLES.EMPLOYEE && (
-                          <th scope='col' className='px-6 py-3'>
+                          <th scope="col" className="px-6 py-3">
                             Price(₹)
                           </th>
                         )}
-                        <th scope='col' className='px-6 py-3'>
+                        <th scope="col" className="px-6 py-3">
                           Quantity
                         </th>
                         {props.currentUser.role !== ROLES.EMPLOYEE && (
                           <>
-                            <th scope='col' className='px-6 py-3'>
+                            <th scope="col" className="px-6 py-3">
                               Total Price(₹)
-                            </th>
-                            <th scope='col' className='px-6 py-3'>
-                              Details
                             </th>
                           </>
                         )}
-                        <th scope='col' className='px-6 py-3'>
-                          Delete
+                        <th scope="col" className="px-6 py-3">
+                          Action
                         </th>
                       </tr>
                     </thead>
@@ -151,11 +228,11 @@ const PlacedPlanning = (props) => {
 
                     {props.currentUser.role !== ROLES.EMPLOYEE && (
                       <>
-                        <tr className='divide-y divide-slate-500'></tr>
+                        <tr className="divide-y divide-slate-500"></tr>
 
-                        <tr className='bg-white divide-x divide-slate-500'>
+                        <tr className="bg-white divide-x divide-slate-500">
                           <td colSpan={4}></td>
-                          <td className='px-6 py-2 text-base font-semibold text-gray-700'>
+                          <td className="px-6 py-2 text-base font-semibold text-gray-700">
                             {totalPrice}
                           </td>
                           <td colSpan={2}></td>
@@ -167,13 +244,13 @@ const PlacedPlanning = (props) => {
               )}
 
               {/* Add products */}
-              <div className='my-6 flex gap-2 justify-center'>
-                <button className='blue_btn' onClick={showProductsToAdd}>
+              <div className="my-6 flex gap-2 justify-center">
+                <button className="blue_btn" onClick={showProductsToAdd}>
                   Add Item
                 </button>
                 {isPlannedProductsAvailable && (
                   <button
-                    className='green_btn'
+                    className="green_btn"
                     onClick={() => submitHandler('submitted')}
                   >
                     Submit

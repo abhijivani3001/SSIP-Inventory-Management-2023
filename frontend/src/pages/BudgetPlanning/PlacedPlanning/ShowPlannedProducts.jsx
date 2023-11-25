@@ -12,7 +12,7 @@ const ShowPlannedProducts = (props) => {
       const res = await axios.delete(`api/planningorder/${props.orderId}`);
       props.getPlannedOrders();
 
-      toast.success('Item added to inventory successfully', {
+      toast.success('Item added to plan successfully', {
         position: 'top-right',
         autoClose: 1500,
         style: {
@@ -50,32 +50,32 @@ const ShowPlannedProducts = (props) => {
       <tr
         className={`bg-white text-gray-700 hover:bg-gray-100 border-b divide-x divide-slate-500 text-base`}
       >
-        <th className='px-6'>{props.index}</th>
+        <th className="px-6">{props.index}</th>
         <td
-          scope='row'
-          className='flex items-center py-1 px-2 whitespace-nowrap'
+          scope="row"
+          className="flex items-center py-1 px-2 whitespace-nowrap"
         >
-          <div className='text-base mx-4 font-semibold flex gap-2 '>
+          <div className="text-base mx-4 font-semibold flex gap-2 ">
             <div>
               <img
-                className='p-2 h-16 w-24 object-contain'
+                className="p-2 h-16 w-24 object-contain"
                 src={props.imageUrl}
-                alt='productimage'
+                alt="productimage"
               />
             </div>
-            <div className='my-auto'>{props.name}</div>
+            <div className="my-auto">{props.name}</div>
           </div>
         </td>
 
         {props.currentUser.role !== ROLES.EMPLOYEE && (
-          <td className='px-6'>{props.price}</td>
+          <td className="px-6">{props.price}</td>
         )}
-        <td className='px-6'>
+        <td className="px-6">
           {isEditing ? (
             <input
-              name='quantity'
-              type='number'
-              className='border-2 border-gray-700 w-12 h-7 p-0 my-auto text-center rounded-lg'
+              name="quantity"
+              type="number"
+              className="border-2 border-gray-700 w-12 h-7 p-0 my-auto text-center rounded-lg"
               min={1}
               value={availableItems}
               onChange={(e) => setAvailableItems(Math.max(1, e.target.value))}
@@ -87,24 +87,25 @@ const ShowPlannedProducts = (props) => {
 
         {props.currentUser.role !== ROLES.EMPLOYEE && (
           <>
-            <td className='px-6'>{props.quantity * props.price}</td>
-            <td className='px-6'>details</td>
+            <td className="px-6">{props.quantity * props.price}</td>
           </>
         )}
-        <td className='px-6'>
-          {isEditing ? (
-            <button className='blue_btn' onClick={handleSaveClick}>
-              Save
+        {!props.isSubmitted && (
+          <td className="px-6">
+            {isEditing ? (
+              <button className="blue_btn" onClick={handleSaveClick}>
+                Save
+              </button>
+            ) : (
+              <button className="green_btn" onClick={handleUpdateClick}>
+                Update
+              </button>
+            )}
+            <button className="trans_red_btn ml-2" onClick={deleteItemHandler}>
+              Delete
             </button>
-          ) : (
-            <button className='green_btn' onClick={handleUpdateClick}>
-              Update
-            </button>
-          )}
-          <button className='trans_red_btn ml-2' onClick={deleteItemHandler}>
-            Delete
-          </button>
-        </td>
+          </td>
+        )}
       </tr>
     </>
   );
