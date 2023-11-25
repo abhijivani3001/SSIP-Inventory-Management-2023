@@ -166,7 +166,7 @@ const DashboardChart = (props) => {
 
             <div className='text-lg text-gray-100'>Overview</div>
           </div>
-          <div className='bg-white p-8 rounded-lg border w-[50rem] h-[32rem] border-indigo-500 shadow-xl -mt-6 mx-auto'>
+          <div className='bg-white p-8 rounded-lg border w-[50rem] border-indigo-500 shadow-xl -mt-6 mx-auto'>
             <canvas
               id={`comparison-chart-${index}`}
               className='mx-auto px-4 w-full'

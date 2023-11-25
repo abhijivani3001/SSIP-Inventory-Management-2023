@@ -17,6 +17,28 @@ const AdminNavbar = () => {
           <li>
             <div className='navbar-element-parent group'>
               <Link
+                to='/products'
+                className={`${
+                  location.pathname === '/products'
+                    ? 'active-navbar-element'
+                    : 'navbar-element'
+                }`}
+              >
+                <div>Products</div>
+              </Link>
+              <div
+                className={`${
+                  location.pathname === '/products'
+                    ? 'active-navbar-underline'
+                    : 'navbar-underline'
+                } `}
+              ></div>
+            </div>
+          </li>
+
+          <li>
+            <div className='navbar-element-parent group'>
+              <Link
                 to='/add-products'
                 className={`${
                   location.pathname === '/add-products'

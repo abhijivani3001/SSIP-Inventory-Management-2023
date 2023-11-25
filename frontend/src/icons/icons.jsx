@@ -168,3 +168,87 @@ export const Rejected = () => {
     </svg>
   );
 };
+
+export const Employees = () => {
+  return (
+    <svg
+      class='h-10 w-10 text-white'
+      width='24'
+      height='24'
+      viewBox='0 0 24 24'
+      stroke-width='2'
+      stroke='currentColor'
+      fill='none'
+      stroke-linecap='round'
+      stroke-linejoin='round'
+    >
+      {' '}
+      <path stroke='none' d='M0 0h24v24H0z' /> <circle cx='9' cy='7' r='4' />{' '}
+      <path d='M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2' />{' '}
+      <path d='M16 3.13a4 4 0 0 1 0 7.75' />{' '}
+      <path d='M21 21v-2a4 4 0 0 0 -3 -3.85' />
+    </svg>
+  );
+};
+
+export const Inventory = () => {
+  return (
+    <svg
+      class='h-10 w-10 text-white'
+      width='24'
+      height='24'
+      viewBox='0 0 24 24'
+      stroke-width='2'
+      stroke='currentColor'
+      fill='none'
+      stroke-linecap='round'
+      stroke-linejoin='round'
+    >
+      {' '}
+      <path stroke='none' d='M0 0h24v24H0z' />{' '}
+      <path d='M14 3v4a1 1 0 0 0 1 1h4' />{' '}
+      <path d='M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z' />{' '}
+      <line x1='9' y1='7' x2='10' y2='7' />{' '}
+      <line x1='9' y1='13' x2='15' y2='13' />{' '}
+      <line x1='13' y1='17' x2='15' y2='17' />
+    </svg>
+  );
+};
+
+export const Low = () => {
+  return (
+    <svg
+      class='h-10 w-10 text-white'
+      width='24'
+      height='24'
+      viewBox='0 0 24 24'
+      stroke-width='2'
+      stroke='currentColor'
+      fill='none'
+      stroke-linecap='round'
+      stroke-linejoin='round'
+    >
+      {' '}
+      <path stroke='none' d='M0 0h24v24H0z' />{' '}
+      <polyline points='3 7 9 13 13 9 21 17' />{' '}
+      <polyline points='21 10 21 17 14 17' />
+    </svg>
+  );
+};
+
+export const Pending = () => {
+  return (
+    <svg
+      class='h-10 w-10 text-white'
+      viewBox='0 0 24 24'
+      fill='none'
+      stroke='currentColor'
+      stroke-width='2'
+      stroke-linecap='round'
+      stroke-linejoin='round'
+    >
+      {' '}
+      <circle cx='12' cy='12' r='10' /> <polyline points='12 6 12 12 16 14' />
+    </svg>
+  );
+};

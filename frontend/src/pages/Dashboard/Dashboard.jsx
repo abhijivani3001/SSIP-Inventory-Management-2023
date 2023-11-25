@@ -2,7 +2,16 @@ import React, { useState, useEffect } from 'react';
 import Loader from '../../components/ChakraUI/Loader';
 import DashboardCard from './DashboardCard';
 import axios from '../../api/AxiosUrl';
-import { Allocated, Plan, Rejected, Request } from '../../icons/icons';
+import {
+  Allocated,
+  Employees,
+  Inventory,
+  Low,
+  Pending,
+  Plan,
+  Rejected,
+  Request,
+} from '../../icons/icons';
 import DashboardChart from './DashboardChart';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -19,9 +28,12 @@ const Dashboard = () => {
 
   // store-manager
   const [belowUsers, setBelowUsers] = useState([]);
-  const [lowStock, setLowStock] = useState(0);
+  // const [lowStock, setLowStock] = useState(0);
+  const [lowStock, setLowStock] = useState([]);
 
-  
+  // useEffect(() => {
+
+  // }, []);
 
   useEffect(() => {
     (async () => {
@@ -36,6 +48,27 @@ const Dashboard = () => {
         if (data2?.length) {
           setBelowUsers(data2);
         }
+        console.log(data2);
+
+        let temp = [];
+        data?.inventory?.forEach((item) => {
+          // console.log(item);
+          if (item.quantity < 10 + (10 * 20) / 100) {
+            temp.push(item);
+          }
+        });
+        setLowStock(temp);
+
+        // pending
+        data2?.forEach((user) => {
+          user.bulkOrders.forEach((bulkOrder) => {
+            bulkOrder.orders.forEach((order) => {
+              if (order.status === 'pending') {
+                setPendingOrders((prev) => prev + 1);
+              }
+            });
+          });
+        });
       } catch (error) {
         console.error(error);
       }
@@ -69,13 +102,17 @@ const Dashboard = () => {
   let allocatedOrders = [];
   let rejectedOrders = [];
   let plannedOrders = [];
+  // let pendingOrders = [];
+  const [pendingOrders, setPendingOrders] = useState(0);
 
   if (userData?.bulkOrders) {
     const mergedOrders = {}; // req
     const mergedOrders2 = {}; // completed
     const mergedOrders3 = {}; // rejected
 
-    userData.bulkOrders.forEach((bulkOrder) => {
+    const mergedOrders4 = []; // pending
+
+    userData?.bulkOrders?.forEach((bulkOrder) => {
       bulkOrder.orders.forEach((order) => {
         const orderDate = new Date(bulkOrder.updatedAt);
 
@@ -116,11 +153,18 @@ const Dashboard = () => {
     requestedOrders = Object.values(mergedOrders);
     allocatedOrders = Object.values(mergedOrders2);
     rejectedOrders = Object.values(mergedOrders3);
+    // pendingOrders=Object.values(mergedOrders4);
+    // pendingOrders=count;
   }
 
   if (userData?.planningBulkOrders?.planningOrders) {
     plannedOrders = userData?.planningBulkOrders?.planningOrders;
   }
+
+  // useEffect(() => {
+  //   console.log(belowUsers, 'hi');
+
+  // }, [belowUsers]);
 
   return (
     <>
@@ -217,37 +261,38 @@ const Dashboard = () => {
                 <div className='w-full p-4 flex flex-wrap justify-center'>
                   <div className='-mt- flex justify-center gap-8'>
                     <DashboardCard
-                      bg={'bg-sky-500'}
-                      hover={'hover:bg-teal-600'}
+                      bg={'bg-orange-400'}
+                      hover={'hover:bg-orange-500'}
                       belowUsers={belowUsers}
-                      icon={<Plan />}
+                      icon={<Employees />}
                       role={'store-manager'}
                       tag={'1'}
                       text={'Employees'}
                     />
                     <DashboardCard
-                      bg={'bg-yellow-300'}
-                      hover={'hover:bg-yellow-400'}
+                      bg={'bg-violet-500'}
+                      hover={'hover:bg-violet-600'}
                       inventory={userData?.inventory}
                       text={'Inventory Items'}
-                      icon={<Request />}
+                      icon={<Inventory />}
                       role={'store-manager'}
                       tag={'2'}
                     />
                     <DashboardCard
-                      bg={'bg-emerald-500'}
-                      hover={'hover:bg-emerald-600'}
+                      bg={'bg-pink-500'}
+                      hover={'hover:bg-pink-600'}
+                      lowStock={lowStock}
                       text={'Low Stock'}
-                      icon={<Allocated />}
+                      icon={<Low />}
                       role={'store-manager'}
                       tag={'3'}
                     />
                     <DashboardCard
-                      bg={'bg-red-500'}
-                      hover={'hover:bg-red-600'}
-                      orders={rejectedOrders}
-                      text={'Rejected Orders'}
-                      icon={<Rejected />}
+                      bg={'bg-lime-500'}
+                      hover={'hover:bg-lime-600'}
+                      pendingOrders={pendingOrders}
+                      text={'Pending Requests'}
+                      icon={<Pending />}
                       role={'store-manager'}
                       tag={'4'}
                     />

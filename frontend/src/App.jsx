@@ -94,9 +94,8 @@ function App() {
           <Route path='/' element={<Dashboard />} />
         )}
 
-        {isLoggedIn && userRole !== ROLES.ADMIN && (
-          <Route path='/products' element={<Products />} />
-        )}
+        {isLoggedIn && <Route path='/products' element={<Products />} />}
+
         {isLoggedIn && userRole !== ROLES.ADMIN && (
           <Route path='/cart' element={<CartItems />} />
         )}
