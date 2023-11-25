@@ -19,13 +19,12 @@ const RegisterUser = () => {
   });
 
   const handleChange = (e) => {
-    validate(e.target.value);
-
     const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
     });
+    // validate(value);
   };
 
   const handleSubmit = async (e) => {
@@ -81,23 +80,22 @@ const RegisterUser = () => {
     }
   }, [formData.profileIcon]);
 
-  const [errorMessage, setErrorMessage] = useState('');
-
-  const validate = (value) => {
-    if (
-      validator.isStrongPassword(value, {
-        minLength: 8,
-        minLowercase: 1,
-        minUppercase: 1,
-        minNumbers: 1,
-        minSymbols: 1,
-      })
-    ) {
-      setErrorMessage('Success');
-    } else {
-      setErrorMessage('Please enter the strong password!');
-    }
-  };
+  // const [errorMessage, setErrorMessage] = useState('');
+  // const validate = (value) => {
+  //   if (
+  //     validator.isStrongPassword(value, {
+  //       minLength: 8,
+  //       minLowercase: 1,
+  //       minUppercase: 1,
+  //       minNumbers: 1,
+  //       minSymbols: 1,
+  //     })
+  //   ) {
+  //     setErrorMessage('Success');
+  //   } else {
+  //     setErrorMessage('Please enter the strong password!');
+  //   }
+  // };
 
   return (
     <div className='inset-0 flex items-center justify-center p-8'>
@@ -147,10 +145,10 @@ const RegisterUser = () => {
           </div>
           <div className='mb-4'>
             <label className='block text-gray-800'>Password</label>
-            <span className='text-gray-400 text-sm'>
+            {/* <span className='text-gray-400 text-sm'>
               (minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1,
               minSymbols: 1)
-            </span>
+            </span> */}
             <input
               type='password'
               id='password'
@@ -162,8 +160,8 @@ const RegisterUser = () => {
               onChange={handleChange}
               required
             />
-            {errorMessage === '' ? null : (
-              <>
+            {/* {errorMessage === '' ? null : ( */}
+            {/* <>
                 {errorMessage.includes('Please') ? (
                   <span className=' text-base font-medium text-red-500'>
                     {errorMessage}
@@ -173,8 +171,8 @@ const RegisterUser = () => {
                     {errorMessage}
                   </span>
                 )}
-              </>
-            )}
+              </> */}
+            {/* )} */}
           </div>
           <div className='mb-4'>
             <label className='block text-gray-800'>Sub Branch</label>

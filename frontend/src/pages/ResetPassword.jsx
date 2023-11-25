@@ -67,7 +67,7 @@ const ResetPassword = () => {
             />
           </div>
           <div className='text-center'>
-            <button type='submit' className='gray_btn'>
+            <button type='submit' className='blue_btn'>
               Reset Password
             </button>
           </div>

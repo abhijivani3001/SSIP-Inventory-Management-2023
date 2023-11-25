@@ -58,6 +58,7 @@ function App() {
       <Routes>
         {/* {!isLoggedIn && <Route path='/login' element={<Login />} />} */}
         {!isLoggedIn && <Route path='/' element={<Login />} />}
+        {!isLoggedIn && <Route path='/reset-password' element={<ResetPassword />} />}
         {/* {!isLoggedIn && <Route path='/forgot-password' element={<ForgotPassword />} />} */}
 
         {/* admin */}

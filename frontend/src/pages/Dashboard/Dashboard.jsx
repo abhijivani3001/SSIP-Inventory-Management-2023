@@ -239,7 +239,7 @@ const Dashboard = () => {
                       bg={'bg-pink-500'}
                       hover={'hover:bg-pink-600'}
                       lowStock={lowStock}
-                      text={'Low Stock'}
+                      text={'Items Low on Stock'}
                       icon={<Low />}
                       role={'store-manager'}
                       tag={'3'}
