@@ -16,7 +16,6 @@ const Login = () => {
   const [captchaData, setCaptchaData] = useState('');
   const authCtx = useContext(AuthContext);
 
-
   useEffect(() => {
     // Fetch captcha when component mounts
     fetchCaptcha();
@@ -74,9 +73,13 @@ const Login = () => {
       const data = await res.data;
 
       if (data.success === true) {
-        showToast('Login Successful', 'success');
+        alert('Login Successfully');
+        window.location.reload(); // bad-practice
+
         authCtx.login(data.token);
         navigate('/');
+
+        // showToast('Login Successful', 'success');
       } else {
         showToast('Login failed. Please check your credentials.', 'error');
       }
@@ -141,27 +144,31 @@ const Login = () => {
             />
           </div>
           <div className='mb-4'>
-      <label htmlFor='captcha' className='block text-gray-700'>
-        Captcha
-      </label>
-      <div className='flex items-end'>
-        <img className='mb-3' src={`data:image/svg+xml;base64,${btoa(captchaData.data)}`} alt='captcha' />
-        <LuRefreshCcw
-          className='mb-4 ml-4 text-3xl cursor-pointer'
-          onClick={fetchCaptcha}
-        />
-      </div>
-      <input
-        type='text'
-        id='captcha'
-        name='captcha'
-        className='w-full px-3 py-2 border text-black rounded-lg focus:outline-none focus:border-blue-500'
-        placeholder='Enter the characters above'
-        value={userCaptchaValue}
-        onChange={(e) => setUserCaptchaValue(e.target.value)}
-        required
-      />
-    </div>
+            <label htmlFor='captcha' className='block text-gray-700'>
+              Captcha
+            </label>
+            <div className='flex items-end'>
+              <img
+                className='mb-3'
+                src={`data:image/svg+xml;base64,${btoa(captchaData.data)}`}
+                alt='captcha'
+              />
+              <LuRefreshCcw
+                className='mb-4 ml-4 text-3xl cursor-pointer'
+                onClick={fetchCaptcha}
+              />
+            </div>
+            <input
+              type='text'
+              id='captcha'
+              name='captcha'
+              className='w-full px-3 py-2 border text-black rounded-lg focus:outline-none focus:border-blue-500'
+              placeholder='Enter the characters above'
+              value={userCaptchaValue}
+              onChange={(e) => setUserCaptchaValue(e.target.value)}
+              required
+            />
+          </div>
           <div className='text-center mt-7'>
             <button type='submit' className='blue_btn'>
               Login
