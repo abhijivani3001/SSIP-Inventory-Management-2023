@@ -18,7 +18,7 @@ const ShowReqPlannigOrdOne = (props) => {
 
   useEffect(() => {
     let price = 0;
-    props.planningBulkOrders.planningOrders.forEach((order) => {
+    props.planningBulkOrders?.planningOrders.forEach((order) => {
       price += order.quantity * order.price;
     });
     setTotalPrice(price);
@@ -113,7 +113,7 @@ const ShowReqPlannigOrdOne = (props) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {props.planningBulkOrders.planningOrders.map((order) => {
+                  {props.planningBulkOrders?.planningOrders.map((order) => {
                     return (
                       <ShowReqPlanningOrdTwo
                         key={order._id}

@@ -40,7 +40,7 @@ const ActualVsPlanning = () => {
       const currentUser = res1.data.user;
       const mergedOrders = handleMergeOrder(currentUser.bulkOrders);
       setActualOrders(mergedOrders);
-      setPlannedOrders(currentUser.planningBulkOrders.planningOrders);
+      setPlannedOrders(currentUser.planningBulkOrders?.planningOrders);
     } catch (error) {
       console.log(error);
     }

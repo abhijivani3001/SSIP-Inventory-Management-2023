@@ -177,7 +177,7 @@ const DashboardChart = (props) => {
           (a, b) => new Date(formatDate(a.date)) - new Date(formatDate(b.date))
         )
         .map((order) => {
-          const allocatedItem = user.planningBulkOrders.planningOrders.find(
+          const allocatedItem = user.planningBulkOrders?.planningOrders.find(
             (order2) => order2.itemId === order.itemId
           );
           return {

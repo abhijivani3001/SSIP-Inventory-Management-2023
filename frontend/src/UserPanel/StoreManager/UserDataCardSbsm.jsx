@@ -253,7 +253,7 @@ const UserDataCardSbsm = (props) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {user.planningBulkOrders.planningOrders.map(
+                    {user.planningBulkOrders?.planningOrders.map(
                       (planningOrder, orderIndex) => (
                         <tr key={orderIndex}>
                           <td className='border border-gray-400 p-2 text-xl'>

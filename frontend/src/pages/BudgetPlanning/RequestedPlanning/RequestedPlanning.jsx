@@ -38,7 +38,7 @@ const RequestedPlanning = (props) => {
   };
 
   const checkStatus = (user) => {
-    if (user.planningBulkOrders.planningOrders.length) {
+    if (user.planningBulkOrders?.planningOrders.length) {
       if (
         props.currentUser.role ===
         (ROLES.BRANCH_STORE_MANAGER || ROLES.DEPARTMENT_STORE_MANAGER)
@@ -64,7 +64,7 @@ const RequestedPlanning = (props) => {
     const orderMap = new Map();
     usersOfRequestedPlans.forEach((user) => {
       if (checkStatus(user)) {
-        user.planningBulkOrders.planningOrders.forEach((order) => {
+        user.planningBulkOrders?.planningOrders.forEach((order) => {
           if (orderMap.has(order.itemId)) {
             const mapItem = orderMap.get(order.itemId);
             let updatedOrder = {

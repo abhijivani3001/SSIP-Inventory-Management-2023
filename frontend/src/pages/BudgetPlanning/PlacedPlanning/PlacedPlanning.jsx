@@ -114,7 +114,7 @@ const PlacedPlanning = (props) => {
                   </thead>
 
                   <tbody>
-                    {plannedBulkOrders.planningOrders.map(
+                    {plannedBulkOrders?.planningOrders.map(
                       (order, arrayIndex) => {
                         const currentIndex = index + arrayIndex;
 
@@ -200,7 +200,7 @@ const PlacedPlanning = (props) => {
                     </thead>
 
                     <tbody>
-                      {plannedBulkOrders.planningOrders.map(
+                      {plannedBulkOrders?.planningOrders.map(
                         (order, arrayIndex) => {
                           const currentIndex = index + arrayIndex;
 
