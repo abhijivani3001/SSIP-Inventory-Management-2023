@@ -42,18 +42,29 @@ const Login = () => {
     toast[type](message, { position: toast.POSITION.TOP_CENTER });
   };
 
-  useEffect(() => {
-    // Close toast when isLoggedIn changes
-    if (authCtx.isLoggedIn) {
-      const closeToast = () => toast.dismiss();
-      setTimeout(closeToast, 3000); // Adjust the timeout as needed
+  const demoLoginHandler = async () => {
+    try {
+      const res = await axios.post('/api/user/login', {
+        email: 'bhavy@gmail.com',
+        password: '123',
+      });
+      const data = await res.data;
+
+      if (data.success === true) {
+        authCtx.login(data.token);
+        navigate('/');
+        showToast('Demo Login Successful', 'success');
+      } else {
+        showToast('Demo Login failed.', 'error');
+      }
+    } catch (err) {
+      showToast('Error during Demo Login. Please try again.', 'error');
     }
-  }, [authCtx.isLoggedIn]);
+  };
 
   const submitHandler = async (event) => {
     event.preventDefault();
 
-    console.log(userCaptchaValue, expectedCaptchaValue);
     if (userCaptchaValue !== expectedCaptchaValue) {
       showToast('Captcha verification failed. Please try again.', 'error');
       return;
@@ -174,17 +185,26 @@ const Login = () => {
               Login
             </button>
           </div>
-
-          <div className='text-center mt-3'>
+          <div className='text-center mt-1'>
             <Link
               to='/reset-password'
-              className='text-blue-600 hover:underline'
+              className='text-blue-600 text-sm font-semibold hover:underline flex items-end justify-end'
             >
               Forgot Password?
             </Link>
           </div>
         </form>
+        <div className='text-center mt-2'>
+          <button
+            type='button'
+            className='trans_btn'
+            onClick={demoLoginHandler}
+          >
+            Demo Login
+          </button>
+        </div>
       </div>
+
       <ToastContainer />
     </div>
   );
