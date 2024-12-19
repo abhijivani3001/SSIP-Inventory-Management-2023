@@ -43,9 +43,6 @@ const Login = () => {
   };
 
   const demoLoginHandler = async () => {
-    setUsername('bhavy@gmail.com');
-    setPassword('123');
-
     try {
       const res = await axios.post('/api/user/login', {
         email: 'bhavy@gmail.com',
